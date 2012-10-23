@@ -1,0 +1,56 @@
+<?php
+// no direct access
+die('Restricted access');
+
+?>
+
+Changelog
+------------
+
+* -> Security Fix
+# -> Bug Fix
+$ -> Language fix or change
++ -> Addition
+^ -> Change
+- -> Removed
+! -> Note
+
+Version 1.0.5
+
++ Recaptcha integrated into module
+^ CSS Improvements
+^ Internal changes to help a future implementation of AJAX
+^ jQuery text countdown replaced with pure Javascript to increase speed
+
+Version 1.0.4
+
++ New JQuery Plugin for text countdown
+^ Smilies are now added when retrieving items from the shoutbox, to avoid the issue of text limitations in the sql file
+! Language files changed to remind users that the sql file has a 250 character limit
+# Fixed issue where if a database error wasn't inserting from the language file
++ Added HTML5 Compatability
+# Error fixed for swear words having too many parameters
+# Corrects a issue with the fixing of backslashes in the name field
++ Combined all modules so that all Joomla versions are compatible in 1 module
+# Note about printing the displays is no longer repeated for each shout
+
+Version 1.0.3
+
+# Fix where in MySQL 5 the timestamp(14) is depreciated
+
+Version 1.0.2
+
+# Some new text is added into the language file
+# Time Zone Parameter is fixed
+
+Version 1.0.1
+
+# Bug Fixes from version 1.0.1
+^ Swear Filter is now a PHP file
+^ W3 code validation
++ Additional Parameters including Timezones, Word limit on message lengths
++ Ability to censor posts with too many swear words
++ Java popup to alert users when they've gone over their word limit
++ Administrators can view the IP addresses of users who post
+# Fix for error message if database doesn't install properly
+# Various bug fixes
