@@ -17,6 +17,8 @@ else {
 jimport( 'joomla.database.database.mysql' );
 }
 
+jimport( 'joomla.database.database' );
+
 class modShoutboxHelper {
 	function install() {
 		$db	=& JFactory::getDBO();
