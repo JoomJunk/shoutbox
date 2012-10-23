@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<extension type="module" client="site" method="upgrade">
+	<name>JJ Shoutbox</name> 
+	<author>George Wilson</author> 
+	<creationDate>05-Mar-2012</creationDate> 
+	<copyright>Copyright (C) 2012 JoomJunk</copyright> 
+	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
+	<authorEmail>admin@georgesjunk.co.uk</authorEmail> 
+	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
+	<version>1.0.5</version> 
+	<description>JJSHOUTBOXINSTALLATION</description>
+	<files>
+			<filename module="mod_shoutbox">mod_shoutbox.php</filename>
+			<filename>index.html</filename>
+			<filename>swearWords.php</filename>
+			<filename>helper.php</filename>
+			<folder>assets</folder>
+			<folder>tmpl</folder>
+	</files>
+ 
+    <languages>
+        <language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.ini</language>
+		<language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.sys.ini</language>
+    </languages>
+ 
+    <config>
+		<fields name="params">
+			<fieldset name="basic">
+				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
+				<field name="width" type="text" default="250" label="SHOUT_WIDTH" description="SHOUT_WIDTHDESC" />
+				<field name="bordercolor" type="text" default="FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
+				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
+				<field name="loginname" type="radio" default="1" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
+					<option value="0">SHOUT_REAL</option>
+					<option value="1">SHOUT_USER</option>
+					<option value="2">SHOUT_CHOOSE</option>
+				</field>
+				<field name="guestpost" type="radio" default="0" label="SHOUT_GUESTLABEL" description="SHOUT_GUESTDESC">
+					<option value="0">JYES</option>
+					<option value="1">JNO</option>
+				</field>
+				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
+				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
+				<field name="deletecolor" type="text" default="FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
+				<field name="headercolor" type="text" default="D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
+				<field name="smile" type="radio" default="0" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
+					<option value="0">JON</option>
+					<option value="1">JOFF</option>
+				</field>
+				<field name="swearingcounter" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
+					<option value="0">JON</option>
+					<option value="1">JOFF</option>
+				</field>
+				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
+				<field name="messagelength" type="text" default="200" label="SHOUT_MESSAGELABEL" description="SHOUT_MESSAGEDESC" />
+				<field name="alertlength" type="text" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
+				<field name="warnlength" type="text" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
+				<field name="timezone" type="timezones" default="0" label="SHOUT_TIMEZONELABEL" description="SHOUT_TIMEZONEDESC" />
+			</fieldset>
+
+			<fieldset name="recaptcha" label="SHOUT_RECAPTCHA">
+				<field name="recaptchaon" type="radio" default="1" label="SHOUT_RECAPTCHAON_LABEL" description="SHOUT_RECAPTCHAON_DESC">
+					<option value="0">JYES</option>
+					<option value="1">JNO</option>
+				</field>
+				<field name="recaptcha-public" type="text" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
+				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />
+			</fieldset>
+			
+			<fieldset name="advanced">
+				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field name="timeadd" type="text" default="0" label="SHOUT_TIMEADDLABEL" description="SHOUT_TIMEADDDESC" />
+			</fieldset>
+
+		</fields>
+	</config>
+</extension>

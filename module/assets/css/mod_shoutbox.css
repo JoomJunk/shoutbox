@@ -1,0 +1,45 @@
+#jjshoutbox { margin: auto; }
+#jjshoutboxform { margin: 0 auto; }
+#jjshoutboxform textarea { width: 100%; margin-top: 5px; }
+#jjshoutboxform input {
+	margin-top: 5px;
+	color: #000;
+	width: 100%;
+}
+#jjshoutboxoutput {
+	height: 200px; 
+	width: 100%;
+	border-style: solid;
+	background: #FFFFFF;
+	overflow: auto;
+	margin-top: 5px;
+	word-wrap: break-word;
+}
+#jjshoutboxoutput input[type=submit]{
+	cursor: pointer;
+	text-align: center;
+	font: bold 10px Arial, Helvetica, sans-serif;
+	text-decoration: none;
+	background: none;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+	height: 15px;
+}
+#jjshoutboxoutput div h1 {
+	font-size: 12px; 
+	font-family: arial; 
+	color: #000; 
+	text-transform: none;
+	margin: 8px 0px;
+	line-height: 125%;
+}
+#jjshoutboxoutput div h1 form { display: inline-block; }
+#jjshoutboxoutput div p {
+	font: 11px helvetica, arial, sans-serif; 
+	text-align: left;
+	color: #000;
+	margin: 5px 0;
+}
+#noguest { color: #FF0000; font-weight: bold; }
+#jjshoutbox { max-width: 100%; }
