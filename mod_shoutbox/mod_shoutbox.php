@@ -2,16 +2,14 @@
 /**
 * @version   $Id: shoutbox.php 2012-01-16 21:00:00
 * @package   JJ Shoutbox
-* @copyright Copyright (C) 2011 - 2012 George Wilson. All rights reserved.
+* @copyright Copyright (C) 2011 - 2012 JoomJunk. All rights reserved.
 * @license   http://www.gnu.org/licenses/gpl-3.0.html
 */
 
 defined('_JEXEC') or die('Restricted access');
 
-// Include the syndicate functions only once
-require_once( dirname(__FILE__)'/helper.php' );
+require_once( dirname(__FILE__).'/helper.php' );
 
-//Retrieves the parameters for the module
 $displayname = $params->get('loginname');
 $smile = $params->get('smile');
 $swearcounter = $params->get('swearingcounter');
@@ -28,13 +26,33 @@ $houradd = $params->get('timezone', '0');
 $extraadd = $params->get('timeadd', '0');
 $width = $params->get('width', '250');
 
-//Defines message if there is a database error
 $dataerror= JText::_('SHOUT_DATABASEERRORSHOUT');
 
-//recapture library inserted
-require_once( dirname(__FILE__)'/assets/recaptcha/recaptchalib.php');
+$user = JFactory::getUser();
+require_once( dirname(__FILE__).'/assets/recaptcha/recaptchalib.php');
 
-//Include the layout file
+if($params->get('recaptchaon')==0) {
+	if(isset($_POST["recaptcha_response_field"])) {
+		if ($_POST["recaptcha_response_field"]) {
+			$resp = recaptcha_check_answer ($params->get('recaptcha-private'),
+											$_SERVER["REMOTE_ADDR"],
+											$_POST["recaptcha_challenge_field"],
+											$_POST["recaptcha_response_field"]);
+
+			if ($resp->is_valid) {
+			modShoutboxHelper::postfiltering($_POST, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
+			} else {
+					$error = $resp->error;
+			}
+		}
+	}
+} else {
+	modShoutboxHelper::postfiltering($_POST, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
+}
+if(isset($_POST['delete'])) {
+    $deletepostnumber=$_POST['idvalue'];
+    modShoutboxHelper::deletepost($deletepostnumber);
+}
+
 require(JModuleHelper::getLayoutPath('mod_shoutbox'));
-
 ?>

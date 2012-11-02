@@ -1,3 +1,10 @@
+/**
+* @version   $Id: default.php 2012-01-16 21:00:00
+* @package   JJ Shoutbox
+* @copyright Copyright (C) 2011 - 2012 JoomJunk. All rights reserved.
+* @license   http://www.gnu.org/licenses/gpl-3.0.html
+*/
+
 #jjshoutbox { margin: auto; }
 #jjshoutboxform { margin: 0 auto; }
 #jjshoutboxform textarea { width: 100%; margin-top: 5px; }
@@ -34,7 +41,10 @@
 	margin: 8px 0px;
 	line-height: 125%;
 }
-#jjshoutboxoutput div h1 form { display: inline-block; }
+#jjshoutboxoutput div h1 form {
+	display: inline-block;
+	margin: 0px;
+}
 #jjshoutboxoutput div p {
 	font: 11px helvetica, arial, sans-serif; 
 	text-align: left;

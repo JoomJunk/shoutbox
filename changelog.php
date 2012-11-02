@@ -15,6 +15,22 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.1.2
+
++ Integrated Joomla update feature with 2.5/3.0 version
++ New Database commands in 2.5/3.0 version to allow for non-MYSQL databases to be supported
+^ Improved code structure for future AJAX implementation and template overrides
+^ Separated Joomla 1.5 and 2.5/3.x versions
+-  Remove support for Joomla 1.6 and 1.7
+
+Version 1.1.1
+
+# Fix to solve issue when allow_url_fopen was turned off
+
+Version 1.1.0
+
++ New Version of Shoutbox for Joomla 3.0
+
 Version 1.0.5
 
 + Recaptcha integrated into module
