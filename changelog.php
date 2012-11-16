@@ -15,6 +15,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.1.3
+
+# Issue fixed with line breaks not working
+
 Version 1.1.2
 
 + Integrated Joomla update feature with 2.5/3.0 version
