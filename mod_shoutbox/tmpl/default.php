@@ -62,7 +62,7 @@ while ($i < $number) { ?>
 		</form> 
 	<?php } ?>
    </h1>
-   <p><?php if ($smile==0){ print modShoutboxHelper::smileyfilter(stripslashes($shouts[$i]->msg));} else {print stripslashes($shouts[$i]->msg);} ?></p></div>
+   <p><?php if ($smile==0){ print modShoutboxHelper::smileyfilter(stripcslashes($shouts[$i]->msg));} else {print stripcslashes($shouts[$i]->msg);} ?></p></div>
   <?php $i++; ?>
   <br />
   <?php
