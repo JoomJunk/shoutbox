@@ -15,6 +15,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.1.4
++ Uses native JInput for processing rather than $_POST
+
 Version 1.1.3
 
 # Issue fixed with line breaks not working
