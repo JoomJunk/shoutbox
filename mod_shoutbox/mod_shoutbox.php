@@ -30,28 +30,31 @@ $dataerror= JText::_('SHOUT_DATABASEERRORSHOUT');
 
 $user = JFactory::getUser();
 require_once( dirname(__FILE__).'/assets/recaptcha/recaptchalib.php');
+if(isset($_POST)) {
+	$input = new JInput();
+	$post = $input->getArray($_POST);
+	if($params->get('recaptchaon')==0) {
+		if(isset($post["recaptcha_response_field"])) {
+			if ($post["recaptcha_response_field"]) {
+				$resp = recaptcha_check_answer ($params->get('recaptcha-private'),
+												$_SERVER["REMOTE_ADDR"],
+												$post["recaptcha_challenge_field"],
+												$post["recaptcha_response_field"]);
 
-if($params->get('recaptchaon')==0) {
-	if(isset($_POST["recaptcha_response_field"])) {
-		if ($_POST["recaptcha_response_field"]) {
-			$resp = recaptcha_check_answer ($params->get('recaptcha-private'),
-											$_SERVER["REMOTE_ADDR"],
-											$_POST["recaptcha_challenge_field"],
-											$_POST["recaptcha_response_field"]);
-
-			if ($resp->is_valid) {
-			modShoutboxHelper::postfiltering($_POST, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
-			} else {
-					$error = $resp->error;
+				if ($resp->is_valid) {
+				modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
+				} else {
+						$error = $resp->error;
+				}
 			}
 		}
+	} else {
+		modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
 	}
-} else {
-	modShoutboxHelper::postfiltering($_POST, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
-}
-if(isset($_POST['delete'])) {
-    $deletepostnumber=$_POST['idvalue'];
-    modShoutboxHelper::deletepost($deletepostnumber);
+	if(isset($post['delete'])) {
+		$deletepostnumber=$post['idvalue'];
+		modShoutboxHelper::deletepost($deletepostnumber);
+	}
 }
 
 require(JModuleHelper::getLayoutPath('mod_shoutbox'));
