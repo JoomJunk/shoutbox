@@ -51,5 +51,9 @@
 	color: #000;
 	margin: 5px 0;
 }
+#noscript_charsleft { 
+	color:red;
+	font-weight: bold;
+}
 #noguest { color: #FF0000; font-weight: bold; }
 #jjshoutbox { max-width: 100%; }
