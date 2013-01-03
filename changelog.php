@@ -17,6 +17,7 @@ $ -> Language fix or change
 
 Version 1.1.4
 + Uses native JInput for processing rather than $_POST
++ noscript text for people without javascript to warn them of message limit
 
 Version 1.1.3
 
