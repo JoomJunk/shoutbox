@@ -54,7 +54,7 @@ $number=$actualnumber;
 while ($i < $number) { ?>
   <div>
   <h1 <?php echo shouttitle($user, $shouts, $i); ?>>
-  <?php if ($smile==0){ print modShoutboxHelper::smileyfilter(stripslashes($shouts[$i]->name));} else {print stripslashes($shouts[$i]->name);} ?> - <?php print date("H:i",strtotime($shouts[$i]->when));
+  <?php if ($smile==0){ print modShoutboxHelper::smileyfilter(stripslashes($profile_link));} else {print stripslashes($profile_link);} ?> - <?php print date("H:i",strtotime($shouts[$i]->when));
 	if($user->authorise('core.delete')) { ?> 
 		<form method="post" name="delete">
 			<input name="delete" type="submit" value="x" />
