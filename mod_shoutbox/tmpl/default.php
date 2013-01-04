@@ -56,7 +56,7 @@ while ($i < $number) { ?>
   <?php 
   $sef = JFactory::getConfig()->getValue('config.sef');
   $user_id = JFactory::getUser($shouts[$i]->name);
-	if($profile == 0 && $displayname == 1 &&  !$user->get('guest')) {	
+	if($profile == 0 && $displayname == 1 && $profile_allow == 0) {	
 		if($sef == 1){
 			$profile_link = '<a href="index.php/profile/userprofile/'. $shouts[$i]->name .'.html">' . $shouts[$i]->name . '</a>';
 		}
@@ -64,7 +64,7 @@ while ($i < $number) { ?>
 			$profile_link = '<a href="index.php?option=com_comprofiler&task=userProfile&user='. $user_id->id .'">' . $shouts[$i]->name . '</a>'; 
 		}
 	}	
-	elseif($profile == 1 && $displayname == 1 && !$user->get('guest')) {
+	elseif($profile == 1 && $displayname == 1 && $profile_allow == 0) {
 		if($sef == 1){
 			$profile_link = '<a href="index.php/forum/profile/'. $user_id->id .'-'. $shouts[$i]->name .'">' . $shouts[$i]->name . '</a>'; 
 		}
