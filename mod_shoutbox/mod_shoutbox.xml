@@ -51,6 +51,10 @@
 					<option value="1">SHOUT_KUNENA_USERS</option>
 					<option value="2">SHOUT_NO_USERS</option>
 				</field>
+				<field name="profile_allow" type="radio" default="1" label="SHOUT_LINK_PROFILE_ALLOW" description="SHOUT_LINK_PROFILE_ALLOWDESC">
+					<option value="0">JYES</option>
+					<option value="1">JNO</option>
+				</field>
 				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
 				<field name="width" type="text" default="250" label="SHOUT_WIDTH" description="SHOUT_WIDTHDESC" />
 				<field name="bordercolor" type="text" default="FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
