@@ -53,28 +53,21 @@ $number=$actualnumber;
   }
 while ($i < $number) { ?>
   <div>
-  <?php 
-  $sef = JFactory::getConfig()->getValue('config.sef');
+  <?php
   $user_id = JFactory::getUser($shouts[$i]->name);
-	if($profile == 0 && $displayname == 1 && $profile_allow == 0) {	
-		if($sef == 1){
-			$profile_link = '<a href="index.php/profile/userprofile/'. $shouts[$i]->name .'.html">' . $shouts[$i]->name . '</a>';
+  if($user_id!=0) {
+		if($profile == 0 && $displayname == 1 && $profile_allow == 0) {	
+			$profile_link = '<a href="'.JRoute::_('index.php?option=com_comprofiler&task=userProfile&user='.$user_id->id).'">' . $shouts[$i]->name . '</a>';
+		}	
+		elseif($profile == 1 && $displayname == 1 && $profile_allow == 0) {
+			$profile_link = '<a href="'.JRoute::_('index.php?option=com_kunena&func=fbprofile&userid='. $user_id->id).'">' . $shouts[$i]->name . '</a>'; 
 		}
 		else {
-			$profile_link = '<a href="index.php?option=com_comprofiler&task=userProfile&user='. $user_id->id .'">' . $shouts[$i]->name . '</a>'; 
+			$profile_link = $shouts[$i]->name;
 		}
-	}	
-	elseif($profile == 1 && $displayname == 1 && $profile_allow == 0) {
-		if($sef == 1){
-			$profile_link = '<a href="index.php/forum/profile/'. $user_id->id .'-'. $shouts[$i]->name .'">' . $shouts[$i]->name . '</a>'; 
-		}
-		else {
-			$profile_link = '<a href="index.php?option=com_kunena&func=fbprofile&userid='. $user_id->id .'">' . $shouts[$i]->name . '</a>'; 
-		}
-	}
-	else {
-		$profile_link = $shouts[$i]->name;
-	} 
+  } else {
+	$profile_link = $shouts[$i]->name;
+  }
   ?>
   <h1 <?php echo shouttitle($user, $shouts, $i); ?>>
   <?php if ($smile==0){ print modShoutboxHelper::smileyfilter(stripslashes($profile_link));} else {print stripslashes($profile_link);} ?> - <?php print date("H:i",strtotime($shouts[$i]->when));
