@@ -68,6 +68,11 @@
 					<option value="0">JYES</option>
 					<option value="1">JNO</option>
 				</field>
+				<field name="date" type="list" default="0" label="SHOUT_SHOW_DATE" description="SHOUT_SHOW_DATEDESC">
+					<option value="0">12/01/2013</option>
+					<option value="1">Sat 01 2013</option>
+					<option value="2">SHOUT_DONT_SHOW</option>
+				</field>
 				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
 				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
 				<field name="deletecolor" type="text" default="FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
