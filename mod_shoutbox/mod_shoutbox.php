@@ -27,6 +27,7 @@ $extraadd = $params->get('timeadd', '0');
 $width = $params->get('width', '250');
 $profile = $params->get('profile');
 $profile_allow = $params->get('profile_allow');
+$date = $params->get('date');
 
 $dataerror= JText::_('SHOUT_DATABASEERRORSHOUT');
 
