@@ -112,7 +112,7 @@ while ($i < $number) { ?>
 	  <?php }
 	if (($user->guest && $guestpost==0)||!$user->guest) { ?>
 	  <br />
-	  <input name="token" type="hidden" value="<?php echo $_SESSION['token'];?>" />
+	  <?php echo JHTML::_( 'form.token' ); ?>
 	  <span id="charsleft"></span>
 	  <noscript><span id="noscript_charsleft"><?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?></span></noscript>
 	  <textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
