@@ -26,7 +26,6 @@ $houradd = $params->get('timezone', '0');
 $extraadd = $params->get('timeadd', '0');
 $width = $params->get('width', '250');
 $profile = $params->get('profile');
-$profile_allow = $params->get('profile_allow');
 
 $dataerror= JText::_('SHOUT_DATABASEERRORSHOUT');
 

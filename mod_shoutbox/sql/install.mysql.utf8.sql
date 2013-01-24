@@ -4,8 +4,9 @@ CREATE TABLE IF NOT EXISTS `#__shoutbox` (
 	`when` TIMESTAMP NOT NULL,
 	`ip` varchar(15) NOT NULL,
 	`msg` text NOT NULL,
+	`user_id` int(11) NOT NULL DEFAULT '0',
 
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
-INSERT INTO `#__shoutbox` (`name`, `when`, `msg`) VALUES ('JoomJunk', '2012-01-16 20:00:00', 'Welcome to the Shoutbox');
+INSERT INTO `#__shoutbox` (`name`, `when`, `msg`, `user_id`) VALUES ('JoomJunk', '2012-01-16 20:00:00', 'Welcome to the Shoutbox', '0');

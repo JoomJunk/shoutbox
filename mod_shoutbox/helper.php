@@ -42,6 +42,7 @@ class modShoutboxHelper {
 				$shouts[$i]->when = date( 'Y-m-d H:i:s', time()+$timezone);
 				$shouts[$i]->msg = $message;
 				$shouts[$i]->ip = 'System';
+				$shouts[$i]->user_id = 0;
 				return $shouts;
 			}
 		}
@@ -52,6 +53,7 @@ class modShoutboxHelper {
 			$shouts[$i]->when = date( 'Y-m-d H:i:s', $adjustedtime);
 			$shouts[$i]->ip = $row->ip;
 			$shouts[$i]->msg = $row->msg;
+			$shouts[$i]->user_id = $row->user_id;
 			$i++;
 		}
 		return $shouts;
@@ -179,6 +181,26 @@ class modShoutboxHelper {
 		return $post; 
 	}  
 	
+	function linkUser($profile, $displayname, $name, $user_id) {
+		if($user_id!=0) {
+			if($profile == 0) {
+				//Community Builder Profile Link
+				$profile_link = '<a href="'.JRoute::_('index.php?option=com_comprofiler&task=userProfile&user='.$user_id).'">' . $name . '</a>';
+			}	
+			elseif($profile == 1) {
+				//Kunena Profile Link
+				$profile_link = '<a href="'.JRoute::_('index.php?option=com_kunena&func=fbprofile&userid='. $user_id).'">' . $name . '</a>'; 
+			}
+			else {
+				//No profile Link
+				$profile_link = $name;
+			}
+		} else {
+			$profile_link = $name;
+		}
+		return $profile_link;
+	}
+	
 	function addShout($name, $message, $ip, $timeadd) {
 		$timenow = time() + ($timeadd*60*60);
 		$timesql = date('Y-m-d H:i:s',$timenow);
@@ -189,6 +211,7 @@ class modShoutboxHelper {
 		$data->when = $timesql;
 		$data->ip = $ip;
 		$data->msg = $message;
+		$data->user_id = JFactory::getUser()->id;
 		$db->insertObject( '#__shoutbox', $data, 'id' );
 	}
 
