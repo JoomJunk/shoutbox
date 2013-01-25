@@ -2,7 +2,7 @@
 /**
 * @version   $Id:helper.php 2012-01-16 21:00:00
 * @package   JJ Shoutbox
-* @copyright Copyright (C) 2011 - 2012 JoomJunk. All rights reserved.
+* @copyright Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
 * @license   http://www.gnu.org/licenses/gpl-3.0.html
 */
 
@@ -224,5 +224,21 @@ class modShoutboxHelper {
 		$db->setQuery($query);
 		$db->query();
 	}
+	function deleteall($delete) {
+		$db	= JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->delete()
+		->from('#__shoutbox');
+		$db->setQuery($query, 0, $delete);
+		$db->query();
+	}
+	//Joomla 2.5 coding standard but doesn't work
+	
+	//function deleteall($delete) {
+	//	$db	= JFactory::getDBO();
+	//	$query = "DELETE FROM #__shoutbox LIMIT ".$delete."";
+	//	$db->setQuery($query);
+	//	$db->query(); 
+	//}
 }
 ?>
