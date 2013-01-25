@@ -224,5 +224,21 @@ class modShoutboxHelper {
 		$db->setQuery($query);
 		$db->query();
 	}
+	
+	function deleteall($delete) {
+		$db	= JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->delete()
+		->from('#__shoutbox');
+		$db->setQuery($query, 0, $delete);
+		$db->query();
+	}
+	//Joomla 2.5 coding standard but doesn't work	
+	//function deleteall($delete) {
+	//	$db	= JFactory::getDBO();
+	//	$query = "DELETE FROM #__shoutbox LIMIT ".$delete."";
+	//	$db->setQuery($query);
+	//	$db->query(); 
+	//   }
 }
 ?>
