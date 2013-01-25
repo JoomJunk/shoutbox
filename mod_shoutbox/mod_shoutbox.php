@@ -57,6 +57,10 @@ if(isset($_POST)) {
 		$deletepostnumber=$post['idvalue'];
 		modShoutboxHelper::deletepost($deletepostnumber);
 	}
+	if(isset($post['deleteall'])) {
+		$delete = $post['valueall'];
+		modShoutboxHelper::deleteall($delete);
+	}
 }
 
 require(JModuleHelper::getLayoutPath('mod_shoutbox'));
