@@ -55,7 +55,11 @@ while ($i < $number) { ?>
   <div>
   <?php $profile_link = modShoutboxHelper::linkUser($profile, $displayname, $shouts[$i]->name, $shouts[$i]->user_id); ?>
   <h1 <?php echo shouttitle($user, $shouts, $i); ?>>
-  <?php if ($smile==0){ print modShoutboxHelper::smileyfilter(stripslashes($profile_link));} else {print stripslashes($profile_link);} ?> - <?php print date("H:i",strtotime($shouts[$i]->when));
+  <?php 
+  if($date==0){ $show_date = "d/m/Y -"; }
+  elseif($date==1){ $show_date = "D m Y -"; }
+  else{$show_date = "";}
+  if ($smile==0){ print modShoutboxHelper::smileyfilter(stripslashes($profile_link));} else {print stripslashes($profile_link);} ?> - <?php print date($show_date . "H:i",strtotime($shouts[$i]->when));
 	if($user->authorise('core.delete')) { ?> 
 		<form method="post" name="delete">
 			<input name="delete" type="submit" value="x" />
