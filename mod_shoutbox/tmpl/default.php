@@ -56,7 +56,6 @@ while ($i < $number) { ?>
   <?php $profile_link = modShoutboxHelper::linkUser($profile, $displayname, $shouts[$i]->name, $shouts[$i]->user_id); ?>
   <h1 <?php echo shouttitle($user, $shouts, $i); ?>>
   <?php
-  <?php 
   if($date==0){ $show_date = "d/m/Y -"; }
   elseif($date==1){ $show_date = "D m Y -"; }
   else{$show_date = "";}
@@ -152,7 +151,13 @@ while ($i < $number) { ?>
 	  <input name="shout" id="shoutbox-submit" type="submit" value="<?php print $submittext ?>" <?php if ($params->get('recaptchaon')==0 && !$params->get('recaptcha-public') || $params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) { echo 'disabled="disabled"'; }?> />   
 	  <?php } ?>
 	</form> 
-	<?php }
+	<?php
+	if($user->authorise('core.delete')) { ?> 
+	<form method="post" name="deleteall">
+		<input name="valueall" type="text" />
+		<input name="deleteall" type="submit" value="mass delete" />
+	</form> 
+	<?php } }
 	else if($guestpost==1 && $guestpost==1) { ?>
 	<p id="noguest"><?php echo $nonmembers ?></p>
 	<?php } ?>
