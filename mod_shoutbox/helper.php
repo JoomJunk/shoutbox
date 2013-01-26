@@ -60,8 +60,8 @@ class modShoutboxHelper {
 	}
 	
 	function postfiltering($shout, $user, $swearcounter, $swearnumber, $extraadd, $displayname) {
-		JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );
-		if(isset($shout['shout'])) { 
+		if(isset($shout['shout'])) {
+			JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );
 			if(!empty($shout['message'])){
 				if($_SESSION['token'] == $shout['token']){	
 					$replace = '****';
