@@ -59,61 +59,63 @@ class modShoutboxHelper {
 		return $shouts;
 	}
 	
-	function postfiltering($shout, $user, $swearcounter, $swearnumber, $extraadd, $displayname) {	
+	function postfiltering($shout, $user, $swearcounter, $swearnumber, $extraadd, $displayname) {
+		JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );	
 		if(isset($shout['shout'])) { 
 			if(!empty($shout['message'])){
-				JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );
-				$replace = '****';
-				$backslashreplace='\\\\';
-				
-				$config = JFactory::getConfig()->get('dbtype');
-				if($config=='mysqli') {
-					$mysqli = new mysqli(JFactory::getConfig()->get('host'), JFactory::getConfig()->get('user'), JFactory::getConfig()->get('password'));
-				}
-
-				if (!$user->guest && $displayname==0) {
-					$name = $user->name;
-					$nameswears=0;
-				}
-				else if (!$user->guest && $displayname==1) {
-					$name = $user->username;
-					$nameswears=0;
-				}
-				else {
-					$shout['name'] = modShoutboxHelper::backslashfix($shout['name'], $backslashreplace);
-					if (get_magic_quotes_gpc()) {$shout['name']=stripslashes($shout['name']);}
-					if($swearcounter==0) { $before=substr_count($shout['name'], $replace); }
+				if($_SESSION['token'] == $shout['token']){
+					$replace = '****';
+					$backslashreplace='\\\\';
+					
+					$config = JFactory::getConfig()->get('dbtype');
 					if($config=='mysqli') {
-						$name = modShoutboxHelper::swearfilter($mysqli->real_escape_string($shout['name']), $replace);
+						$mysqli = new mysqli(JFactory::getConfig()->get('host'), JFactory::getConfig()->get('user'), JFactory::getConfig()->get('password'));
+					}
+
+					if (!$user->guest && $displayname==0) {
+						$name = $user->name;
+						$nameswears=0;
+					}
+					else if (!$user->guest && $displayname==1) {
+						$name = $user->username;
+						$nameswears=0;
 					}
 					else {
-						$name = modShoutboxHelper::swearfilter(mysql_real_escape_string($shout['name']), $replace);
+						$shout['name'] = modShoutboxHelper::backslashfix($shout['name'], $backslashreplace);
+						if (get_magic_quotes_gpc()) {$shout['name']=stripslashes($shout['name']);}
+						if($swearcounter==0) { $before=substr_count($shout['name'], $replace); }
+						if($config=='mysqli') {
+							$name = modShoutboxHelper::swearfilter($mysqli->real_escape_string($shout['name']), $replace);
+						}
+						else {
+							$name = modShoutboxHelper::swearfilter(mysql_real_escape_string($shout['name']), $replace);
+						}
+						if($swearcounter==0) {
+							$after=substr_count($name, $replace);
+							$nameswears=($after-$before);
+						}
+						else {$nameswears=0; }
+					}
+					$shout['message'] = modShoutboxHelper::backslashfix($shout['message'], $backslashreplace);
+					if (get_magic_quotes_gpc()) {$shout['message']=stripslashes($shout['message']);}
+					if($swearcounter==0) { $before=substr_count($shout['message'], $replace); }
+					if($config=='mysqli') {
+						$message = modShoutboxHelper::swearfilter($mysqli->real_escape_string($shout['message']), $replace);				
+					}
+					else {
+						$message = modShoutboxHelper::swearfilter(mysql_real_escape_string($shout['message']), $replace);
 					}
 					if($swearcounter==0) {
-						$after=substr_count($name, $replace);
-						$nameswears=($after-$before);
+						$after=substr_count($message, $replace);
+						$messageswears=($after-$before);
 					}
-					else {$nameswears=0; }
-				}
-				$shout['message'] = modShoutboxHelper::backslashfix($shout['message'], $backslashreplace);
-				if (get_magic_quotes_gpc()) {$shout['message']=stripslashes($shout['message']);}
-				if($swearcounter==0) { $before=substr_count($shout['message'], $replace); }
-				if($config=='mysqli') {
-					$message = modShoutboxHelper::swearfilter($mysqli->real_escape_string($shout['message']), $replace);				
-				}
-				else {
-					$message = modShoutboxHelper::swearfilter(mysql_real_escape_string($shout['message']), $replace);
-				}
-				if($swearcounter==0) {
-					$after=substr_count($message, $replace);
-					$messageswears=($after-$before);
-				}
-				$ip=$_SERVER['REMOTE_ADDR'];
-				if($swearcounter==1 || $swearcounter==0 && (($nameswears+$messageswears)<$swearnumber)) {
-					modShoutboxHelper::addShout($name, $message, $ip, $extraadd);
-				}
-				if($config=='mysqli') {
-					$mysqli->close();
+					$ip=$_SERVER['REMOTE_ADDR'];
+					if($swearcounter==1 || $swearcounter==0 && (($nameswears+$messageswears)<$swearnumber)) {
+						modShoutboxHelper::addShout($name, $message, $ip, $extraadd);
+					}
+					if($config=='mysqli') {
+						$mysqli->close();
+					}
 				}
 			}
 		}
