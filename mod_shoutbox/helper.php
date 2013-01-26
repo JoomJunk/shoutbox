@@ -60,10 +60,10 @@ class modShoutboxHelper {
 	}
 	
 	function postfiltering($shout, $user, $swearcounter, $swearnumber, $extraadd, $displayname) {
-		JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );	
+		JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );
 		if(isset($shout['shout'])) { 
 			if(!empty($shout['message'])){
-				if($_SESSION['token'] == $shout['token']){
+				if($_SESSION['token'] == $shout['token']){	
 					$replace = '****';
 					$backslashreplace='\\\\';
 					
@@ -227,21 +227,22 @@ class modShoutboxHelper {
 		$db->query();
 	}
 	
-	function deleteall($delete) {
-		$db	= JFactory::getDBO();
-		$query = "DELETE FROM #__shoutbox LIMIT ".$delete."";
-		$db->setQuery($query);
-		$db->query(); 
+	function deleteall($delete) {	
+		$db = & JFactory::getDBO();
+		$query = $db->getQuery(true);
+		$query->select('*')
+		  ->from('#__shoutbox')
+		  ->order('id DESC');
+		$db->setQuery($query , 0 , $delete);
+		$rows = $db->loadObjectList();
+		foreach ($rows as $row) {
+			$query = $db->getQuery(true);
+			$query->delete()
+			  ->from('#__shoutbox')
+			  ->where('id = '. (int) $row->id);			  
+			$db->setQuery($query);
+			$db->query();
+		}
 	}
-	
-	//Joomla 2.5 coding standard but doesn't work
-	//function deleteall($delete) {
-	//	$db	= JFactory::getDBO();
-	//	$query = $db->getQuery(true);
-	//	$query->delete()
-	//	->from('#__shoutbox');
-	//	$db->setQuery($query, 0, $delete);
-	//	$db->query();
-	//   }
 }
 ?>
