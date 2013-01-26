@@ -1,4 +1,10 @@
 <?php
+/**
+* @version   $Id:script.php 2012-01-16 21:00:00
+* @package   JJ Shoutbox
+* @copyright Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
+* @license   http://www.gnu.org/licenses/gpl-3.0.html
+*/
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
  
