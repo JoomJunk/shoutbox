@@ -193,6 +193,12 @@ class modShoutboxHelper {
 				//Kunena Profile Link
 				$profile_link = '<a href="'.JRoute::_('index.php?option=com_kunena&func=fbprofile&userid='. $user_id).'">' . $name . '</a>'; 
 			}
+			elseif($profile == 2) {
+				//JomSocial Profile Link
+				$jspath = JPATH_ROOT.DS.'components'.DS.'com_community';
+				include_once($jspath.DS.'libraries'.DS.'core.php');
+				$profile_link = '<a href="'.CRoute::_('index.php?option=com_community&view=profile&userid='.$user_id).'">' . $name . '</a>';
+			}
 			else {
 				//No profile Link
 				$profile_link = $name;
