@@ -1,7 +1,5 @@
 Shoutbox
 ========
-<a href="https://travis-ci.org/wilsonge/shoutbox"><img src="https://travis-ci.org/wilsonge/shoutbox.png" /></a>
-
 JoomJunk Shoutbox - A PHP shoutbox designed for use on Joomla sites
 
 Please see the changelog for detailed information about recent changes
