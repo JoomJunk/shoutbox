@@ -158,7 +158,7 @@ while ($i < $number) { ?>
 	if($user->authorise('core.delete')) { ?> 
 	<form method="post" name="deleteall">
 		<input name="valueall" type="text" />
-		<input name="deleteall" type="submit" value="mass delete" />
+		<input name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
 	</form> 
 	<?php } }
 	else if($guestpost==1 && $guestpost==1) { ?>
