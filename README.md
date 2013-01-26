@@ -1,5 +1,6 @@
 Shoutbox
 ========
+<img src="https://travis-ci.org/wilsonge/shoutbox.png" />
 
 JoomJunk Shoutbox - A PHP shoutbox designed for use on Joomla sites
 
