@@ -59,15 +59,15 @@ while ($i < $number) { ?>
   if($date==0){ $show_date = "d/m/Y -"; }
   elseif($date==1){ $show_date = "D m Y -"; }
   else{$show_date = "";}
-  if ($smile==0){ print modShoutboxHelper::smileyfilter(stripslashes($profile_link));} else {print stripslashes($profile_link);} ?> - <?php print date($show_date . "H:i",strtotime($shouts[$i]->when));
+  if ($smile==0){ echo modShoutboxHelper::smileyfilter(stripslashes($profile_link));} else {echo stripslashes($profile_link);} ?> - <?php echo date($show_date . "H:i",strtotime($shouts[$i]->when));
 	if($user->authorise('core.delete')) { ?> 
 		<form method="post" name="delete">
 			<input name="delete" type="submit" value="x" />
-			<input name="idvalue" type="hidden" value="<?php print $shouts[$i]->id ?>" />
+			<input name="idvalue" type="hidden" value="<?php echo $shouts[$i]->id ?>" />
 		</form> 
 	<?php } ?>
    </h1>
-   <p><?php if ($smile==0){ print modShoutboxHelper::smileyfilter(stripcslashes($shouts[$i]->msg));} else {print stripcslashes($shouts[$i]->msg);} ?></p></div>
+   <p><?php if ($smile==0){ echo modShoutboxHelper::smileyfilter(stripcslashes($shouts[$i]->msg));} else {echo stripcslashes($shouts[$i]->msg);} ?></p></div>
   <?php $i++; ?>
   <br />
   <?php
@@ -151,7 +151,7 @@ while ($i < $number) { ?>
 		}
 		?>
 
-	  <input name="shout" id="shoutbox-submit" type="submit" value="<?php print $submittext ?>" <?php if ($params->get('recaptchaon')==0 && !$params->get('recaptcha-public') || $params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) { echo 'disabled="disabled"'; }?> />   
+	  <input name="shout" id="shoutbox-submit" type="submit" value="<?php echo $submittext ?>" <?php if ($params->get('recaptchaon')==0 && !$params->get('recaptcha-public') || $params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) { echo 'disabled="disabled"'; }?> />   
 	  <?php } ?>
 	</form> 
 	<?php
