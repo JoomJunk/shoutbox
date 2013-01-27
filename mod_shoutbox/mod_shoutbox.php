@@ -59,7 +59,18 @@ if(isset($_POST)) {
 	}
 	if(isset($post['deleteall'])) {
 		$delete = $post['valueall'];
-		modShoutboxHelper::deleteall($delete);
+		if(is_int($delete)) {
+			if($delete>0) {
+				if($delete>$post['max']) {
+					$delete=$post['max'];
+				}
+				modShoutboxHelper::deleteall($delete);
+			} else {
+				JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'jerror');
+			}
+		} else {
+			JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'jerror');
+		}
 	}
 }
 
