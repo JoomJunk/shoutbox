@@ -157,7 +157,7 @@ while ($i < $number) { ?>
 	<?php
 	if($user->authorise('core.delete')) { ?> 
 	<form method="post" name="deleteall">
-		<input type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" />
+		<input type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
 		<input type="hidden" name="max" value="<?php echo $number; ?>" />
 		<input name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
 	</form> 
