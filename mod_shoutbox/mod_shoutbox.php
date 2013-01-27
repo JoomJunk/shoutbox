@@ -58,7 +58,7 @@ if(isset($_POST)) {
 		modShoutboxHelper::deletepost($deletepostnumber);
 	}
 	if(isset($post['deleteall'])) {
-		$delete = $post['valueall'];
+		$delete=$input->getInt('valueall');
 		if(is_int($delete)) {
 			if($delete>0) {
 				if($delete>$post['max']) {
