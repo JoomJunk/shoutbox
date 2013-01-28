@@ -56,4 +56,4 @@
 	font-weight: bold;
 }
 #noguest { color: #FF0000; font-weight: bold; }
-#jjshoutbox { max-width: 100%; }
+#jjshoutbox .jj_error { color:red; font-weight:bold; }
