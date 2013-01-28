@@ -56,6 +56,7 @@
 					<option value="0">SHOUT_CB_USERS</option>
 					<option value="1">SHOUT_KUNENA_USERS</option>
 					<option value="2">SHOUT_JOM_SOCIAL_USERS</option>
+					<option value="3">SHOUT_K2_BLOG_USERS</option>
 					<option value="none">SHOUT_NO_USERS</option>
 				</field>
 				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
