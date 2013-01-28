@@ -70,6 +70,7 @@ if(isset($_POST)) {
 				}
 				else{
 					JLog::add(JText::_('SHOUT_ANSWER_INCORRECT'), JLog::WARNING, 'mod_shoutbox');
+					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_ANSWER_INCORRECT'), 'error');
 				}
 			}			
 		}
@@ -92,10 +93,12 @@ if(isset($_POST)) {
 					modShoutboxHelper::deleteall($delete);
 				} else {
 					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
+					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
 				}
 			} 
 			else {
 				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
+				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
 			}
 		}
 	}

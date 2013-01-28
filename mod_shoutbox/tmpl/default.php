@@ -160,6 +160,7 @@ while ($i < $number) { ?>
 		}
 		if($params->get('recaptchaon')==0 && $securityquestion==0){
 			JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
+			JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 		}
 		?>
 
