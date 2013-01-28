@@ -195,8 +195,10 @@ class modShoutboxHelper {
 			}
 			elseif($profile == 2) {
 				//JomSocial Profile Link
-				$jspath = JPATH_ROOT.DS.'components'.DS.'com_community';
-				include_once($jspath.DS.'libraries'.DS.'core.php');
+				$jspath = JPATH_ROOT.'/components/com_community/libraries/core.php';
+				if(file_exists($jspath)){
+					include_once($jspath);
+				}
 				$profile_link = '<a href="'.CRoute::_('index.php?option=com_community&view=profile&userid='.$user_id).'">' . $name . '</a>';
 			}
 			elseif($profile == 3) {
@@ -253,6 +255,23 @@ class modShoutboxHelper {
 			$db->setQuery($query);
 			$db->query();
 		}
+	}
+	
+	function randomnumber($digits) { 
+		static $startseed = 0; 
+		if (!$startseed) { 
+			$startseed = (double)microtime()*getrandmax(); 
+			srand($startseed); 
+		} 
+		$range = 8; 
+		$start = 1; 
+		$i = 1; 
+		while ($i<$digits) { 
+			$range = $range . 9; 
+			$start = $start . 0; 
+			$i++; 
+		} 
+		return (rand()%$range+$start); 
 	}
 }
 ?>

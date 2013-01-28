@@ -27,6 +27,7 @@ $extraadd = $params->get('timeadd', '0');
 $width = $params->get('width', '250');
 $profile = $params->get('profile');
 $date = $params->get('date');
+$securityquestion = $params->get('securityquestion');
 
 $dataerror= JText::_('SHOUT_DATABASEERRORSHOUT');
 
@@ -50,7 +51,21 @@ if(isset($_POST)) {
 				}
 			}
 		}
-	} else {
+	} 
+	elseif($securityquestion==0) {
+		if(isset($post['sum1']) && isset($post['sum2'])){
+			$que_result = $post['sum1'] + $post['sum2'];
+			if(isset($post['human'])){
+				if($post['human']==$que_result) {
+					modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
+				}
+				else{
+					JLog::add(JText::_('SHOUT_ANSWER_INCORRECT'), JLog::WARNING, 'jerror');
+				}
+			}			
+		}
+	}
+	else {
 		modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
 	}
 	if(isset($post['delete'])) {
@@ -59,17 +74,20 @@ if(isset($_POST)) {
 	}
 	if(isset($post['deleteall'])) {
 		$delete=$post['valueall'];
-		if(is_numeric($delete) && (int) $delete == $delete) {
-			if($delete>0) {
-				if($delete>$post['max']) {
-					$delete=$post['max'];
+		if(isset($delete)){
+			if(is_numeric($delete) && (int) $delete == $delete) {
+				if($delete>0) {
+					if($delete>$post['max']) {
+						$delete=$post['max'];
+					}
+					modShoutboxHelper::deleteall($delete);
+				} else {
+					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'jerror');
 				}
-				modShoutboxHelper::deleteall($delete);
-			} else {
-				JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'jerror');
+			} 
+			else {
+				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'jerror');
 			}
-		} else {
-			JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'jerror');
 		}
 	}
 }

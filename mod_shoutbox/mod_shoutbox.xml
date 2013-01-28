@@ -96,13 +96,18 @@
 				<field name="timezone" type="timezones" default="0" label="SHOUT_TIMEZONELABEL" description="SHOUT_TIMEZONEDESC" />
 			</fieldset>
 
-			<fieldset name="recaptcha" label="SHOUT_RECAPTCHA">
+			<fieldset name="security" label="SHOUT_SECURITY">
 				<field name="recaptchaon" type="radio" default="1" label="SHOUT_RECAPTCHAON_LABEL" description="SHOUT_RECAPTCHAON_DESC">
 					<option value="0">JYES</option>
 					<option value="1">JNO</option>
 				</field>
 				<field name="recaptcha-public" type="text" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
 				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />
+				
+				<field name="securityquestion" type="radio" default="1" label="SHOUT_SECURITY_QUESTION_LABEL" description="SHOUT_SECURITY_QUESTION_DESC">
+					<option value="0">JYES</option>
+					<option value="1">JNO</option>
+				</field>
 			</fieldset>
 			
 			<fieldset name="advanced">
