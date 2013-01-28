@@ -149,6 +149,15 @@ while ($i < $number) { ?>
 				echo recaptcha_get_html($publickey, $error);
 			}
 		}
+		if($securityquestion==0){
+			$que_number1 = modShoutboxHelper::randomnumber(1);
+			$que_number2 = modShoutboxHelper::randomnumber(1); ?>
+			<label class="jj_label"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
+			<input type="hidden" name="sum1" value="<?php echo $que_number1; ?>" />
+			<input type="hidden" name="sum2" value="<?php echo $que_number2; ?>" />
+			<input type="number" name="human" />
+		<?php
+		}
 		?>
 
 	  <input name="shout" id="shoutbox-submit" type="submit" value="<?php echo $submittext ?>" <?php if ($params->get('recaptchaon')==0 && !$params->get('recaptcha-public') || $params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) { echo 'disabled="disabled"'; }?> />   
