@@ -159,7 +159,7 @@ while ($i < $number) { ?>
 		<?php
 		}
 		if($params->get('recaptchaon')==0 && $securityquestion==0){
-			echo "<p class='jj_error'>" . JText::_('SHOUT_BOTH_SECURITY_ENABLED') . "</p>";
+			JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
 		}
 		?>
 

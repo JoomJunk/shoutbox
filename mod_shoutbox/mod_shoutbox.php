@@ -31,6 +31,15 @@ $securityquestion = $params->get('securityquestion');
 
 $dataerror= JText::_('SHOUT_DATABASEERRORSHOUT');
 
+// Log mod_shoutbox errors to specific file.
+JLog::addLogger(
+    array(
+        'text_file' => 'mod_shoutbox.errors.php'
+    ),
+    JLog::ALL,
+    'mod_shoutbox'
+);
+
 $user = JFactory::getUser();
 require_once( dirname(__FILE__).'/assets/recaptcha/recaptchalib.php');
 if(isset($_POST)) {
@@ -60,7 +69,7 @@ if(isset($_POST)) {
 					modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
 				}
 				else{
-					JLog::add(JText::_('SHOUT_ANSWER_INCORRECT'), JLog::WARNING, 'jerror');
+					JLog::add(JText::_('SHOUT_ANSWER_INCORRECT'), JLog::WARNING, 'mod_shoutbox');
 				}
 			}			
 		}
@@ -82,11 +91,11 @@ if(isset($_POST)) {
 					}
 					modShoutboxHelper::deleteall($delete);
 				} else {
-					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'jerror');
+					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
 				}
 			} 
 			else {
-				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'jerror');
+				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
 			}
 		}
 	}
