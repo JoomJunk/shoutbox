@@ -158,6 +158,9 @@ while ($i < $number) { ?>
 			<input type="number" name="human" />
 		<?php
 		}
+		if($params->get('recaptchaon')==0 && $securityquestion==0){
+			echo "<p class='jj_error'>" . JText::_('SHOUT_BOTH_SECURITY_ENABLED') . "</p>";
+		}
 		?>
 
 	  <input name="shout" id="shoutbox-submit" type="submit" value="<?php echo $submittext ?>" <?php if ($params->get('recaptchaon')==0 && !$params->get('recaptcha-public') || $params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) { echo 'disabled="disabled"'; }?> />   
