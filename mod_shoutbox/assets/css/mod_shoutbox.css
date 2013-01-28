@@ -57,3 +57,14 @@
 }
 #noguest { color: #FF0000; font-weight: bold; }
 #jjshoutbox .jj_error { color:red; font-weight:bold; }
+#jjshoutbox .jj_label { width: 50%; }
+#jjshoutbox .jj_input {	width: 50%; }
+#jjshoutbox .jj_admin_label { width: 30%; }
+#jjshoutbox .jj_admin_button {
+	width: 65%;
+	min-width: 90px;
+	background-color: #FF3333;
+	border-radius: 2px;
+	border: 1px solid #CC0000;
+	cursor: pointer;
+}
