@@ -15,11 +15,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-Version 1.1.4
+Version 1.2.0
 + Uses native JInput for processing rather than $_POST
 + noscript text for people without javascript to warn them of message limit
 + Added in Cross Site Request Forgery (CSRF) anti-spoofing token
 + Option to Link to Profiles of various user management systems
++ Add in mass delete function
 
 Version 1.1.3
 
