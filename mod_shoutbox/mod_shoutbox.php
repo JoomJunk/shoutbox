@@ -31,6 +31,9 @@ $securityquestion = $params->get('securityquestion');
 
 $dataerror= JText::_('SHOUT_DATABASEERRORSHOUT');
 
+//Import JLog class
+jimport('joomla.log.log');
+
 // Log mod_shoutbox errors to specific file.
 JLog::addLogger(
     array(
