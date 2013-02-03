@@ -46,8 +46,12 @@ JLog::addLogger(
 $user = JFactory::getUser();
 require_once( dirname(__FILE__).'/assets/recaptcha/recaptchalib.php');
 if(isset($_POST)) {
-	$input = new JInput();
-	$post = $input->getArray($_POST);
+	if (!get_magic_quotes_gpc()){
+		$input = new JInput();
+		$post = $input->post;
+	} else {
+		$post = JRequest::get( 'post' );
+	}
 	if($params->get('recaptchaon')==0) {
 		if(isset($post["recaptcha_response_field"])) {
 			if ($post["recaptcha_response_field"]) {
