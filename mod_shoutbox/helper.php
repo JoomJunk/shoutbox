@@ -160,7 +160,8 @@ class modShoutboxHelper {
 	function swearfilter($post, $replace) { 
 		$myfile = 'modules/mod_shoutbox/swearWords.php';
 		$words = array();
-		 if (!file_exists($myfile)){
+		 if (!JFile::exists($myfile)){
+			JLog::add(JText::_('SHOUT_SWEAR_FILE_NOT_FOUND'), JLog::WARNING, 'mod_shoutbox');
             return $post;
         }
 		$words = file($myfile, FILE_IGNORE_NEW_LINES);
