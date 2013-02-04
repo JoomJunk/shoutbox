@@ -30,21 +30,12 @@ class modShoutboxHelper {
 		$i=0;
 		$timezone=$timezone*60*60;
 		if ($db->getErrorNum()) {
-			$db = JFactory::getDBO();
-			$query = $db->getQuery(true);
-			$query->select('*')
-			->from('#__shoutbox')
-			->order('id DESC');
-			$db->setQuery($query , 0 , $number);
-			$rows = $db->loadObjectList();
-			if ($db->getErrorNum()) {
-				$shouts[$i]->name = 'Administrator';
-				$shouts[$i]->when = date( 'Y-m-d H:i:s', time()+$timezone);
-				$shouts[$i]->msg = $message;
-				$shouts[$i]->ip = 'System';
-				$shouts[$i]->user_id = 0;
-				return $shouts;
-			}
+			$shouts[$i]->name = 'Administrator';
+			$shouts[$i]->when = date( 'Y-m-d H:i:s', time()+$timezone);
+			$shouts[$i]->msg = $message;
+			$shouts[$i]->ip = 'System';
+			$shouts[$i]->user_id = 0;
+			return $shouts;
 		}
 		foreach ( $rows as $row ) {
 			$shouts[$i]->id = $row->id;
