@@ -25,7 +25,7 @@ class modShoutboxHelper {
 		$query->select('*')
 		->from('#__shoutbox')
 		->order('id DESC');
-		$db->setQuery($query , 0 , $number)
+		$db->setQuery($query , 0 , $number);
 		try {
 			// Execute the query.
 			$rows = $db->loadObjectList();
