@@ -48,7 +48,7 @@ require_once( dirname(__FILE__).'/assets/recaptcha/recaptchalib.php');
 if(isset($_POST)) {
 	if (!get_magic_quotes_gpc()){
 		$input = new JInput();
-		$post = $input->post;
+		$post = $input->getArray($_POST);
 	} else {
 		$post = JRequest::get( 'post' );
 	}
