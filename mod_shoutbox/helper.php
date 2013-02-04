@@ -185,23 +185,26 @@ class modShoutboxHelper {
 	
 	function linkUser($profile, $displayname, $name, $user_id) {
 		if($user_id!=0) {
-			if($profile == 0) {
+			if($profile == 1) {
 				//Community Builder Profile Link
 				$profile_link = '<a href="'.JRoute::_('index.php?option=com_comprofiler&task=userProfile&user='.$user_id).'">' . $name . '</a>';
 			}	
-			elseif($profile == 1) {
+			elseif($profile == 2) {
 				//Kunena Profile Link
 				$profile_link = '<a href="'.JRoute::_('index.php?option=com_kunena&func=fbprofile&userid='. $user_id).'">' . $name . '</a>'; 
 			}
-			elseif($profile == 2) {
+			elseif($profile == 3) {
 				//JomSocial Profile Link
 				$jspath = JPATH_ROOT.'/components/com_community/libraries/core.php';
-				if(file_exists($jspath)){
+				if(JFile::exists($jspath)){
 					include_once($jspath);
+					$profile_link = '<a href="'.CRoute::_('index.php?option=com_community&view=profile&userid='.$user_id).'">' . $name . '</a>';
+				} else {
+					JLog::add(JText::_('SHOUT_JOM_SOCIAL_NOT_INSTALLED'), JLog::WARNING, 'mod_shoutbox');
+					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_JOM_SOCIAL_NOT_INSTALLED'), 'error');
 				}
-				$profile_link = '<a href="'.CRoute::_('index.php?option=com_community&view=profile&userid='.$user_id).'">' . $name . '</a>';
 			}
-			elseif($profile == 3) {
+			elseif($profile == 4) {
 				//K2 Profile Link
 				$profile_link = '<a href="'.JRoute::_('index.php?option=com_k2&view=itemlist&layout=user&id='. $user_id .'&task=user').'">' . $name . '</a>'; 
 			}
