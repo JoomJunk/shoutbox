@@ -25,18 +25,23 @@ class modShoutboxHelper {
 		$query->select('*')
 		->from('#__shoutbox')
 		->order('id DESC');
-		$db->setQuery($query , 0 , $number);
-		$rows = $db->loadObjectList();
-		$i=0;
-		$timezone=$timezone*60*60;
-		if ($db->getErrorNum()) {
+		$db->setQuery($query , 0 , $number)
+		try {
+			// Execute the query.
+			$rows = $db->loadObjectList();
+		} catch (Exception $e) {
+			// Output error to shoutbox.
 			$shouts[$i]->name = 'Administrator';
 			$shouts[$i]->when = date( 'Y-m-d H:i:s', time()+$timezone);
 			$shouts[$i]->msg = $message;
 			$shouts[$i]->ip = 'System';
 			$shouts[$i]->user_id = 0;
+			// Add error to log.
+			JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
 			return $shouts;
 		}
+		$i=0;
+		$timezone=$timezone*60*60;
 		foreach ( $rows as $row ) {
 			$shouts[$i]->id = $row->id;
 			$shouts[$i]->name = $row->name;
