@@ -72,7 +72,7 @@
 					<option value="0">JYES</option>
 					<option value="1">JNO</option>
 				</field>
-				<field name="date" type="list" default="0" label="SHOUT_SHOW_DATE" description="SHOUT_SHOW_DATEDESC">
+				<field name="date" type="list" default="2" label="SHOUT_SHOW_DATE" description="SHOUT_SHOW_DATEDESC">
 					<option value="0">SHOUT_DATE_BACKSLASH</option>
 					<option value="1">SHOUT_DATE_SPACE</option>
 					<option value="2">SHOUT_DONT_SHOW</option>
