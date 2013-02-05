@@ -43,6 +43,7 @@ class modShoutboxHelper {
 				return $shouts;
 			}
 		} else {
+			$rows = $db->loadObjectList();
 			if ($db->getErrorNum()) {
 				$shouts[$i]->name = 'Administrator';
 				$shouts[$i]->when = date( 'Y-m-d H:i:s', time()+$timezone);
