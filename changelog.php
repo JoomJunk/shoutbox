@@ -17,10 +17,15 @@ $ -> Language fix or change
 
 Version 1.2.0
 + Uses native JInput for processing rather than $_POST
++ Use JRequest as fall back in Joomla 2.5 when magic quotes turned on
 + noscript text for people without javascript to warn them of message limit
 + Added in Cross Site Request Forgery (CSRF) anti-spoofing token
 + Option to Link to Profiles of various user management systems
 + Add in mass delete function
++ JLog support for easier debugging
+# Change deprecated Joomla 3.0 function getErrorNum() to use exceptions
++ Add ability to show date of post
++ Add new easier maths validation method
 
 Version 1.1.3
 
