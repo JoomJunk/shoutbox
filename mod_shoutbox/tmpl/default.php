@@ -44,17 +44,10 @@ else {
 if($actualnumber<$number) {
 $number=$actualnumber;
 }
-    function shouttitle($user, $shouts, $i) {
-		$title=null;
-		if($user->authorise('core.delete')) {
-			$title='title="'. $shouts[$i]->ip .'"';
-		}
-	return $title;
-  }
 while ($i < $number) { ?>
   <div>
   <?php $profile_link = modShoutboxHelper::linkUser($profile, $displayname, $shouts[$i]->name, $shouts[$i]->user_id); ?>
-  <h1 <?php echo shouttitle($user, $shouts, $i); ?>>
+  <h1 <?php echo modShoutboxHelper::shouttitle($user, $shouts, $i); ?>>
   <?php
   if($date==0){ $show_date = "d/m/Y -"; }
   elseif($date==1){ $show_date = "D m Y -"; }

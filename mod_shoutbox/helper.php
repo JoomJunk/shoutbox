@@ -69,6 +69,14 @@ class modShoutboxHelper {
 		return $shouts;
 	}
 	
+	function shouttitle($user, $shouts, $i) {
+		$title=null;
+		if($user->authorise('core.delete')) {
+			$title='title="'. $shouts[$i]->ip .'"';
+		}
+		return $title;
+	}
+	
 	function postfiltering($shout, $user, $swearcounter, $swearnumber, $extraadd, $displayname) {
 		if(isset($shout['shout'])) {
 			JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );
