@@ -22,6 +22,14 @@ class mod_shoutboxInstallerScript
 						Jerror::raiseWarning(null, JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE') . $rel);
 						return false;
 					}
+					if ( version_compare( $oldRelease, $this->release, '<' ) ) {
+						if ( version_compare( $oldRelease, '1.1.3', '<=' ) ) {
+							$db = JFactory::getDBO();
+							$sql = "ALTER TABLE #__shoutbox ADD COLUMN user_id int(11) NOT NULL DEFAULT '0'";
+							$db->setQuery($sql);
+							$db->query();
+						}
+					}
 				}
 				else { $rel = $this->release; }
 		}

@@ -22,12 +22,6 @@
         </sql>
     </uninstall>
 	
-	<update>
-		<schemas>
-			<schemapath type="mysql">sql/updates/mysql</schemapath>
-		</schemas>
-	</update>
-	
 	<scriptfile>script.php</scriptfile>
 	
 	<files>
