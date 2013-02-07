@@ -76,7 +76,6 @@ if(isset($_POST)) {
 					modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
 				}
 				else{
-					JLog::add(JText::_('SHOUT_ANSWER_INCORRECT'), JLog::WARNING, 'mod_shoutbox');
 					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_ANSWER_INCORRECT'), 'error');
 				}
 			}			
