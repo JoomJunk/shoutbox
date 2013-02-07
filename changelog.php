@@ -26,7 +26,7 @@ Version 1.2.0
 # Change deprecated Joomla 3.0 function getErrorNum() to use exceptions
 + Add ability to show date of post
 + Add new easier maths validation method
-+ Documentation Started at https://github.com/wilsonge/shoutbox/wiki/Changing-the-Database-Name
++ Documentation Started at https://github.com/wilsonge/shoutbox/wiki
 
 Version 1.1.3
 
