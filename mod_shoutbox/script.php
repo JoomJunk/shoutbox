@@ -19,7 +19,11 @@ class mod_shoutboxInstallerScript
 					$oldRelease = $this->getParam('version');
 					$rel = $oldRelease . JText::_('MOD_SHOUTBOX_VERSION_TO') . $this->release;
 					if ( version_compare( $this->release, $oldRelease, 'le' ) ) {
-						Jerror::raiseWarning(null, JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE') . $rel);
+						if (!JError::$legacy) {
+							JFactory::getApplication()->enqueueMessage(JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE'), 'error');
+						} else {
+							Jerror::raiseWarning(null, JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE') . $rel);
+						}
 						return false;
 					}
 					if ( version_compare( $oldRelease, $this->release, '<' ) ) {
