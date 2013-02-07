@@ -1,1 +1,0 @@
-ALTER TABLE `#__shoutbox` ADD `user_id` int(11) NOT NULL DEFAULT '0'
