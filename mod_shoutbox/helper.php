@@ -99,8 +99,6 @@ class modShoutboxHelper {
 						$nameswears=0;
 					}
 					else {
-						$shout['name'] = modShoutboxHelper::backslashfix($shout['name'], $backslashreplace);
-						if (get_magic_quotes_gpc()) {$shout['name']=stripslashes($shout['name']);}
 						if($swearcounter==0) { $before=substr_count($shout['name'], $replace); }
 						if($config=='mysqli') {
 							$name = modShoutboxHelper::swearfilter($mysqli->real_escape_string($shout['name']), $replace);
@@ -114,8 +112,6 @@ class modShoutboxHelper {
 						}
 						else {$nameswears=0; }
 					}
-					$shout['message'] = modShoutboxHelper::backslashfix($shout['message'], $backslashreplace);
-					if (get_magic_quotes_gpc()) {$shout['message']=stripslashes($shout['message']);}
 					if($swearcounter==0) { $before=substr_count($shout['message'], $replace); }
 					if($config=='mysqli') {
 						$message = modShoutboxHelper::swearfilter($mysqli->real_escape_string($shout['message']), $replace);				
