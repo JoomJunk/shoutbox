@@ -83,7 +83,6 @@ class modShoutboxHelper {
 			if(!empty($shout['message'])){
 				if($_SESSION['token'] == $shout['token']){	
 					$replace = '****';
-					$backslashreplace='\\\\';
 					
 					$config = JFactory::getConfig()->get('dbtype');
 					if($config=='mysqli') {
@@ -191,12 +190,6 @@ class modShoutboxHelper {
 		}
 		return $post; 
 	}
-	
-	function backslashfix($post, $replace) { 
-		$word = '\\';
-		$post = modShoutboxHelper::stri_replace($word, $replace, $post); 
-		return $post; 
-	}  
 	
 	function linkUser($profile, $displayname, $name, $user_id) {
 		if($user_id!=0) {
