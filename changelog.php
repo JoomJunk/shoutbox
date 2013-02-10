@@ -27,7 +27,7 @@ Version 1.2.0
 + Add ability to show date of post
 + Add new easier maths validation method
 + Documentation Started at https://github.com/wilsonge/shoutbox/wiki
-+ Joomla 1.5 Support Removed
+- Joomla 1.5 Support Removed
 
 Version 1.1.3
 
