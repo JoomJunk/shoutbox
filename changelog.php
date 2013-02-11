@@ -30,6 +30,7 @@ Version 1.2.0
 - Joomla 1.5 Support Removed
 + Remove mysqli/mysql requirement
 + Use JDate instead of date()
+# Timzone form field typo corrected
 
 Version 1.1.3
 
