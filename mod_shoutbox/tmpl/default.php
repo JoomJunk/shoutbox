@@ -47,7 +47,7 @@ $number=$actualnumber;
 while ($i < $number) { ?>
   <div>
   <?php $profile_link = modShoutboxHelper::linkUser($profile, $shouts[$i]->name, $shouts[$i]->user_id); ?>
-  <h1 <?php echo modShoutboxHelper::shouttitle($user, $shouts, $i); ?>>
+  <h1 <?php echo modShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
   <?php
   if($date==0){ $show_date = "d/m/Y -"; }
   elseif($date==1){ $show_date = "D m Y -"; }

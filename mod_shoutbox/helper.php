@@ -83,16 +83,15 @@ class modShoutboxHelper {
 	 * Adds the ip address on hover to the post title if an administrator.
 	 *
 	 * @param   int  $user  The user ID.
-	 * @param   array  $shouts  The shouts array.
-	 * @param   int  $message  The shout id number.
+	 * @param   string  $ip  The ip address of the shout.
 	 *
 	 * @return  string  The title to assign.
 	 *
 	 */
-	function shouttitle($user, $shouts, $i) {
+	function shouttitle($user, $ip) {
 		$title=null;
 		if($user->authorise('core.delete')) {
-			$title='title="'. $shouts[$i]->ip .'"';
+			$title='title="'. $ip .'"';
 		}
 		return $title;
 	}
