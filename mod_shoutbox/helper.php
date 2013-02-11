@@ -331,12 +331,7 @@ class modShoutboxHelper {
 		$db->setQuery($query , 0 , $delete);
 		$rows = $db->loadObjectList();
 		foreach ($rows as $row) {
-			$query = $db->getQuery(true);
-			$query->delete()
-			  ->from('#__shoutbox')
-			  ->where('id = '. (int) $row->id);			  
-			$db->setQuery($query);
-			$db->query();
+			modShoutboxHelper::deletepost($row->id);
 		}
 	}
 	
