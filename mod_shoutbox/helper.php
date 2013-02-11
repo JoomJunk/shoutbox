@@ -210,7 +210,7 @@ class modShoutboxHelper {
 	
 	function addShout($name, $message, $ip, $timeadd) {
 		$timenow = time() + ($timeadd*60*60);
-		$timesql = date('Y-m-d H:i:s',$timenow);
+		$timesql = JDate::toMySQL($timenow);
 		
 		$db = JFactory::getDBO();     
 		$query = $db->getQuery(true);
