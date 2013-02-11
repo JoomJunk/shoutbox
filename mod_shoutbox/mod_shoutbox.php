@@ -61,9 +61,9 @@ if(isset($_POST)) {
 												$post["recaptcha_response_field"]);
 
 				if ($resp->is_valid) {
-				modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
+					modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
 				} else {
-						$error = $resp->error;
+					$error = $resp->error;
 				}
 			}
 		}
