@@ -10,13 +10,13 @@ defined('_JEXEC') or die('Restricted access');
 
 $config = JFactory::getConfig()->get('dbtype');
 
-if($config=='mysqli') {
-jimport( 'joomla.database.database.mysqli' );
-}
-else {
-jimport( 'joomla.database.database.mysql' );
-}
 
+/**
+ * Shoutbox helper connector class.
+ *
+ * @package     JJ Shoutbox
+ *
+ */
 class modShoutboxHelper {
 	function getShouts($number, $timezone, $message) {
 		$shouts	= array();
@@ -83,11 +83,6 @@ class modShoutboxHelper {
 			if(!empty($shout['message'])){
 				if($_SESSION['token'] == $shout['token']){	
 					$replace = '****';
-					
-					$config = JFactory::getConfig()->get('dbtype');
-					if($config=='mysqli') {
-						$mysqli = new mysqli(JFactory::getConfig()->get('host'), JFactory::getConfig()->get('user'), JFactory::getConfig()->get('password'));
-					}
 
 					if (!$user->guest && $displayname==0) {
 						$name = $user->name;
@@ -99,12 +94,7 @@ class modShoutboxHelper {
 					}
 					else {
 						if($swearcounter==0) { $before=substr_count($shout['name'], $replace); }
-						if($config=='mysqli') {
-							$name = modShoutboxHelper::swearfilter($mysqli->real_escape_string($shout['name']), $replace);
-						}
-						else {
-							$name = modShoutboxHelper::swearfilter(mysql_real_escape_string($shout['name']), $replace);
-						}
+						$name = modShoutboxHelper::swearfilter($shout['name'], $replace);
 						if($swearcounter==0) {
 							$after=substr_count($name, $replace);
 							$nameswears=($after-$before);
@@ -112,12 +102,7 @@ class modShoutboxHelper {
 						else {$nameswears=0; }
 					}
 					if($swearcounter==0) { $before=substr_count($shout['message'], $replace); }
-					if($config=='mysqli') {
-						$message = modShoutboxHelper::swearfilter($mysqli->real_escape_string($shout['message']), $replace);				
-					}
-					else {
-						$message = modShoutboxHelper::swearfilter(mysql_real_escape_string($shout['message']), $replace);
-					}
+					$message = modShoutboxHelper::swearfilter($shout['message'], $replace);
 					if($swearcounter==0) {
 						$after=substr_count($message, $replace);
 						$messageswears=($after-$before);
@@ -125,9 +110,6 @@ class modShoutboxHelper {
 					$ip=$_SERVER['REMOTE_ADDR'];
 					if($swearcounter==1 || $swearcounter==0 && (($nameswears+$messageswears)<$swearnumber)) {
 						modShoutboxHelper::addShout($name, $message, $ip, $extraadd);
-					}
-					if($config=='mysqli') {
-						$mysqli->close();
 					}
 				}
 			}
@@ -229,15 +211,17 @@ class modShoutboxHelper {
 	function addShout($name, $message, $ip, $timeadd) {
 		$timenow = time() + ($timeadd*60*60);
 		$timesql = date('Y-m-d H:i:s',$timenow);
-		$db = JFactory::getDBO();
-		$data = new stdClass();
-		$data->id = null;
-		$data->name = $name;
-		$data->when = $timesql;
-		$data->ip = $ip;
-		$data->msg = $message;
-		$data->user_id = JFactory::getUser()->id;
-		$db->insertObject( '#__shoutbox', $data, 'id' );
+		
+		$db = JFactory::getDBO();     
+		$query = $db->getQuery(true);
+		$query->insert($db->nameQuote('#__shoutbox'));
+		$query->set($db->nameQuote('name').'='.$db->quote($name).','.
+		$db->nameQuote('when').'='.$db->quote($timesql).','.
+		$db->nameQuote('ip').'='.$db->quote($ip).','.
+		$db->nameQuote('msg').'='.$db->quote($message).','.
+		$db->nameQuote('user_id').'='.$db->quote(JFactory::getUser()->id));     
+		$db->setQuery( $query );
+		$db->query();
 	}
 
 	function deletepost($id) {
