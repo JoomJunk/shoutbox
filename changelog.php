@@ -29,6 +29,7 @@ Version 1.2.0
 + Documentation Started at https://github.com/wilsonge/shoutbox/wiki
 - Joomla 1.5 Support Removed
 + Remove mysqli/mysql requirement
++ Use JDate instead of date()
 
 Version 1.1.3
 
