@@ -27,6 +27,7 @@ $width = $params->get('width', '250');
 $profile = $params->get('profile');
 $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
+$mass_delete = $params->get('mass_delete');
 
 $dataerror= JText::_('SHOUT_DATABASEERRORSHOUT');
 
