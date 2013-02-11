@@ -23,7 +23,6 @@ $nonmembers = $params->get('nonmembers');
 $deletecolor = $params->get('deletecolor');
 $headercolor = $params->get('headercolor');
 $houradd = $params->get('timezone', '0');
-$extraadd = $params->get('timeadd', '0');
 $width = $params->get('width', '250');
 $profile = $params->get('profile');
 $date = $params->get('date');
@@ -61,7 +60,7 @@ if(isset($_POST)) {
 												$post["recaptcha_response_field"]);
 
 				if ($resp->is_valid) {
-					modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
+					modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $displayname);
 				} else {
 					$error = $resp->error;
 				}
@@ -73,7 +72,7 @@ if(isset($_POST)) {
 			$que_result = $post['sum1'] + $post['sum2'];
 			if(isset($post['human'])){
 				if($post['human']==$que_result) {
-					modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
+					modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $displayname);
 				}
 				else{
 					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_ANSWER_INCORRECT'), 'error');
@@ -82,7 +81,7 @@ if(isset($_POST)) {
 		}
 	}
 	else {
-		modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $extraadd, $displayname);
+		modShoutboxHelper::postfiltering($post, $user, $swearcounter, $swearnumber, $displayname);
 	}
 	if(isset($post['delete'])) {
 		$deletepostnumber=$post['idvalue'];

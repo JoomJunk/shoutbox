@@ -77,7 +77,7 @@ class modShoutboxHelper {
 		return $title;
 	}
 	
-	function postfiltering($shout, $user, $swearcounter, $swearnumber, $extraadd, $displayname) {
+	function postfiltering($shout, $user, $swearcounter, $swearnumber, $displayname) {
 		if(isset($shout['shout'])) {
 			JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );
 			if(!empty($shout['message'])){
@@ -109,7 +109,7 @@ class modShoutboxHelper {
 					}
 					$ip=$_SERVER['REMOTE_ADDR'];
 					if($swearcounter==1 || $swearcounter==0 && (($nameswears+$messageswears)<$swearnumber)) {
-						modShoutboxHelper::addShout($name, $message, $ip, $extraadd);
+						modShoutboxHelper::addShout($name, $message, $ip);
 					}
 				}
 			}
@@ -208,9 +208,8 @@ class modShoutboxHelper {
 		return $profile_link;
 	}
 	
-	function addShout($name, $message, $ip, $timeadd) {
-		$timenow = time() + ($timeadd*60*60);
-		$timesql = JDate::toMySQL($timenow);
+	function addShout($name, $message, $ip) {
+		$timesql = JDate::toMySQL();
 		
 		$db = JFactory::getDBO();     
 		$query = $db->getQuery(true);
