@@ -240,7 +240,7 @@ class modShoutboxHelper {
 	 * return   string  $profile_link  The user name - with a profile link depending on parameters.
 	 *
 	 */
-	function linkUser($profile, $displayname, $name, $user_id) {
+	function linkUser($profile, $name, $user_id) {
 		if($user_id!=0) {
 			if($profile == 1) {
 				//Community Builder Profile Link
