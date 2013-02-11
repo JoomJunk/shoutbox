@@ -18,6 +18,16 @@ $config = JFactory::getConfig()->get('dbtype');
  *
  */
 class modShoutboxHelper {
+	/**
+	 * Retrieves the shouts from the database and returns them. Will return an error message if the database retrieval fails.
+	 *
+	 * @param   int  $number  The number of posts to retrieve from the databse.
+	 * @param   int  $timezone  The timezone of the user.
+	 * @param   string  $message  The error message to return if the database retrieval fails.
+	 *
+	 * @return  array  The shoutbox posts.
+	 *
+	 */
 	function getShouts($number, $timezone, $message) {
 		$shouts	= array();
 		$db = JFactory::getDBO();
@@ -69,6 +79,16 @@ class modShoutboxHelper {
 		return $shouts;
 	}
 	
+	/**
+	 * Adds the ip address on hover to the post title if an administrator.
+	 *
+	 * @param   int  $user  The user ID.
+	 * @param   array  $shouts  The shouts array.
+	 * @param   int  $message  The shout id number.
+	 *
+	 * @return  string  The title to assign.
+	 *
+	 */
 	function shouttitle($user, $shouts, $i) {
 		$title=null;
 		if($user->authorise('core.delete')) {
@@ -77,6 +97,16 @@ class modShoutboxHelper {
 		return $title;
 	}
 	
+	/**
+	 * Filters the posts before calling the add function.
+	 *
+	 * @param   int  $shout  The shout post.
+	 * @param   int  $user  The user id number.
+	 * @param   booleon  $swearcounter  Is the swear counter is on.
+	 * @param   int  $swearnumber  If the swear counter is on - how many swears are allowed.
+	 * @param   int  $displayname  The user display name.
+	 *
+	 */
 	function postfiltering($shout, $user, $swearcounter, $swearnumber, $displayname) {
 		if(isset($shout['shout'])) {
 			JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );
@@ -116,6 +146,16 @@ class modShoutboxHelper {
 		}
 	}
 	
+	/**
+	 * Replaces a instance of a object in a string with another.
+	 *
+	 * @param   string  $find  The thing to be found in the string.
+	 * @param   string  $replace  The thing to be replaced in the string.
+	 * @param   string  $string  The string to be searched.
+	 *
+	 * return   string  join( $replace, $parts )  The string with the filtered parts.
+	 *
+	 */
 	function stri_replace( $find, $replace, $string ) { 
 		$parts = explode( strtolower($find), strtolower($string) ); 
 		$pos = 0;
@@ -126,6 +166,14 @@ class modShoutboxHelper {
 			return( join( $replace, $parts ) ); 
 	}
 	
+	/**
+	 * Replaces all the smilies in the message.
+	 *
+	 * @param   message  $message  The message to be searched to add smilies in.
+	 *
+	 * return   message  $message  The message with the smiley code in.
+	 *
+	 */
 	function smileyfilter($message) { 
 		$replace = array(':)' => ' <img src="modules/mod_shoutbox/assets/images/icon_e_smile.gif" alt=":)">');
 		foreach($replace as $old=>$new) $message = str_replace($old,$new,$message); 
@@ -150,8 +198,17 @@ class modShoutboxHelper {
 		$replace = array('lol' => ' <img src="modules/mod_shoutbox/assets/images/icon_lol.gif" alt="lol">'); 
 		foreach($replace as $old=>$new) $message = str_replace($old,$new,$message); 
 		return $message;
-		}
-					
+	}
+	
+	/**
+	 * Retrieves swear words from a file and then filters them.
+	 *
+	 * @param   string  $post  The post to be searched.
+	 * @param   string  $replace  The thing to be replace the swear words in the string.
+	 *
+	 * return   string  $post  The post with the filtered swear words.
+	 *
+	 */
 	function swearfilter($post, $replace) { 
 		$myfile = 'modules/mod_shoutbox/swearWords.php';
 		$words = array();
@@ -173,6 +230,16 @@ class modShoutboxHelper {
 		return $post; 
 	}
 	
+	/**
+	 * Links a users profile with another extension if desired.
+	 *
+	 * @param   int  $profile  The post to be searched.
+	 * @param   string  $name  The name of the user from the database.
+	 * @param   int  $user_id  The id of the user.
+	 *
+	 * return   string  $profile_link  The user name - with a profile link depending on parameters.
+	 *
+	 */
 	function linkUser($profile, $displayname, $name, $user_id) {
 		if($user_id!=0) {
 			if($profile == 1) {
@@ -208,6 +275,16 @@ class modShoutboxHelper {
 		return $profile_link;
 	}
 	
+	/**
+	 * Adds a shout to the database.
+	 *
+	 * @param   string  $name  The post to be searched.
+	 * @param   string  $message  The name of the user from the database.
+	 * @param   int  $user_id  The id of the user.
+	 *
+	 * return   string  $profile_link  The user name - with a profile link depending on parameters.
+	 *
+	 */
 	function addShout($name, $message, $ip) {
 		$timesql = JDate::toMySQL();
 		
@@ -223,6 +300,12 @@ class modShoutboxHelper {
 		$db->query();
 	}
 
+	/**
+	 * Removes a shout to the database.
+	 *
+	 * @param   int  $id  The id of the post to be deleted.
+	 *
+	 */
 	function deletepost($id) {
 		$db	= JFactory::getDBO();
 		$query = $db->getQuery(true);
@@ -233,6 +316,12 @@ class modShoutboxHelper {
 		$db->query();
 	}
 	
+	/**
+	 * Removes multiple shouts from the database.
+	 *
+	 * @param   int  $id  The id of the post to be deleted.
+	 *
+	 */
 	function deleteall($delete) {	
 		$db = & JFactory::getDBO();
 		$query = $db->getQuery(true);
@@ -251,6 +340,12 @@ class modShoutboxHelper {
 		}
 	}
 	
+	/**
+	 * Creates a random number for the maths question.
+	 *
+	 * @param   int  $digits  The number of digits long the number shoutld be.
+	 *
+	 */
 	function randomnumber($digits) { 
 		static $startseed = 0; 
 		if (!$startseed) { 
