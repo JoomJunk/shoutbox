@@ -286,13 +286,11 @@ class modShoutboxHelper {
 	 *
 	 */
 	function addShout($name, $message, $ip) {
-		$timesql = JDate::toMySQL();
-		
 		$db = JFactory::getDBO();     
 		$query = $db->getQuery(true);
 		$query->insert($db->nameQuote('#__shoutbox'));
 		$query->set($db->nameQuote('name').'='.$db->quote($name).','.
-		$db->nameQuote('when').'='.$db->quote($timesql).','.
+		$db->nameQuote('when').'='.$db->Quote(JFactory::getDate()->toSql()).','.
 		$db->nameQuote('ip').'='.$db->quote($ip).','.
 		$db->nameQuote('msg').'='.$db->quote($message).','.
 		$db->nameQuote('user_id').'='.$db->quote(JFactory::getUser()->id));     
