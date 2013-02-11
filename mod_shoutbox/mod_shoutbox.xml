@@ -105,6 +105,10 @@
 			</fieldset>
 			
 			<fieldset name="advanced">
+				<field name="mass_delete" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
+					<option value="0">JYES</option>
+					<option value="1">JNO</option>
+				</field>
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 			</fieldset>
 
