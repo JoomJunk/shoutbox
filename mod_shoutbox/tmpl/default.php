@@ -16,9 +16,6 @@ $style = '#jjshoutboxoutput {
 	}
 	#jjshoutboxoutput div h1 {
 	background: #'. $headercolor .';
-	}
-	#jjshoutbox {
-	width: '. $width .'px;
 	}';
 $document->addStyleDeclaration( $style );
 $user = JFactory::getUser();
