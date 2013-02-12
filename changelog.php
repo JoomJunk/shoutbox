@@ -31,6 +31,8 @@ Version 1.2.0
 + Remove mysqli/mysql requirement
 + Use JDate instead of date()
 # Timzone form field typo corrected
+- Remove module width parameter
++ Module now responsive
 
 Version 1.1.3
 
