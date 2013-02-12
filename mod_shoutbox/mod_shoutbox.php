@@ -23,7 +23,6 @@ $nonmembers = $params->get('nonmembers');
 $deletecolor = $params->get('deletecolor');
 $headercolor = $params->get('headercolor');
 $houradd = $params->get('timezone', '0');
-$width = $params->get('width', '250');
 $profile = $params->get('profile');
 $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
