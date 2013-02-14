@@ -137,7 +137,7 @@ class modShoutboxHelper {
 						$messageswears=($after-$before);
 					}
 					$ip=$_SERVER['REMOTE_ADDR'];
-					if($swearcounter==1 || $swearcounter==0 && (($nameswears+$messageswears)<$swearnumber)) {
+					if($swearcounter==1 || $swearcounter==0 && (($nameswears+$messageswears)<=$swearnumber)) {
 						modShoutboxHelper::addShout($name, $message, $ip);
 					}
 				}
