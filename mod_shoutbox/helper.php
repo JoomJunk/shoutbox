@@ -8,9 +8,6 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-$config = JFactory::getConfig()->get('dbtype');
-
-
 /**
  * Shoutbox helper connector class.
  *
