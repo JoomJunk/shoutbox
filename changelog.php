@@ -15,6 +15,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.2.1
+# Fixes bug when number of swears is set to zero
+
 Version 1.2.0
 + Uses native JInput for processing rather than $_POST
 + Use JRequest as fall back in Joomla 2.5 when magic quotes turned on
