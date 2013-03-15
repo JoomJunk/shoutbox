@@ -3,7 +3,7 @@
 	<name>JJ Shoutbox</name> 
 	<author>JoomJunk</author> 
 	<creationDate>05-Mar-2012</creationDate> 
-	<copyright>Copyright (C) 2012 JoomJunk</copyright> 
+	<copyright>Copyright (C) 2011 - 2013 JoomJunk</copyright> 
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
@@ -74,9 +74,11 @@
 				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
 				<field name="deletecolor" type="text" default="FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
 				<field name="headercolor" type="text" default="D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
-				<field name="smile" type="radio" default="0" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
-					<option value="0">JON</option>
-					<option value="1">JOFF</option>
+				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
+					<option value="0">SHOUT_SMILIES_ON</option>
+					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
+					<option value="2">SHOUT_SMILIES_ON_SLIDE</option>
+					<option value="3">SHOUT_SMILIES_DISABLE</option>
 				</field>
 				<field name="swearingcounter" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
 					<option value="0">JON</option>
