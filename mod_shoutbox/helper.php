@@ -197,6 +197,30 @@ class modShoutboxHelper {
 	}
 	
 	/**
+	 * Displays an array of smilies.
+	 *
+	 * @param   smiley  $smiley  The smiley to be defined as an linkable image.
+	 *
+	 * return   smiley  $smiley  The smiley as an image.
+	 *
+	 */
+	function smileyshow($smilies) { 
+		$smilies = '';
+		$smilies .= '<a href="#!" title=":)"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_smile.gif" alt=":)"></a>'; 
+		$smilies .= '<a href="#!" title=":("><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_sad.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title=":D"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title="xD"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title=":p"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title=":P"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title=";)"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_wink.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title=":S"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_confused.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title=":@"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_mad.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title=":O"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_surprised.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title="lol"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_lol.gif" alt=":)"></a>';
+		return $smilies;
+	}
+	
+	/**
 	 * Retrieves swear words from a file and then filters them.
 	 *
 	 * @param   string  $post  The post to be searched.
@@ -336,7 +360,7 @@ class modShoutboxHelper {
 	 *
 	 */
 	function deleteall($delete) {	
-		$db = & JFactory::getDBO();
+		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')
 		  ->from('#__shoutbox')

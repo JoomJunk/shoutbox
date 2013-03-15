@@ -9,6 +9,12 @@
 defined('_JEXEC') or die('Restricted access');
 	
 $document = JFactory::getDocument();
+if($smile == 2){
+	if(!JFactory::getApplication()->get('jquery')){
+		JFactory::getApplication()->set('jquery',true);
+		$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+	}
+}
 $document->addStyleSheet(JURI::base() . 'modules/mod_shoutbox/assets/css/mod_shoutbox.css');
 $style = '#jjshoutboxoutput {
 	border-color: #'. $bordercolor .';
@@ -122,7 +128,17 @@ if($user->authorise('core.delete')) {
 								<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
 							</span>
 						</noscript>
-						<textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>						
+						<textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+						<?php if($smile == 1 || $smile == 2){ 
+								if($smile == 2){
+									echo '<input id="jj_smiley_button" type="button" value="Smilies" />';
+								}
+								echo '<div id="jj_smiley_box">';
+									$path = JPATH_SITE ."/modules/mod_shoutbox/assets/images";			
+									$smilies = JFolder::files($path);
+									echo modShoutboxHelper::smileyshow($smilies);					
+								echo '</div>';
+						} ?>						
 						<script type="text/javascript">
 							function textCounter(textarea, countdown, maxlimit) {
 								textareaid = document.getElementById(textarea);
@@ -140,6 +156,35 @@ if($user->authorise('core.delete')) {
 								  
 							}
 							textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
+							$('#jj_smiley_box a').click(function(){
+								var smiley = $(this).attr('title');
+								var caretPos = caretPos();
+    							var strBegin = $('#message').val().substring(0, caretPos);
+    							var strEnd   = $('#message').val().substring(caretPos);
+    							$('#message').val( strBegin + " " + smiley + " " + strEnd);
+								function caretPos(){
+									var el = document.getElementById("message");
+    								var pos = 0;
+    								// IE Support
+    								if (document.selection){
+        								el.focus ();
+        								var Sel = document.selection.createRange();
+        								var SelLength = document.selection.createRange().text.length;
+        								Sel.moveStart ('character', -el.value.length);
+        								pos = Sel.text.length - SelLength;
+    								}
+    								// Firefox support
+    								else if (el.selectionStart || el.selectionStart == '0')
+       								 pos = el.selectionStart;
+
+    								return pos;
+								}
+							});
+							<?php if($smile == 2){ ?>
+							$("#jj_smiley_button").click(function () {
+								$("#jj_smiley_box").slideToggle("slow");
+							});
+							<?php } ?>
 						</script>
 		
 						<?php
