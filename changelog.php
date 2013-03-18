@@ -17,6 +17,7 @@ $ -> Language fix or change
 
 Version 1.2.1
 # Fixes bug when number of swears is set to zero
++ Smiley dropdown improvement
 
 Version 1.2.0
 + Uses native JInput for processing rather than $_POST
