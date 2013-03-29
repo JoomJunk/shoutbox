@@ -12,7 +12,11 @@ $document = JFactory::getDocument();
 if($smile == 2){
 	if(!JFactory::getApplication()->get('jquery')){
 		JFactory::getApplication()->set('jquery',true);
-		$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+		if(version_compare(JVERSION,'3.0.0','ge')) {
+			JHtml::_('jquery.framework', false);
+		} else {
+			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+		}
 	}
 }
 $document->addStyleSheet(JURI::base() . 'modules/mod_shoutbox/assets/css/mod_shoutbox.css');
