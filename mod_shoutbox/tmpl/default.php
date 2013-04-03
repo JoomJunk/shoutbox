@@ -18,7 +18,7 @@ if($smile == 2){
 		if(!JFactory::getApplication()->get('jquery')){
 			JFactory::getApplication()->set('jquery',true);
 			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
-			JHtml::_('script', 'plugins/system/jjtabs/js/jquery-conflict.js');
+			JHtml::_('script', JURI::base() . 'modules/mod_shoutbox/assets/js/jquery-conflict.js');
 		}
 	}
 }
