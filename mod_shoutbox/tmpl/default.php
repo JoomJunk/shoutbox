@@ -163,37 +163,39 @@ if($user->authorise('core.delete')) {
 								  
 							}
 							textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
-							(function($){
-								$('#jj_smiley_box a').click(function(){
-									var smiley = $(this).attr('title');
-									var caretPos = caretPos();
-									var strBegin = $('#message').val().substring(0, caretPos);
-									var strEnd   = $('#message').val().substring(caretPos);
-									$('#message').val( strBegin + " " + smiley + " " + strEnd);
-									function caretPos(){
-										var el = document.getElementById("message");
-										var pos = 0;
-										// IE Support
-										if (document.selection){
-											el.focus ();
-											var Sel = document.selection.createRange();
-											var SelLength = document.selection.createRange().text.length;
-											Sel.moveStart ('character', -el.value.length);
-											pos = Sel.text.length - SelLength;
-										}
-										// Firefox support
-										else if (el.selectionStart || el.selectionStart == '0')
-										 pos = el.selectionStart;
+							<?php if($smile == 1 || $smile == 2 ){ ?>
+								(function($){
+									$('#jj_smiley_box a').click(function(){
+										var smiley = $(this).attr('title');
+										var caretPos = caretPos();
+										var strBegin = $('#message').val().substring(0, caretPos);
+										var strEnd   = $('#message').val().substring(caretPos);
+										$('#message').val( strBegin + " " + smiley + " " + strEnd);
+										function caretPos(){
+											var el = document.getElementById("message");
+											var pos = 0;
+											// IE Support
+											if (document.selection){
+												el.focus ();
+												var Sel = document.selection.createRange();
+												var SelLength = document.selection.createRange().text.length;
+												Sel.moveStart ('character', -el.value.length);
+												pos = Sel.text.length - SelLength;
+											}
+											// Firefox support
+											else if (el.selectionStart || el.selectionStart == '0')
+											 pos = el.selectionStart;
 
-										return pos;
-									}
-								});
-								<?php if($smile == 2){ ?>
-								$("#jj_smiley_button").click(function () {
-									$("#jj_smiley_box").slideToggle("slow");
-								});
-								<?php } ?>
-							})(jQuery);
+											return pos;
+										}
+									});
+									<?php if($smile == 2){ ?>
+									$("#jj_smiley_button").click(function () {
+										$("#jj_smiley_box").slideToggle("slow");
+									});
+									<?php } ?>
+								})(jQuery);
+							<?php } ?>
 						</script>
 		
 						<?php
