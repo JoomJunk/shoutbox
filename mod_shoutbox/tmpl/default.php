@@ -10,12 +10,15 @@ defined('_JEXEC') or die('Restricted access');
 	
 $document = JFactory::getDocument();
 if($smile == 2){
-	if(!JFactory::getApplication()->get('jquery')){
-		JFactory::getApplication()->set('jquery',true);
-		if(version_compare(JVERSION,'3.0.0','ge')) {
-			JHtml::_('jquery.framework');
-		} else {
+	if(version_compare(JVERSION,'3.0.0','ge')) {
+		JHtml::_('jquery.framework');
+	}
+	else
+	{
+		if(!JFactory::getApplication()->get('jquery')){
+			JFactory::getApplication()->set('jquery',true);
 			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+			JHtml::_('script', 'plugins/system/jjtabs/js/jquery-conflict.js');
 		}
 	}
 }
