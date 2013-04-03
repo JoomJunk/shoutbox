@@ -13,7 +13,7 @@ if($smile == 2){
 	if(!JFactory::getApplication()->get('jquery')){
 		JFactory::getApplication()->set('jquery',true);
 		if(version_compare(JVERSION,'3.0.0','ge')) {
-			JHtml::_('jquery.framework', false);
+			JHtml::_('jquery.framework');
 		} else {
 			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
 		}
