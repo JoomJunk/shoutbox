@@ -9,7 +9,7 @@
 defined('_JEXEC') or die('Restricted access');
 	
 $document = JFactory::getDocument();
-if($smile == 2){
+if($smile == 1 || $smile == 2){
 	if(version_compare(JVERSION,'3.0.0','ge')) {
 		JHtml::_('jquery.framework');
 	}
