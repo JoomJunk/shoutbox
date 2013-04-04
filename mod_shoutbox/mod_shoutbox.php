@@ -8,6 +8,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+jimport('joomla.filesystem.folder');
+
 require_once( dirname(__FILE__).'/helper.php' );
 
 $displayname = $params->get('loginname');

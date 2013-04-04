@@ -73,8 +73,21 @@
 }
 #jj_smiley_button{
 	margin: 5px 0px 0px 0px;
-	width: 50px !important;
+	float:right;
+}
+#jj_btn, #jj_btn2{
+	cursor: pointer;
+}
+#jj_btn{
+	display: block;
+}
+#jj_btn2{
+	display:none;
 }
 .jj_smiley {
 	padding: 0px 2px 0px 2px;
+	border:none;
+}
+.outter_jj_smiley:hover {
+	background:none !important;
 }
