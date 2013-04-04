@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
 * @version   $Id: default.php 2012-01-16 21:00:00
 * @package   JJ Shoutbox
@@ -31,6 +31,12 @@ $style = '#jjshoutboxoutput {
 	background: #'. $headercolor .';
 	}';
 $document->addStyleDeclaration( $style );
+if(version_compare(JVERSION,'3.0.0','le')) {
+	$style = '#jj_btn, #jj_btn2{
+					width: 25px !important;
+					}';
+	$document->addStyleDeclaration( $style );
+}
 $user = JFactory::getUser();
 if($user->authorise('core.delete')) {
 	$style = '#jjshoutboxoutput input[type=submit]{
@@ -138,7 +144,18 @@ if($user->authorise('core.delete')) {
 						<textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
 						<?php if($smile == 1 || $smile == 2){ 
 								if($smile == 2){
-									echo '<input id="jj_smiley_button" type="button" value="Smilies" />';
+									if(version_compare(JVERSION,'3.0.0','ge')) { 
+										echo '<div id="jj_smiley_button">
+												<input id="jj_btn" type="button" class="btn btn-mini" value="&#9650;" />
+												<input id="jj_btn2" type="button" class="btn btn-mini" value="&#9660;" />
+										      </div>';
+									}
+									else{
+										echo '<div id="jj_smiley_button">
+												<input id="jj_btn" type="button" class="btn" value="&#9650;" />
+												<input id="jj_btn2" type="button" class="btn" value="&#9660;" />
+										      </div>';
+									}
 								}
 								echo '<div id="jj_smiley_box">';
 									$path = JPATH_SITE ."/modules/mod_shoutbox/assets/images";			
@@ -193,6 +210,16 @@ if($user->authorise('core.delete')) {
 									$("#jj_smiley_button").click(function () {
 										$("#jj_smiley_box").slideToggle("slow");
 									});
+									
+									$('#jj_btn').click(function(){
+										$('#jj_btn2').show();
+										$('#jj_btn').hide();
+									});
+									$('#jj_btn2').click(function(){
+										$('#jj_btn').show();
+										$('#jj_btn2').hide();
+									});
+									
 									<?php } ?>
 								})(jQuery);
 							<?php } ?>
