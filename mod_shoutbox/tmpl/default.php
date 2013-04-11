@@ -277,7 +277,7 @@ if($user->authorise('core.delete')) {
 		} else if($guestpost==1 && $guestpost==1) {
 			//Shows no members allowed to post text
 			?>
-			<p id="noguest"><?php echo $nonmembers ?></p>
+			<p id="noguest"><?php echo $nonmembers; ?></p>
 		<?php } ?>
 	</div>
 </div>
