@@ -270,7 +270,16 @@ if($user->authorise('core.delete')) {
 					<form method="post" name="deleteall">
 						<input class="jj_admin_label" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
 						<input type="hidden" name="max" value="<?php echo $number; ?>" />
-						<input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
+						<?php
+						if(version_compare(JVERSION,'3.0.0','ge'))
+						{
+							?><input class="btn btn-danger btn-small" name="deleteall" type="submit" style="width:35%;margin-bottom:10px;color:white;" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
+						}
+						else
+						{
+							?><input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
+						}
+						?>
 					</form> 
 				<?php }
 			}
