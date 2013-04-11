@@ -36,8 +36,8 @@ class modShoutboxHelper {
 		$i=0;
 		if (!JError::$legacy) {
 			try {
-			// Execute the query.
-			$rows = $db->loadObjectList();
+				// Execute the query.
+				$rows = $db->loadObjectList();
 			} catch (Exception $e) {
 				// Output error to shoutbox.
 				$shouts[$i]->name = 'Administrator';
