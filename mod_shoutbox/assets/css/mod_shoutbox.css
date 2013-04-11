@@ -7,7 +7,12 @@
 
 #jjshoutbox { margin: auto; }
 #jjshoutboxform { margin: 0 auto; }
-#jjshoutboxform textarea { width: 100%; margin-top: 5px; }
+#jjshoutboxform textarea {
+	width: 100%;
+	margin: 0px;
+	margin-top: 5px;
+	padding: 0px;
+}
 #jjshoutboxform input {
 	margin-top: 5px;
 	color: #000;
