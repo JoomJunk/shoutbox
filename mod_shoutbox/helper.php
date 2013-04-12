@@ -207,16 +207,16 @@ class modShoutboxHelper {
 	function smileyshow($smilies) { 
 		$smilies = '';
 		$smilies .= '<a href="#!" title=":)"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_smile.gif" alt=":)"></a>'; 
-		$smilies .= '<a href="#!" title=":("><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_sad.gif" alt=":)"></a>';
-		$smilies .= '<a href="#!" title=":D"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt=":)"></a>';
-		$smilies .= '<a href="#!" title="xD"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt=":)"></a>';
-		$smilies .= '<a href="#!" title=":p"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":)"></a>';
-		$smilies .= '<a href="#!" title=":P"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":)"></a>';
-		$smilies .= '<a href="#!" title=";)"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_wink.gif" alt=":)"></a>';
-		$smilies .= '<a href="#!" title=":S"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_confused.gif" alt=":)"></a>';
-		$smilies .= '<a href="#!" title=":@"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_mad.gif" alt=":)"></a>';
-		$smilies .= '<a href="#!" title=":O"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_surprised.gif" alt=":)"></a>';
-		$smilies .= '<a href="#!" title="lol"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_lol.gif" alt=":)"></a>';
+		$smilies .= '<a href="#!" title=":("><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_sad.gif" alt=":("></a>';
+		$smilies .= '<a href="#!" title=":D"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt=":D"></a>';
+		$smilies .= '<a href="#!" title="xD"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt="xD"></a>';
+		$smilies .= '<a href="#!" title=":p"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":p"></a>';
+		$smilies .= '<a href="#!" title=":P"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":P"></a>';
+		$smilies .= '<a href="#!" title=";)"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_wink.gif" alt=";)"></a>';
+		$smilies .= '<a href="#!" title=":S"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_confused.gif" alt=":S"></a>';
+		$smilies .= '<a href="#!" title=":@"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_mad.gif" alt=":@"></a>';
+		$smilies .= '<a href="#!" title=":O"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_surprised.gif" alt=":O"></a>';
+		$smilies .= '<a href="#!" title="lol"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_lol.gif" alt="lol"></a>';
 		return $smilies;
 	}
 	
