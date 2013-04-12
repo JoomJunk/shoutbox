@@ -11,12 +11,13 @@
 	width: 100%;
 	margin: 0px;
 	margin-top: 5px;
-	padding: 0px;
+	padding: 4px 0px;
 }
 #jjshoutboxform input {
 	margin-top: 5px;
 	color: #000;
 	width: 100%;
+	padding: 4px 0px;
 }
 #jjshoutboxoutput {
 	height: 200px; 
