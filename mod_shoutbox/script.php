@@ -18,7 +18,7 @@ class mod_shoutboxInstallerScript
 				if ( $type == 'Update' ) {
 					$oldRelease = $this->getParam('version');
 					$rel = $oldRelease . JText::_('MOD_SHOUTBOX_VERSION_TO') . $this->release;
-					if ( version_compare( $this->release, $oldRelease, 'le' ) ) {
+					if ( version_compare( $this->release, $oldRelease, 'lt' ) ) {
 						if (!JError::$legacy) {
 							JFactory::getApplication()->enqueueMessage(JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE'), 'error');
 						} else {
