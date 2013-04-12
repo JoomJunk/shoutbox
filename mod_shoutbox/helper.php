@@ -210,7 +210,6 @@ class modShoutboxHelper {
 		$smilies .= '<a href="#!" title=":("><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_sad.gif" alt=":("></a>';
 		$smilies .= '<a href="#!" title=":D"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt=":D"></a>';
 		$smilies .= '<a href="#!" title="xD"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt="xD"></a>';
-		$smilies .= '<a href="#!" title=":p"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":p"></a>';
 		$smilies .= '<a href="#!" title=":P"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":P"></a>';
 		$smilies .= '<a href="#!" title=";)"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_wink.gif" alt=";)"></a>';
 		$smilies .= '<a href="#!" title=":S"><img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_confused.gif" alt=":S"></a>';
