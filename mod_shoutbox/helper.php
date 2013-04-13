@@ -19,13 +19,12 @@ class modShoutboxHelper {
 	 * Retrieves the shouts from the database and returns them. Will return an error message if the database retrieval fails.
 	 *
 	 * @param   int  $number  The number of posts to retrieve from the databse.
-	 * @param   int  $timezone  The timezone of the user.
 	 * @param   string  $message  The error message to return if the database retrieval fails.
 	 *
 	 * @return  array  The shoutbox posts.
 	 *
 	 */
-	function getShouts($number, $timezone, $message) {
+	function getShouts($number, $message) {
 		$shouts	= array();
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
@@ -41,7 +40,7 @@ class modShoutboxHelper {
 			} catch (Exception $e) {
 				// Output error to shoutbox.
 				$shouts[$i]->name = 'Administrator';
-				$shouts[$i]->when = date( 'Y-m-d H:i:s', time()+$timezone);
+				$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
 				$shouts[$i]->msg = $message;
 				$shouts[$i]->ip = 'System';
 				$shouts[$i]->user_id = 0;
@@ -53,7 +52,7 @@ class modShoutboxHelper {
 			$rows = $db->loadObjectList();
 			if ($db->getErrorNum()) {
 				$shouts[$i]->name = 'Administrator';
-				$shouts[$i]->when = date( 'Y-m-d H:i:s', time()+$timezone);
+				$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
 				$shouts[$i]->msg = $message;
 				$shouts[$i]->ip = 'System';
 				$shouts[$i]->user_id = 0;
@@ -62,12 +61,10 @@ class modShoutboxHelper {
 				return $shouts;
 			}
 		}
-		$timezone=$timezone*60*60;
 		foreach ( $rows as $row ) {
 			$shouts[$i]->id = $row->id;
 			$shouts[$i]->name = $row->name;
-			$adjustedtime = strtotime($row->when) + $timezone;
-			$shouts[$i]->when = date( 'Y-m-d H:i:s', $adjustedtime);
+			$shouts[$i]->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
 			$shouts[$i]->ip = $row->ip;
 			$shouts[$i]->msg = $row->msg;
 			$shouts[$i]->user_id = $row->user_id;
@@ -199,9 +196,9 @@ class modShoutboxHelper {
 	/**
 	 * Displays an array of smilies.
 	 *
-	 * @param   smiley  $smiley  The smiley to be defined as an linkable image.
+	 * @param   smiley  $smilies  The smiley to be defined as an linkable image.
 	 *
-	 * return   smiley  $smiley  The smiley as an image.
+	 * return   smiley  $smilies The smiley images html code.
 	 *
 	 */
 	function smileyshow($smilies) { 
@@ -305,19 +302,20 @@ class modShoutboxHelper {
 	 *
 	 */
 	function addShout($name, $message, $ip) {
-		$db = JFactory::getDBO();     
+		$db = JFactory::getDBO();
+		$config = JFactory::getConfig();
 		$query = $db->getQuery(true);
 		if(version_compare(JVERSION,'3.0.0','ge')) {
 			$query->insert($db->quoteName('#__shoutbox'));
 			$query->set($db->quoteName('name').'='.$db->quote($name).','.
-			$db->quoteName('when').'='.$db->Quote(JFactory::getDate()->toSql()).','.
+			$db->quoteName('when').'='.$db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)).','.
 			$db->quoteName('ip').'='.$db->quote($ip).','.
 			$db->quoteName('msg').'='.$db->quote($message).','.
 			$db->quoteName('user_id').'='.$db->quote(JFactory::getUser()->id)); 
 		} else {
 			$query->insert($db->nameQuote('#__shoutbox'));
 			$query->set($db->nameQuote('name').'='.$db->quote($name).','.
-			$db->nameQuote('when').'='.$db->Quote(JFactory::getDate()->toSql()).','.
+			$db->nameQuote('when').'='.$db->Quote(JFactory::getDate('now', $config->getValue('config.offset'))->toSql(true)).','.
 			$db->nameQuote('ip').'='.$db->quote($ip).','.
 			$db->nameQuote('msg').'='.$db->quote($message).','.
 			$db->nameQuote('user_id').'='.$db->quote(JFactory::getUser()->id));

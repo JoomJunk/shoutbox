@@ -51,7 +51,7 @@ if($user->authorise('core.delete')) {
 		<?php
 			$shouts	= array();
 			//Retrieves the shouts from the database
-			$shouts= modShoutboxHelper::getShouts($number, $houradd, $dataerror);
+			$shouts= modShoutboxHelper::getShouts($number, $dataerror);
 			$i=0;
 			//Counts the number of shouts retrieved from the database
 			$actualnumber = count($shouts);
