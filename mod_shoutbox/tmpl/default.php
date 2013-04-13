@@ -63,7 +63,7 @@ $document->addStyleDeclaration( $style );
 								echo $profile_link;
 							}
 						?> - <?php
-							echo date($show_date . "H:i",strtotime($shouts[$i]->when));
+							echo JFactory::getDate($shouts[$i]->when)->format($show_date . 'H:i');
 							if($user->authorise('core.delete')) {
 						?> 
 						<form method="post" name="delete">
