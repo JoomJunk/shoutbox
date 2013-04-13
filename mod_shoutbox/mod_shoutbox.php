@@ -121,23 +121,26 @@ if(isset($_POST)) {
 		$deletepostnumber=$post['idvalue'];
 		modShoutboxHelper::deletepost($deletepostnumber);
 	}
-	if(isset($post['deleteall'])) {
-		$delete=$post['valueall'];
-		if(isset($delete)){
-			if(is_numeric($delete) && (int) $delete == $delete) {
-				if($delete>0) {
-					if($delete>$post['max']) {
-						$delete=$post['max'];
+	if($mass_delete==0)
+	{
+		if(isset($post['deleteall'])) {
+			$delete=$post['valueall'];
+			if(isset($delete)){
+				if(is_numeric($delete) && (int) $delete == $delete) {
+					if($delete>0) {
+						if($delete>$post['max']) {
+							$delete=$post['max'];
+						}
+						modShoutboxHelper::deleteall($delete);
+					} else {
+						JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
+						JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
 					}
-					modShoutboxHelper::deleteall($delete);
-				} else {
-					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
-					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
+				} 
+				else {
+					JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
+					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
 				}
-			} 
-			else {
-				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
-				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
 			}
 		}
 	}
