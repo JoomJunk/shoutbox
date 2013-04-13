@@ -17,17 +17,29 @@ $smile = $params->get('smile');
 $swearcounter = $params->get('swearingcounter');
 $swearnumber = $params->get('swearingnumber');
 $number = $params->get('maximum');
-$bordercolor = $params->get('bordercolor');
-$borderwidth = $params->get('borderwidth');
 $guestpost = $params->get('guestpost');
 $submittext = $params->get('submittext');
 $nonmembers = $params->get('nonmembers');
-$deletecolor = $params->get('deletecolor');
-$headercolor = $params->get('headercolor');
 $profile = $params->get('profile');
 $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
 $mass_delete = $params->get('mass_delete');
+
+// Add in jQuery if smilies are required
+$document = JFactory::getDocument();
+if($smile == 1 || $smile == 2){
+	if(version_compare(JVERSION,'3.0.0','ge')) {
+		JHtml::_('jquery.framework');
+	}
+	else
+	{
+		if(!JFactory::getApplication()->get('jquery')){
+			JFactory::getApplication()->set('jquery',true);
+			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+			JHtml::_('script', JUri::root() . 'modules/mod_shoutbox/assets/js/jquery-conflict.js');
+		}
+	}
+}
 
 // Set Date Format for when posted
 if($date==0){

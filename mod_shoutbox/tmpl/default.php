@@ -8,42 +8,26 @@
 
 defined('_JEXEC') or die('Restricted access');
 	
-$document = JFactory::getDocument();
-if($smile == 1 || $smile == 2){
-	if(version_compare(JVERSION,'3.0.0','ge')) {
-		JHtml::_('jquery.framework');
-	}
-	else
-	{
-		if(!JFactory::getApplication()->get('jquery')){
-			JFactory::getApplication()->set('jquery',true);
-			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
-			JHtml::_('script', JURI::base() . 'modules/mod_shoutbox/assets/js/jquery-conflict.js');
-		}
-	}
-}
-$document->addStyleSheet(JURI::base() . 'modules/mod_shoutbox/assets/css/mod_shoutbox.css');
+$document->addStyleSheet(JUri::root() . 'modules/mod_shoutbox/assets/css/mod_shoutbox.css');
 $style = '#jjshoutboxoutput {
-	border-color: #'. $bordercolor .';
-	border-width: '. $borderwidth .'px;
+		border-color: #'. $params->get('bordercolor', 'FF3C16') .';
+		border-width: '. $params->get('borderwidth', '1') .'px;
 	}
 	#jjshoutboxoutput div h1 {
-	background: #'. $headercolor .';
+		background: #'. $params->get('headercolor', 'D0D0D0') .';
 	}';
-$document->addStyleDeclaration( $style );
 if(version_compare(JVERSION,'3.0.0','le')) {
-	$style = '#jj_btn, #jj_btn2{
-					width: 25px !important;
-					}';
-	$document->addStyleDeclaration( $style );
+	$style .= '#jj_btn, #jj_btn2{
+		width: 25px !important;
+	}';
 }
 $user = JFactory::getUser();
 if($user->authorise('core.delete')) {
-	$style = '#jjshoutboxoutput input[type=submit]{
-	color:#' . $deletecolor . ';
+	$style .= '#jjshoutboxoutput input[type=submit]{
+		color:#' . $params->get('deletecolor', 'FF0000') . ';
 	}'; 
-	$document->addStyleDeclaration( $style );
 }
+$document->addStyleDeclaration( $style );
 ?>
 
 <div id="jjshoutbox">
