@@ -29,6 +29,27 @@ $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
 $mass_delete = $params->get('mass_delete');
 
+// Set Date Format for when posted
+if($date==0){
+	$show_date = "d/m/Y - ";
+}
+elseif($date==1)
+{
+	$show_date = "D m Y - ";
+}
+elseif($date==3)
+{
+	$show_date = "m/d/Y - ";
+}
+elseif($date==4)
+{
+	$show_date = "D j M - ";
+}
+else
+{
+	$show_date = "";
+}
+
 $dataerror= JText::_('SHOUT_DATABASEERRORSHOUT');
 
 //Import JLog class

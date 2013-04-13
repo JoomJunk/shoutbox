@@ -73,9 +73,6 @@ if($user->authorise('core.delete')) {
 					?>
 					<h1 <?php echo modShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
 						<?php
-							if($date==0){ $show_date = "d/m/Y -"; }
-							elseif($date==1){ $show_date = "D m Y -"; }
-							else{$show_date = "";}
 							if ($smile==0){
 								echo modShoutboxHelper::smileyfilter($profile_link);
 							} else {
