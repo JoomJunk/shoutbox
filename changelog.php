@@ -19,6 +19,7 @@ Version 1.2.2
 - Remove Timezone parameter and use the Joomla Global Config Timzone
 + Add in more date options
 # Simplify the way styling and jQuery code is added into the head
++ Add in PostgreSQL support
 
 Version 1.2.1
 # Fixes bug when number of swears is set to zero

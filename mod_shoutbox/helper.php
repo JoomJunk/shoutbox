@@ -304,21 +304,19 @@ class modShoutboxHelper {
 	function addShout($name, $message, $ip) {
 		$db = JFactory::getDBO();
 		$config = JFactory::getConfig();
+		$columns = array('name', 'when', 'ip', 'msg', 'user_id');
+		$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)), $db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
 		$query = $db->getQuery(true);
-		if(version_compare(JVERSION,'3.0.0','ge')) {
-			$query->insert($db->quoteName('#__shoutbox'));
-			$query->set($db->quoteName('name').'='.$db->quote($name).','.
-			$db->quoteName('when').'='.$db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)).','.
-			$db->quoteName('ip').'='.$db->quote($ip).','.
-			$db->quoteName('msg').'='.$db->quote($message).','.
-			$db->quoteName('user_id').'='.$db->quote(JFactory::getUser()->id)); 
+		if(version_compare(JVERSION,'3.0.0','ge')) {			 
+			$query
+				->insert($db->quoteName('#__shoutbox'))
+				->columns($db->quoteName($columns))
+				->values(implode(',', $values));
 		} else {
-			$query->insert($db->nameQuote('#__shoutbox'));
-			$query->set($db->nameQuote('name').'='.$db->quote($name).','.
-			$db->nameQuote('when').'='.$db->Quote(JFactory::getDate('now', $config->getValue('config.offset'))->toSql(true)).','.
-			$db->nameQuote('ip').'='.$db->quote($ip).','.
-			$db->nameQuote('msg').'='.$db->quote($message).','.
-			$db->nameQuote('user_id').'='.$db->quote(JFactory::getUser()->id));
+			$query
+				->insert($db->nameQuote('#__shoutbox'))
+				->columns($db->nameQuote($columns))
+				->values(implode(',', $values));
 		}
 		
 		$db->setQuery( $query );

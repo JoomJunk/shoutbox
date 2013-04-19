@@ -49,7 +49,11 @@ class mod_shoutboxInstallerScript
 		
         function getParam( $name ) {
                 $db = JFactory::getDbo();
-                $db->setQuery('SELECT manifest_cache FROM #__extensions WHERE name = "JJ Shoutbox"');
+				$query = $db->getQuery(true);
+				$query->select('manifest_cache')
+				->from('#__extensions')
+				->where('name =' . $db->Quote('JJ Shoutbox'));
+                $db->setQuery($query);
                 $manifest = json_decode( $db->loadResult(), true );
                 return $manifest[ $name ];
         }
