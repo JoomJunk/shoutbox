@@ -324,9 +324,16 @@ class modShoutboxHelper {
 		$db->setQuery( $query );
 		
 		if(version_compare(JVERSION,'3.0.0','ge')) {
-			$db->execute();
+			try {
+				$db->execute();
+			} catch (Exception $e) {
+				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+			}
 		} else {
 			$db->query();
+			if ($db->getErrorNum()) {
+				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $db->getErrorMsg()), JLog::CRITICAL, 'mod_shoutbox');
+			}
 		}
 	}
 
