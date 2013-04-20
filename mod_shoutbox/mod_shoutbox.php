@@ -23,6 +23,7 @@ $nonmembers = $params->get('nonmembers');
 $profile = $params->get('profile');
 $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
+$recaptcha = $params->get('recaptchaon', 1);
 $mass_delete = $params->get('mass_delete');
 
 // Add in jQuery if smilies are required
@@ -33,11 +34,13 @@ if($smile == 1 || $smile == 2){
 	}
 	else
 	{
+		/**
 		if(!JFactory::getApplication()->get('jquery')){
 			JFactory::getApplication()->set('jquery',true);
 			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
 			JHtml::_('script', JUri::root() . 'modules/mod_shoutbox/assets/js/jquery-conflict.js');
 		}
+		**/
 	}
 }
 
@@ -78,14 +81,66 @@ JLog::addLogger(
 
 $user = JFactory::getUser();
 require_once( dirname(__FILE__).'/assets/recaptcha/recaptchalib.php');
-if(isset($_POST)) {
-	if (!get_magic_quotes_gpc()){
-		$input = new JInput();
-		$post = $input->getArray($_POST);
-	} else {
-		$post = JRequest::get( 'post' );
+
+if (!get_magic_quotes_gpc()){
+	$input = new JInput();
+	$task = $input->get('task', null, 'cmd');
+} else {
+	$task = JRequest::getVar('task');
+}
+
+if(isset($_POST) || $task == "submitShout") {
+	if($task == "submitShout"){
+		$post = array();
+		if (!get_magic_quotes_gpc()){
+			$input = new JInput();
+			$post["name"] = $input->get('name', null, 'STRING');
+			$post["message"] = $input->get('message', null, 'STRING');
+			$post["token"] = $input->get('token', null, 'STRING');
+			
+			if($securityquestion==0)
+			{
+				$post['sum1'] = $input->get('sum1', null, 'INT');
+				$post['sum2'] = $input->get('sum2', null, 'INT');
+				$post['human'] = $input->get('human', null, 'INT');
+			}
+			if($recaptcha==0)
+			{
+				$post['recaptcha_challenge_field'] = $input->get('recaptcha_challenge_field', null, 'STRING');
+				$post['recaptcha_response_field'] = $input->get('recaptcha_response_field', null, 'STRING');
+			}
+		} else {
+			$post["name"] = JRequest::getVar('name', null, 'get', 'string');
+			$post["message"] = JRequest::getVar('message', null, 'get', 'string');
+			$post["token"] = JRequest::getVar('token', null, 'get', 'string');
+			
+			if($securityquestion==0)
+			{
+				$post['sum1']=JRequest::getVar('sum1', null, 'get', 'int');
+				$post['sum2']=JRequest::getVar('sum2', null, 'get', 'int');
+				$post['human']=JRequest::getVar('human', null, 'get', 'int');
+			}
+			if($recaptcha==0)
+			{
+				$post['recaptcha_challenge_field'] = JRequest::getVar('recaptcha_challenge_field', null, 'get', 'string');
+				$post['recaptcha_response_field'] = JRequest::getVar('recaptcha_response_field', null, 'get', 'string');
+			}
+		}
+		$post['shout'] = "Shout!";
+		$post["method"] = 'get';
 	}
-	if($params->get('recaptchaon')==0) {
+	else
+	{
+		if (!get_magic_quotes_gpc()){
+			$input = new JInput();
+			$post = $input->getArray($_POST);
+		} else {
+			$post = JRequest::get( 'post' );
+		}
+		$post["method"] = 'post';
+	}
+
+	if($recaptcha==0) {
 		if(isset($post["recaptcha_response_field"])) {
 			if ($post["recaptcha_response_field"]) {
 				$resp = recaptcha_check_answer ($params->get('recaptcha-private'),

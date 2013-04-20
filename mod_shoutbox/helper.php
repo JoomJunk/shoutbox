@@ -102,9 +102,9 @@ class modShoutboxHelper {
 	 */
 	function postfiltering($shout, $user, $swearcounter, $swearnumber, $displayname) {
 		if(isset($shout['shout'])) {
-			JSession::checkToken() or die( JText::_( 'SHOUT_INVALID_TOKEN' ) );
+			JSession::checkToken($shout["method"]) or jexit( JText::_( 'SHOUT_INVALID_TOKEN' ) );
 			if(!empty($shout['message'])){
-				if($_SESSION['token'] == $shout['token']){	
+				if($_SESSION['token'] == $shout['token']){
 					$replace = '****';
 
 					if (!$user->guest && $displayname==0) {
