@@ -209,7 +209,7 @@ $document->addStyleDeclaration( $style );
 		
 						<?php
 						//Shows recapture or math question depending on the parameters
-						if($params->get('recaptchaon')==0) {
+						if($recaptcha==0) {
 							if($params->get('recaptcha-public')=='' || $params->get('recaptcha-private')=='') {
 								echo JText::_('SHOUT_RECAPTCHA_KEY_ERROR');
 							} else {
@@ -233,7 +233,7 @@ $document->addStyleDeclaration( $style );
 							<label class="jj_label"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
 							<input type="hidden" name="sum1" value="<?php echo $que_number1; ?>" />
 							<input type="hidden" name="sum2" value="<?php echo $que_number2; ?>" />
-							<input class="jj_input" type="text" name="human" />
+							<input class="jj_input" type="text" name="human" id="mathsanswer" />
 						<?php
 						}
 						if($params->get('recaptchaon')==0 && $securityquestion==0){
@@ -242,7 +242,7 @@ $document->addStyleDeclaration( $style );
 							JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 						}
 						?>
-						<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />   
+						<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($recaptcha==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />   
 				<?php } ?>
 			</form> 
 			<?php
@@ -277,10 +277,14 @@ $document->addStyleDeclaration( $style );
 	$( "#shoutbox-submit" ).click( function() {
 		$.ajax({
 			type: "GET",
-			url: "<?php echo JUri::current() . '?task=submitShout&name='; ?>" + encodeURIComponent($('#shoutbox-name').val()) + "&message=" + $('#message').val(),
-			success:function(){
-				$('<div><h1>' + $('#shoutbox-name').val() + '</h1><p>' + $('#message').val() + '</p><br />').hide().insertAfter('#newshout').slideDown();
-				console.log('Success');
+			url: "<?php echo JUri::current() . '?task=submitShout'; ?>",
+			data: 'name=' + encodeURIComponent($('#shoutbox-name').val()) + "&message=" + encodeURIComponent($('#message').val()) + "&<?php echo JSession::getFormToken(); ?>=1&token=<?php echo $_SESSION['token']; ?>"
+					<?php if($recaptcha==0) { ?> + "&recaptcha_response_field=" + encodeURIComponent($('#recaptcha_response_field').val()) + "&recaptcha_challenge_field=" + encodeURIComponent($('#recaptcha_challenge_field').val())
+					<?php } elseif($securityquestion==0) { ?> + "<?php echo '&sum1='.$que_number1.'&sum2='.$que_number2.'&human=';?>" + encodeURIComponent($('#mathsanswer').val()) <?php } ?>,
+			success:function(data){
+				var name = $('#shoutbox-name').val();
+				console.log(data);
+				$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?></h1><p>' + $('#message').val() + '</p><br />').hide().insertAfter('#newshout').slideDown();
 			},
 			error:function(ts){
 				console.log(ts.responseText);
