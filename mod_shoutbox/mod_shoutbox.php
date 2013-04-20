@@ -33,12 +33,29 @@ if($smile == 1 || $smile == 2){
 	}
 	else
 	{
+		/**
 		if(!JFactory::getApplication()->get('jquery')){
 			JFactory::getApplication()->set('jquery',true);
 			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
 			JHtml::_('script', JUri::root() . 'modules/mod_shoutbox/assets/js/jquery-conflict.js');
 		}
+		**/
 	}
+}
+
+if (!get_magic_quotes_gpc()){
+	$input = new JInput();
+	$task = $input->get('task', null, 'cmd');
+} else {
+	$task = JRequest::getVar('task');
+}
+
+dump($task, 'task');
+if($task == "submitShout"){
+	$name = test;
+	$message = "This is a test";
+	$ip = $ip=$_SERVER['REMOTE_ADDR'];
+	modShoutboxHelper::addShout($name, $message, $ip);
 }
 
 // Set Date Format for when posted

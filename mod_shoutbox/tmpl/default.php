@@ -271,3 +271,20 @@ $document->addStyleDeclaration( $style );
 		<?php } ?>
 	</div>
 </div>
+<script>
+(function($){
+	$( "#shoutbox-submit" ).click( function() {
+		$.ajax({
+			type: "GET",
+			url: "<?php echo JUri::current() . '?task=submitShout'; ?>",
+			success:function(){
+				console.log('Success - lets look for the alert.');
+			},
+			error:function(ts){
+				console.log(ts.responseText);
+			},
+		});
+		return false;
+	});
+})(jQuery);
+</script>
