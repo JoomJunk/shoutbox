@@ -52,8 +52,14 @@ if (!get_magic_quotes_gpc()){
 
 dump($task, 'task');
 if($task == "submitShout"){
-	$name = test;
-	$message = "This is a test";
+	if (!get_magic_quotes_gpc()){
+		$input = new JInput();
+		$name = $input->get('name', null, 'cmd');
+		$message = $input->get('message', null, 'cmd');
+	} else {
+		$name = JRequest::getVar('name');
+		$message = JRequest::getVar('message');
+	}
 	$ip = $ip=$_SERVER['REMOTE_ADDR'];
 	modShoutboxHelper::addShout($name, $message, $ip);
 }

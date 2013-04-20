@@ -32,6 +32,7 @@ $document->addStyleDeclaration( $style );
 
 <div id="jjshoutbox">
 	<div id="jjshoutboxoutput">
+		<div id="newshout"></div>
 		<?php
 			$shouts	= array();
 			//Retrieves the shouts from the database
@@ -122,7 +123,7 @@ $document->addStyleDeclaration( $style );
 								<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
 							</span>
 						</noscript>
-						<textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+						<textarea id="message" cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
 						<?php if($smile == 1 || $smile == 2){ 
 								if($smile == 2){
 									if(version_compare(JVERSION,'3.0.0','ge')) { 
@@ -276,9 +277,10 @@ $document->addStyleDeclaration( $style );
 	$( "#shoutbox-submit" ).click( function() {
 		$.ajax({
 			type: "GET",
-			url: "<?php echo JUri::current() . '?task=submitShout'; ?>",
+			url: "<?php echo JUri::current() . '?task=submitShout&name='; ?>" + encodeURIComponent($('#shoutbox-name').val()) + "&message=" + $('#message').val(),
 			success:function(){
-				console.log('Success - lets look for the alert.');
+				$('<div><h1>' + $('#shoutbox-name').val() + '</h1><p>' + $('#message').val() + '</p><br />').hide().insertAfter('#newshout').slideDown();
+				console.log('Success');
 			},
 			error:function(ts){
 				console.log(ts.responseText);
