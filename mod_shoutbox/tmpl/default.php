@@ -281,9 +281,14 @@ $document->addStyleDeclaration( $style );
 			data: 'name=' + encodeURIComponent($('#shoutbox-name').val()) + "&message=" + encodeURIComponent($('#message').val()) + "&<?php echo JSession::getFormToken(); ?>=1&token=<?php echo $_SESSION['token']; ?>"
 					<?php if($recaptcha==0) { ?> + "&recaptcha_response_field=" + encodeURIComponent($('#recaptcha_response_field').val()) + "&recaptcha_challenge_field=" + encodeURIComponent($('#recaptcha_challenge_field').val())
 					<?php } elseif($securityquestion==0) { ?> + "<?php echo '&sum1='.$que_number1.'&sum2='.$que_number2.'&human=';?>" + encodeURIComponent($('#mathsanswer').val()) <?php } ?>,
-			success:function(data){
-				var name = $('#shoutbox-name').val();
-				console.log(data);
+			success:function(){
+				<?php if($displayname==1 && !$user->guest){ ?>
+					var name = "<?php echo $user->username;?>";
+				<?php } elseif($displayname==0 && !$user->guest) { ?>
+					var name = "<?php echo $user->name;?>";
+				<?php } else { ?>
+					var name = $('#shoutbox-name').val();
+				<?php } ?>
 				$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?></h1><p>' + $('#message').val() + '</p><br />').hide().insertAfter('#newshout').slideDown();
 			},
 			error:function(ts){
