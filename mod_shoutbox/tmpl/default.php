@@ -123,11 +123,8 @@ $document->addStyleDeclaration( $style );
 								<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
 							</span>
 						</noscript>
-						<?php if($enterclick == 0) { ?>
 						<textarea id="message" cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
-						<?php } else { ?>
-						<input id="message" type="text" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" />
-						<?php } 
+						<?php 
 						if($smile == 1 || $smile == 2){ 
 								if($smile == 2){
 									if(version_compare(JVERSION,'3.0.0','ge')) { 
