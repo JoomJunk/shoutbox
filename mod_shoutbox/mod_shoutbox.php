@@ -25,6 +25,7 @@ $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
 $recaptcha = $params->get('recaptchaon', 1);
 $mass_delete = $params->get('mass_delete');
+$enterclick = $params->get('enterclick');
 
 // Add in jQuery
 $document = JFactory::getDocument();

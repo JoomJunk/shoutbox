@@ -123,8 +123,12 @@ $document->addStyleDeclaration( $style );
 								<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
 							</span>
 						</noscript>
+						<?php if($enterclick == 0) { ?>
 						<textarea id="message" cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
-						<?php if($smile == 1 || $smile == 2){ 
+						<?php } else { ?>
+						<input id="message" type="text" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" />
+						<?php } 
+						if($smile == 1 || $smile == 2){ 
 								if($smile == 2){
 									if(version_compare(JVERSION,'3.0.0','ge')) { 
 										echo '<div id="jj_smiley_button">
@@ -241,9 +245,9 @@ $document->addStyleDeclaration( $style );
 							JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
 							JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 						}
-						?>
-						<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($recaptcha==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />   
-				<?php } ?>
+						if($enterclick == 0) { ?>
+						<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($recaptcha==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />
+						<?php } } ?>
 			</form> 
 			<?php
 			//Shows mass delete button if enabled
@@ -274,7 +278,12 @@ $document->addStyleDeclaration( $style );
 </div>
 <script>
 (function($){
+	<?php if($enterclick == 1) { ?>
+	$('input#message').keypress(function (e) {
+		if (e.which == 13) {
+	<?php } else { ?>	
 	$( "#shoutbox-submit" ).click( function() {
+	<?php } ?>
 		$.ajax({
 			type: "POST",
 			url: "<?php echo JUri::current() . '?task=submitShout'; ?>",
@@ -309,6 +318,12 @@ $document->addStyleDeclaration( $style );
 			},
 		});
 		return false;
-	});
+	<?php if($enterclick == 1) { ?>
+	}
+	}
+	<?php } else { ?>	
+	}
+	<?php } ?>
+	);
 })(jQuery);
 </script>
