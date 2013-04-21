@@ -77,6 +77,9 @@
 #jj_smiley_box{
 	margin: 10px 0px 10px 0px;
 }
+#jj_smiley_box img{
+	cursor: pointer;
+}
 #jj_smiley_button{
 	margin: 5px 0px 0px 0px;
 	float:right;

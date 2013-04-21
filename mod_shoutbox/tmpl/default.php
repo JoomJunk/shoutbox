@@ -163,8 +163,8 @@ $document->addStyleDeclaration( $style );
 							textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
 							<?php if($smile == 1 || $smile == 2 ){ ?>
 								(function($){
-									$('#jj_smiley_box a').click(function(){
-										var smiley = $(this).attr('title');
+									$('#jj_smiley_box img').click(function(){
+										var smiley = $(this).attr('alt');
 										var caretPos = caretPos();
 										var strBegin = $('#message').val().substring(0, caretPos);
 										var strEnd   = $('#message').val().substring(caretPos);
