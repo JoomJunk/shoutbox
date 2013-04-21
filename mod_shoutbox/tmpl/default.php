@@ -279,8 +279,8 @@ $document->addStyleDeclaration( $style );
 <script>
 (function($){
 	<?php if($enterclick == 1) { ?>
-	$('input#message').keypress(function (e) {
-		if (e.which == 13) {
+	$("textarea#message").keypress(function(e){
+		if (e.keyCode == 13 && !e.shiftKey){ 
 	<?php } else { ?>	
 	$( "#shoutbox-submit" ).click( function() {
 	<?php } ?>
