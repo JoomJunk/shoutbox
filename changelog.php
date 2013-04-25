@@ -20,6 +20,7 @@ Version 1.2.2
 + Add in more date options
 # Simplify the way styling and jQuery code is added into the head
 + Add in PostgreSQL support
++ Add in AJAX
 
 Version 1.2.1
 # Fixes bug when number of swears is set to zero
