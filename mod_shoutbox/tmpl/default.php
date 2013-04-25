@@ -73,7 +73,7 @@ $document->addStyleDeclaration( $style );
 						<?php } ?>
 					</h1>
 					<p>
-						<?php if ($smile==0){
+						<?php if ($smile==0 || $smile == 1 || $smile == 2){
 							echo modShoutboxHelper::smileyfilter($shouts[$i]->msg);
 						} else {
 							echo $shouts[$i]->msg;
