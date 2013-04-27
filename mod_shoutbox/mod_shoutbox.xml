@@ -12,16 +12,24 @@
 	
 	<install>
         <sql>
-            <file driver="mysql" charset="utf8">sql/install.mysql.utf8.sql</file>
-			<file driver="postgresql" charset="utf8">sql/install.postgresql.utf8.sql</file>
+            <file driver="mysql" charset="utf8">sql/mysql/install.mysql.utf8.sql</file>
+			<file driver="postgresql" charset="utf8">sql/postgresql/install.postgresql.utf8.sql</file>
         </sql>
     </install>
               
     <uninstall>
         <sql>
-			<file driver="mysql" charset="utf8">sql/uninstall.mysql.utf8.sql</file>
+			<file driver="mysql" charset="utf8">sql/mysql/uninstall.mysql.utf8.sql</file>
+			<file driver="postgresql" charset="utf8">sql/postgresql/uninstall.postgresql.utf8.sql</file>
         </sql>
     </uninstall>
+	
+	<update> 
+		<schemas>
+			<schemapath type="mysql">sql/mysql/updates</schemapath> 
+			<schemapath type="postgresql">sql/postgresql/updates</schemapath> 
+		</schemas> 
+	</update>
 	
 	<scriptfile>script.php</scriptfile>
 	
