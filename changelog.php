@@ -29,6 +29,7 @@ Version 1.2.2
 Version 1.2.1
 # Fixes bug when number of swears is set to zero
 + Smiley dropdown introduced
+^ Allows installation of the same version of the shoutbox as currently installed
 
 Version 1.2.0
 + Uses native JInput for processing rather than $_POST
