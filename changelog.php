@@ -15,6 +15,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.2.3
+# Update for 1.2.2 using a incorrect url for updating
+
 Version 1.2.2
 - Remove Timezone parameter and use the Joomla Global Config Timzone
 + Add in more date options
