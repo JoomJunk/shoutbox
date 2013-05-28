@@ -31,6 +31,7 @@
 		<filename>swearWords.php</filename>
 		<filename>helper.php</filename>
 		<folder>assets</folder>
+		<folder>fields</folder>
 		<folder>tmpl</folder>
 		<folder>sql</folder>
 	</files>
@@ -46,7 +47,7 @@
  
     <config>
 		<fields name="params">
-			<fieldset name="basic">
+			<fieldset name="basic" addfieldpath="/modules/mod_shoutbox/fields">
 				<field name="profile" type="list" default="none" label="SHOUT_LINK_PROFILE" description="SHOUT_LINK_PROFILEDESC">
 					<option value="0">SHOUT_NO_USERS</option>
 					<option value="1">SHOUT_CB_USERS</option>
@@ -91,6 +92,10 @@
 				<field name="messagelength" type="text" default="200" label="SHOUT_MESSAGELABEL" description="SHOUT_MESSAGEDESC" />
 				<field name="alertlength" type="text" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
 				<field name="warnlength" type="text" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
+				<field name="jquery" type="jQuery" default="0" label="SHOUT_JQUERYLABEL" description="SHOUT_JQUERYDESC">
+					<option value="0">SHOUT_JQUERY_LOCAL</option>
+					<option value="1">SHOUT_JQUERY_EXTERNAL</option>
+				</field>
 				<field name="enterclick" type="radio" default="0" label="SHOUT_ENTERCLICK" description="SHOUT_ENTERCLICK_DESC">
 					<option value="0">SHOUT_CLICK</option>
 					<option value="1">SHOUT_ENTER</option>
