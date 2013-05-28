@@ -281,6 +281,21 @@ $document->addStyleDeclaration( $style );
 	<?php } else { ?>	
 	$( "#shoutbox-submit" ).click( function() {
 	<?php } ?>
+	if($('#message').val() == ""){
+		
+		$('.jj-shout-error').append('<p class="inner-jj-error">Please enter a message!</p>').slideDown().show().delay(6000).queue(function(next){
+			$(this).slideUp().hide();
+			$('.inner-jj-error').remove();
+			next();
+		});
+		
+		$('#message').addClass('jj-redBorder').delay(6000).queue(function(next){
+			$(this).removeClass('jj-redBorder');
+			next();
+		});
+		return false;
+	}
+	else {
 		$.ajax({
 			type: "POST",
 			url: "<?php echo JUri::current() . '?task=submitShout'; ?>",
@@ -315,6 +330,7 @@ $document->addStyleDeclaration( $style );
 			},
 		});
 		return false;
+	}
 	<?php if($enterclick == 1) { ?>
 	}
 	}
