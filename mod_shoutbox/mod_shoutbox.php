@@ -36,7 +36,12 @@ else
 {
 	if(!JFactory::getApplication()->get('jquery')){
 		JFactory::getApplication()->set('jquery',true);
-		$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+		if($params->get('jquery', '0')==0)
+		{
+			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
+		} else {
+			JHtml::_('script', JUri::root() . 'modules/mod_shoutbox/assets/js/jquery.js');
+		}
 		JHtml::_('script', JUri::root() . 'modules/mod_shoutbox/assets/js/jquery-conflict.js');
 	}
 }
