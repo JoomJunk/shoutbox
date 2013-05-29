@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>1.2.3</version> 
+	<version>1.2.4</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -63,7 +63,7 @@
 					<option value="4">SHOUT_K2_BLOG_USERS</option>
 				</field>
 				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
-				<field name="bordercolor" type="text" default="FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
+				<field name="bordercolor" type="color" default="FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
 				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
 				<field name="loginname" type="radio" default="1" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
 					<option value="0">SHOUT_REAL</option>
@@ -83,8 +83,8 @@
 				</field>
 				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
 				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
-				<field name="deletecolor" type="text" default="FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
-				<field name="headercolor" type="text" default="D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
+				<field name="deletecolor" type="color" default="FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
+				<field name="headercolor" type="color" default="D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
 				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
 					<option value="0">SHOUT_SMILIES_ON</option>
 					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
