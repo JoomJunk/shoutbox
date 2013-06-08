@@ -112,7 +112,7 @@ $document->addStyleDeclaration( $style );
 					echo '<br />';
 					//Adds in session token to prevent reposts and a security token to prevent CRSF attacks
 					$_SESSION['token'] = uniqid("token",true);
-					echo JHTML::_( 'form.token' );
+					echo JHtml::_( 'form.token' );
 					?>
 						<input name="token" type="hidden" value="<?php echo $_SESSION['token'];?>" />
 
