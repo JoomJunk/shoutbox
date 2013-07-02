@@ -7,64 +7,80 @@
 */
 
 defined('_JEXEC') or die('Restricted access');
-	
+
 $document->addStyleSheet(JUri::root() . 'modules/mod_shoutbox/assets/css/mod_shoutbox.css');
 $style = '#jjshoutboxoutput {
-		border-color: #'. $params->get('bordercolor', 'FF3C16') .';
-		border-width: '. $params->get('borderwidth', '1') .'px;
+		border-color: #' . $params->get('bordercolor', 'FF3C16') . ';
+		border-width: ' . $params->get('borderwidth', '1') . 'px;
 	}
 	#jjshoutboxoutput div h1 {
-		background: #'. $params->get('headercolor', 'D0D0D0') .';
+		background: #' . $params->get('headercolor', 'D0D0D0') . ';
 	}';
-if(version_compare(JVERSION,'3.0.0','le')) {
+
+if (version_compare(JVERSION,'3.0.0','le'))
+{
 	$style .= '#jj_btn, #jj_btn2{
 		width: 25px !important;
 	}';
 }
+
 $user = JFactory::getUser();
-if($user->authorise('core.delete')) {
+if ($user->authorise('core.delete'))
+{
 	$style .= '#jjshoutboxoutput input[type=submit]{
 		color:#' . $params->get('deletecolor', 'FF0000') . ';
-	}'; 
+	}';
 }
-$document->addStyleDeclaration( $style );
+
+$document->addStyleDeclaration($style);
 ?>
 
 <div id="jjshoutbox">
 	<div id="jjshoutboxoutput">
 		<?php
 			$shouts	= array();
-			//Retrieves the shouts from the database
-			$shouts= modShoutboxHelper::getShouts($number, $dataerror);
-			$i=0;
-			//Counts the number of shouts retrieved from the database
+
+			// Retrieves the shouts from the database
+			$shouts = ModShoutboxHelper::getShouts($number, $dataerror);
+			$i = 0;
+
+			// Counts the number of shouts retrieved from the database
 			$actualnumber = count($shouts);
-			if($actualnumber==0) {
-			//Display shout empty message if there are no posts
+
+			if ($actualnumber == 0)
+			{
+			// Display shout empty message if there are no posts
 			?>
 				<div><p><?php echo JText::_('SHOUT_EMPTY') ?></p></div>
 			<?php }
 		else {
-			if($actualnumber<$number) {
-				$number=$actualnumber;
+			if($actualnumber<$number)
+			{
+				$number = $actualnumber;
 			}
-			//Loops through the shouts
-			while ($i < $number) { ?>
+
+			// Loops through the shouts
+			while ($i < $number)
+			{ ?>
 				<div>
 					<?php
-						//Displays Name or Name with link to profile
-						$profile_link = modShoutboxHelper::linkUser($profile, $shouts[$i]->name, $shouts[$i]->user_id);
+						// Displays Name or Name with link to profile
+						$profile_link = ModShoutboxHelper::linkUser($profile, $shouts[$i]->name, $shouts[$i]->user_id);
 					?>
-					<h1 <?php echo modShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
+					<h1 <?php echo ModShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
 						<?php
-							if ($smile==0){
-								echo modShoutboxHelper::smileyfilter($profile_link);
-							} else {
+							if ($smile == 0)
+							{
+								echo ModShoutboxHelper::smileyfilter($profile_link);
+							}
+							else
+							{
 								echo $profile_link;
 							}
 						?> - <?php
 							echo JFactory::getDate($shouts[$i]->when)->format($show_date . 'H:i');
-							if($user->authorise('core.delete')) {
+							if ($user->authorise('core.delete'))
+							{
 						?> 
 						<form method="post" name="delete">
 							<input name="delete" type="submit" value="x" />
@@ -73,9 +89,12 @@ $document->addStyleDeclaration( $style );
 						<?php } ?>
 					</h1>
 					<p>
-						<?php if ($smile==0 || $smile == 1 || $smile == 2){
-							echo modShoutboxHelper::smileyfilter($shouts[$i]->msg);
-						} else {
+						<?php if ($smile == 0 || $smile == 1 || $smile == 2)
+						{
+							echo ModShoutboxHelper::smileyfilter($shouts[$i]->msg);
+						}
+						else
+						{
 							echo $shouts[$i]->msg;
 						} ?>
 					</p>
@@ -89,30 +108,40 @@ $document->addStyleDeclaration( $style );
 	</div>
 	<div id="jjshoutboxform">
 		<?php
-		if(($actualnumber>0) && ($shouts[0]->msg==$dataerror) && ($shouts[0]->ip=='System')) {
-			//Shows the error message instead of the form if there is a database error.
+		if(($actualnumber > 0) && ($shouts[0]->msg == $dataerror) && ($shouts[0]->ip == 'System'))
+		{
+			// Shows the error message instead of the form if there is a database error.
 			echo JText::_('SHOUT_DATABASEERROR');
-		} else if (($user->guest && $guestpost==0)||!$user->guest) { ?>
+		}
+		elseif (($user->guest && $guestpost == 0)||!$user->guest)
+		{ ?>
 			<form method="post" name="shout">
 				<?php
-				//Displays the Name of the user if logged in unless stated in the parameters to be a input box
-				if($displayname==0 && !$user->guest) {
-				  echo JText::_( 'SHOUT_NAME' );
-				  echo ": ";
-				  echo $user->name;
-				} else if($displayname==1 && !$user->guest) {
-				  echo JText::_( 'SHOUT_NAME' );
-				  echo ": ";
-				  echo $user->username;
-				} else if(($guestpost==0 && $user->guest)||($displayname==2 && !$user->guest)) { ?>
+				// Displays the Name of the user if logged in unless stated in the parameters to be a input box
+				if($displayname==0 && !$user->guest)
+				{
+					echo JText::_('SHOUT_NAME');
+					echo ": ";
+					echo $user->name;
+				}
+				elseif ($displayname == 1 && !$user->guest)
+				{
+					echo JText::_( 'SHOUT_NAME' );
+					echo ": ";
+					echo $user->username;
+				}
+				elseif (($guestpost == 0 && $user->guest)||($displayname == 2 && !$user->guest))
+				{ ?>
 					<input name="name" type="text" value="Name" maxlength="25" id="shoutbox-name" onfocus="this.value = (this.value=='Name')? '' : this.value;" />
 				<?php }
-				
-				if (($user->guest && $guestpost==0)||!$user->guest) {
+
+				if (($user->guest && $guestpost == 0) || !$user->guest)
+				{
 					echo '<br />';
-					//Adds in session token to prevent reposts and a security token to prevent CRSF attacks
-					$_SESSION['token'] = uniqid("token",true);
-					echo JHtml::_( 'form.token' );
+
+					// Adds in session token to prevent reposts and a security token to prevent CRSF attacks
+					$_SESSION['token'] = uniqid("token", true);
+					echo JHtml::_('form.token');
 					?>
 						<input name="token" type="hidden" value="<?php echo $_SESSION['token'];?>" />
 
@@ -123,9 +152,12 @@ $document->addStyleDeclaration( $style );
 							</span>
 						</noscript>
 						<textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
-						<?php if($smile == 1 || $smile == 2){ 
-								if($smile == 2){
-									if(version_compare(JVERSION,'3.0.0','ge')) { 
+						<?php if ($smile == 1 || $smile == 2)
+							{
+								if ($smile == 2)
+								{
+									if (version_compare(JVERSION, '3.0.0', 'ge'))
+									{
 										echo '<div id="jj_smiley_button">
 												<input id="jj_btn" type="button" class="btn btn-mini" value="&#9650;" />
 												<input id="jj_btn2" type="button" class="btn btn-mini" value="&#9660;" />
@@ -138,12 +170,13 @@ $document->addStyleDeclaration( $style );
 										      </div>';
 									}
 								}
+
 								echo '<div id="jj_smiley_box">';
-									$path = JPATH_SITE ."/modules/mod_shoutbox/assets/images";			
+									$path = JPATH_SITE . "/modules/mod_shoutbox/assets/images";
 									$smilies = JFolder::files($path);
-									echo modShoutboxHelper::smileyshow($smilies);					
+									echo ModShoutboxHelper::smileyshow($smilies);
 								echo '</div>';
-						} ?>						
+						} ?>
 						<script type="text/javascript">
 							function textCounter(textarea, countdown, maxlimit) {
 								textareaid = document.getElementById(textarea);
@@ -161,7 +194,8 @@ $document->addStyleDeclaration( $style );
 								  
 							}
 							textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
-							<?php if($smile == 1 || $smile == 2 ){ ?>
+							<?php if($smile == 1 || $smile == 2 )
+							{ ?>
 								(function($){
 									$('#jj_smiley_box img').click(function(){
 										var smiley = $(this).attr('alt');
@@ -187,7 +221,8 @@ $document->addStyleDeclaration( $style );
 											return pos;
 										}
 									});
-									<?php if($smile == 2){ ?>
+									<?php if($smile == 2)
+									{ ?>
 									$("#jj_smiley_button").click(function () {
 										$("#jj_smiley_box").slideToggle("slow");
 									});
@@ -207,36 +242,45 @@ $document->addStyleDeclaration( $style );
 						</script>
 		
 						<?php
-						//Shows recapture or math question depending on the parameters
-						if($params->get('recaptchaon')==0) {
-							if($params->get('recaptcha-public')=='' || $params->get('recaptcha-private')=='') {
+						// Shows recapture or math question depending on the parameters
+						if ($params->get('recaptchaon') == 0)
+						{
+							if ($params->get('recaptcha-public') == '' || $params->get('recaptcha-private') == '')
+							{
 								echo JText::_('SHOUT_RECAPTCHA_KEY_ERROR');
-							} else {
-
+							}
+							else
+							{
 								$publickey = $params->get('recaptcha-public');
 
-								if(!isset($resp)) {
+								if (!isset($resp))
+								{
 									$resp = null;
 								}
 
-								if(!isset($error)) {
+								if (!isset($error))
+								{
 									$error = null;
 								}
 
 								echo recaptcha_get_html($publickey, $error);
 							}
 						}
-						if($securityquestion==0){
-							$que_number1 = modShoutboxHelper::randomnumber(1);
-							$que_number2 = modShoutboxHelper::randomnumber(1); ?>
+
+						if ($securityquestion == 0)
+						{
+							$que_number1 = ModShoutboxHelper::randomnumber(1);
+							$que_number2 = ModShoutboxHelper::randomnumber(1); ?>
 							<label class="jj_label"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
 							<input type="hidden" name="sum1" value="<?php echo $que_number1; ?>" />
 							<input type="hidden" name="sum2" value="<?php echo $que_number2; ?>" />
 							<input class="jj_input" type="text" name="human" />
 						<?php
 						}
-						if($params->get('recaptchaon')==0 && $securityquestion==0){
-							//Shows warning if both security questions are enabled and logs to error file.
+
+						if ($params->get('recaptchaon') == 0 && $securityquestion == 0)
+						{
+							// Shows warning if both security questions are enabled and logs to error file.
 							JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
 							JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 						}
@@ -245,14 +289,16 @@ $document->addStyleDeclaration( $style );
 				<?php } ?>
 			</form> 
 			<?php
-			//Shows mass delete button if enabled
-			if($user->authorise('core.delete')) { 
-				if ($mass_delete == 0){ ?> 
+			// Shows mass delete button if enabled
+			if ($user->authorise('core.delete'))
+			{
+				if ($mass_delete == 0)
+				{ ?>
 					<form method="post" name="deleteall">
 						<input class="jj_admin_label" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
 						<input type="hidden" name="max" value="<?php echo $number; ?>" />
 						<?php
-						if(version_compare(JVERSION,'3.0.0','ge'))
+						if (version_compare(JVERSION, '3.0.0', 'ge'))
 						{
 							?><input class="btn btn-danger btn-small" name="deleteall" type="submit" style="width:35%;margin-bottom:10px;color:white;" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
 						}
@@ -264,8 +310,8 @@ $document->addStyleDeclaration( $style );
 					</form> 
 				<?php }
 			}
-		} else if($guestpost==1 && $guestpost==1) {
-			//Shows no members allowed to post text
+		} elseif($guestpost == 1 && $guestpost == 1) {
+			// Shows no members allowed to post text
 			?>
 			<p id="noguest"><?php echo $nonmembers; ?></p>
 		<?php } ?>
