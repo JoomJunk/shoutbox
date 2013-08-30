@@ -1,6 +1,6 @@
-<?php 
+<?php
 /**
-* @version    $Id:helper.php 2012-01-16 21:00:00
+* @version    $Id: helper.php 2012-01-16 21:00:00
 * @package    JJ_Shoutbox
 * @copyright  Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
 * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
@@ -51,6 +51,7 @@ class ModShoutboxHelper
 			catch (Exception $e)
 			{
 				// Output error to shoutbox.
+				$shouts[$i] = new stdClass;
 				$shouts[$i]->name = 'Administrator';
 				$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
 				$shouts[$i]->msg = $message;
@@ -69,6 +70,7 @@ class ModShoutboxHelper
 
 			if ($db->getErrorNum())
 			{
+				$shouts[$i] = new stdClass;
 				$shouts[$i]->name = 'Administrator';
 				$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
 				$shouts[$i]->msg = $message;
@@ -84,6 +86,7 @@ class ModShoutboxHelper
 
 		foreach ( $rows as $row )
 		{
+			$shouts[$i] = new stdClass;
 			$shouts[$i]->id = $row->id;
 			$shouts[$i]->name = $row->name;
 			$shouts[$i]->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
