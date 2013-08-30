@@ -17,6 +17,8 @@ $ -> Language fix or change
 
 Version 1.2.4
 + Add type color form fields to the colour fields
+^ Joomla PHPCS fixes
+# Fix errors with standard class intialisation
 
 Version 1.2.3
 # Update for 1.2.2 using a incorrect url for updating
