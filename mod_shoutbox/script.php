@@ -1,60 +1,78 @@
 <?php
 /**
-* @version   $Id:script.php 2012-01-16 21:00:00
-* @package   JJ Shoutbox
-* @copyright Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
-* @license   http://www.gnu.org/licenses/gpl-3.0.html
-*/
+ * @version    $Id: script.php 2012-01-16 21:00:00
+ * @package    JJ_Shoutbox
+ * @copyright  Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
+ * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
+ */
 // No direct access to this file
 defined('_JEXEC') or die('Restricted access');
- 
-class mod_shoutboxInstallerScript
+
+class Mod_ShoutboxInstallerScript
 {
-        function preflight( $type, $parent ) {
- 
-			// Module manifest file version
-			$this->release = $parent->get( "manifest" )->version;
-				// abort if the module being installed is not newer than the currently installed version
-				if ( $type == 'Update' ) {
-					$oldRelease = $this->getParam('version');
-					$rel = $oldRelease . JText::_('MOD_SHOUTBOX_VERSION_TO') . $this->release;
-					if ( version_compare( $this->release, $oldRelease, 'lt' ) ) {
-						if (!JError::$legacy) {
-							JFactory::getApplication()->enqueueMessage(JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE'), 'error');
-						} else {
-							Jerror::raiseWarning(null, JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE') . $rel);
-						}
-						return false;
+	public function preflight($type, $parent)
+	{
+		// Module manifest file version
+		$this->release = $parent->get("manifest")->version;
+
+			// Abort if the module being installed is not newer than the currently installed version
+			if ($type == 'Update')
+			{
+				$oldRelease = $this->getParam('version');
+				$rel = $oldRelease . JText::_('MOD_SHOUTBOX_VERSION_TO') . $this->release;
+
+				if (version_compare($this->release, $oldRelease, 'lt'))
+				{
+					if (!JError::$legacy)
+					{
+						JFactory::getApplication()->enqueueMessage(JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE'), 'error');
 					}
-					if ( version_compare( $oldRelease, $this->release, '<' ) ) {
-						if ( version_compare( $oldRelease, '1.1.3', '<=' ) ) {
-							$db = JFactory::getDBO();
-							$sql = "ALTER TABLE #__shoutbox ADD COLUMN user_id int(11) NOT NULL DEFAULT '0'";
-							$db->setQuery($sql);
-							$db->query();
-						}
+					else
+					{
+						JError::raiseWarning(null, JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE') . $rel);
+					}
+
+					return false;
+				}
+
+				if (version_compare($oldRelease, $this->release, '<'))
+				{
+					if (version_compare($oldRelease, '1.1.3', '<='))
+					{
+						$db = JFactory::getDBO();
+						$sql = "ALTER TABLE #__shoutbox ADD COLUMN user_id int(11) NOT NULL DEFAULT '0'";
+						$db->setQuery($sql);
+						$db->query();
 					}
 				}
-				else { $rel = $this->release; }
-		}
+			}
+			else
+			{
+				$rel = $this->release;
+			}
+	}
 
-		function install( $parent ) {
-			echo '<p>' . JText::_('MOD_SHOUTBOX_INSTALL') . '</p>';
-		}
+	public function install( $parent )
+	{
+		echo '<p>' . JText::_('MOD_SHOUTBOX_INSTALL') . '</p>';
+	}
 
-		function update( $parent ) {
-			echo '<p>' . JText::_('MOD_SHOUTBOX_UPDATE') . $this->release . '</p>';
-			echo '<p>' . JText::_('MOD_SHOUTBOX_UPDATE_CHANGELOG') . '</p>';
-		}
-		
-        function getParam( $name ) {
-                $db = JFactory::getDbo();
-				$query = $db->getQuery(true);
-				$query->select('manifest_cache')
-				->from('#__extensions')
-				->where('name =' . $db->Quote('JJ Shoutbox'));
-                $db->setQuery($query);
-                $manifest = json_decode( $db->loadResult(), true );
-                return $manifest[ $name ];
-        }
+	public function update( $parent )
+	{
+		echo '<p>' . JText::_('MOD_SHOUTBOX_UPDATE') . $this->release . '</p>';
+		echo '<p>' . JText::_('MOD_SHOUTBOX_UPDATE_CHANGELOG') . '</p>';
+	}
+
+	public function getParam($name)
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('manifest_cache')
+			->from('#__extensions')
+			->where('name =' . $db->Quote('JJ Shoutbox'));
+		$db->setQuery($query);
+        $manifest = json_decode( $db->loadResult(), true );
+
+		return $manifest[$name];
+	}
 }
