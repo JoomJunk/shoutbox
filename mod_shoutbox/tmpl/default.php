@@ -75,7 +75,7 @@ $document->addStyleDeclaration($style);
 							<?php
 								if ($smile == 0)
 								{
-									echo ModShoutboxHelper::smileyfilter($profile_link);
+									echo ModShoutboxHelper::smileyFilter($profile_link);
 								}
 								else
 								{
@@ -128,19 +128,19 @@ $document->addStyleDeclaration($style);
 			<form method="post" name="shout">
 				<?php
 				// Displays the Name of the user if logged in unless stated in the parameters to be a input box
-				if ($displayname==0 && !$user->guest)
+				if ($displayName == 0 && !$user->guest)
 				{
 					echo JText::_('SHOUT_NAME');
 					echo ": ";
 					echo $user->name;
 				}
-				elseif ($displayname == 1 && !$user->guest)
+				elseif ($displayName == 1 && !$user->guest)
 				{
 					echo JText::_('SHOUT_NAME');
 					echo ": ";
 					echo $user->username;
 				}
-				elseif (($guestpost == 0 && $user->guest)||($displayname == 2 && !$user->guest))
+				elseif (($guestpost == 0 && $user->guest)||($displayName == 2 && !$user->guest))
 				{
 				?>
 					<input name="name" type="text" value="Name" maxlength="25" id="shoutbox-name" onfocus="this.value = (this.value=='Name')? '' : this.value;" />

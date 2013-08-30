@@ -126,15 +126,15 @@ class ModShoutboxHelper
 	 *
 	 * @param   int      $shout         The shout post.
 	 * @param   JUser    $user          The user id number.
-	 * @param   boolean  $swearcounter  Is the swear counter is on.
-	 * @param   int      $swearnumber   If the swear counter is on - how many swears are allowed.
-	 * @param   int      $displayname   The user display name.
+	 * @param   boolean  $swearCounter  Is the swear counter is on.
+	 * @param   int      $swearNumber   If the swear counter is on - how many swears are allowed.
+	 * @param   int      $displayName   The user display name.
 	 *
 	 * @return  void
 	 *
 	 * @since 1.1.2
 	 */
-	public static function postfiltering($shout, $user, $swearcounter, $swearnumber, $displayname)
+	public static function postFiltering($shout, $user, $swearCounter, $swearNumber, $displayName)
 	{
 		if (isset($shout['shout']))
 		{
@@ -146,52 +146,52 @@ class ModShoutboxHelper
 				{
 					$replace = '****';
 
-					if (!$user->guest && $displayname == 0)
+					if (!$user->guest && $displayName == 0)
 					{
 						$name = $user->name;
-						$nameswears = 0;
+						$nameSwears = 0;
 					}
-					elseif (!$user->guest && $displayname == 1)
+					elseif (!$user->guest && $displayName == 1)
 					{
 						$name = $user->username;
-						$nameswears = 0;
+						$nameSwears = 0;
 					}
 					else
 					{
-						if ($swearcounter == 0)
+						if ($swearCounter == 0)
 						{
 							$before = substr_count($shout['name'], $replace);
 						}
 
 						$name = self::swearfilter($shout['name'], $replace);
 
-						if ($swearcounter == 0)
+						if ($swearCounter == 0)
 						{
 							$after = substr_count($name, $replace);
-							$nameswears = ($after - $before);
+							$nameSwears = ($after - $before);
 						}
 						else
 						{
-							$nameswears = 0;
+							$nameSwears = 0;
 						}
 					}
 
-					if ($swearcounter == 0)
+					if ($swearCounter == 0)
 					{
 						$before = substr_count($shout['message'], $replace);
 					}
 
 					$message = self::swearfilter($shout['message'], $replace);
 
-					if ($swearcounter == 0)
+					if ($swearCounter == 0)
 					{
 						$after = substr_count($message, $replace);
-						$messageswears = ($after - $before);
+						$messageSwears = ($after - $before);
 					}
 
 					$ip = $_SERVER['REMOTE_ADDR'];
 
-					if ($swearcounter == 1 || $swearcounter == 0 && (($nameswears + $messageswears) <= $swearnumber))
+					if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
 					{
 						self::addShout($name, $message, $ip);
 					}
@@ -234,7 +234,7 @@ class ModShoutboxHelper
 	 *
 	 * @since 1.0
 	 */
-	public static function smileyfilter($message)
+	public static function smileyFilter($message)
 	{
 		$replace = array(':)' => ' <img src="modules/mod_shoutbox/assets/images/icon_e_smile.gif" alt=":)">');
 
