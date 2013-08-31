@@ -10,11 +10,11 @@ defined('_JEXEC') or die('Restricted access');
 
 $document->addStyleSheet(JUri::root() . 'media/mod_shoutbox/css/mod_shoutbox.css');
 $style = '#jjshoutboxoutput {
-		border-color: #' . $params->get('bordercolor', 'FF3C16') . ';
+		border-color: ' . $params->get('bordercolor', '#FF3C16') . ';
 		border-width: ' . $params->get('borderwidth', '1') . 'px;
 	}
 	#jjshoutboxoutput div h1 {
-		background: #' . $params->get('headercolor', 'D0D0D0') . ';
+		background: ' . $params->get('headercolor', '#D0D0D0') . ';
 	}';
 
 if (version_compare(JVERSION, '3.0.0', 'le'))
@@ -29,7 +29,7 @@ $user = JFactory::getUser();
 if ($user->authorise('core.delete'))
 {
 	$style .= '#jjshoutboxoutput input[type=submit]{
-		color:#' . $params->get('deletecolor', 'FF0000') . ';
+		color:' . $params->get('deletecolor', '#FF0000') . ';
 	}';
 }
 
