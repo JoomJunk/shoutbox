@@ -15,41 +15,54 @@ class Mod_ShoutboxInstallerScript
 		// Module manifest file version
 		$this->release = $parent->get("manifest")->version;
 
-			// Abort if the module being installed is not newer than the currently installed version
-			if ($type == 'Update')
+		// Abort if the module being installed is not newer than the currently installed version
+		if ($type == 'Update')
+		{
+			$oldRelease = $this->getParam('version');
+			$rel = $oldRelease . JText::_('MOD_SHOUTBOX_VERSION_TO') . $this->release;
+
+			if (version_compare($this->release, $oldRelease, 'lt'))
 			{
-				$oldRelease = $this->getParam('version');
-				$rel = $oldRelease . JText::_('MOD_SHOUTBOX_VERSION_TO') . $this->release;
-
-				if (version_compare($this->release, $oldRelease, 'lt'))
+				if (!JError::$legacy)
 				{
-					if (!JError::$legacy)
-					{
-						JFactory::getApplication()->enqueueMessage(JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE'), 'error');
-					}
-					else
-					{
-						JError::raiseWarning(null, JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE') . $rel);
-					}
-
-					return false;
+					JFactory::getApplication()->enqueueMessage(JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE'), 'error');
+				}
+				else
+				{
+					JError::raiseWarning(null, JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE') . $rel);
 				}
 
-				if (version_compare($oldRelease, $this->release, '<'))
+				return false;
+			}
+
+			if (version_compare($oldRelease, $this->release, '<'))
+			{
+				if (version_compare($oldRelease, '1.1.3', '<='))
 				{
-					if (version_compare($oldRelease, '1.1.3', '<='))
+					$db = JFactory::getDBO();
+					$sql = "ALTER TABLE #__shoutbox ADD COLUMN user_id int(11) NOT NULL DEFAULT '0'";
+					$db->setQuery($sql);
+					$db->query();
+				}
+
+				if (version_compare($oldRelease, '1.2.3', '<='))
+				{
+					if (JFolder::create('media/mod_shoutbox')
+						&& JFolder::move(JUri::root() . 'modules/mod_shoutbox/assets/css', JUri::root() . 'media/mod_shoutbox')
+						&& JFolder::move(JUri::root() . 'modules/mod_shoutbox/assets/images', JUri::root() . 'media/mod_shoutbox')
+						&& JFolder::move(JUri::root() . 'modules/mod_shoutbox/assets/js', JUri::root() . 'media/mod_shoutbox')
+						&& JFolder::move(JUri::root() . 'modules/mod_shoutbox/assets/recaptcha', JUri::root() . 'media/mod_shoutbox')
+						&& JFile::move(JUri::root() . 'modules/mod_shoutbox/assets/index.html', JUri::root() . 'media/mod_shoutbox/index.html'))
 					{
-						$db = JFactory::getDBO();
-						$sql = "ALTER TABLE #__shoutbox ADD COLUMN user_id int(11) NOT NULL DEFAULT '0'";
-						$db->setQuery($sql);
-						$db->query();
+						JFolder::delete(JPATH_ROOT . '/modules/mod_shoutbox/assets');
 					}
 				}
 			}
-			else
-			{
-				$rel = $this->release;
-			}
+		}
+		else
+		{
+			$rel = $this->release;
+		}
 	}
 
 	public function install( $parent )

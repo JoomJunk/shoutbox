@@ -236,77 +236,77 @@ class ModShoutboxHelper
 	 */
 	public static function smileyFilter($message)
 	{
-		$replace = array(':)' => ' <img src="modules/mod_shoutbox/assets/images/icon_e_smile.gif" alt=":)">');
+		$replace = array(':)' => ' <img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array(':(' => ' <img src="modules/mod_shoutbox/assets/images/icon_e_sad.gif" alt=":(">');
+		$replace = array(':(' => ' <img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array(':D' => ' <img src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt=":D">');
+		$replace = array(':D' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array('xD' => ' <img src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt="xD">');
+		$replace = array('xD' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array(':p' => ' <img src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":p">');
+		$replace = array(':p' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":p">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array(':P' => ' <img src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":P">');
+		$replace = array(':P' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":P">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array(';)' => ' <img src="modules/mod_shoutbox/assets/images/icon_e_wink.gif" alt=";)">');
+		$replace = array(';)' => ' <img src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array(':S' => ' <img src="modules/mod_shoutbox/assets/images/icon_e_confused.gif" alt=":S">');
+		$replace = array(':S' => ' <img src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array(':@' => ' <img src="modules/mod_shoutbox/assets/images/icon_mad.gif" alt=":@">');
+		$replace = array(':@' => ' <img src="media/mod_shoutbox/images/icon_mad.gif" alt=":@">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array(':O' => ' <img src="modules/mod_shoutbox/assets/images/icon_e_surprised.gif" alt=":O">');
+		$replace = array(':O' => ' <img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O">');
 
 		foreach ($replace as $old => $new)
 		{
 			$message = str_replace($old, $new, $message);
 		}
 
-		$replace = array('lol' => ' <img src="modules/mod_shoutbox/assets/images/icon_lol.gif" alt="lol">');
+		$replace = array('lol' => ' <img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol">');
 
 		foreach ($replace as $old => $new)
 		{
@@ -326,16 +326,16 @@ class ModShoutboxHelper
 	public static function smileyshow()
 	{
 		$smilies = '';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_smile.gif" alt=":)" />';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_sad.gif" alt=":(" />';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt=":D" />';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_biggrin.gif" alt="xD" />';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_razz.gif" alt=":P" />';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_wink.gif" alt=";)" />';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_confused.gif" alt=":S" />';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_mad.gif" alt=":@" />';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_e_surprised.gif" alt=":O" />';
-		$smilies .= '<img class="jj_smiley" src="modules/mod_shoutbox/assets/images/icon_lol.gif" alt="lol" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_razz.gif" alt=":P" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_mad.gif" alt=":@" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O" />';
+		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_lol.gif" alt="lol" />';
 
 		return $smilies;
 	}

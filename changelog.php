@@ -16,9 +16,11 @@ $ -> Language fix or change
 ! -> Note
 
 Version 1.2.4
-+ Add type color form fields to the colour fields
++ Add type colour form fields to the colour fields
 ^ Joomla PHPCS fixes
-# Fix errors with standard class intialisation
+# Fix errors with standard class initialisation
+^ Moved all media files into Joomla media folder so they can be overrided by the template
+
 
 Version 1.2.3
 # Update for 1.2.2 using a incorrect url for updating

@@ -40,7 +40,7 @@ if ($smile == 1 || $smile == 2)
 		{
 			JFactory::getApplication()->set('jquery', true);
 			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
-			JHtml::_('script', JUri::root() . 'modules/mod_shoutbox/assets/js/jquery-conflict.js');
+			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js');
 		}
 	}
 }
@@ -82,7 +82,7 @@ JLog::addLogger(
 );
 
 $user = JFactory::getUser();
-require_once dirname(__FILE__) . '/assets/recaptcha/recaptchalib.php';
+require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
 if (isset($_POST))
 {
@@ -111,7 +111,7 @@ if (isset($_POST))
 
 				if ($resp->is_valid)
 				{
-					modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayname);
+					modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
 				}
 				else
 				{
