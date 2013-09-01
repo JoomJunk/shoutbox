@@ -35,11 +35,11 @@ class Mod_ShoutboxInstallerScript
 	/**
 	 * Function called before module installation/update/removal procedure commences
 	 *
-	 * @param   string                   $type    The type of change (install, update or discover_install
-	 *                                            , not uninstall)
+	 * @param   string                   $type    The type of change (install, update or discover_install,
+	 *                                            not uninstall)
 	 * @param   JInstallerAdapterModule  $parent  The class calling this method
 	 *
-	 * @return  mixed   void on success and false on failure
+	 * @return  boolean  true on success and false on failure
 	 *
 	 * @since  1.1.2
 	 */
@@ -88,6 +88,8 @@ class Mod_ShoutboxInstallerScript
 				}
 			}
 		}
+
+		return true;
 	}
 
 	/**
@@ -123,14 +125,14 @@ class Mod_ShoutboxInstallerScript
 	 * Gets each instance of a module in the #__modules table
 	 * For all other extensions see alternate query
 	 *
-	 * @param   string  $extensionType  The type of extension (Component, Module or Plugin)
+	 * @param   boolean  $isModule  True if the extension is a module as this can have multiple instances
 	 *
 	 * @return  array  An array of ID's of the extension
 	 *
 	 * @since  1.2.4
 	 * @see getExtensionInstance
 	 */
-	protected function getInstances($extensionType)
+	protected function getInstances($isModule)
 	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
@@ -138,7 +140,7 @@ class Mod_ShoutboxInstallerScript
 		// Select the item(s) and retrieve the id
 		$query->select($db->quoteName('id'));
 
-		if ($extensionType == 'module')
+		if ($isModule)
 		{
 			$query->from($db->quoteName('#__modules'))
 				->where('module = ' . $db->Quote($this->extension));
@@ -237,6 +239,8 @@ class Mod_ShoutboxInstallerScript
 		{
 			$db->query();
 		}
+
+		return true;
 	}
 
 	/**
@@ -313,7 +317,7 @@ class Mod_ShoutboxInstallerScript
 		 * We have moved to use the colour form field so a hash must be applied
 		 * to the parameters for them to function as expected still.
 		 */
-		$modules = $this->getInstances('module');
+		$modules = $this->getInstances(true);
 
 		foreach ($modules as $module)
 		{
