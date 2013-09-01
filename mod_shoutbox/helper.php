@@ -1,6 +1,5 @@
 <?php
 /**
-* @version    $Id: helper.php 2012-01-16 21:00:00
 * @package    JJ_Shoutbox
 * @copyright  Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
 * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
@@ -11,11 +10,7 @@ defined('_JEXEC') or die('Restricted access');
 /**
  * Shoutbox helper connector class.
  *
- * @package  JJ_Shoutbox
- *
- * @author   JoomJunk <admin@joomjunk.co.uk>
- * @license  GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
- * @since    1.0
+ * @since  1.0
  */
 class ModShoutboxHelper
 {

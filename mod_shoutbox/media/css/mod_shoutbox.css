@@ -1,16 +1,14 @@
 /**
-* @version   $Id: default.php 2012-01-16 21:00:00
-* @package   JJ Shoutbox
-* @copyright Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
-* @license   http://www.gnu.org/licenses/gpl-3.0.html
-*/
+ * @package    JJ_Shoutbox
+ * @copyright  Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
+ * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
+ */
 
 #jjshoutbox { margin: auto; }
 #jjshoutboxform { margin: 0 auto; }
 #jjshoutboxform textarea {
     width: 100%;
-    margin: 0;
-    margin-top: 5px;
+    margin: 5px 0 0 0;
     padding: 4px 0;
 }
 #jjshoutboxform input {
