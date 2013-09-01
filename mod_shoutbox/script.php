@@ -263,7 +263,7 @@ class Mod_ShoutboxInstallerScript
 		// Build the query
 		$query->select($db->quoteName($element))
 			->from($db->quoteName($table))
-			->where($db->quoteName($column) . ' = ' . $db->Quote($identifier));
+			->where($db->quoteName($column) . ' = ' . $identifier);
 		$db->setQuery($query);
 
 		// Load the single cell and json_decode data
