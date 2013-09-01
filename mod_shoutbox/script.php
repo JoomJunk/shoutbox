@@ -27,12 +27,6 @@ class Mod_ShoutboxInstallerScript
 	protected $paramTable = '#__modules';
 
 	/**
-	 * @var		string	The table column the parameters are stored in.
-	 * @since   1.2.4
-	 */
-	protected $paramColumn = 'params';
-
-	/**
 	 * @var		string	The extension name.
 	 * @since   1.2.4
 	 */
@@ -142,16 +136,16 @@ class Mod_ShoutboxInstallerScript
 		$query = $db->getQuery(true);
 
 		// Select the item(s) and retrieve the id
+		$query->select($db->quoteName('id'));
+
 		if ($extensionType == 'module')
 		{
-			$query->select($db->quoteName('id'))
-				->from($db->quoteName('#__modules'))
+			$query->from($db->quoteName('#__modules'))
 				->where('module = ' . $db->Quote($this->extension));
 		}
 		else
 		{
-			$query->select($db->quoteName('id'))
-				->from($db->quoteName('#__extensions'))
+			$query->from($db->quoteName('#__extensions'))
 				->where('element = ' . $db->Quote($this->extension));
 		}
 
@@ -180,7 +174,7 @@ class Mod_ShoutboxInstallerScript
 			return false;
 		}
 
-		$params = $this->getItemArray($this->paramColumn, $this->paramTable, 'id', $id);
+		$params = $this->getItemArray('params', $this->paramTable, 'id', $id);
 
 		return $params[$name];
 	}
@@ -204,7 +198,7 @@ class Mod_ShoutboxInstallerScript
 			return false;
 		}
 
-		$params = $this->getItemArray($this->paramColumn, $this->paramTable, 'id', $id);
+		$params = $this->getItemArray('params', $this->paramTable, 'id', $id);
 
 		if ($param_array)
 		{
@@ -229,7 +223,7 @@ class Mod_ShoutboxInstallerScript
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->update($db->quoteName($this->paramTable))
-			->set($this->paramColumn . ' = ' . $db->quote($paramsString))
+			->set('params = ' . $db->quote($paramsString))
 			->where('id = ' . $id);
 
 		// Update table
