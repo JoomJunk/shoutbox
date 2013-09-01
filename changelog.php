@@ -1,7 +1,6 @@
 <?php
-// no direct access
+// No direct access
 die('Restricted access');
-
 ?>
 
 Changelog
@@ -14,6 +13,10 @@ $ -> Language fix or change
 ^ -> Change
 - -> Removed
 ! -> Note
+
+Version 1.2.5
+# Fix a bug in the install of version 1.2.4
+$ Merge some strings together and use sprintf for some strings
 
 Version 1.2.4
 +$ Add type colour form fields to the colour fields

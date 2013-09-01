@@ -51,20 +51,18 @@ class Mod_ShoutboxInstallerScript
 		// Abort if the module being installed is not newer than the currently installed version
 		if ($type == 'Update')
 		{
-			$manifest = $this->getItemArray('manifest_cache', '#__extensions', 'element', $this->extension);
+			$manifest = $this->getItemArray('manifest_cache', '#__extensions', 'element', JFactory::getDbo()->quote($this->extension));
 			$oldRelease = $manifest['version'];
 
-			$rel = $oldRelease . JText::_('MOD_SHOUTBOX_VERSION_TO') . $this->release;
-
-			if (version_compare($this->release, $oldRelease, 'lt'))
+			if (version_compare($this->release, $oldRelease, '<'))
 			{
 				if (!JError::$legacy)
 				{
-					JFactory::getApplication()->enqueueMessage(JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE'), 'error');
+					JFactory::getApplication()->enqueueMessage(JText::sprintf('MOD_SHOUTBOX_INCORRECT_SEQUENCE', $oldRelease, $this->release), 'error');
 				}
 				else
 				{
-					JError::raiseWarning(null, JText::_('MOD_SHOUTBOX_INCORRECT_SEQUENCE') . $rel);
+					JError::raiseWarning(null, JText::sprintf('MOD_SHOUTBOX_INCORRECT_SEQUENCE', $oldRelease, $this->release));
 				}
 
 				return false;
@@ -117,7 +115,7 @@ class Mod_ShoutboxInstallerScript
 	 */
 	public function update($parent)
 	{
-		echo '<p>' . JText::_('MOD_SHOUTBOX_UPDATE') . $this->release . '</p>';
+		echo '<p>' . JText::sprintf('MOD_SHOUTBOX_UPDATE', $this->release) . '</p>';
 		echo '<p>' . JText::_('MOD_SHOUTBOX_UPDATE_CHANGELOG') . '</p>';
 	}
 
@@ -250,7 +248,7 @@ class Mod_ShoutboxInstallerScript
 	 * @param   string  $element     The element to get from the query
 	 * @param   string  $table       The table to search for the data in
 	 * @param   string  $column      The column of the database to search from
-	 * @param   string  $identifier  The property of the column to search for
+	 * @param   mixed   $identifier  The integer id or the already quoted string
 	 *
 	 * @return  array  associated array containing data from the cell
 	 *
@@ -265,7 +263,7 @@ class Mod_ShoutboxInstallerScript
 		// Build the query
 		$query->select($db->quoteName($element))
 			->from($db->quoteName($table))
-			->where($column . ' = ' . $db->Quote($identifier));
+			->where($db->quoteName($column) . ' = ' . $db->Quote($identifier));
 		$db->setQuery($query);
 
 		// Load the single cell and json_decode data
