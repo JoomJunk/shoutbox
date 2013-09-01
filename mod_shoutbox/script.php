@@ -129,51 +129,37 @@ class Mod_ShoutboxInstallerScript
 	 * Gets each instance of a module in the #__modules table
 	 * For all other extensions see alternate query
 	 *
+	 * @param   string  $extensionType  The type of extension (Component, Module or Plugin)
+	 *
 	 * @return  array  An array of ID's of the extension
 	 *
 	 * @since  1.2.4
 	 * @see getExtensionInstance
 	 */
-	protected function getModuleInstances()
+	protected function getInstances($extensionType)
 	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 
 		// Select the item(s) and retrieve the id
-		$query->select($db->quoteName('id'))
-			->from($db->quoteName('#__modules'))
-			->where('module = ' . $db->Quote($this->extension));
+		if ($extensionType == 'module')
+		{
+			$query->select($db->quoteName('id'))
+				->from($db->quoteName('#__modules'))
+				->where('module = ' . $db->Quote($this->extension));
+		}
+		else
+		{
+			$query->select($db->quoteName('id'))
+				->from($db->quoteName('#__extensions'))
+				->where('element = ' . $db->Quote($this->extension));
+		}
 
 		// Set the query and obtain an array of id's
 		$db->setQuery($query);
 		$items = $db->loadColumn();
 
 		return $items;
-	}
-
-	/**
-	 * Gets each instance of any extension that isn't a module
-	 *
-	 * @return  string  The id of an extension in the #__extension table
-	 *
-	 * @since  1.2.4
-	 * @see    getModuleInstances
-	 */
-	protected function getExtensionInstance()
-	{
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-
-		// Select the item and retrieve the id
-		$query->select($db->quoteName('id'))
-			->from($db->quoteName('#__extensions'))
-			->where('element = ' . $db->Quote($this->extension));
-
-		// Set the query and obtain the extension id
-		$db->setQuery($query);
-		$item = $db->loadResult();
-
-		return $item;
 	}
 
 	/**
@@ -333,7 +319,7 @@ class Mod_ShoutboxInstallerScript
 		 * We have moved to use the colour form field so a hash must be applied
 		 * to the parameters for them to function as expected still.
 		 */
-		$modules = $this->getModuleInstances();
+		$modules = $this->getInstances('module');
 
 		foreach ($modules as $module)
 		{
