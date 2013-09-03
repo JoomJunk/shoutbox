@@ -300,6 +300,10 @@ class Mod_ShoutboxInstallerScript
 	 */
 	protected function update124()
 	{
+		// Import dependencies
+		jimport('joomla.filesystem.folder');
+		jimport('joomla.filesystem.file');
+
 		// Move the assets
 		if (JFolder::create('media/mod_shoutbox')
 			&& JFolder::move(JUri::root() . 'modules/mod_shoutbox/assets/css', JUri::root() . 'media/mod_shoutbox')
@@ -308,6 +312,7 @@ class Mod_ShoutboxInstallerScript
 			&& JFolder::move(JUri::root() . 'modules/mod_shoutbox/assets/recaptcha', JUri::root() . 'media/mod_shoutbox')
 			&& JFile::move(JUri::root() . 'modules/mod_shoutbox/assets/index.html', JUri::root() . 'media/mod_shoutbox/index.html'))
 		{
+			// We can now delete the folder
 			JFolder::delete(JPATH_ROOT . '/modules/mod_shoutbox/assets');
 		}
 
