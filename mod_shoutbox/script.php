@@ -141,12 +141,12 @@ class Mod_ShoutboxInstallerScript
 		if ($isModule)
 		{
 			$query->from($db->quoteName('#__modules'))
-				->where('module = ' . $db->Quote($this->extension));
+				->where($db->quoteName('module') . ' = ' . $db->Quote($this->extension));
 		}
 		else
 		{
 			$query->from($db->quoteName('#__extensions'))
-				->where('element = ' . $db->Quote($this->extension));
+				->where($db->quoteName('element') . ' = ' . $db->Quote($this->extension));
 		}
 
 		// Set the query and obtain an array of id's
