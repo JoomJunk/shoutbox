@@ -24,6 +24,7 @@ $date = $params->get('date');
 $securityQuestion = $params->get('securityquestion');
 $mass_delete = $params->get('mass_delete');
 $recaptcha = $params->get('recaptchaon', 1);
+$enterclick = $params->get('enterclick');
 
 // Add in jQuery for AJAX and smilies
 $document = JFactory::getDocument();
