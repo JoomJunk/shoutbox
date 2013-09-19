@@ -315,16 +315,21 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 		if ($mass_delete == 0)
 		{ ?>
 			<form method="post" name="deleteall">
-				<input class="jj_admin_label" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
 				<input type="hidden" name="max" value="<?php echo $number; ?>" />
 				<?php
 				if (version_compare(JVERSION, '3.0.0', 'ge'))
 				{
-					?><input class="btn btn-danger btn-small" name="deleteall" type="submit" style="width:35%;margin-bottom:10px;color:white;" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
+					?><div class="input-append">
+						<input class="span2" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" style="width:50px;">
+						<input class="btn btn-danger" type="submit" name="deleteall" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
+					</div>	
+					<?php
 				}
 				else
 				{
-					?><input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
+					?>
+					<input class="jj_admin_label" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
+					<input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
 				}
 				?>
 			</form>

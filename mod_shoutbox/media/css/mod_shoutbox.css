@@ -15,7 +15,7 @@
     margin-top: 5px;
     color: #000;
     width: 100%;
-    padding: 4px 0;
+    padding: 5px 0;
 }
 #jjshoutboxoutput {
     height: 200px;
@@ -87,6 +87,7 @@
 }
 #jj_btn, #jj_btn2{
     cursor: pointer;
+	padding: 2px 5px !important;
 }
 #jj_btn{
     display: block;
