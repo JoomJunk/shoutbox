@@ -375,12 +375,34 @@ elseif ($guestpost == 1 && $guestpost == 1)
 							return false;
 						}
 						else {
+							var request = {
+								'name' : encodeURIComponent($('#shoutbox-name').val()),
+								'message' : encodeURIComponent($('#message').val()),
+								'<?php echo JSession::getFormToken(); ?>'    : '1',
+								'token'   : '<?php echo $_SESSION['token']; ?>',
+								'shout' : encodeURIComponent('Shout!'),
+								'title' : '<?php echo $title; ?>'
+								<?php
+								if($recaptcha==0) {
+								?>
+								,'recaptcha_response_field' : encodeURIComponent($('#recaptcha_response_field').val()),
+								'recaptcha_challenge_field' : encodeURIComponent($('#recaptcha_challenge_field').val())
+								<?php
+								}
+								elseif($securityQuestion==0)
+								{
+								?>
+								,'sum1' : '<?php echo $que_number1; ?>'
+								'sum2' : '<?php echo $que_number2; ?>'
+								'human' : encodeURIComponent($('#mathsanswer').val())
+								<?php
+								}
+								?>
+							};
 							$.ajax({
 								type: "POST",
-								url: "<?php echo JUri::current() . '?option=com_ajax&module=shoutbox&method=submit&title=' . $title; ?>",
-								data: 'name=' + encodeURIComponent($('#shoutbox-name').val()) + "&message=" + encodeURIComponent($('#message').val()) + "&<?php echo JSession::getFormToken(); ?>=1&token=<?php echo $_SESSION['token']; ?>&shout=" + encodeURIComponent('Shout!')
-									<?php if($recaptcha==0) { ?> + "&recaptcha_response_field=" + encodeURIComponent($('#recaptcha_response_field').val()) + "&recaptcha_challenge_field=" + encodeURIComponent($('#recaptcha_challenge_field').val())
-									<?php } elseif($securityQuestion==0) { ?> + "<?php echo '&sum1=' . $que_number1 . '&sum2=' . $que_number2 . '&human=';?>" + encodeURIComponent($('#mathsanswer').val()) <?php } ?>,
+								url: "<?php echo JUri::current() . '?option=com_ajax&module=shoutbox&method=submit'; ?>",
+								data: request,
 								success:function(){
 									<?php if($displayName==1 && !$user->guest){ ?>
 									var name = "<?php echo $user->username;?>";
