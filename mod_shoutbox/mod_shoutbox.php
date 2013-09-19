@@ -23,24 +23,29 @@ $profile = $params->get('profile');
 $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
 $mass_delete = $params->get('mass_delete');
+$recaptcha = $params->get('recaptchaon', 1);
 
-// Add in jQuery if smilies are required
+// Add in jQuery for AJAX and smilies
 $document = JFactory::getDocument();
 
-if ($smile == 1 || $smile == 2)
+if (version_compare(JVERSION, '3.0.0', 'ge'))
 {
-	if (version_compare(JVERSION, '3.0.0', 'ge'))
+	JHtml::_('jquery.framework');
+}
+else
+{
+	if (!JFactory::getApplication()->get('jquery'))
 	{
-		JHtml::_('jquery.framework');
-	}
-	else
-	{
-		if (!JFactory::getApplication()->get('jquery'))
+		JFactory::getApplication()->set('jquery', true);
+		if($params->get('jquery', '0') == 0)
 		{
-			JFactory::getApplication()->set('jquery', true);
-			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
-			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js');
+			$document->addScript("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
 		}
+		else
+		{
+			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery.js');
+		}
+		JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js');
 	}
 }
 
@@ -83,7 +88,17 @@ JLog::addLogger(
 $user = JFactory::getUser();
 require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
-if (isset($_POST))
+if (!get_magic_quotes_gpc())
+{
+	$input = new JInput();
+	$task = $input->get('task', null, 'cmd');
+}
+else
+{
+	$task = JRequest::getVar('task');
+}
+
+if (isset($_POST) || $task == "submitShout")
 {
 	if (!get_magic_quotes_gpc())
 	{
@@ -95,7 +110,7 @@ if (isset($_POST))
 		$post = JRequest::get('post');
 	}
 
-	if ($params->get('recaptchaon') == 0)
+	if ($recaptcha == 0)
 	{
 		if (isset($post["recaptcha_response_field"]))
 		{

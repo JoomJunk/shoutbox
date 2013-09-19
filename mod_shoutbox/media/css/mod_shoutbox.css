@@ -105,3 +105,21 @@
 #jjshoutboxform[type='number'] {
 	padding: 4px 0px;
 }
+.jj-shout-error {
+    background: #F00;
+    background: rgba(255, 0, 0, 0.7);
+    width: 100%;
+    height: 27px;
+    color: #FFF;
+    display: none;
+    text-align: center;
+    padding-top: 8px;
+    margin-top: 5px;
+}
+.jj-redBorder {
+    border: 1px solid red;
+}
+.inner-jj-error {
+    padding: 0;
+    margin: 0;
+}

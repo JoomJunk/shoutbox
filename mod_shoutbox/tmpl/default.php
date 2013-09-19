@@ -161,7 +161,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 								<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
 							</span>
 			</noscript>
-			<textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+			<textarea id="message" cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
 			<?php
 			if ($smile == 1 || $smile == 2)
 			{
@@ -263,7 +263,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 
 			<?php
 			// Shows recapture or math question depending on the parameters
-			if ($params->get('recaptchaon') == 0)
+			if ($recaptcha == 0)
 			{
 				if ($params->get('recaptcha-public') == '' || $params->get('recaptcha-private') == '')
 				{
@@ -294,7 +294,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				<label class="jj_label"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
 				<input type="hidden" name="sum1" value="<?php echo $que_number1; ?>" />
 				<input type="hidden" name="sum2" value="<?php echo $que_number2; ?>" />
-				<input class="jj_input" type="text" name="human" />
+				<input class="jj_input" type="text" name="human" id="mathsanswer" />
 			<?php
 			}
 
@@ -305,8 +305,11 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 			}
 			if($enterclick == 0) { ?>
-			<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />
-		<?php } } ?>
+				<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />
+		<?php
+			}
+		}
+	?>
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -347,3 +350,70 @@ elseif ($guestpost == 1 && $guestpost == 1)
 ?>
 </div>
 </div>
+<script>
+	(function($){
+		<?php if($enterclick == 1) { ?>
+		$("textarea#message").keypress(function(e){
+				if (e.keyCode == 13 && !e.shiftKey){
+					<?php } else { ?>
+					$( "#shoutbox-submit" ).click( function() {
+						<?php } ?>
+						if($('#message').val() == ""){
+
+							$('.jj-shout-error').append('<p class="inner-jj-error">Please enter a message!</p>').slideDown().show().delay(6000).queue(function(next){
+								$(this).slideUp().hide();
+								$('.inner-jj-error').remove();
+								next();
+							});
+
+							$('#message').addClass('jj-redBorder').delay(6000).queue(function(next){
+								$(this).removeClass('jj-redBorder');
+								next();
+							});
+							return false;
+						}
+						else {
+							$.ajax({
+								type: "POST",
+								url: "<?php echo JUri::current() . '?task=submitShout'; ?>",
+								data: 'name=' + encodeURIComponent($('#shoutbox-name').val()) + "&message=" + encodeURIComponent($('#message').val()) + "&<?php echo JSession::getFormToken(); ?>=1&token=<?php echo $_SESSION['token']; ?>&shout=" + encodeURIComponent('Shout!')
+									<?php if($recaptcha==0) { ?> + "&recaptcha_response_field=" + encodeURIComponent($('#recaptcha_response_field').val()) + "&recaptcha_challenge_field=" + encodeURIComponent($('#recaptcha_challenge_field').val())
+									<?php } elseif($securityquestion==0) { ?> + "<?php echo '&sum1='.$que_number1.'&sum2='.$que_number2.'&human=';?>" + encodeURIComponent($('#mathsanswer').val()) <?php } ?>,
+								success:function(){
+									<?php if($displayname==1 && !$user->guest){ ?>
+									var name = "<?php echo $user->username;?>";
+									<?php } elseif($displayname==0 && !$user->guest) { ?>
+									var name = "<?php echo $user->name;?>";
+									<?php } else { ?>
+									var name = $('#shoutbox-name').val();
+									<?php } ?>
+									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?></h1><p>' + $('#message').val() + '</p><br />').hide().insertAfter('#newshout').slideDown();
+									<?php if($displayname==2 || $user->guest)
+									{ ?>
+									$('#shoutbox-name').val('');
+									<?php }
+									if($securityquestion==0)
+									{?>
+									$('#mathsanswer').val('');
+									<?php }
+									if($recaptcha==0)
+									{ ?>
+									Recaptcha.reload();
+									<?php } ?>
+									$('#message').val('');
+								},
+								error:function(ts){
+									console.log(ts.responseText);
+								}
+							});
+							return false;
+						}
+						<?php if($enterclick == 1) { ?>
+					}
+				}
+				<?php } else { ?>
+			}
+			<?php } ?>
+		);
+	})(jQuery);
+</script>
