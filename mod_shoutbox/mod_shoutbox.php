@@ -92,17 +92,7 @@ JLog::addLogger(
 $user = JFactory::getUser();
 require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
-if (!get_magic_quotes_gpc())
-{
-	$input = new JInput();
-	$task = $input->get('task', null, 'cmd');
-}
-else
-{
-	$task = JRequest::getVar('task');
-}
-
-if (isset($_POST) || $task == "submitShout")
+if (isset($_POST))
 {
 	ModShoutboxHelper::submitAJAX($title);
 
