@@ -388,7 +388,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 									<?php } else { ?>
 									var name = $('#shoutbox-name').val();
 									<?php } ?>
-									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?></h1><p>' + $('#message').val() + '</p><br />').hide().insertAfter('#newshout').slideDown();
+									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?></h1><p>' + $('#message').val() + '</p>').hide().insertAfter('#newshout').slideDown();
 									<?php if($displayName==2 || $user->guest)
 									{ ?>
 									$('#shoutbox-name').val('');

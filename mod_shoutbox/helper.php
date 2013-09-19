@@ -307,7 +307,11 @@ class ModShoutboxHelper
 	 */
 	public static function swearfilter($post, $replace)
 	{
-		$myfile = 'modules/mod_shoutbox/swearWords.php';
+		// Import Dependencies
+		JLoader::import('joomla.filesystem.file');
+
+		// Define the location of the swear word list
+		$myfile = JPATH_SITE . 'modules/mod_shoutbox/swearWords.php';
 
 		if (!JFile::exists($myfile))
 		{
