@@ -163,6 +163,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 							</span>
 			</noscript>
 			<textarea id="message" cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+			<div class="jj-shout-error"></div>
 			<?php
 			if ($smile == 1 || $smile == 2)
 			{
