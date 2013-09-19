@@ -21,7 +21,7 @@ $submittext = $params->get('submittext');
 $nonmembers = $params->get('nonmembers');
 $profile = $params->get('profile');
 $date = $params->get('date');
-$securityquestion = $params->get('securityquestion');
+$securityQuestion = $params->get('securityquestion');
 $mass_delete = $params->get('mass_delete');
 $recaptcha = $params->get('recaptchaon', 1);
 
@@ -134,7 +134,7 @@ if (isset($_POST) || $task == "submitShout")
 			}
 		}
 	}
-	elseif ($securityquestion == 0)
+	elseif ($securityQuestion == 0)
 	{
 		if (isset($post['sum1']) && isset($post['sum2']))
 		{

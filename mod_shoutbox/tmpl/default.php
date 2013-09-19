@@ -287,7 +287,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				}
 			}
 
-			if ($securityquestion == 0)
+			if ($securityQuestion == 0)
 			{
 				$que_number1 = ModShoutboxHelper::randomnumber(1);
 				$que_number2 = ModShoutboxHelper::randomnumber(1); ?>
@@ -298,7 +298,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 			<?php
 			}
 
-			if ($params->get('recaptchaon') == 0 && $securityquestion == 0)
+			if ($params->get('recaptchaon') == 0 && $securityQuestion == 0)
 			{
 				// Shows warning if both security questions are enabled and logs to error file.
 				JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
@@ -306,10 +306,10 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 			}
 			if($enterclick == 0) { ?>
 				<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />
-		<?php
+			<?php
 			}
 		}
-	?>
+		?>
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -378,21 +378,21 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								url: "<?php echo JUri::current() . '?task=submitShout'; ?>",
 								data: 'name=' + encodeURIComponent($('#shoutbox-name').val()) + "&message=" + encodeURIComponent($('#message').val()) + "&<?php echo JSession::getFormToken(); ?>=1&token=<?php echo $_SESSION['token']; ?>&shout=" + encodeURIComponent('Shout!')
 									<?php if($recaptcha==0) { ?> + "&recaptcha_response_field=" + encodeURIComponent($('#recaptcha_response_field').val()) + "&recaptcha_challenge_field=" + encodeURIComponent($('#recaptcha_challenge_field').val())
-									<?php } elseif($securityquestion==0) { ?> + "<?php echo '&sum1='.$que_number1.'&sum2='.$que_number2.'&human=';?>" + encodeURIComponent($('#mathsanswer').val()) <?php } ?>,
+									<?php } elseif($securityQuestion==0) { ?> + "<?php echo '&sum1='.$que_number1.'&sum2='.$que_number2.'&human=';?>" + encodeURIComponent($('#mathsanswer').val()) <?php } ?>,
 								success:function(){
-									<?php if($displayname==1 && !$user->guest){ ?>
+									<?php if($displayName==1 && !$user->guest){ ?>
 									var name = "<?php echo $user->username;?>";
-									<?php } elseif($displayname==0 && !$user->guest) { ?>
+									<?php } elseif($displayName==0 && !$user->guest) { ?>
 									var name = "<?php echo $user->name;?>";
 									<?php } else { ?>
 									var name = $('#shoutbox-name').val();
 									<?php } ?>
 									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?></h1><p>' + $('#message').val() + '</p><br />').hide().insertAfter('#newshout').slideDown();
-									<?php if($displayname==2 || $user->guest)
+									<?php if($displayName==2 || $user->guest)
 									{ ?>
 									$('#shoutbox-name').val('');
 									<?php }
-									if($securityquestion==0)
+									if($securityQuestion==0)
 									{?>
 									$('#mathsanswer').val('');
 									<?php }
