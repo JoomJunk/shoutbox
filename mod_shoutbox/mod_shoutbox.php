@@ -11,6 +11,9 @@ jimport('joomla.filesystem.folder');
 
 require_once dirname(__FILE__) . '/helper.php';
 
+$title = 'shoutbox';
+$params = ModShoutboxHelper::getParams($title);
+
 $displayName = $params->get('loginname');
 $smile = $params->get('smile');
 $swearcounter = $params->get('swearingcounter');
@@ -101,69 +104,7 @@ else
 
 if (isset($_POST) || $task == "submitShout")
 {
-	if (!get_magic_quotes_gpc())
-	{
-		$input = new JInput;
-		$post = $input->getArray($_POST);
-	}
-	else
-	{
-		$post = JRequest::get('post');
-	}
-
-	if ($recaptcha == 0)
-	{
-		if (isset($post["recaptcha_response_field"]))
-		{
-			if ($post["recaptcha_response_field"])
-			{
-				$resp = recaptcha_check_answer(
-					$params->get('recaptcha-private'),
-					$_SERVER["REMOTE_ADDR"],
-					$post["recaptcha_challenge_field"],
-					$post["recaptcha_response_field"]
-				);
-
-				if ($resp->is_valid)
-				{
-					modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-				}
-				else
-				{
-					$error = $resp->error;
-				}
-			}
-		}
-	}
-	elseif ($securityQuestion == 0)
-	{
-		if (isset($post['sum1']) && isset($post['sum2']))
-		{
-			$que_result = $post['sum1'] + $post['sum2'];
-
-			if (isset($post['human']))
-			{
-				if ($post['human'] == $que_result)
-				{
-					modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-				}
-				else
-				{
-					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_ANSWER_INCORRECT'), 'error');
-				}
-			}
-		}
-	}
-	else
-	{
-		modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-	}
-
-	if (isset($post['delete']))
-	{
-		$deletepostnumber = $post['idvalue'];
-		modShoutboxHelper::deletepost($deletepostnumber);
-	}
+	ModShoutboxHelper::submitAJAX($title);
 
 	if ($mass_delete == 0)
 	{
@@ -188,12 +129,14 @@ if (isset($_POST) || $task == "submitShout")
 					{
 						JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
 						JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
+						return false;
 					}
 				}
 				else
 				{
 					JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
 					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
+					return false;
 				}
 			}
 		}

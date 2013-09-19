@@ -15,6 +15,24 @@ defined('_JEXEC') or die('Restricted access');
 class ModShoutboxHelper
 {
 	/**
+	 * Fetches the parameters of the shoutbox independently of the view
+	 * so it can be used for the AJAX
+	 *
+	 * @param   string  $instance  The instance of the module to retrieve
+	 *
+	 * @return  JRegistry  The parameters of the module
+	 */
+	public static function getParams($instance = 'mod_shoutbox')
+	{
+		jimport('joomla.application.module.helper');
+		$module = JModuleHelper::getModule($instance);
+		$moduleParams = new JRegistry();
+		$moduleParams->loadString($module->params);
+
+		return $moduleParams;
+	}
+
+	/**
 	 * Retrieves the shouts from the database and returns them. Will return an error
 	 * message if the database retrieval fails.
 	 *
@@ -521,5 +539,103 @@ class ModShoutboxHelper
 		}
 
 		return (rand() % $range + $start);
+	}
+
+	/**
+	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
+	 *
+	 * @param   string  $instance  The instance of the module.
+	 *
+	 * @return   boolean  True on success, false on failure
+	 */
+	public static function submitAJAX($instance = 'mod_shoutbox')
+	{
+		$input  = JFactory::getApplication()->input;
+
+		// If coming from AJAX let's get the title from the request
+		if ($input->get('title'))
+		{
+			$instance = $input->get('title');
+		}
+
+		// Get the user instance
+		$user = JFactory::getUser();
+
+		// Retrieve relevant parameters
+		$params = static::getParams($instance);
+		$displayName = $params->get('loginname');
+		$recaptcha = $params->get('recaptchaon', 1);
+		$swearcounter = $params->get('swearingcounter');
+		$swearnumber = $params->get('swearingnumber');
+		$securityQuestion = $params->get('securityquestion');
+
+		if (!get_magic_quotes_gpc())
+		{
+			$post = $input->getArray($_POST);
+		}
+		else
+		{
+			$post = JRequest::get('post');
+		}
+
+		if ($recaptcha == 0)
+		{
+			// Recaptcha is on
+			if (isset($post["recaptcha_response_field"]))
+			{
+				if ($post["recaptcha_response_field"])
+				{
+					$resp = recaptcha_check_answer(
+						$params->get('recaptcha-private'),
+						$_SERVER["REMOTE_ADDR"],
+						$post["recaptcha_challenge_field"],
+						$post["recaptcha_response_field"]
+					);
+
+					if ($resp->is_valid)
+					{
+						static::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+					}
+					else
+					{
+						$error = $resp->error;
+					}
+				}
+			}
+		}
+		elseif ($securityQuestion == 0)
+		{
+			// Our maths security question is on
+			if (isset($post['sum1']) && isset($post['sum2']))
+			{
+				$que_result = $post['sum1'] + $post['sum2'];
+
+				if (isset($post['human']))
+				{
+					if ($post['human'] == $que_result)
+					{
+						static::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+					}
+					else
+					{
+						JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_ANSWER_INCORRECT'), 'error');
+
+						return false;
+					}
+				}
+			}
+		}
+		else
+		{
+			static::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+		}
+
+		if (isset($post['delete']))
+		{
+			$deletepostnumber = $post['idvalue'];
+			static::deletepost($deletepostnumber);
+		}
+
+		return true;
 	}
 }
