@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 2.0.0
++ Add in AJAX for Joomla 3.2 and higher
+
 Version 1.2.5
 # Fix a bug in the install of version 1.2.4
 $ Merge some strings together and use sprintf for some strings
