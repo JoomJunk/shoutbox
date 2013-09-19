@@ -133,7 +133,7 @@ class ModShoutboxHelper
 	{
 		if (isset($shout['shout']))
 		{
-			JSession::checkToken() or die( JText::_('SHOUT_INVALID_TOKEN') );
+			JSession::checkToken() or jexit(JText::_('SHOUT_INVALID_TOKEN'));
 
 			if (!empty($shout['message']))
 			{
