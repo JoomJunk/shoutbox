@@ -388,18 +388,18 @@ elseif ($guestpost == 1 && $guestpost == 1)
 							}
 							<?php } ?>
 							var request = {
-								'name' : encodeURIComponent(name),
-								'message' : encodeURIComponent($('#message').val()),
+								'name' : name,
+								'message' : $('#message').val(),
 								'<?php echo JSession::getFormToken(); ?>'    : '1',
 								'token'   : '<?php echo $_SESSION['token']; ?>',
-								'shout' : encodeURIComponent('Shout!'),
+								'shout' : 'Shout!',
 								'title' : '<?php echo $title; ?>',
 								'ajax' : 'true'
 								<?php
 								if($recaptcha==0) {
 								?>
-								,'recaptcha_response_field' : encodeURIComponent($('#recaptcha_response_field').val()),
-								'recaptcha_challenge_field' : encodeURIComponent($('#recaptcha_challenge_field').val())
+								,'recaptcha_response_field' : $('#recaptcha_response_field').val(),
+								'recaptcha_challenge_field' : $('#recaptcha_challenge_field').val()
 								<?php
 								}
 								elseif($securityQuestion==0)
@@ -407,7 +407,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								?>
 								,'sum1' : '<?php echo $que_number1; ?>'
 								'sum2' : '<?php echo $que_number2; ?>'
-								'human' : encodeURIComponent($('#mathsanswer').val())
+								'human' : $('#mathsanswer').val()
 								<?php
 								}
 								?>
