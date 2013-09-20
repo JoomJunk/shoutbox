@@ -102,3 +102,6 @@
 .outter_jj_smiley:hover {
     background:none !important;
 }
+#jjshoutboxform[type=' number'] {
+	padding: 4px 0px;
+}
