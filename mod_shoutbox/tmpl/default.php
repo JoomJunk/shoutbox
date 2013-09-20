@@ -367,7 +367,10 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								$('.inner-jj-error').remove();
 								next();
 							});
-
+							var $elt = $('#shoutbox-submit').attr('disabled', true);
+							setTimeout(function (){
+								$elt.attr('disabled', false);
+							}, 6000);
 							$('#message').addClass('jj-redBorder').delay(6000).queue(function(next){
 								$(this).removeClass('jj-redBorder');
 								next();
