@@ -177,6 +177,14 @@ class ModShoutboxHelper
 						}
 
 						$name = self::swearfilter($shout['name'], $replace);
+						
+						// Retrieve genericname parameters
+						$params = static::getParams('mod_shoutbox');
+						$genericname = $params->get('genericname');
+						if($name == '')
+						{
+							$name = $genericname;
+						}
 
 						if ($swearCounter == 0)
 						{

@@ -375,6 +375,18 @@ elseif ($guestpost == 1 && $guestpost == 1)
 							return false;
 						}
 						else {
+							<?php if($displayName==1 && !$user->guest){ ?>
+							var name = "<?php echo $user->username;?>";
+							<?php } elseif($displayName==0 && !$user->guest) { ?>
+							var name = "<?php echo $user->name;?>";
+							<?php } else { ?>
+							if($('#shoutbox-name').val() == ""){
+								var name = "<?php echo $genericname; ?>";
+							}
+							else{
+								var name = $('#shoutbox-name').val();
+							}
+							<?php } ?>
 							var request = {
 								'name' : encodeURIComponent($('#shoutbox-name').val()),
 								'message' : encodeURIComponent($('#message').val()),
@@ -404,13 +416,6 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								url: "<?php echo JUri::current() . '?option=com_ajax&module=shoutbox&method=submit'; ?>",
 								data: request,
 								success:function(){
-									<?php if($displayName==1 && !$user->guest){ ?>
-									var name = "<?php echo $user->username;?>";
-									<?php } elseif($displayName==0 && !$user->guest) { ?>
-									var name = "<?php echo $user->name;?>";
-									<?php } else { ?>
-									var name = $('#shoutbox-name').val();
-									<?php } ?>
 									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?></h1><p>' + $('#message').val().replace(/\n/g, "<br />") + '</p>').hide().insertAfter('#newshout').slideDown();
 									<?php if($displayName==2 || $user->guest)
 									{ ?>

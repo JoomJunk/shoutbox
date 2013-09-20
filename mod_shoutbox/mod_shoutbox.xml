@@ -78,6 +78,7 @@
 					<option value="1">SHOUT_USER</option>
 					<option value="2">SHOUT_CHOOSE</option>
 				</field>
+				<field name="genericname" type="text" default="Anonymous" label="SHOUT_GENERIC_NAME" description="SHOUT_GENERIC_NAME_DESC" />
 				<field name="guestpost" type="radio" default="0" label="SHOUT_GUESTLABEL" description="SHOUT_GUESTDESC">
 					<option value="0">JYES</option>
 					<option value="1">JNO</option>

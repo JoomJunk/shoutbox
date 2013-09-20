@@ -28,6 +28,7 @@ $securityQuestion = $params->get('securityquestion');
 $mass_delete = $params->get('mass_delete');
 $recaptcha = $params->get('recaptchaon', 1);
 $enterclick = $params->get('enterclick');
+$genericname = $params->get('genericname', 'Anonymous');
 
 // Add in jQuery for AJAX and smilies
 $document = JFactory::getDocument();
