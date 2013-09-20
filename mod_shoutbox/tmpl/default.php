@@ -412,6 +412,24 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								}
 								?>
 							};
+							var map = {
+								':)':   '<img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)" />',
+								':(':   '<img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(" />',
+								':D':   '<img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D" />',
+								'xD':   '<img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD" />',
+								':P':   '<img src="media/mod_shoutbox/images/icon_razz.gif" alt=":P" />',
+								';)':   '<img src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)" />',
+								':S':   '<img src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S" />',
+								':@':   '<img src="media/mod_shoutbox/images/icon_mad.gif" alt=":@" />',
+								':O':   '<img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O" />',
+								'lol':   '<img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol" />'
+							},
+							message = $('#message').val();
+							Object.keys( map ).forEach(function( ico ) {
+								var icoE   = ico.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+								message    = message.replace( new RegExp(icoE, 'g'), map[ico] );
+							});
+							filtered_message = message.replace(/\n/g, "<br />");
 							$.ajax({
 								type: "POST",
 								url: "<?php echo JUri::current() . '?option=com_ajax&module=shoutbox&method=submit&format=json'; ?>",
@@ -426,7 +444,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 									<?php
 									}
 									?>
-									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?>' + deleteResponse + '</h1><p>' + $('#message').val().replace(/\n/g, "<br />") + '</p>').hide().insertAfter('#newshout').slideDown();
+									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?>' + deleteResponse + '</h1><p>' + filtered_message + '</p>').hide().insertAfter('#newshout').slideDown();
 									<?php if($displayName == 2 || $user->guest)
 									{ ?>
 									$('#shoutbox-name').val('');
