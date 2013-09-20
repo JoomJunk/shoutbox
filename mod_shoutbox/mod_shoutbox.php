@@ -97,6 +97,23 @@ if (isset($_POST))
 {
 	ModShoutboxHelper::submitAJAX($title);
 
+	$input  = JFactory::getApplication()->input;
+
+	if (!get_magic_quotes_gpc())
+	{
+		$post = $input->getArray($_POST);
+	}
+	else
+	{
+		$post = JRequest::get('post');
+	}
+
+	if (isset($post['delete']))
+	{
+		$deletepostnumber = $post['idvalue'];
+		static::deletepost($deletepostnumber);
+	}
+
 	if ($mass_delete == 0)
 	{
 		if (isset($post['deleteall']))

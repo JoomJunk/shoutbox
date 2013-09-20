@@ -661,12 +661,6 @@ class ModShoutboxHelper
 			}
 		}
 
-		if (isset($post['delete']))
-		{
-			$deletepostnumber = $post['idvalue'];
-			static::deletepost($deletepostnumber);
-		}
-
 		return true;
 	}
 }
