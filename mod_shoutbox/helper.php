@@ -229,83 +229,37 @@ class ModShoutboxHelper
 	 *
 	 * @since 1.0
 	 */
+	/**
+	 * Replaces all the smilies in the message.
+	 *
+	 * @param   string  $message  The message to be searched to add smilies in.
+	 *
+	 * @return   string  $message  The message with the smiley code in.
+	 *
+	 * @since 1.0
+	 */
 	public static function smileyFilter($message)
 	{
-		$replace = array(':)' => ' <img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)">');
+		$smileys = array(
+			array(':)' => ' <img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)">'),
+			array(':(' => ' <img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(">'),
+			array(':D' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D">'),
+			array('xD' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD">'),
+			array(':p' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":p">'),
+			array(':P' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":P">'),
+			array(';)' => ' <img src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)">'),
+			array(':S' => ' <img src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S">'),
+			array(':@' => ' <img src="media/mod_shoutbox/images/icon_mad.gif" alt=":@">'),
+			array(':O' => ' <img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O">'),
+			array('lol' => ' <img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol">'),
+		);
 
-		foreach ($replace as $old => $new)
+		foreach ($smileys as $replace)
 		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array(':(' => ' <img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array(':D' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array('xD' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array(':p' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":p">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array(':P' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":P">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array(';)' => ' <img src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array(':S' => ' <img src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array(':@' => ' <img src="media/mod_shoutbox/images/icon_mad.gif" alt=":@">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array(':O' => ' <img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
-		}
-
-		$replace = array('lol' => ' <img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol">');
-
-		foreach ($replace as $old => $new)
-		{
-			$message = str_replace($old, $new, $message);
+			foreach ($replace as $old => $new)
+			{
+				$message = str_replace($old, $new, $message);
+			}
 		}
 
 		return $message;
