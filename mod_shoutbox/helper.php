@@ -232,25 +232,22 @@ class ModShoutboxHelper
 	public static function smileyFilter($message)
 	{
 		$smileys = array(
-			array(':)' => ' <img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)">'),
-			array(':(' => ' <img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(">'),
-			array(':D' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D">'),
-			array('xD' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD">'),
-			array(':p' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":p">'),
-			array(':P' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":P">'),
-			array(';)' => ' <img src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)">'),
-			array(':S' => ' <img src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S">'),
-			array(':@' => ' <img src="media/mod_shoutbox/images/icon_mad.gif" alt=":@">'),
-			array(':O' => ' <img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O">'),
-			array('lol' => ' <img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol">'),
+			':)' => ' <img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)">',
+			':(' => ' <img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(">',
+			':D' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D">',
+			'xD' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD">',
+			':p' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":p">',
+			':P' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":P">',
+			';)' => ' <img src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)">',
+			':S' => ' <img src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S">',
+			':@' => ' <img src="media/mod_shoutbox/images/icon_mad.gif" alt=":@">',
+			':O' => ' <img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O">',
+			'lol' => ' <img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol">',
 		);
 
-		foreach ($smileys as $replace)
+		foreach ($smileys as $key => $val)
 		{
-			foreach ($replace as $old => $new)
-			{
-				$message = str_replace($old, $new, $message);
-			}
+			$message = str_replace($key, $val, $message);
 		}
 
 		return $message;
