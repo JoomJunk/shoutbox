@@ -122,7 +122,7 @@ if (isset($_POST))
 	if (isset($post['delete']))
 	{
 		$deletepostnumber = $post['idvalue'];
-		static::deletepost($deletepostnumber);
+		ModShoutboxHelper::deletepost($deletepostnumber);
 	}
 
 	if ($mass_delete == 0)
