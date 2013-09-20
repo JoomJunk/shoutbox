@@ -229,7 +229,6 @@ class ModShoutboxHelper
 	 *
 	 * @since 1.0
 	 */
-
 	public static function smileyFilter($message)
 	{
 		$smileys = array(
