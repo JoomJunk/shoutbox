@@ -221,23 +221,15 @@ class ModShoutboxHelper
 	}
 
 	/**
-	 * Replaces all the smilies in the message.
+	 * Replaces all the smileys in the message.
 	 *
-	 * @param   string  $message  The message to be searched to add smilies in.
-	 *
-	 * @return   string  $message  The message with the smiley code in.
-	 *
-	 * @since 1.0
-	 */
-	/**
-	 * Replaces all the smilies in the message.
-	 *
-	 * @param   string  $message  The message to be searched to add smilies in.
+	 * @param   string  $message  The message to be searched to add smileys in.
 	 *
 	 * @return   string  $message  The message with the smiley code in.
 	 *
 	 * @since 1.0
 	 */
+
 	public static function smileyFilter($message)
 	{
 		$smileys = array(
