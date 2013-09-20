@@ -15,6 +15,12 @@ defined('_JEXEC') or die('Restricted access');
 class ModShoutboxHelper
 {
 	/**
+	 * @var		boolean  Is the post being submitted by AJAX
+	 * @since   2.0.0
+	 */
+	private static $ajax = false;
+
+	/**
 	 * Fetches the parameters of the shoutbox independently of the view
 	 * so it can be used for the AJAX
 	 *
@@ -135,7 +141,7 @@ class ModShoutboxHelper
 	}
 
 	/**
-	 * Filters the posts before calling the add function.
+	 * Filters the posts before adding the post.
 	 *
 	 * @param   int      $shout         The shout post.
 	 * @param   JUser    $user          The user id number.
@@ -143,11 +149,11 @@ class ModShoutboxHelper
 	 * @param   int      $swearNumber   If the swear counter is on - how many swears are allowed.
 	 * @param   int      $displayName   The user display name.
 	 *
-	 * @return  void
+	 * @return  mixed  Array when called by AJAX, otherwise boolean depending on success.
 	 *
 	 * @since 1.1.2
 	 */
-	public static function postFiltering($shout, $user, $swearCounter, $swearNumber, $displayName)
+	public static function addShout($shout, $user, $swearCounter, $swearNumber, $displayName)
 	{
 		if (isset($shout['shout']))
 		{
@@ -176,7 +182,7 @@ class ModShoutboxHelper
 							$before = substr_count($shout['name'], $replace);
 						}
 
-						$name = self::swearfilter($shout['name'], $replace);
+						$name = static::swearfilter($shout['name'], $replace);
 						
 						// Retrieve genericname parameters
 						$params = static::getParams('mod_shoutbox');
@@ -202,23 +208,79 @@ class ModShoutboxHelper
 						$before = substr_count($shout['message'], $replace);
 					}
 
-					$message = nl2br(self::swearfilter($shout['message'], $replace));
+					$message = nl2br(static::swearfilter($shout['message'], $replace));
 
 					if ($swearCounter == 0)
 					{
 						$after = substr_count($message, $replace);
 						$messageSwears = ($after - $before);
 					}
+					else
+					{
+						$messageSwears = 0;
+					}
 
 					$ip = $_SERVER['REMOTE_ADDR'];
 
 					if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
 					{
-						self::addShout($name, $message, $ip);
+						$config = JFactory::getConfig();
+						$db = JFactory::getDbo();
+						$columns = array('name', 'when', 'ip', 'msg', 'user_id');
+						$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)),
+							$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
+						$query = $db->getQuery(true);
+
+						if (version_compare(JVERSION, '3.0.0', 'ge'))
+						{
+							$query
+								->insert($db->quoteName('#__shoutbox'))
+								->columns($db->quoteName($columns))
+								->values(implode(',', $values));
+						}
+						else
+						{
+							$query
+								->insert($db->nameQuote('#__shoutbox'))
+								->columns($db->nameQuote($columns))
+								->values(implode(',', $values));
+						}
+
+						$db->setQuery($query);
+
+						if (version_compare(JVERSION, '3.0.0', 'ge'))
+						{
+							try
+							{
+								$db->execute();
+							}
+							catch (Exception $e)
+							{
+								JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+							}
+						}
+						else
+						{
+							$db->query();
+
+							if ($db->getErrorNum())
+							{
+								JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $db->getErrorMsg()), JLog::CRITICAL, 'mod_shoutbox');
+							}
+						}
+
+						if(static::$ajax)
+						{
+							return array('value' => $db->insertid());
+						}
+
+						return true;
 					}
 				}
 			}
 		}
+
+		return false;
 	}
 
 	/**
@@ -341,7 +403,7 @@ class ModShoutboxHelper
 
 		foreach ($swearwords as $key => $word )
 		{
-			$post = self::stri_replace($word, $replace, $post);
+			$post = static::stri_replace($word, $replace, $post);
 		}
 
 		return $post;
@@ -411,65 +473,6 @@ class ModShoutboxHelper
 	}
 
 	/**
-	 * Adds a shout to the database.
-	 *
-	 * @param   string  $name     The post to be searched.
-	 * @param   string  $message  The name of the user from the database.
-	 * @param   string  $ip       The ip of the user.
-	 *
-	 * @return   void
-	 *
-	 * @since 1.0
-	 */
-	public static function addShout($name, $message, $ip)
-	{
-		$db = JFactory::getDBO();
-		$config = JFactory::getConfig();
-		$columns = array('name', 'when', 'ip', 'msg', 'user_id');
-		$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)),
-			$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
-		$query = $db->getQuery(true);
-
-		if (version_compare(JVERSION, '3.0.0', 'ge'))
-		{
-			$query
-				->insert($db->quoteName('#__shoutbox'))
-				->columns($db->quoteName($columns))
-				->values(implode(',', $values));
-		}
-		else
-		{
-			$query
-				->insert($db->nameQuote('#__shoutbox'))
-				->columns($db->nameQuote($columns))
-				->values(implode(',', $values));
-		}
-
-		$db->setQuery($query);
-
-		if (version_compare(JVERSION, '3.0.0', 'ge'))
-		{
-			try
-			{
-				$db->execute();
-			}
-			catch (Exception $e)
-			{
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
-			}
-		}
-		else
-		{
-			$db->query();
-
-			if ($db->getErrorNum())
-			{
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $db->getErrorMsg()), JLog::CRITICAL, 'mod_shoutbox');
-			}
-		}
-	}
-
-	/**
 	 * Removes a shout to the database.
 	 *
 	 * @param   int  $id  The id of the post to be deleted.
@@ -518,7 +521,7 @@ class ModShoutboxHelper
 
 		foreach ($rows as $row)
 		{
-			self::deletepost($row->id);
+			static::deletepost($row->id);
 		}
 	}
 
@@ -558,16 +561,17 @@ class ModShoutboxHelper
 	 *
 	 * @param   string  $instance  The instance of the module.
 	 *
-	 * @return   boolean  True on success, false on failure
+	 * @return   mixed  True on success outside of AJAX mode, false on failure. Integer on success when accessed via AJAX.
 	 */
 	public static function submitAJAX($instance = 'mod_shoutbox')
 	{
 		$input  = JFactory::getApplication()->input;
 
 		// If coming from AJAX let's get the title from the request
-		if ($input->get('title'))
+		if ($input->get('ajax'))
 		{
 			$instance = $input->get('title');
+			static::$ajax = true;
 		}
 
 		// Get the user instance
@@ -606,7 +610,12 @@ class ModShoutboxHelper
 
 					if ($resp->is_valid)
 					{
-						static::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+						$result = static::addShout($post, $user, $swearcounter, $swearnumber, $displayName);
+
+						if (static::$ajax)
+						{
+							return $result;
+						}
 					}
 					else
 					{
@@ -626,7 +635,12 @@ class ModShoutboxHelper
 				{
 					if ($post['human'] == $que_result)
 					{
-						static::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+						$result = static::addShout($post, $user, $swearcounter, $swearnumber, $displayName);
+
+						if (static::$ajax)
+						{
+							return $result;
+						}
 					}
 					else
 					{
@@ -639,7 +653,12 @@ class ModShoutboxHelper
 		}
 		else
 		{
-			static::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+			$result = static::addShout($post, $user, $swearcounter, $swearnumber, $displayName);
+
+			if (static::$ajax)
+			{
+				return $result;
+			}
 		}
 
 		if (isset($post['delete']))

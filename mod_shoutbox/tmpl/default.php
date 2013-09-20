@@ -354,14 +354,14 @@ elseif ($guestpost == 1 && $guestpost == 1)
 </div>
 <script>
 	(function($){
+		var textarea = $("textarea#message");
 		<?php if($enterclick == 1) { ?>
-		$("textarea#message").keypress(function(e){
-				if (e.keyCode == 13 && !e.shiftKey){
-					<?php } else { ?>
+		textarea.keypress(function(e){
+			if (e.keyCode == 13 && !e.shiftKey){
+				<?php } else { ?>
 					$( "#shoutbox-submit" ).click( function() {
 						<?php } ?>
-						if($('#message').val() == ""){
-
+						if(textarea.val() == ""){
 							$('.jj-shout-error').append('<p class="inner-jj-error">Please enter a message!</p>').slideDown().show().delay(6000).queue(function(next){
 								$(this).slideUp().hide();
 								$('.inner-jj-error').remove();
@@ -388,12 +388,13 @@ elseif ($guestpost == 1 && $guestpost == 1)
 							}
 							<?php } ?>
 							var request = {
-								'name' : encodeURIComponent($('#shoutbox-name').val()),
+								'name' : encodeURIComponent(name),
 								'message' : encodeURIComponent($('#message').val()),
 								'<?php echo JSession::getFormToken(); ?>'    : '1',
 								'token'   : '<?php echo $_SESSION['token']; ?>',
 								'shout' : encodeURIComponent('Shout!'),
-								'title' : '<?php echo $title; ?>'
+								'title' : '<?php echo $title; ?>',
+								'ajax' : 'true'
 								<?php
 								if($recaptcha==0) {
 								?>
@@ -413,23 +414,32 @@ elseif ($guestpost == 1 && $guestpost == 1)
 							};
 							$.ajax({
 								type: "POST",
-								url: "<?php echo JUri::current() . '?option=com_ajax&module=shoutbox&method=submit'; ?>",
+								url: "<?php echo JUri::current() . '?option=com_ajax&module=shoutbox&method=submit&format=json'; ?>",
 								data: request,
-								success:function(){
-									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?></h1><p>' + $('#message').val().replace(/\n/g, "<br />") + '</p>').hide().insertAfter('#newshout').slideDown();
-									<?php if($displayName==2 || $user->guest)
+								success:function(response){
+									var deleteResponse = '';
+									<?php
+									if ($user->authorise('core.delete'))
+									{
+									?>
+										deleteResponse = '<form method="post" name="delete"><input name="delete" type="submit" value="x" /><input name="idvalue" type="hidden" value="' + response['value'] + '" /></form>';
+									<?php
+									}
+									?>
+									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?>' + deleteResponse + '</h1><p>' + $('#message').val().replace(/\n/g, "<br />") + '</p>').hide().insertAfter('#newshout').slideDown();
+									<?php if($displayName == 2 || $user->guest)
 									{ ?>
 									$('#shoutbox-name').val('');
 									<?php }
-									if($securityQuestion==0)
+									if($securityQuestion == 0)
 									{?>
 									$('#mathsanswer').val('');
 									<?php }
-									if($recaptcha==0)
+									if($recaptcha == 0)
 									{ ?>
 									Recaptcha.reload();
 									<?php } ?>
-									$('#message').val('');
+									textarea.val('');
 								},
 								error:function(ts){
 									console.log(ts.responseText);
