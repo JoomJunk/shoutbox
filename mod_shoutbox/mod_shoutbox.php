@@ -53,6 +53,17 @@ else
 		JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js');
 	}
 }
+JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/scrollbar.js');
+JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/mousewheel.js');
+$document->addScriptDeclaration('(function($){
+									$(window).load(function(){
+										$("#jjshoutboxoutput").mCustomScrollbar({
+											theme:"dark-2"
+										});
+									});
+								 })(jQuery);
+								');
+JHtml::_('stylesheet', JUri::root() . 'media/mod_shoutbox/css/scrollbar.css');
 
 // Set Date Format for when posted
 if ($date == 0)

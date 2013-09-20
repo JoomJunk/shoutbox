@@ -22,7 +22,7 @@
     width: 100%;
     border-style: solid;
     background: #FFFFFF;
-    overflow: auto;
+    overflow: hidden;
     margin-top: 5px;
     word-wrap: break-word;
 }
