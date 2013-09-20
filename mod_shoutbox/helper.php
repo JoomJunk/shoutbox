@@ -194,7 +194,7 @@ class ModShoutboxHelper
 						$before = substr_count($shout['message'], $replace);
 					}
 
-					$message = self::swearfilter($shout['message'], $replace);
+					$message = nl2br(self::swearfilter($shout['message'], $replace));
 
 					if ($swearCounter == 0)
 					{
