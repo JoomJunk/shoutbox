@@ -33,6 +33,8 @@ if ($user->authorise('core.delete'))
 }
 
 $document->addStyleDeclaration($style);
+
+JText::script('SHOUT_ANSWER_INCORRECT');
 ?>
 
 <div id="jjshoutbox">
