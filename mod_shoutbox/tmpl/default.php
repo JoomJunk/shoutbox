@@ -408,14 +408,14 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								elseif($securityQuestion==0)
 								{
 								?>
-								,'sum1' : '<?php echo $que_number1; ?>'
-								'sum2' : '<?php echo $que_number2; ?>'
+								,'sum1' : '<?php echo $que_number1; ?>',
+								'sum2' : '<?php echo $que_number2; ?>',
 								'human' : $('#mathsanswer').val()
 								<?php
 								}
 								?>
-							};
-							var map = {
+							},
+							map = {
 								':)':   '<img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)" />',
 								':(':   '<img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(" />',
 								':D':   '<img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D" />',
@@ -438,29 +438,55 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								url: "<?php echo JUri::current() . '?option=com_ajax&module=shoutbox&method=submit&format=json'; ?>",
 								data: request,
 								success:function(response){
-									var deleteResponse = '';
-									<?php
-									if ($user->authorise('core.delete'))
+									if (response.data['value'])
 									{
-									?>
-										deleteResponse = '<form method="post" name="delete"><input name="delete" type="submit" value="x" /><input name="idvalue" type="hidden" value="' + response['value'] + '" /></form>';
-									<?php
+										var deleteResponse = '';
+										<?php
+										if ($user->authorise('core.delete'))
+										{
+										?>
+										deleteResponse = '<form method="post" name="delete"><input name="delete" type="submit" value="x" /><input name="idvalue" type="hidden" value="' + response.data['value'] + '" /></form>';
+										<?php
+										}
+										?>
+										$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?>' + deleteResponse + '</h1><p>' + filtered_message + '</p>').hide().insertAfter('#newshout').slideDown();
+										<?php if($displayName == 2 || $user->guest)
+										{ ?>
+										$('#shoutbox-name').val('');
+										<?php }
+										if($securityQuestion == 0)
+										{?>
+										$('#mathsanswer').val('');
+										<?php }
+										if($recaptcha == 0)
+										{ ?>
+										Recaptcha.reload();
+										<?php } ?>
+										textarea.val('');
 									}
-									?>
-									$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?>' + deleteResponse + '</h1><p>' + filtered_message + '</p>').hide().insertAfter('#newshout').slideDown();
-									<?php if($displayName == 2 || $user->guest)
-									{ ?>
-									$('#shoutbox-name').val('');
-									<?php }
-									if($securityQuestion == 0)
-									{?>
-									$('#mathsanswer').val('');
-									<?php }
-									if($recaptcha == 0)
-									{ ?>
-									Recaptcha.reload();
-									<?php } ?>
-									textarea.val('');
+									else
+									{
+										var error = '';
+										if(response.data['error'])
+										{
+											error = response.data['error'];
+										}
+										$('.jj-shout-error').append('<p class="inner-jj-error">' + error + '</p>').slideDown().show().delay(6000).queue(function(next){
+											$(this).slideUp().hide();
+											$('.inner-jj-error').remove();
+											next();
+										});
+										var $elt = $('#shoutbox-submit').attr('disabled', true);
+										setTimeout(function (){
+											$elt.attr('disabled', false);
+										}, 6000);
+										$('#message').addClass('jj-redBorder').delay(6000).queue(function(next){
+											$(this).removeClass('jj-redBorder');
+											next();
+										});
+
+										return false;
+									}
 								},
 								error:function(ts){
 									console.log(ts.responseText);

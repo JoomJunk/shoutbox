@@ -581,8 +581,8 @@ class ModShoutboxHelper
 		$params = static::getParams($instance);
 		$displayName = $params->get('loginname');
 		$recaptcha = $params->get('recaptchaon', 1);
-		$swearcounter = $params->get('swearingcounter');
-		$swearnumber = $params->get('swearingnumber');
+		$swearCounter = $params->get('swearingcounter');
+		$swearNumber = $params->get('swearingnumber');
 		$securityQuestion = $params->get('securityquestion');
 
 		if (!get_magic_quotes_gpc())
@@ -610,7 +610,7 @@ class ModShoutboxHelper
 
 					if ($resp->is_valid)
 					{
-						$result = static::addShout($post, $user, $swearcounter, $swearnumber, $displayName);
+						$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
 
 						if (static::$ajax)
 						{
@@ -635,7 +635,7 @@ class ModShoutboxHelper
 				{
 					if ($post['human'] == $que_result)
 					{
-						$result = static::addShout($post, $user, $swearcounter, $swearnumber, $displayName);
+						$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
 
 						if (static::$ajax)
 						{
@@ -644,7 +644,16 @@ class ModShoutboxHelper
 					}
 					else
 					{
-						JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_ANSWER_INCORRECT'), 'error');
+						$errorMessage = JText::_('SHOUT_ANSWER_INCORRECT');
+
+						if (static::$ajax)
+						{
+							return array('error' => $errorMessage);
+						}
+						else
+						{
+							JFactory::getApplication()->enqueueMessage($errorMessage, 'error');
+						}
 
 						return false;
 					}
@@ -653,7 +662,7 @@ class ModShoutboxHelper
 		}
 		else
 		{
-			$result = static::addShout($post, $user, $swearcounter, $swearnumber, $displayName);
+			$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
 
 			if (static::$ajax)
 			{
