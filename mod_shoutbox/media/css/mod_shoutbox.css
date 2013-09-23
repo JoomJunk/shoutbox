@@ -80,30 +80,11 @@
 }
 #jj_smiley_box img{
     cursor: pointer;
-}
-#jj_smiley_button{
-    margin: 5px 0 0 0;
-    float:right;
-}
-#jj_btn, #jj_btn2{
-    cursor: pointer;
-	padding: 2px 5px !important;
-}
-#jj_btn{
-    display: block;
-}
-#jj_btn2{
-    display:none;
-}
-.jj_smiley {
-    padding: 0 2px 0 2px;
+	padding: 0 2px 0 2px;
     border:none;
 }
-.outter_jj_smiley:hover {
-    background:none !important;
-}
-#jjshoutboxform[type='number'] {
-	padding: 4px 0px;
+#jjshoutbox .btn {
+	line-height: 19px !important;
 }
 .jj-shout-error {
     background: #F00;

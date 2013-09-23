@@ -99,7 +99,7 @@ JText::script('SHOUT_ANSWER_INCORRECT');
 				</h1>
 				<p>
 					<?php
-					if ($smile == 0 || $smile == 1 || $smile == 2)
+					if ( $bbcode == 0)
 					{
 						echo ModShoutboxHelper::smileyfilter($shouts[$i]->msg);
 					}
@@ -166,33 +166,37 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 			</noscript>
 			<textarea id="message" cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
 			<div class="jj-shout-error"></div>
-			<?php
-			if ($smile == 1 || $smile == 2)
-			{
-				if ($smile == 2)
-				{
-					if (version_compare(JVERSION, '3.0.0', 'ge'))
-					{
-						echo '<div id="jj_smiley_button">
-												<input id="jj_btn" type="button" class="btn btn-mini" value="&#9650;" />
-												<input id="jj_btn2" type="button" class="btn btn-mini" value="&#9660;" />
-										      </div>';
-					}
-					else
-					{
-						echo '<div id="jj_smiley_button">
-												<input id="jj_btn" type="button" class="btn" value="&#9650;" />
-												<input id="jj_btn2" type="button" class="btn" value="&#9660;" />
-										      </div>';
-					}
-				}
-
-				echo '<div id="jj_smiley_box">';
-				$path = JPATH_ROOT . "/media/mod_shoutbox/images";
-				$smilies = JFolder::files($path);
-				echo ModShoutboxHelper::smileyshow($smilies);
-				echo '</div>';
-			} ?>
+			
+			<?php if ( $bbcode == 0 )
+			{ 
+			?>
+			<div class="btn-toolbar">
+				<div class="btn-group">
+					<button class="btn btn-small jj_bbcode_bold"><strong>B</strong></button>
+					<button class="btn btn-small jj_bbcode_italic"><em>I</em></button>
+					<button class="btn btn-small jj_bbcode_strike"><strike>S</strike></button>
+					<button class="btn btn-small jj_bbcode_link">Link</button>
+					<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+						<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_razz.gif" alt=":D"/>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+						<?php
+							echo '<div id="jj_smiley_box">';
+							$path = JPATH_ROOT . "/media/mod_shoutbox/images";
+							$smilies = JFolder::files($path);
+							echo ModShoutboxHelper::smileyshow($smilies);
+							echo '</div>';
+						?>					
+						</li>
+					</ul>
+				</div>
+			</div>
+			<?php 
+			}
+			?>
+			
 			<script type="text/javascript">
 				function textCounter(textarea, countdown, maxlimit) {
 					textareaid = document.getElementById(textarea);
@@ -211,7 +215,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				}
 				textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
 				<?php
-				if ($smile == 1 || $smile == 2 )
+				if ( $bbcode == 0 )
 				{
 				?>
 				(function($){
@@ -239,26 +243,6 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 							return pos;
 						}
 					});
-					<?php
-					if ($smile == 2)
-					{
-					?>
-					$("#jj_smiley_button").click(function () {
-						$("#jj_smiley_box").slideToggle("slow");
-					});
-
-					$('#jj_btn').click(function(){
-						$('#jj_btn2').show();
-						$('#jj_btn').hide();
-					});
-					$('#jj_btn2').click(function(){
-						$('#jj_btn').show();
-						$('#jj_btn2').hide();
-					});
-
-					<?php
-					}
-					?>
 				})(jQuery);
 				<?php
 				}
@@ -416,7 +400,12 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								<?php
 								}
 								?>
-							},
+							}
+							<?php
+							if( $bbcode == 0 )
+							{
+							?>
+							,
 							map = {
 								':)':   '<img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)" />',
 								':(':   '<img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(" />',
@@ -434,7 +423,22 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								var icoE   = ico.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
 								message    = message.replace( new RegExp(icoE, 'g'), map[ico] );
 							});
-							filtered_message = message.replace(/\n/g, "<br />");
+							filtered_message = message.replace(/\[i\](.*)\[\/i\]/g, '<em>$1</em>')
+							.replace(/\[s\](.*)\[\/s\]/g, '<strike>$1</strike>')				
+							.replace(/\[b\](.*)\[\/b\]/g, '<strong>$1</strong>')
+							.replace(/\n/g, "<br />");	
+							/* TO DO - Links work however are converted back to original start on page refresh
+							   .replace(/\[url=([^\]]+)\]\s*(.*?)\s*\[\/url\]/gi, "<a href='$1'>$2</a>")						
+							*/
+							<?php
+							}
+							else
+							{
+							?>							
+							filtered_message = $('#message').val().replace(/\n/g, "<br />");
+							<?php
+							}
+							?>
 							$.ajax({
 								type: "POST",
 								url: "<?php echo JUri::current() . '?option=com_ajax&module=shoutbox&method=submit&format=json'; ?>",

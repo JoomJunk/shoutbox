@@ -15,7 +15,7 @@ $title = 'shoutbox';
 $params = ModShoutboxHelper::getParams($title);
 
 $displayName = $params->get('loginname');
-$smile = $params->get('smile');
+$bbcode = $params->get('bbcode');
 $swearcounter = $params->get('swearingcounter');
 $swearnumber = $params->get('swearingnumber');
 $number = $params->get('maximum');
@@ -61,6 +61,28 @@ $document->addScriptDeclaration('(function($){
 											theme:"dark-2"
 										});
 									});
+									$(document).ready(function(){
+										$(".jj_bbcode_bold").click(function(){
+											var box = $("#jjshoutbox #message");
+											box.val(box.val() + "[b] [/b]");
+											return false;
+										});
+										$(".jj_bbcode_italic").click(function(){
+											var box = $("#jjshoutbox #message");
+											box.val(box.val() + "[i] [/i]");
+											return false;
+										});
+										$(".jj_bbcode_strike").click(function(){
+											var box = $("#jjshoutbox #message");
+											box.val(box.val() + "[s] [/s]");
+											return false;
+										});
+										$(".jj_bbcode_link").click(function(){
+											var box = $("#jjshoutbox #message");
+											box.val(box.val() + "[url=] [/url]");
+											return false;
+										});
+									});	
 								 })(jQuery);
 								');
 JHtml::_('stylesheet', JUri::root() . 'media/mod_shoutbox/css/scrollbar.css');

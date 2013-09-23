@@ -90,12 +90,6 @@
 					<option value="2">SHOUT_DONT_SHOW</option>
 				</field>
 				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
-				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
-					<option value="0">SHOUT_SMILIES_ON</option>
-					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
-					<option value="2">SHOUT_SMILIES_ON_SLIDE</option>
-					<option value="3">SHOUT_SMILIES_DISABLE</option>
-				</field>
 				<field name="swearingcounter" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
 					<option value="0">JON</option>
 					<option value="1">JOFF</option>
@@ -113,7 +107,10 @@
                     <option value="1">SHOUT_ENTER</option>
                 </field>
 				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
-				
+				<field name="bbcode" type="radio" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JON</option>
+					<option value="1">JOFF</option>
+				</field>
 				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
 				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
 				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
