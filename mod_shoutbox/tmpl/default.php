@@ -75,7 +75,7 @@ JText::script('SHOUT_ANSWER_INCORRECT');
 				?>
 				<h1 <?php echo ModShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
 					<?php
-					if ($smile == 0)
+					if ($bbcode == 0)
 					{
 						echo ModShoutboxHelper::smileyFilter($profile_link);
 					}
