@@ -77,7 +77,7 @@ JText::script('SHOUT_ANSWER_INCORRECT');
 					<?php
 					if ($bbcode == 0)
 					{
-						echo ModShoutboxHelper::smileyFilter($profile_link);
+						echo ModShoutboxHelper::bbcodeFilter($profile_link);
 					}
 					else
 					{
@@ -99,9 +99,9 @@ JText::script('SHOUT_ANSWER_INCORRECT');
 				</h1>
 				<p>
 					<?php
-					if ( $bbcode == 0)
+					if ($bbcode == 0)
 					{
-						echo ModShoutboxHelper::smileyfilter($shouts[$i]->msg);
+						echo ModShoutboxHelper::bbcodeFilter($shouts[$i]->msg);
 					}
 					else
 					{
@@ -168,7 +168,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 			<div class="jj-shout-error"></div>
 			
 			<?php if ( $bbcode == 0 )
-			{ 
+			{
 			?>
 			<div class="btn-toolbar">
 				<div class="btn-group">
@@ -186,7 +186,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 							echo '<div id="jj_smiley_box">';
 							$path = JPATH_ROOT . "/media/mod_shoutbox/images";
 							$smilies = JFolder::files($path);
-							echo ModShoutboxHelper::smileyshow($smilies);
+							echo ModShoutboxHelper::smileyShow($smilies);
 							echo '</div>';
 						?>					
 						</li>
