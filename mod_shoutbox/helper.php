@@ -344,6 +344,23 @@ class ModShoutboxHelper
 			$message = str_replace($smile, $replace, $message);
 		}
 
+		// Parse the Bold, Italic, strikes and links
+		$search = array(
+			'/\[b\](.*?)\[\/b\]/is',
+			'/\[i\](.*?)\[\/i\]/is',
+			'/\[s\](.*?)\[\/s\]/is',
+			'/\[url\=(.*?)\](.*?)\[\/url\]/is',
+		);
+
+		$replace = array(
+			'<span class="jj-bold">$1</span>',
+			'<span class="jj-italic">$1</span>',
+			'<span class="jj-strike">$1</span>',
+			'<a href="$1">$2</a>',
+		);
+
+		$message = preg_replace ($search, $replace, $message);
+
 		return $message;
 	}
 

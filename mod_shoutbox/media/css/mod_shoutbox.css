@@ -4,8 +4,12 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-#jjshoutbox { margin: auto; }
-#jjshoutboxform { margin: 0 auto; }
+#jjshoutbox {
+	margin: auto;
+}
+#jjshoutboxform {
+	margin: 0 auto;
+}
 #jjshoutboxform textarea {
     width: 100%;
     margin: 5px 0 0 0;
@@ -62,11 +66,23 @@
     color:red;
     font-weight: bold;
 }
-#noguest { color: #FF0000; font-weight: bold; }
-#jjshoutbox .jj_error { color:red; font-weight:bold; }
-#jjshoutbox .jj_label { width: 50%; }
-#jjshoutbox .jj_input {	width: 50%; }
-#jjshoutbox .jj_admin_label { width: 30%; }
+#noguest {
+	color: #FF0000;
+	font-weight: bold;
+}
+#jjshoutbox .jj_error {
+	color:red;
+	font-weight:bold;
+}
+#jjshoutbox .jj_label {
+	width: 50%;
+}
+#jjshoutbox .jj_input {
+	width: 50%;
+}
+#jjshoutbox .jj_admin_label {
+	width: 30%;
+}
 #jjshoutbox .jj_admin_button {
     width: 65%;
     min-width: 90px;
@@ -106,4 +122,16 @@
 }
 #newshout {
 	padding-bottom: 0px;
+}
+/**
+Bold, italics and strike for the BB Code
+**/
+.jj-bold {
+	font-weight: bold;
+}
+.jj-italic {
+	font-style: italic;
+}
+.jj-strike {
+	text-decoration: line-through;
 }
