@@ -219,12 +219,13 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				{
 				?>
 				(function($){
+					var message = $('#message').val();
 					$('#jj_smiley_box img').click(function(){
 						var smiley = $(this).attr('alt');
 						var caretPos = caretPos();
-						var strBegin = $('#message').val().substring(0, caretPos);
-						var strEnd   = $('#message').val().substring(caretPos);
-						$('#message').val( strBegin + " " + smiley + " " + strEnd);
+						var strBegin = message.substring(0, caretPos);
+						var strEnd   = message.substring(caretPos);
+						$('#message').val(strBegin + " " + smiley + " " + strEnd);
 						function caretPos(){
 							var el = document.getElementById("message");
 							var pos = 0;
@@ -357,7 +358,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 							setTimeout(function (){
 								$elt.attr('disabled', false);
 							}, 6000);
-							$('#message').addClass('jj-redBorder').delay(6000).queue(function(next){
+							textarea.addClass('jj-redBorder').delay(6000).queue(function(next){
 								$(this).removeClass('jj-redBorder');
 								next();
 							});
@@ -378,20 +379,20 @@ elseif ($guestpost == 1 && $guestpost == 1)
 							<?php } ?>
 							var request = {
 								'name' : name,
-								'message' : $('#message').val(),
+								'message' : textarea.val(),
 								'<?php echo JSession::getFormToken(); ?>'    : '1',
 								'token'   : '<?php echo $_SESSION['token']; ?>',
 								'shout' : 'Shout!',
 								'title' : '<?php echo $title; ?>',
 								'ajax' : 'true'
 								<?php
-								if($recaptcha==0) {
+								if ($recaptcha==0) {
 								?>
 								,'recaptcha_response_field' : $('#recaptcha_response_field').val(),
 								'recaptcha_challenge_field' : $('#recaptcha_challenge_field').val()
 								<?php
 								}
-								elseif($securityQuestion==0)
+								elseif ($securityQuestion == 0)
 								{
 								?>
 								,'sum1' : '<?php echo $que_number1; ?>',
@@ -402,7 +403,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								?>
 							}
 							<?php
-							if( $bbcode == 0 )
+							if($bbcode == 0)
 							{
 							?>
 							,
@@ -418,24 +419,22 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								':O':   '<img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O" />',
 								'lol':   '<img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol" />'
 							},
-							message = $('#message').val();
-							Object.keys( map ).forEach(function( ico ) {
+							message = textarea.val(),
+							Object.keys(map).forEach(function (ico) {
 								var icoE   = ico.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
 								message    = message.replace( new RegExp(icoE, 'g'), map[ico] );
 							});
 							filtered_message = message.replace(/\[i\](.*)\[\/i\]/g, '<em>$1</em>')
-							.replace(/\[s\](.*)\[\/s\]/g, '<strike>$1</strike>')				
+							.replace(/\[s\](.*)\[\/s\]/g, '<strike>$1</strike>')
 							.replace(/\[b\](.*)\[\/b\]/g, '<strong>$1</strong>')
-							.replace(/\n/g, "<br />");	
-							/* TO DO - Links work however are converted back to original start on page refresh
-							   .replace(/\[url=([^\]]+)\]\s*(.*?)\s*\[\/url\]/gi, "<a href='$1'>$2</a>")						
-							*/
+							.replace(/\n/g, "<br />")
+							.replace(/\[url=([^\]]+)\]\s*(.*?)\s*\[\/url\]/gi, "<a href='$1'>$2</a>");
 							<?php
 							}
 							else
 							{
 							?>							
-							filtered_message = $('#message').val().replace(/\n/g, "<br />");
+							filtered_message = textarea.val().replace(/\n/g, "<br />");
 							<?php
 							}
 							?>
@@ -486,7 +485,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 										setTimeout(function (){
 											$elt.attr('disabled', false);
 										}, 6000);
-										$('#message').addClass('jj-redBorder').delay(6000).queue(function(next){
+										textarea.addClass('jj-redBorder').delay(6000).queue(function(next){
 											$(this).removeClass('jj-redBorder');
 											next();
 										});
