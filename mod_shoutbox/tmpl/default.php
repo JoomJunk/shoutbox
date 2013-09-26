@@ -198,6 +198,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 			?>
 			
 			<script type="text/javascript">
+				var bbcode = <?php echo $bbcode; ?>;
 				function textCounter(textarea, countdown, maxlimit) {
 					textareaid = document.getElementById(textarea);
 					if (textareaid.value.length > maxlimit)
@@ -214,40 +215,36 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 
 				}
 				textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
-				<?php
-				if ( $bbcode == 0 )
-				{
-				?>
-				(function($){
-					var message = $('#message').val();
-					$('#jj_smiley_box img').click(function(){
-						var smiley = $(this).attr('alt');
-						var caretPos = caretPos();
-						var strBegin = message.substring(0, caretPos);
-						var strEnd   = message.substring(caretPos);
-						$('#message').val(strBegin + " " + smiley + " " + strEnd);
-						function caretPos(){
-							var el = document.getElementById("message");
-							var pos = 0;
-							// IE Support
-							if (document.selection){
-								el.focus ();
-								var Sel = document.selection.createRange();
-								var SelLength = document.selection.createRange().text.length;
-								Sel.moveStart ('character', -el.value.length);
-								pos = Sel.text.length - SelLength;
-							}
-							// Firefox support
-							else if (el.selectionStart || el.selectionStart == '0')
-								pos = el.selectionStart;
 
-							return pos;
-						}
-					});
-				})(jQuery);
-				<?php
+				if (bbcode == 0) {
+					(function($){
+						var message = $('#message').val();
+						$('#jj_smiley_box img').click(function(){
+							var smiley = $(this).attr('alt');
+							var caretPos = caretPos();
+							var strBegin = message.substring(0, caretPos);
+							var strEnd   = message.substring(caretPos);
+							$('#message').val(strBegin + " " + smiley + " " + strEnd);
+							function caretPos(){
+								var el = document.getElementById("message");
+								var pos = 0;
+								// IE Support
+								if (document.selection){
+									el.focus ();
+									var Sel = document.selection.createRange();
+									var SelLength = document.selection.createRange().text.length;
+									Sel.moveStart ('character', -el.value.length);
+									pos = Sel.text.length - SelLength;
+								}
+								// Firefox support
+								else if (el.selectionStart || el.selectionStart == '0')
+									pos = el.selectionStart;
+
+								return pos;
+							}
+						});
+					})(jQuery);
 				}
-				?>
 			</script>
 
 			<?php
