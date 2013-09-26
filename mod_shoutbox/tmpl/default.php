@@ -175,7 +175,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 					<button class="btn btn-small jj-bold">B</button>
 					<button class="btn btn-small jj-italic">I</button>
 					<button class="btn btn-small jj-strike">S</button>
-					<button class="btn btn-small jj_bbcode_link">Link</button>
+					<button class="btn btn-small jj-link">Link</button>
 					<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
 						<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_razz.gif" alt=":D"/>
 						<span class="caret"></span>
