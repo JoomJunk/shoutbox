@@ -425,7 +425,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 							.replace(/\[s\](.*)\[\/s\]/g, '<span class="jj-strike">$1</span>')
 							.replace(/\[b\](.*)\[\/b\]/g, '<span class="jj-bold">$1</span>')
 							.replace(/\n/g, "<br />")
-							.replace(/\[url=([^\]]+)\]\s*(.*?)\s*\[\/url\]/gi, "<a href='$1'>$2</a>");
+							.replace(/\[url=(?:http:\/\/)?([^\]]+)\]\s*(.*?)\s*\[\/url\]/gi, "<a href='http://$1'>$2</a>");
 							<?php
 							}
 							else
