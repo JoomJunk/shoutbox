@@ -416,7 +416,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								':O':   '<img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O" />',
 								'lol':   '<img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol" />'
 							},
-							message = textarea.val(),
+							message = textarea.val();
 							Object.keys(map).forEach(function (ico) {
 								var icoE   = ico.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
 								message    = message.replace( new RegExp(icoE, 'g'), map[ico] );
