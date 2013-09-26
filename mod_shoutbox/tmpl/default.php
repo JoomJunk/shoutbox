@@ -198,7 +198,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 			?>
 			
 			<script type="text/javascript">
-				var bbcode = <?php echo $bbcode; ?>;
+				var bbCode = <?php echo $bbcode; ?>;
 				function textCounter(textarea, countdown, maxlimit) {
 					textareaid = document.getElementById(textarea);
 					if (textareaid.value.length > maxlimit)
@@ -216,7 +216,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				}
 				textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
 
-				if (bbcode == 0) {
+				if (bbCode == 0) {
 					(function($){
 						var message = $('#message').val();
 						$('#jj_smiley_box img').click(function(){
