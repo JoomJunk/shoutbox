@@ -62,22 +62,22 @@ $document->addScriptDeclaration('(function($){
 										});
 									});
 									$(document).ready(function(){
-										$(".jj_bold").click(function(){
+										$(".jj-bold").click(function(){
 											var box = $("#jjshoutbox #message");
 											box.val(box.val() + "[b] [/b]");
 											return false;
 										});
-										$(".jj_italic").click(function(){
+										$(".jj-italic").click(function(){
 											var box = $("#jjshoutbox #message");
 											box.val(box.val() + "[i] [/i]");
 											return false;
 										});
-										$(".jj_strike").click(function(){
+										$(".jj-strike").click(function(){
 											var box = $("#jjshoutbox #message");
 											box.val(box.val() + "[s] [/s]");
 											return false;
 										});
-										$(".jj_link").click(function(){
+										$(".jj-link").click(function(){
 											var box = $("#jjshoutbox #message");
 											box.val(box.val() + "[url=] [/url]");
 											return false;
