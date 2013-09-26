@@ -62,22 +62,22 @@ $document->addScriptDeclaration('(function($){
 										});
 									});
 									$(document).ready(function(){
-										$(".jj_bbcode_bold").click(function(){
+										$(".jj_bold").click(function(){
 											var box = $("#jjshoutbox #message");
 											box.val(box.val() + "[b] [/b]");
 											return false;
 										});
-										$(".jj_bbcode_italic").click(function(){
+										$(".jj_italic").click(function(){
 											var box = $("#jjshoutbox #message");
 											box.val(box.val() + "[i] [/i]");
 											return false;
 										});
-										$(".jj_bbcode_strike").click(function(){
+										$(".jj_strike").click(function(){
 											var box = $("#jjshoutbox #message");
 											box.val(box.val() + "[s] [/s]");
 											return false;
 										});
-										$(".jj_bbcode_link").click(function(){
+										$(".jj_link").click(function(){
 											var box = $("#jjshoutbox #message");
 											box.val(box.val() + "[url=] [/url]");
 											return false;
