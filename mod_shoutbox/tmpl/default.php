@@ -172,9 +172,9 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 			?>
 			<div class="btn-toolbar">
 				<div class="btn-group">
-					<button class="btn btn-small jj_bbcode_bold"><strong>B</strong></button>
-					<button class="btn btn-small jj_bbcode_italic"><em>I</em></button>
-					<button class="btn btn-small jj_bbcode_strike"><strike>S</strike></button>
+					<button class="btn btn-small jj-bold">B</button>
+					<button class="btn btn-small jj-italic">I</button>
+					<button class="btn btn-small jj-strike">S</button>
 					<button class="btn btn-small jj_bbcode_link">Link</button>
 					<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
 						<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_razz.gif" alt=":D"/>
@@ -421,9 +421,9 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								var icoE   = ico.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
 								message    = message.replace( new RegExp(icoE, 'g'), map[ico] );
 							});
-							filtered_message = message.replace(/\[i\](.*)\[\/i\]/g, '<em>$1</em>')
-							.replace(/\[s\](.*)\[\/s\]/g, '<strike>$1</strike>')
-							.replace(/\[b\](.*)\[\/b\]/g, '<strong>$1</strong>')
+							filtered_message = message.replace(/\[i\](.*)\[\/i\]/g, '<span class="jj-italic">$1</span>')
+							.replace(/\[s\](.*)\[\/s\]/g, '<span class="jj-strike">$1</span>')
+							.replace(/\[b\](.*)\[\/b\]/g, '<span class="jj-bold">$1</span>')
 							.replace(/\n/g, "<br />")
 							.replace(/\[url=([^\]]+)\]\s*(.*?)\s*\[\/url\]/gi, "<a href='$1'>$2</a>");
 							<?php
