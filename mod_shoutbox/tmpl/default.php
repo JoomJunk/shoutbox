@@ -421,7 +421,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								var icoE   = ico.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
 								message    = message.replace( new RegExp(icoE, 'g'), map[ico] );
 							});
-							filtered_message = message.replace(/\[i\](.*)\[\/i\]/g, '<span class="jj-italic">$1</span>')
+							var filtered_message = message.replace(/\[i\](.*)\[\/i\]/g, '<span class="jj-italic">$1</span>')
 							.replace(/\[s\](.*)\[\/s\]/g, '<span class="jj-strike">$1</span>')
 							.replace(/\[b\](.*)\[\/b\]/g, '<span class="jj-bold">$1</span>')
 							.replace(/\n/g, "<br />")
@@ -431,7 +431,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 							else
 							{
 							?>							
-							filtered_message = textarea.val().replace(/\n/g, "<br />");
+							var filtered_message = textarea.val().replace(/\n/g, "<br />");
 							<?php
 							}
 							?>
