@@ -31,6 +31,34 @@ function insertBbCode(bbCode) {
                 var smiley = $(this).attr('alt');
                 document.getElementById('message').value += ' ' + smiley + ' ';
             });
+            $(document).ready(function(){
+                var box = $("textarea#message");
+                $(".jj-bold").click(function(){
+                    box.val(box.val() + "[b] [/b]");
+                    return false;
+                });
+                $(".jj-italic").click(function(){
+                    box.val(box.val() + "[i] [/i]");
+                    return false;
+                });
+                $(".jj-strike").click(function(){
+                    box.val(box.val() + "[s] [/s]");
+                    return false;
+                });
+                $(".jj-link").click(function(){
+                    box.val(box.val() + "[url=] [/url]");
+                    return false;
+                });
+            });
         })(jQuery);
     }
 }
+
+// Scroll bar function
+(function($){
+    $(window).load(function(){
+        $("#jjshoutboxoutput").mCustomScrollbar({
+            theme:"dark-2"
+        });
+    });
+})(jQuery);
