@@ -190,9 +190,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 						<li>
 						<?php
 							echo '<div id="jj_smiley_box">';
-							$path = JPATH_ROOT . "/media/mod_shoutbox/images";
-							$smilies = JFolder::files($path);
-							echo ModShoutboxHelper::smileyShow($smilies);
+							echo ModShoutboxHelper::smileyShow();
 							echo '</div>';
 						?>					
 						</li>

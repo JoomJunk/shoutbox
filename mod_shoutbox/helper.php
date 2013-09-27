@@ -1,9 +1,9 @@
 <?php
 /**
-* @package    JJ_Shoutbox
-* @copyright  Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
-* @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
-*/
+ * @package    JJ_Shoutbox
+ * @copyright  Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
+ * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
+ */
 
 defined('_JEXEC') or die('Restricted access');
 
@@ -50,7 +50,7 @@ class ModShoutboxHelper
 	{
 		jimport('joomla.application.module.helper');
 		$module = JModuleHelper::getModule($instance);
-		$moduleParams = new JRegistry();
+		$moduleParams = new JRegistry;
 		$moduleParams->loadString($module->params);
 
 		return $moduleParams;
@@ -200,14 +200,15 @@ class ModShoutboxHelper
 							$before = substr_count($shout['name'], $replace);
 						}
 
-						$name = static::swearfilter($shout['name'], $replace);
-						
-						// Retrieve genericname parameters
+						$name = static::swearFilter($shout['name'], $replace);
+
+						// Retrieve Generic Name parameters
 						$params = static::getParams('mod_shoutbox');
-						$genericname = $params->get('genericname');
-						if($name == '')
+						$genericName = $params->get('genericname');
+
+						if ($name == '')
 						{
-							$name = $genericname;
+							$name = $genericName;
 						}
 
 						if ($swearCounter == 0)
@@ -226,7 +227,7 @@ class ModShoutboxHelper
 						$before = substr_count($shout['message'], $replace);
 					}
 
-					$message = nl2br(static::swearfilter($shout['message'], $replace));
+					$message = nl2br(static::swearFilter($shout['message'], $replace));
 
 					if ($swearCounter == 0)
 					{
@@ -287,7 +288,7 @@ class ModShoutboxHelper
 							}
 						}
 
-						if(static::$ajax)
+						if (static::$ajax)
 						{
 							return array('value' => $db->insertid());
 						}
@@ -359,7 +360,7 @@ class ModShoutboxHelper
 			'<a href="$1">$2</a>',
 		);
 
-		$message = preg_replace ($search, $replace, $message);
+		$message = preg_replace($search, $replace, $message);
 
 		return $message;
 	}
@@ -371,7 +372,7 @@ class ModShoutboxHelper
 	 *
 	 * @since 2.5
 	 */
-	public static function smileyshow()
+	public static function smileyShow()
 	{
 		$smilies = '';
 
@@ -393,7 +394,7 @@ class ModShoutboxHelper
 	 *
 	 * @since 1.0
 	 */
-	public static function swearfilter($post, $replace)
+	public static function swearFilter($post, $replace)
 	{
 		// Import Dependencies
 		JLoader::import('joomla.filesystem.file');

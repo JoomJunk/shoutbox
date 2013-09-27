@@ -42,7 +42,8 @@ else
 	if (!JFactory::getApplication()->get('jquery'))
 	{
 		JFactory::getApplication()->set('jquery', true);
-		if($params->get('jquery', '0') == 0)
+
+		if ($params->get('jquery', '0') == 0)
 		{
 			$document->addScript("//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js");
 		}
@@ -50,16 +51,17 @@ else
 		{
 			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery.js');
 		}
+
 		JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js');
 	}
 }
 
-// Add in JS and CSS for the scrollbar
+// Add in JS and CSS for the scroll bar
 JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/scrollbar.js');
 JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/mousewheel.js');
 JHtml::_('stylesheet', JUri::root() . 'media/mod_shoutbox/css/scrollbar.css');
 
-// Add in the JS for the shoutbox
+// Add in the JS for the Shoutbox
 JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/mod_shoutbox.js');
 
 // Set Date Format for when posted
