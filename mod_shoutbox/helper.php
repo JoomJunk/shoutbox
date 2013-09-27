@@ -349,14 +349,14 @@ class ModShoutboxHelper
 			'/\[b\](.*?)\[\/b\]/is',
 			'/\[i\](.*?)\[\/i\]/is',
 			'/\[s\](.*?)\[\/s\]/is',
-			'/\[url\=(.*?)\](.*?)\[\/url\]/is',
+			'/\[url=(?:http(s?):\/\/)?([^\]]+)\]\s*(.*?)\s*\[\/url\]/is'
 		);
 
 		$replace = array(
 			'<span class="jj-bold">$1</span>',
 			'<span class="jj-italic">$1</span>',
 			'<span class="jj-strike">$1</span>',
-			'<a href="$1">$2</a>',
+			'<a href="http$1://$2" target="_blank">$3</a>'
 		);
 
 		$message = preg_replace ($search, $replace, $message);
