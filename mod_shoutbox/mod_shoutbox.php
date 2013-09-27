@@ -53,39 +53,14 @@ else
 		JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js');
 	}
 }
+
+// Add in JS and CSS for the scrollbar
 JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/scrollbar.js');
 JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/mousewheel.js');
-$document->addScriptDeclaration('(function($){
-									$(window).load(function(){
-										$("#jjshoutboxoutput").mCustomScrollbar({
-											theme:"dark-2"
-										});
-									});
-									$(document).ready(function(){
-										$(".jj-bold").click(function(){
-											var box = $("#jjshoutbox #message");
-											box.val(box.val() + "[b] [/b]");
-											return false;
-										});
-										$(".jj-italic").click(function(){
-											var box = $("#jjshoutbox #message");
-											box.val(box.val() + "[i] [/i]");
-											return false;
-										});
-										$(".jj-strike").click(function(){
-											var box = $("#jjshoutbox #message");
-											box.val(box.val() + "[s] [/s]");
-											return false;
-										});
-										$(".jj-link").click(function(){
-											var box = $("#jjshoutbox #message");
-											box.val(box.val() + "[url=] [/url]");
-											return false;
-										});
-									});	
-								 })(jQuery);
-								');
 JHtml::_('stylesheet', JUri::root() . 'media/mod_shoutbox/css/scrollbar.css');
+
+// Add in the JS for the shoutbox
+JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/mod_shoutbox.js');
 
 // Set Date Format for when posted
 if ($date == 0)
