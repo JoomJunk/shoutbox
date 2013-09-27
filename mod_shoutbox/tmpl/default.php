@@ -166,12 +166,18 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 								<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
 							</span>
 			</noscript>
-			<textarea id="message" cols="20" rows="5" name="message" onKeyDown="textCounter('message','charsLeft', <?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);" onKeyUp="textCounter('message','charsLeft',<?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);"></textarea>
+			<textarea
+				id="message"
+				cols="20"
+				rows="5"
+				name="message"
+				onKeyDown="textCounter('message','charsLeft', <?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);"
+				onKeyUp="textCounter('message','charsLeft',<?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);"
+			>
+			</textarea>
 			<div class="jj-shout-error"></div>
 			
-			<?php if ( $bbcode == 0 )
-			{
-			?>
+			<?php if ( $bbcode == 0 ) : ?>
 			<div class="btn-toolbar">
 				<div class="btn-group">
 					<button class="btn btn-small jj-bold">B</button>
@@ -195,9 +201,9 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 					</ul>
 				</div>
 			</div>
-			<?php 
-			}
+			<?php endif; ?>
 
+			<?php
 			// Shows recapture or math question depending on the parameters
 			if ($recaptcha == 0)
 			{
@@ -240,8 +246,12 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
 				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 			}
-			if($enterclick == 0) { ?>
-				<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityQuestion==0)) { echo 'disabled="disabled"'; }?> />
+
+			if($enterclick == 0)
+			{
+				$disabled = (($params->get('recaptchaon') == 0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon') == 0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon') == 0 && $securityQuestion == 0)) ? 'disabled="disabled"' : '';
+				?>
+				<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php echo $disabled; ?> />
 			<?php
 			}
 		}
