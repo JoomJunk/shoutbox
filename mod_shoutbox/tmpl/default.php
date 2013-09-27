@@ -247,7 +247,13 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 
 			if($enterclick == 0)
 			{
-				$disabled = (($params->get('recaptchaon') == 0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon') == 0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon') == 0 && $securityQuestion == 0)) ? 'disabled="disabled"' : '';
+				$disabled = '';
+				if((($params->get('recaptchaon') == 0 && !$params->get('recaptcha-public'))
+					|| ($params->get('recaptchaon') == 0 && !$params->get('recaptcha-private'))
+					|| ($params->get('recaptchaon') == 0 && $securityQuestion == 0)))
+				{
+					$disabled = 'disabled="disabled"';
+				}
 				?>
 				<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php echo $disabled; ?> />
 			<?php
