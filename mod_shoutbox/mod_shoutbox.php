@@ -55,6 +55,8 @@ else
 }
 JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/scrollbar.js');
 JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/mousewheel.js');
+JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/mod_shoutbox.js');
+
 $document->addScriptDeclaration('(function($){
 									$(window).load(function(){
 										$("#jjshoutboxoutput").mCustomScrollbar({

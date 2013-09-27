@@ -36,7 +36,6 @@ $document->addStyleDeclaration($style);
 
 JText::script('SHOUT_ANSWER_INCORRECT');
 JText::script('SHOUT_REMAINING');
-$document->addScript(JUri::root() . 'media/mod_shoutbox/js/mod_shoutbox.js');
 ?>
 
 <div id="jjshoutbox">
@@ -173,8 +172,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				name="message"
 				onKeyDown="textCounter('message','charsLeft', <?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);"
 				onKeyUp="textCounter('message','charsLeft',<?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);"
-			>
-			</textarea>
+			></textarea>
 			<div class="jj-shout-error"></div>
 			
 			<?php if ( $bbcode == 0 ) : ?>
