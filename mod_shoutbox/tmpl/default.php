@@ -35,6 +35,8 @@ if ($user->authorise('core.delete'))
 $document->addStyleDeclaration($style);
 
 JText::script('SHOUT_ANSWER_INCORRECT');
+JText::script('SHOUT_REMAINING');
+$document->addScript(JUri::root() . 'media/mod_shoutbox/js/mod_shoutbox.js');
 ?>
 
 <div id="jjshoutbox">
@@ -164,7 +166,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 								<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
 							</span>
 			</noscript>
-			<textarea id="message" cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+			<textarea id="message" cols="20" rows="5" name="message" onKeyDown="textCounter('message','charsLeft', <?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);" onKeyUp="textCounter('message','charsLeft',<?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);"></textarea>
 			<div class="jj-shout-error"></div>
 			
 			<?php if ( $bbcode == 0 )
@@ -195,59 +197,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 			</div>
 			<?php 
 			}
-			?>
-			
-			<script type="text/javascript">
-				var bbCode = <?php echo $bbcode; ?>;
-				function textCounter(textarea, countdown, maxlimit) {
-					textareaid = document.getElementById(textarea);
-					if (textareaid.value.length > maxlimit)
-						textareaid.value = textareaid.value.substring(0, maxlimit);
-					else
-						document.getElementById('charsLeft').innerHTML = (maxlimit-textareaid.value.length)+' <?php echo JText::_('SHOUT_REMAINING') ?>';
 
-					if (maxlimit-textareaid.value.length > <?php echo $params->get('alertlength', '50'); ?>)
-						document.getElementById('charsLeft').style.color = "Black";
-					if (maxlimit-textareaid.value.length <= <?php echo $params->get('alertlength', '50'); ?> && maxlimit-textareaid.value.length > <?php echo $params->get('warnlength', '10'); ?>)
-						document.getElementById('charsLeft').style.color = "Orange";
-					if (maxlimit-textareaid.value.length <= <?php echo $params->get('warnlength', '10'); ?>)
-						document.getElementById('charsLeft').style.color = "Red";
-
-				}
-				textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
-
-				if (bbCode == 0) {
-					(function($){
-						var message = $('#message').val();
-						$('#jj_smiley_box img').click(function(){
-							var smiley = $(this).attr('alt');
-							var caretPos = caretPos();
-							var strBegin = message.substring(0, caretPos);
-							var strEnd   = message.substring(caretPos);
-							$('#message').val(strBegin + " " + smiley + " " + strEnd);
-							function caretPos(){
-								var el = document.getElementById("message");
-								var pos = 0;
-								// IE Support
-								if (document.selection){
-									el.focus ();
-									var Sel = document.selection.createRange();
-									var SelLength = document.selection.createRange().text.length;
-									Sel.moveStart ('character', -el.value.length);
-									pos = Sel.text.length - SelLength;
-								}
-								// Firefox support
-								else if (el.selectionStart || el.selectionStart == '0')
-									pos = el.selectionStart;
-
-								return pos;
-							}
-						});
-					})(jQuery);
-				}
-			</script>
-
-			<?php
 			// Shows recapture or math question depending on the parameters
 			if ($recaptcha == 0)
 			{
@@ -337,6 +287,11 @@ elseif ($guestpost == 1 && $guestpost == 1)
 </div>
 </div>
 <script>
+	// Initialize text counter and BBCode inserter
+	textCounter('message','charsLeft', <?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);
+	var bbCode = <?php echo $bbcode; ?>;
+	insertBbCode(bbCode);
+
 	(function($){
 		var textarea = $("textarea#message");
 		<?php if($enterclick == 1) { ?>
