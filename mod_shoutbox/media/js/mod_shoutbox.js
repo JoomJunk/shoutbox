@@ -27,30 +27,9 @@ function insertBbCode(bbCode) {
     "use strict";
     if (bbCode === 0) {
         (function ($) {
-            var message = $('#message').val();
             $('#jj_smiley_box img').click(function () {
-                function caretPos() {
-                    var el = document.getElementById("message"),
-                        pos = 0;
-                    if (document.selection) {
-                        // IE Support
-                        el.focus();
-                        var Sel = document.selection.createRange(),
-                            SelLength = document.selection.createRange().text.length;
-                        Sel.moveStart('character', -el.value.length);
-                        pos = Sel.text.length - SelLength;
-                    } else if (el.selectionStart || el.selectionStart === '0') {
-                        // Firefox support
-                        pos = el.selectionStart;
-                    }
-
-                    return pos;
-                }
-                var smiley = $(this).attr('alt'),
-                    caretPosition = caretPos(),
-                    strBegin = message.substring(0, caretPosition),
-                    strEnd   = message.substring(caretPosition);
-                $('#message').val(strBegin + " " + smiley + " " + strEnd);
+                var smiley = $(this).attr('alt');
+                document.getElementById('message').value += ' ' + smiley + ' ';
             });
         })(jQuery);
     }
