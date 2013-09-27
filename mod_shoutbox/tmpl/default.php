@@ -218,7 +218,6 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 
 				if (bbCode == 0) {
 					(function($){
-						var message = $('#message').val();
 						$('#jj_smiley_box img').click(function(){
 							var smiley = $(this).attr('alt');
 							document.getElementById('message').value += ' '+smiley+' ';
