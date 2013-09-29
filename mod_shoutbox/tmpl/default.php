@@ -180,7 +180,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				<div class="btn-group">
 					<button class="btn btn-small jj-bold">B</button>
 					<button class="btn btn-small jj-italic">I</button>
-					<button class="btn btn-small jj-strike">S</button>
+					<button class="btn btn-small jj-underline">U</button>
 					<button class="btn btn-small jj-link">Link</button>
 					<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
 						<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_razz.gif" alt=":D"/>
@@ -389,7 +389,7 @@ elseif ($guestpost == 1 && $guestpost == 1)
 								message    = message.replace( new RegExp(icoE, 'g'), map[ico] );
 							});
 							var filtered_message = message.replace(/\[i\](.*)\[\/i\]/g, '<span class="jj-italic">$1</span>')
-							.replace(/\[s\](.*)\[\/s\]/g, '<span class="jj-strike">$1</span>')
+							.replace(/\[u\](.*)\[\/u\]/g, '<span class="jj-underline">$1</span>')
 							.replace(/\[b\](.*)\[\/b\]/g, '<span class="jj-bold">$1</span>')
 							.replace(/\n/g, "<br />")
 							.replace(/\[url=(?:http(s?):\/\/)?([^\]]+)\]\s*(.*?)\s*\[\/url\]/gi, "<a href='http$1://$2' target='_blank'>$3</a>");

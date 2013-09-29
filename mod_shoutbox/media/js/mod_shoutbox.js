@@ -41,8 +41,8 @@ function insertBbCode(bbCode) {
                     box.val(box.val() + "[i] [/i]");
                     return false;
                 });
-                $(".jj-strike").click(function () {
-                    box.val(box.val() + "[s] [/s]");
+                $(".jj-underline").click(function () {
+                    box.val(box.val() + "[u] [/u]");
                     return false;
                 });
                 $(".jj-link").click(function () {

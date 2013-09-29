@@ -124,7 +124,7 @@
 	padding-bottom: 0px;
 }
 /**
-Bold, italics and strike for the BB Code
+Bold, italics and underline for the BB Code
 **/
 .jj-bold {
 	font-weight: bold;
@@ -132,6 +132,6 @@ Bold, italics and strike for the BB Code
 .jj-italic {
 	font-style: italic;
 }
-.jj-strike {
-	text-decoration: line-through;
+.jj-underline {
+	text-decoration: underline;
 }
