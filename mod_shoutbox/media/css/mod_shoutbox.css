@@ -93,6 +93,7 @@
 }
 #jj_smiley_box{
     margin: 10px 0 10px 0;
+	white-space: normal;
 }
 #jj_smiley_box img{
     cursor: pointer;
