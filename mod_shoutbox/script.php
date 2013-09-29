@@ -84,6 +84,12 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update124();
 				}
+
+				// Going to version 2.0.0 we renamed smile parameter to bbCode
+				if (version_compare($oldRelease, '2.0.0', '<='))
+				{
+					$this->update200();
+				}
 			}
 		}
 
@@ -338,6 +344,39 @@ class Mod_ShoutboxInstallerScript
 
 			// Unset the array for the next loop
 			unset($colours);
+		}
+	}
+
+	/**
+	 * Function to update the smiley parameter being renamed to bbCode
+	 *
+	 * @return  void
+	 *
+	 * @since  2.0.0
+	 */
+	protected function update200()
+	{
+		$modules = $this->getInstances(true);
+
+		foreach ($modules as $module)
+		{
+			// Convert string to integer
+			$module = (int) $module;
+
+			$smile = $this->getParam('smile');
+
+			// Set the param values depending on value of smiley parameter
+			if ($smile == 0 || $smile == 1 || $smile == 2)
+			{
+				$this->setParams(array('bbcode' => 0), 'edit', $module);
+			}
+			else
+			{
+				$this->setParams(array('bbcode' => 1), 'edit', $module);
+			}
+
+			// Unset the array for the next loop
+			unset($smile);
 		}
 	}
 }
