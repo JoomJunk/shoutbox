@@ -86,7 +86,7 @@ class Mod_ShoutboxInstallerScript
 				}
 
 				// Going to version 2.0.0 we renamed smile parameter to bbCode
-				if (version_compare($oldRelease, '2.0.0', '<='))
+				if (version_compare($oldRelease, '1.2.5', '<='))
 				{
 					$this->update200();
 				}
@@ -360,19 +360,18 @@ class Mod_ShoutboxInstallerScript
 
 		foreach ($modules as $module)
 		{
-			// Convert string to integer
+			// Convert string to integer and get smiley param for the module
 			$module = (int) $module;
+			$smile = (int) $this->getParam('smile', $module);
 
-			$smile = $this->getParam('smile');
-
-			// Set the param values depending on value of smiley parameter
-			if ($smile == 0 || $smile == 1 || $smile == 2)
+			// If completely turned off we'll turn off the bbCode
+			if ($smile == 3)
 			{
-				$this->setParams(array('bbcode' => 0), 'edit', $module);
+				$this->setParams(array('bbcode' => 1), 'edit', $module);
 			}
 			else
 			{
-				$this->setParams(array('bbcode' => 1), 'edit', $module);
+				$this->setParams(array('bbcode' => 0), 'edit', $module);
 			}
 
 			// Unset the array for the next loop
