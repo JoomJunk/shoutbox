@@ -4,8 +4,12 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-#jjshoutbox { margin: auto; }
-#jjshoutboxform { margin: 0 auto; }
+#jjshoutbox {
+	margin: auto;
+}
+#jjshoutboxform {
+	margin: 0 auto;
+}
 #jjshoutboxform textarea {
     width: 100%;
     margin: 5px 0 0 0;
@@ -15,14 +19,14 @@
     margin-top: 5px;
     color: #000;
     width: 100%;
-    padding: 4px 0;
+    padding: 5px 0;
 }
 #jjshoutboxoutput {
     height: 200px;
     width: 100%;
     border-style: solid;
     background: #FFFFFF;
-    overflow: auto;
+    overflow: hidden;
     margin-top: 5px;
     word-wrap: break-word;
 }
@@ -62,11 +66,23 @@
     color:red;
     font-weight: bold;
 }
-#noguest { color: #FF0000; font-weight: bold; }
-#jjshoutbox .jj_error { color:red; font-weight:bold; }
-#jjshoutbox .jj_label { width: 50%; }
-#jjshoutbox .jj_input {	width: 50%; }
-#jjshoutbox .jj_admin_label { width: 30%; }
+#noguest {
+	color: #FF0000;
+	font-weight: bold;
+}
+#jjshoutbox .jj_error {
+	color:red;
+	font-weight:bold;
+}
+#jjshoutbox .jj_label {
+	width: 50%;
+}
+#jjshoutbox .jj_input {
+	width: 50%;
+}
+#jjshoutbox .jj_admin_label {
+	width: 30%;
+}
 #jjshoutbox .jj_admin_button {
     width: 65%;
     min-width: 90px;
@@ -77,27 +93,46 @@
 }
 #jj_smiley_box{
     margin: 10px 0 10px 0;
+	white-space: normal;
 }
 #jj_smiley_box img{
     cursor: pointer;
-}
-#jj_smiley_button{
-    margin: 5px 0 0 0;
-    float:right;
-}
-#jj_btn, #jj_btn2{
-    cursor: pointer;
-}
-#jj_btn{
-    display: block;
-}
-#jj_btn2{
-    display:none;
-}
-.jj_smiley {
-    padding: 0 2px 0 2px;
+	padding: 0 2px 0 2px;
     border:none;
 }
-.outter_jj_smiley:hover {
-    background:none !important;
+#jjshoutbox .btn {
+	line-height: 19px !important;
+}
+.jj-shout-error {
+    background: #F00;
+    background: rgba(255, 0, 0, 0.7);
+    width: 100%;
+    height: 27px;
+    color: #FFF;
+    display: none;
+    text-align: center;
+    padding-top: 8px;
+    margin-top: 5px;
+}
+.jj-redBorder {
+    border: 1px solid red;
+}
+.inner-jj-error {
+    padding: 0;
+    margin: 0;
+}
+#newshout {
+	padding-bottom: 0px;
+}
+/**
+Bold, italics and underline for the BB Code
+**/
+.jj-bold {
+	font-weight: bold;
+}
+.jj-italic {
+	font-style: italic;
+}
+.jj-underline {
+	text-decoration: underline;
 }

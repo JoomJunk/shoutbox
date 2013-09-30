@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>1.2.5</version> 
+	<version>2.0.0</version>
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -48,6 +48,7 @@
 		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 		<folder>sql</folder>
+        <folder>fields</folder>
 	</files>
  
     <languages>
@@ -61,7 +62,7 @@
  
     <config>
 		<fields name="params">
-			<fieldset name="basic">
+			<fieldset name="basic" addfieldpath="/modules/mod_shoutbox/fields">
 				<field name="profile" type="list" default="none" label="SHOUT_LINK_PROFILE" description="SHOUT_LINK_PROFILEDESC">
 					<option value="0">SHOUT_NO_USERS</option>
 					<option value="1">SHOUT_CB_USERS</option>
@@ -69,14 +70,14 @@
 					<option value="3">SHOUT_JOM_SOCIAL_USERS</option>
 					<option value="4">SHOUT_K2_BLOG_USERS</option>
 				</field>
-				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
-				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
-				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
 				<field name="loginname" type="radio" default="1" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
 					<option value="0">SHOUT_REAL</option>
 					<option value="1">SHOUT_USER</option>
 					<option value="2">SHOUT_CHOOSE</option>
 				</field>
+				<field name="genericname" type="text" default="Anonymous" label="SHOUT_GENERIC_NAME" description="SHOUT_GENERIC_NAME_DESC" />
+				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
+				
 				<field name="guestpost" type="radio" default="0" label="SHOUT_GUESTLABEL" description="SHOUT_GUESTDESC">
 					<option value="0">JYES</option>
 					<option value="1">JNO</option>
@@ -89,15 +90,6 @@
 					<option value="2">SHOUT_DONT_SHOW</option>
 				</field>
 				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
-				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
-				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
-				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
-				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
-					<option value="0">SHOUT_SMILIES_ON</option>
-					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
-					<option value="2">SHOUT_SMILIES_ON_SLIDE</option>
-					<option value="3">SHOUT_SMILIES_DISABLE</option>
-				</field>
 				<field name="swearingcounter" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
 					<option value="0">JON</option>
 					<option value="1">JOFF</option>
@@ -106,6 +98,23 @@
 				<field name="messagelength" type="text" default="200" label="SHOUT_MESSAGELABEL" description="SHOUT_MESSAGEDESC" />
 				<field name="alertlength" type="text" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
 				<field name="warnlength" type="text" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
+                <field name="jquery" type="jQuery" default="0" label="SHOUT_JQUERYLABEL" description="SHOUT_JQUERYDESC">
+                    <option value="0">SHOUT_JQUERY_LOCAL</option>
+                    <option value="1">SHOUT_JQUERY_EXTERNAL</option>
+                </field>
+                <field name="enterclick" type="radio" default="0" label="SHOUT_ENTERCLICK" description="SHOUT_ENTERCLICK_DESC">
+                    <option value="0">SHOUT_CLICK</option>
+                    <option value="1">SHOUT_ENTER</option>
+                </field>
+				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
+				<field name="bbcode" type="radio" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JON</option>
+					<option value="1">JOFF</option>
+				</field>
+				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
+				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
+				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
+				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
 			</fieldset>
 
 			<fieldset name="security" label="SHOUT_SECURITY">

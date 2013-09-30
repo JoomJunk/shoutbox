@@ -33,10 +33,14 @@ if ($user->authorise('core.delete'))
 }
 
 $document->addStyleDeclaration($style);
+
+JText::script('SHOUT_ANSWER_INCORRECT');
+JText::script('SHOUT_REMAINING');
 ?>
 
 <div id="jjshoutbox">
 <div id="jjshoutboxoutput">
+	<div id="newshout"></div>
 	<?php
 	$shouts	= array();
 
@@ -72,9 +76,9 @@ $document->addStyleDeclaration($style);
 				?>
 				<h1 <?php echo ModShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
 					<?php
-					if ($smile == 0)
+					if ($bbcode == 0)
 					{
-						echo ModShoutboxHelper::smileyFilter($profile_link);
+						echo ModShoutboxHelper::bbcodeFilter($profile_link);
 					}
 					else
 					{
@@ -96,13 +100,13 @@ $document->addStyleDeclaration($style);
 				</h1>
 				<p>
 					<?php
-					if ($smile == 0 || $smile == 1 || $smile == 2)
+					if ($bbcode == 0)
 					{
-						echo ModShoutboxHelper::smileyfilter($shouts[$i]->msg);
+						echo ModShoutboxHelper::bbcodeFilter($shouts[$i]->msg);
 					}
 					else
 					{
-						echo $shouts[$i]->msg;
+						echo nl2br($shouts[$i]->msg);
 					}
 					?>
 				</p>
@@ -161,109 +165,43 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 								<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
 							</span>
 			</noscript>
-			<textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
-			<?php
-			if ($smile == 1 || $smile == 2)
-			{
-				if ($smile == 2)
-				{
-					if (version_compare(JVERSION, '3.0.0', 'ge'))
-					{
-						echo '<div id="jj_smiley_button">
-												<input id="jj_btn" type="button" class="btn btn-mini" value="&#9650;" />
-												<input id="jj_btn2" type="button" class="btn btn-mini" value="&#9660;" />
-										      </div>';
-					}
-					else
-					{
-						echo '<div id="jj_smiley_button">
-												<input id="jj_btn" type="button" class="btn" value="&#9650;" />
-												<input id="jj_btn2" type="button" class="btn" value="&#9660;" />
-										      </div>';
-					}
-				}
-
-				echo '<div id="jj_smiley_box">';
-				$path = JPATH_ROOT . "/media/mod_shoutbox/images";
-				$smilies = JFolder::files($path);
-				echo ModShoutboxHelper::smileyshow($smilies);
-				echo '</div>';
-			} ?>
-			<script type="text/javascript">
-				function textCounter(textarea, countdown, maxlimit) {
-					textareaid = document.getElementById(textarea);
-					if (textareaid.value.length > maxlimit)
-						textareaid.value = textareaid.value.substring(0, maxlimit);
-					else
-						document.getElementById('charsLeft').innerHTML = (maxlimit-textareaid.value.length)+' <?php echo JText::_('SHOUT_REMAINING') ?>';
-
-					if (maxlimit-textareaid.value.length > <?php echo $params->get('alertlength', '50'); ?>)
-						document.getElementById('charsLeft').style.color = "Black";
-					if (maxlimit-textareaid.value.length <= <?php echo $params->get('alertlength', '50'); ?> && maxlimit-textareaid.value.length > <?php echo $params->get('warnlength', '10'); ?>)
-						document.getElementById('charsLeft').style.color = "Orange";
-					if (maxlimit-textareaid.value.length <= <?php echo $params->get('warnlength', '10'); ?>)
-						document.getElementById('charsLeft').style.color = "Red";
-
-				}
-				textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
-				<?php
-				if ($smile == 1 || $smile == 2 )
-				{
-				?>
-				(function($){
-					$('#jj_smiley_box img').click(function(){
-						var smiley = $(this).attr('alt');
-						var caretPos = caretPos();
-						var strBegin = $('#message').val().substring(0, caretPos);
-						var strEnd   = $('#message').val().substring(caretPos);
-						$('#message').val( strBegin + " " + smiley + " " + strEnd);
-						function caretPos(){
-							var el = document.getElementById("message");
-							var pos = 0;
-							// IE Support
-							if (document.selection){
-								el.focus ();
-								var Sel = document.selection.createRange();
-								var SelLength = document.selection.createRange().text.length;
-								Sel.moveStart ('character', -el.value.length);
-								pos = Sel.text.length - SelLength;
-							}
-							// Firefox support
-							else if (el.selectionStart || el.selectionStart == '0')
-								pos = el.selectionStart;
-
-							return pos;
-						}
-					});
-					<?php
-					if ($smile == 2)
-					{
-					?>
-					$("#jj_smiley_button").click(function () {
-						$("#jj_smiley_box").slideToggle("slow");
-					});
-
-					$('#jj_btn').click(function(){
-						$('#jj_btn2').show();
-						$('#jj_btn').hide();
-					});
-					$('#jj_btn2').click(function(){
-						$('#jj_btn').show();
-						$('#jj_btn2').hide();
-					});
-
-					<?php
-					}
-					?>
-				})(jQuery);
-				<?php
-				}
-				?>
-			</script>
+			<textarea
+				id="message"
+				cols="20"
+				rows="5"
+				name="message"
+				onKeyDown="textCounter('message','charsLeft', <?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);"
+				onKeyUp="textCounter('message','charsLeft',<?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);"
+			></textarea>
+			<div class="jj-shout-error"></div>
+			
+			<?php if ( $bbcode == 0 ) : ?>
+			<div class="btn-toolbar">
+				<div class="btn-group">
+					<button class="btn btn-small jj-bold">B</button>
+					<button class="btn btn-small jj-italic">I</button>
+					<button class="btn btn-small jj-underline">U</button>
+					<button class="btn btn-small jj-link">Link</button>
+					<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
+						<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_razz.gif" alt=":D"/>
+						<span class="caret"></span>
+					</a>
+					<ul class="dropdown-menu">
+						<li>
+						<?php
+							echo '<div id="jj_smiley_box">';
+							echo ModShoutboxHelper::smileyShow();
+							echo '</div>';
+						?>					
+						</li>
+					</ul>
+				</div>
+			</div>
+			<?php endif; ?>
 
 			<?php
 			// Shows recapture or math question depending on the parameters
-			if ($params->get('recaptchaon') == 0)
+			if ($recaptcha == 0)
 			{
 				if ($params->get('recaptcha-public') == '' || $params->get('recaptcha-private') == '')
 				{
@@ -287,26 +225,39 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 				}
 			}
 
-			if ($securityquestion == 0)
+			if ($securityQuestion == 0)
 			{
 				$que_number1 = ModShoutboxHelper::randomnumber(1);
 				$que_number2 = ModShoutboxHelper::randomnumber(1); ?>
 				<label class="jj_label"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
 				<input type="hidden" name="sum1" value="<?php echo $que_number1; ?>" />
 				<input type="hidden" name="sum2" value="<?php echo $que_number2; ?>" />
-				<input class="jj_input" type="text" name="human" />
+				<input class="jj_input" type="text" name="human" id="mathsanswer" />
 			<?php
 			}
 
-			if ($params->get('recaptchaon') == 0 && $securityquestion == 0)
+			if ($params->get('recaptchaon') == 0 && $securityQuestion == 0)
 			{
 				// Shows warning if both security questions are enabled and logs to error file.
 				JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
 				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 			}
-			?>
-			<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />
-		<?php } ?>
+
+			if($enterclick == 0)
+			{
+				$disabled = '';
+				if((($params->get('recaptchaon') == 0 && !$params->get('recaptcha-public'))
+					|| ($params->get('recaptchaon') == 0 && !$params->get('recaptcha-private'))
+					|| ($params->get('recaptchaon') == 0 && $securityQuestion == 0)))
+				{
+					$disabled = 'disabled="disabled"';
+				}
+				?>
+				<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php echo $disabled; ?> />
+			<?php
+			}
+		}
+		?>
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -315,16 +266,21 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 		if ($mass_delete == 0)
 		{ ?>
 			<form method="post" name="deleteall">
-				<input class="jj_admin_label" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
 				<input type="hidden" name="max" value="<?php echo $number; ?>" />
 				<?php
 				if (version_compare(JVERSION, '3.0.0', 'ge'))
 				{
-					?><input class="btn btn-danger btn-small" name="deleteall" type="submit" style="width:35%;margin-bottom:10px;color:white;" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
+					?><div class="input-append">
+						<input class="span2" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" style="width:50px;">
+						<input class="btn btn-danger" type="submit" name="deleteall" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
+					</div>	
+					<?php
 				}
 				else
 				{
-					?><input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
+					?>
+					<input class="jj_admin_label" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
+					<input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
 				}
 				?>
 			</form>
@@ -342,3 +298,177 @@ elseif ($guestpost == 1 && $guestpost == 1)
 ?>
 </div>
 </div>
+<script>
+	// Initialize text counter and BBCode inserter
+	textCounter('message','charsLeft', <?php echo $params->get('messagelength', '200'); ?>, <?php echo $params->get('alertlength', '50'); ?>, <?php echo $params->get('warnlength', '10'); ?>);
+	var bbCode = <?php echo $bbcode; ?>;
+	insertBbCode(bbCode);
+
+	(function($){
+		var textarea = $("textarea#message");
+		<?php if($enterclick == 1) { ?>
+		textarea.keypress(function(e){
+			if (e.keyCode == 13 && !e.shiftKey){
+				<?php } else { ?>
+					$( "#shoutbox-submit" ).click( function() {
+						<?php } ?>
+						if(textarea.val() == ""){
+							$('.jj-shout-error').append('<p class="inner-jj-error">Please enter a message!</p>').slideDown().show().delay(6000).queue(function(next){
+								$(this).slideUp().hide();
+								$('.inner-jj-error').remove();
+								next();
+							});
+							var $elt = $('#shoutbox-submit').attr('disabled', true);
+							setTimeout(function (){
+								$elt.attr('disabled', false);
+							}, 6000);
+							textarea.addClass('jj-redBorder').delay(6000).queue(function(next){
+								$(this).removeClass('jj-redBorder');
+								next();
+							});
+							return false;
+						}
+						else {
+							<?php if($displayName==1 && !$user->guest){ ?>
+							var name = "<?php echo $user->username;?>";
+							<?php } elseif($displayName==0 && !$user->guest) { ?>
+							var name = "<?php echo $user->name;?>";
+							<?php } else { ?>
+							if($('#shoutbox-name').val() == ""){
+								var name = "<?php echo $genericname; ?>";
+							}
+							else{
+								var name = $('#shoutbox-name').val();
+							}
+							<?php } ?>
+							var request = {
+								'name' : name,
+								'message' : textarea.val(),
+								'<?php echo JSession::getFormToken(); ?>'    : '1',
+								'token'   : '<?php echo $_SESSION['token']; ?>',
+								'shout' : 'Shout!',
+								'title' : '<?php echo $title; ?>',
+								'ajax' : 'true'
+								<?php
+								if ($recaptcha==0) {
+								?>
+								,'recaptcha_response_field' : $('#recaptcha_response_field').val(),
+								'recaptcha_challenge_field' : $('#recaptcha_challenge_field').val()
+								<?php
+								}
+								elseif ($securityQuestion == 0)
+								{
+								?>
+								,'sum1' : '<?php echo $que_number1; ?>',
+								'sum2' : '<?php echo $que_number2; ?>',
+								'human' : $('#mathsanswer').val()
+								<?php
+								}
+								?>
+							}
+							<?php
+							if($bbcode == 0)
+							{
+							?>
+							,
+							map = {
+								':)':   '<img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)" />',
+								':(':   '<img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(" />',
+								':D':   '<img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D" />',
+								'xD':   '<img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD" />',
+								':P':   '<img src="media/mod_shoutbox/images/icon_razz.gif" alt=":P" />',
+								';)':   '<img src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)" />',
+								':S':   '<img src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S" />',
+								':@':   '<img src="media/mod_shoutbox/images/icon_mad.gif" alt=":@" />',
+								':O':   '<img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O" />',
+								'lol':   '<img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol" />'
+							},
+							message = textarea.val();
+							Object.keys(map).forEach(function (ico) {
+								var icoE   = ico.replace(/([.?*+^$[\]\\(){}|-])/g, "\\$1");
+								message    = message.replace( new RegExp(icoE, 'g'), map[ico] );
+							});
+							var filtered_message = message.replace(/\[i\](.*)\[\/i\]/g, '<span class="jj-italic">$1</span>')
+							.replace(/\[u\](.*)\[\/u\]/g, '<span class="jj-underline">$1</span>')
+							.replace(/\[b\](.*)\[\/b\]/g, '<span class="jj-bold">$1</span>')
+							.replace(/\n/g, "<br />")
+							.replace(/\[url=(?:http(s?):\/\/)?([^\]]+)\]\s*(.*?)\s*\[\/url\]/gi, "<a href='http$1://$2' target='_blank'>$3</a>");
+							<?php
+							}
+							else
+							{
+							?>							
+							var filtered_message = textarea.val().replace(/\n/g, "<br />");
+							<?php
+							}
+							?>
+							$.ajax({
+								type: "POST",
+								url: "<?php echo JUri::current() . '?option=com_ajax&module=shoutbox&method=submit&format=json'; ?>",
+								data: request,
+								success:function(response){
+									if (response.data['value'])
+									{
+										var deleteResponse = '';
+										<?php
+										if ($user->authorise('core.delete'))
+										{
+										?>
+										deleteResponse = '<form method="post" name="delete"><input name="delete" type="submit" value="x" /><input name="idvalue" type="hidden" value="' + response.data['value'] + '" /></form>';
+										<?php
+										}
+										?>
+										$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?>' + deleteResponse + '</h1><p>' + filtered_message + '</p>').hide().insertAfter('#newshout').slideDown();
+										<?php if($displayName == 2 || $user->guest)
+										{ ?>
+										$('#shoutbox-name').val('');
+										<?php }
+										if($securityQuestion == 0)
+										{?>
+										$('#mathsanswer').val('');
+										<?php }
+										if($recaptcha == 0)
+										{ ?>
+										Recaptcha.reload();
+										<?php } ?>
+										textarea.val('');
+									}
+									else
+									{
+										var error = '';
+										if(response.data['error'])
+										{
+											error = response.data['error'];
+										}
+										$('.jj-shout-error').append('<p class="inner-jj-error">' + error + '</p>').slideDown().show().delay(6000).queue(function(next){
+											$(this).slideUp().hide();
+											$('.inner-jj-error').remove();
+											next();
+										});
+										var $elt = $('#shoutbox-submit').attr('disabled', true);
+										setTimeout(function (){
+											$elt.attr('disabled', false);
+										}, 6000);
+										textarea.addClass('jj-redBorder').delay(6000).queue(function(next){
+											$(this).removeClass('jj-redBorder');
+											next();
+										});
+
+										return false;
+									}
+								},
+								error:function(ts){
+									console.log(ts.responseText);
+								}
+							});
+							return false;
+						}
+						<?php if($enterclick == 1) { ?>
+					}
+				}
+				<?php } else { ?>
+			}
+			<?php } ?>
+		);
+	})(jQuery);
+</script>
