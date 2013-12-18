@@ -157,9 +157,9 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 
 			<span id="charsLeft"></span>
 			<noscript>
-							<span id="noscript_charsleft">
-								<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
-							</span>
+				<span id="noscript_charsleft">
+					<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
+				</span>
 			</noscript>
 			<textarea
 				id="message"
@@ -178,24 +178,19 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 					<button class="btn btn-small jj-italic">I</button>
 					<button class="btn btn-small jj-underline">U</button>
 					<button class="btn btn-small jj-link">Link</button>
-					<a class="btn btn-small dropdown-toggle" data-toggle="dropdown" href="#">
-						<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_razz.gif" alt=":D"/>
-						<span class="caret"></span>
-					</a>
-					<ul class="dropdown-menu">
-						<li>
-						<?php
-							echo '<div id="jj_smiley_box">';
-							echo ModShoutboxHelper::smileyShow();
-							echo '</div>';
-						?>					
-						</li>
-					</ul>
 				</div>
 			</div>
-			<?php endif; ?>
-
-			<?php
+			<ul class="dropdown-menu">
+				<li>
+				<?php
+					echo '<div id="jj_smiley_box">';
+					echo ModShoutboxHelper::smileyShow();
+					echo '</div>';
+				?>					
+				</li>
+			</ul>
+			<?php 
+			} 
 			// Shows recapture or math question depending on the parameters
 			if ($recaptcha == 0)
 			{

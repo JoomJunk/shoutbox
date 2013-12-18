@@ -124,6 +124,25 @@
 #newshout {
 	padding-bottom: 0px;
 }
+
+/**
+Non-bootstrap styling for BB Code
+**/
+#jjshoutbox .btn-toolbar {
+	margin-top: 10px;
+}
+#jjshoutbox .btn-group .btn {
+	cursor: pointer;
+	min-width: 30px;
+    padding: 2px 7px;
+}
+#jjshoutbox .dropdown-menu {
+	list-style: none;
+}
+#jjshoutbox .dropdown-menu li{
+	float:left;
+}
+
 /**
 Bold, italics and underline for the BB Code
 **/

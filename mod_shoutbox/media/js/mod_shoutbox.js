@@ -27,6 +27,7 @@ function insertBbCode(bbCode) {
     "use strict";
     if (bbCode === 0) {
         (function ($) {
+
             $('#jj_smiley_box img').click(function () {
                 var smiley = $(this).attr('alt');
                 document.getElementById('message').value += ' ' + smiley + ' ';
