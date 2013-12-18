@@ -76,7 +76,6 @@ class ModShoutboxHelper
 		->from('#__shoutbox')
 		->order('id DESC');
 		$db->setQuery($query, 0, $number);
-		$i = 0;
 
 		if (!JError::$legacy)
 		{
@@ -105,6 +104,8 @@ class ModShoutboxHelper
 				return $shouts;
 			}
 		}
+
+		$i = 0;
 
 		foreach ( $rows as $row )
 		{
@@ -678,6 +679,8 @@ class ModShoutboxHelper
 
 	private static function createErrorMsg()
 	{
+		$i = 0;
+
 		// Output error to shoutbox.
 		$shouts[$i] = new stdClass;
 		$shouts[$i]->name = 'Administrator';
