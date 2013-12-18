@@ -27,16 +27,7 @@ function insertBbCode(bbCode) {
     "use strict";
     if (bbCode === 0) {
         (function ($) {
-            
-            // click toggle function.
-            $('#jjshoutbox .dropdown-toggle').click().toggle(function(){
-                $('#jjshoutbox .dropdown-menu').show(); 
-            },
-            function() {
-                 $('#jjshoutbox .dropdown-menu').hide();
-            });
-            
-            
+
             $('#jj_smiley_box img').click(function () {
                 var smiley = $(this).attr('alt');
                 document.getElementById('message').value += ' ' + smiley + ' ';
