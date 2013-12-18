@@ -34,19 +34,19 @@ function insertBbCode(bbCode) {
             });
             $(document).ready(function () {
                 var box = $("textarea#message");
-                $(".jj-bold").click(function () {
+                $(".btn.jj-bold").click(function () {
                     box.val(box.val() + "[b] [/b]");
                     return false;
                 });
-                $(".jj-italic").click(function () {
+                $(".btn.jj-italic").click(function () {
                     box.val(box.val() + "[i] [/i]");
                     return false;
                 });
-                $(".jj-underline").click(function () {
+                $(".btn.jj-underline").click(function () {
                     box.val(box.val() + "[u] [/u]");
                     return false;
                 });
-                $(".jj-link").click(function () {
+                $(".btn.jj-link").click(function () {
                     box.val(box.val() + "[url=] [/url]");
                     return false;
                 });
