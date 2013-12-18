@@ -171,7 +171,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 			></textarea>
 			<div class="jj-shout-error"></div>
 			
-			<?php if ( $bbcode == 0 ) : ?>
+			<?php if ( $bbcode == 0 ) { ?>
 			<div class="btn-toolbar">
 				<div class="btn-group">
 					<button class="btn btn-small jj-bold">B</button>
