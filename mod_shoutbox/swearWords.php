@@ -9,32 +9,21 @@
 define('_JEXEC', 1);
 ?>
 anal
-anus
 arse
 ballsack
-balls
 bastard
 bitch
-biatch
 blowjob
 blow job
 bollock
 bollok
-boner
-boob
-bugger
-bum
-butt
 buttplug
 clitoris
 cock
 coon
-crap
 cunt
-damn
 dick
 dildo
-dyke
 fag
 feck
 fellate
@@ -48,7 +37,6 @@ fudgepacker
 fudge packer
 flange
 homo
-jerk
 jizz
 knobend
 knob end
@@ -58,26 +46,18 @@ milf
 muff
 nigger
 nigga
-penis
-piss
-poop
 porn
-preteen
 prick
-pube
 pussy
 queer
 scrotum
-sex
 shit
 s.hit
 s.h.i.t
 s hit
 sh1t
 slut
-smegma
 spunk
-turd
 twat
 vagina
 wank
