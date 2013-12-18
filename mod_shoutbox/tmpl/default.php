@@ -132,15 +132,11 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 		// Displays the Name of the user if logged in unless stated in the parameters to be a input box
 		if ($displayName == 0 && !$user->guest)
 		{
-			echo JText::_('SHOUT_NAME');
-			echo ": ";
-			echo $user->name;
+			echo JText::_('SHOUT_NAME') . ":" . $user->name;
 		}
 		elseif ($displayName == 1 && !$user->guest)
 		{
-			echo JText::_('SHOUT_NAME');
-			echo ": ";
-			echo $user->username;
+			echo JText::_('SHOUT_NAME') . ":" . $user->username;
 		}
 		elseif (($guestpost == 0 && $user->guest)||($displayName == 2 && !$user->guest))
 		{

@@ -87,16 +87,8 @@ class ModShoutboxHelper
 			}
 			catch (Exception $e)
 			{
-				// Output error to shoutbox.
-				$shouts[$i] = new stdClass;
-				$shouts[$i]->name = 'Administrator';
-				$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
-				$shouts[$i]->msg = $message;
-				$shouts[$i]->ip = 'System';
-				$shouts[$i]->user_id = 0;
-
-				// Add error to log.
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+				// Assemble Message and add log.
+				$shouts = self::createErrorMsg();
 
 				return $shouts;
 			}
@@ -107,15 +99,8 @@ class ModShoutboxHelper
 
 			if ($db->getErrorNum())
 			{
-				$shouts[$i] = new stdClass;
-				$shouts[$i]->name = 'Administrator';
-				$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
-				$shouts[$i]->msg = $message;
-				$shouts[$i]->ip = 'System';
-				$shouts[$i]->user_id = 0;
-
-				// Add error to log.
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $db->getErrorMsg()), JLog::CRITICAL, 'mod_shoutbox');
+				// Assemble Message and add log.
+				$shouts = self::createErrorMsg();
 
 				return $shouts;
 			}
@@ -690,5 +675,20 @@ class ModShoutboxHelper
 		}
 
 		return true;
+
+	private static function createErrorMsg()
+	{
+		// Output error to shoutbox.
+		$shouts[$i] = new stdClass;
+		$shouts[$i]->name = 'Administrator';
+		$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
+		$shouts[$i]->msg = $message;
+		$shouts[$i]->ip = 'System';
+		$shouts[$i]->user_id = 0;
+
+		// Add error to log.
+		JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+
+		return $shouts;
 	}
 }
