@@ -91,15 +91,6 @@
     border: 1px solid #CC0000;
     cursor: pointer;
 }
-#jj_smiley_box{
-    margin: 10px 0 10px 0;
-	white-space: normal;
-}
-#jj_smiley_box img{
-    cursor: pointer;
-	padding: 0 2px 0 2px;
-    border:none;
-}
 #jjshoutbox .btn {
 	line-height: 19px !important;
 }
@@ -128,6 +119,15 @@
 /**
 Non-bootstrap styling for BB Code
 **/
+#jjshoutbox #jj_smiley_box{
+    margin: 10px 0 10px 0;
+	white-space: normal;
+}
+#jjshoutbox #jj_smiley_box img{
+    cursor: pointer;
+	padding: 2px;
+    border:none;
+}
 #jjshoutbox .btn-toolbar {
 	margin-top: 10px;
 }
@@ -135,12 +135,6 @@ Non-bootstrap styling for BB Code
 	cursor: pointer;
 	min-width: 30px;
     padding: 2px 7px;
-}
-#jjshoutbox .dropdown-menu {
-	list-style: none;
-}
-#jjshoutbox .dropdown-menu li{
-	float:left;
 }
 
 /**

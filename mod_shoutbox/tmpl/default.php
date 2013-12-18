@@ -180,15 +180,9 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 					<button class="btn btn-small jj-link">Link</button>
 				</div>
 			</div>
-			<ul class="dropdown-menu">
-				<li>
-				<?php
-					echo '<div id="jj_smiley_box">';
-					echo ModShoutboxHelper::smileyShow();
-					echo '</div>';
-				?>					
-				</li>
-			</ul>
+			<div id="jj_smiley_box">
+				<?php echo ModShoutboxHelper::smileyShow(); ?>					
+			</div>
 			<?php 
 			} 
 			// Shows recapture or math question depending on the parameters
