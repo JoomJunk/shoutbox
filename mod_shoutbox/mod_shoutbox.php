@@ -51,8 +51,7 @@ else
 		{
 			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery.js');
 		}
-
-		JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js');
+		$doc->addScriptDeclaration('jQuery.noConflict();');		
 	}
 }
 
