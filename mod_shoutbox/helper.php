@@ -70,10 +70,10 @@ class ModShoutboxHelper
 	public static function getShouts($number, $message)
 	{
 		$shouts	= array();
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-		->from('#__shoutbox')
+		->from($db->quoteName('#__shoutbox'))
 		->order('id DESC');
 		$db->setQuery($query, 0, $number);
 
@@ -232,7 +232,7 @@ class ModShoutboxHelper
 						$config = JFactory::getConfig();
 						$db = JFactory::getDbo();
 						$columns = array('name', 'when', 'ip', 'msg', 'user_id');
-						$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)),
+						$values = array($db->quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)),
 							$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
 						$query = $db->getQuery(true);
 
@@ -480,8 +480,8 @@ class ModShoutboxHelper
 		$db	= JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->delete()
-		->from('#__shoutbox')
-		->where('id = ' . (int) $id);
+		->from($db->quoteName('#__shoutbox'))
+		->where('id = ' . $db->quote((int) $id));
 		$db->setQuery($query);
 
 		if (version_compare(JVERSION, '3.0.0', 'ge'))
@@ -508,7 +508,7 @@ class ModShoutboxHelper
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from('#__shoutbox')
+			->from($db->quoteName('#__shoutbox'))
 			->order('id DESC');
 		$db->setQuery($query, 0, $delete);
 		$rows = $db->loadObjectList();
