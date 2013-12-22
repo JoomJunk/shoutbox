@@ -138,7 +138,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 		}
 		elseif ($displayName == 1 && !$user->guest)
 		{
-			echo JText::_('SHOUT_NAME') . ":" . $user->username;
+			echo JText::_('SHOUT_NAME') . ": " . $user->username;
 		}
 		elseif (($guestpost == 0 && $user->guest)||($displayName == 2 && !$user->guest))
 		{
