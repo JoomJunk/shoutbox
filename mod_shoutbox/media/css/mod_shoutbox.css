@@ -8,7 +8,7 @@
 	margin: auto;
 }
 #jjshoutboxform {
-	margin: 0 auto;
+	margin: 5px auto;
 }
 #jjshoutboxform textarea {
     width: 100%;
@@ -26,43 +26,47 @@
     width: 100%;
     border-style: solid;
     background: #FFFFFF;
-    overflow: hidden;
+    overflow: auto;
     margin-top: 5px;
     word-wrap: break-word;
 }
-#jjshoutboxoutput div {
-    padding-bottom: 5px;
-}
 #jjshoutboxoutput input[type=submit]{
     cursor: pointer;
-    text-align: center;
     font-family: inherit;
     text-decoration: none;
     background: none;
     padding: 0;
     margin: 0;
     border: 0;
-    height: 15px;
 }
-#jjshoutboxoutput div h1 {
+#jjshoutboxoutput .jjshoutboxheader {
     font-size: 12px;
     font-family: inherit;
     color: #000000;
     text-transform: none;
     margin: 8px 0;
-    line-height: 125%;
+	padding-left: 3px;
 }
-#jjshoutboxoutput div h1 form {
+#jjshoutboxoutput .jjshoutboxheader span {
+	font-weight: bold;
+	display: inline-block;
+}
+#jjshoutboxoutput .jjshoutboxheader form {
     display: inline-block;
     margin: 0;
+}
+#jjshoutboxoutput .jjshoutboxheader form input{
+    font-weight: bold;
+	font-size: 11px;
 }
 #jjshoutboxoutput div p {
     text-align: left;
     color: #000000;
     margin: 5px 0;
+	padding-left: 3px;
 }
 #noscript_charsleft {
-    color:red;
+    color: #FF0000;
     font-weight: bold;
 }
 #noguest {
@@ -70,8 +74,8 @@
 	font-weight: bold;
 }
 #jjshoutbox .jj_error {
-	color:red;
-	font-weight:bold;
+	color: #FF0000;
+	font-weight: bold;
 }
 #jjshoutbox .jj_label {
 	width: 50%;
@@ -105,7 +109,7 @@
     margin-top: 5px;
 }
 .jj-redBorder {
-    border: 1px solid red;
+    border: 1px solid #FF0000;
 }
 .inner-jj-error {
     padding: 0;

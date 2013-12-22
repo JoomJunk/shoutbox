@@ -12,7 +12,7 @@ $style = '#jjshoutboxoutput {
 		border-color: ' . $params->get('bordercolor', '#FF3C16') . ';
 		border-width: ' . $params->get('borderwidth', '1') . 'px;
 	}
-	#jjshoutboxoutput div h1 {
+	#jjshoutboxoutput .jjshoutboxheader {
 		background: ' . $params->get('headercolor', '#D0D0D0') . ';
 	}';
 
@@ -74,7 +74,8 @@ JText::script('SHOUT_REMAINING');
 				// Displays Name or Name with link to profile
 				$profile_link = ModShoutboxHelper::linkUser($profile, $shouts[$i]->name, $shouts[$i]->user_id);
 				?>
-				<h1 <?php echo ModShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
+				<div class="jjshoutboxheader" <?php echo ModShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
+					<span>
 					<?php
 					if ($bbcode == 0)
 					{
@@ -84,9 +85,10 @@ JText::script('SHOUT_REMAINING');
 					{
 						echo $profile_link;
 					}
-					?> - <?php
-					echo JFactory::getDate($shouts[$i]->when)->format($show_date . 'H:i');
-
+					echo ' - ' .  JFactory::getDate($shouts[$i]->when)->format($show_date . 'H:i');
+					?>
+					</span>
+					<?php
 					if ($user->authorise('core.delete'))
 					{
 						?>
@@ -97,7 +99,7 @@ JText::script('SHOUT_REMAINING');
 					<?php
 					}
 					?>
-				</h1>
+				</div>
 				<p>
 					<?php
 					if ($bbcode == 0)
@@ -399,11 +401,11 @@ elseif ($guestpost == 1 && $guestpost == 1)
 										if ($user->authorise('core.delete'))
 										{
 										?>
-										deleteResponse = '<form method="post" name="delete"><input name="delete" type="submit" value="x" /><input name="idvalue" type="hidden" value="' + response.data['value'] + '" /></form>';
+										deleteResponse = '<form method="post" name="delete"><input name="delete" type="submit" value=" x" /><input name="idvalue" type="hidden" value="' + response.data['value'] + '" /></form>';
 										<?php
 										}
 										?>
-										$('<div><h1>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?>' + deleteResponse + '</h1><p>' + filtered_message + '</p>').hide().insertAfter('#newshout').slideDown();
+										$('<div><div class="jjshoutboxheader"><span>' + name + ' - 	<?php echo JFactory::getDate('now', JFactory::getConfig()->get('offset'))->format($show_date . 'H:i');?>' + deleteResponse + '</span></div><p>' + filtered_message + '</p>').hide().insertAfter('#newshout').slideDown();
 										<?php if($displayName == 2 || $user->guest)
 										{ ?>
 										$('#shoutbox-name').val('');
