@@ -44,7 +44,7 @@
     font-family: inherit;
     color: #000000;
     text-transform: none;
-    margin: 8px 0;
+    margin: 12px 0 0;
 	padding-left: 3px;
 }
 #jjshoutboxoutput .jjshoutboxheader span {
@@ -62,7 +62,7 @@
 #jjshoutboxoutput div p {
     text-align: left;
     color: #000000;
-    margin: 5px 0;
+    margin: 3px 0 5px;
 	padding-left: 3px;
 }
 #noscript_charsleft {
