@@ -16,13 +16,13 @@ $smile = $params->get('smile');
 $swearcounter = $params->get('swearingcounter');
 $swearnumber = $params->get('swearingnumber');
 $number = $params->get('maximum');
-$guestpost = $params->get('guestpost');
 $submittext = $params->get('submittext');
 $nonmembers = $params->get('nonmembers');
 $profile = $params->get('profile');
 $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
 $mass_delete = $params->get('mass_delete');
+$permission = $params->get('guestpost');
 
 // Add in jQuery if smilies are required
 $document = JFactory::getDocument();
