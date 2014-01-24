@@ -61,6 +61,10 @@ elseif ($date == 4)
 {
 	$show_date = "D j M - ";
 }
+elseif ($date == 5)
+{
+	$show_date = "Y/m/d - ";
+}
 else
 {
 	$show_date = "";
