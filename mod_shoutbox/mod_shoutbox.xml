@@ -77,7 +77,7 @@
 					<option value="1">SHOUT_USER</option>
 					<option value="2">SHOUT_CHOOSE</option>
 				</field>
-				<field name="guestpost" type="Usergroup" default="1" label="SHOUT_GUESTLABEL" description="SHOUT_GUESTDESC" />
+				<field name="guestpost" type="Usergroup" default="1" multiple="true" label="SHOUT_GUESTLABEL" description="SHOUT_GUESTDESC" />
 				<field name="date" type="list" default="2" label="SHOUT_SHOW_DATE" description="SHOUT_SHOW_DATEDESC">
 					<option value="0">SHOUT_DATE_ENGLAND_BACKSLASH</option>
 					<option value="3">SHOUT_DATE_AMERICAN_BACKSLASH</option>
