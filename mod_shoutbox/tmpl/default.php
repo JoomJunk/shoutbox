@@ -145,7 +145,7 @@ elseif (array_intersect($permissions, $access))
 		{
 			echo JText::_('SHOUT_NAME') . ":" . $user->username;
 		}
-		elseif (($permissions == 1 && $user->guest)||($displayName == 2 && !$user->guest))
+		elseif ($user->guest||($displayName == 2 && !$user->guest))
 		{
 			?>
 			<input name="name" type="text" value="Name" maxlength="25" id="shoutbox-name" onfocus="this.value = (this.value=='Name')? '' : this.value;" />
