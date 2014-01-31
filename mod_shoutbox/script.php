@@ -412,6 +412,5 @@ class Mod_ShoutboxInstallerScript
 			// Unset the array for the next loop
 			unset($values);
 		}
-
 	}
 }
