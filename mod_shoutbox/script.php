@@ -376,6 +376,9 @@ class Mod_ShoutboxInstallerScript
 		$groups = $db->loadColumn();
 
 		$modules = $this->getInstances(true);
+		
+		// Display a notification to the user with a notification
+		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_126_UPDATE_NOTIFICATION'), 'warning');
 
 		foreach ($modules as $module)
 		{
@@ -390,11 +393,11 @@ class Mod_ShoutboxInstallerScript
 			{
 				// Set the param values so that guests have no permissions
 				$groupsCopy = $groups;
-				// Define the group which has the guest permissions
 				$del_val = 1;
 				if(($key = array_search($del_val, $groupsCopy)) !== false) {
 					unset($groupsCopy[$key]);
 				}
+
 				$del_val = 13;
 				if(($key = array_search($del_val, $groupsCopy)) !== false) {
 					unset($groupsCopy[$key]);
