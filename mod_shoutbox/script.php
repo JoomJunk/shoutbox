@@ -218,7 +218,7 @@ class Mod_ShoutboxInstallerScript
 					if (is_array($value))
 					{
 						// Convert an array into a json encoded string
-						$params[(string) $name] = $value;
+						$params[(string) $name] = array_values($value);
 					}
 					else
 					{
@@ -392,6 +392,10 @@ class Mod_ShoutboxInstallerScript
 				$groupsCopy = $groups;
 				// Define the group which has the guest permissions
 				$del_val = 1;
+				if(($key = array_search($del_val, $groupsCopy)) !== false) {
+					unset($groupsCopy[$key]);
+				}
+				$del_val = 13;
 				if(($key = array_search($del_val, $groupsCopy)) !== false) {
 					unset($groupsCopy[$key]);
 				}
