@@ -131,7 +131,7 @@ if (($actualnumber > 0) && ($shouts[0]->msg == $dataerror) && ($shouts[0]->ip ==
 	// Shows the error message instead of the form if there is a database error.
 	echo JText::_('SHOUT_DATABASEERROR');
 }
-elseif (in_array($permission, $access))
+elseif (array_intersect($permissions, $access))
 {
 	?>
 	<form method="post" name="shout">
