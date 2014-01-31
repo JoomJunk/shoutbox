@@ -22,7 +22,7 @@ $profile = $params->get('profile');
 $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
 $mass_delete = $params->get('mass_delete');
-$permission = $params->get('guestpost');
+$permissions = $params->get('guestpost');
 
 // Add in jQuery if smilies are required
 $document = JFactory::getDocument();

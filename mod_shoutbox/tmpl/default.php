@@ -118,12 +118,20 @@ $document->addStyleDeclaration($style);
 // Retrieve the list of user groups the user has access to
 $access = JFactory::getUser()->getAuthorisedGroups();
 
+// Convert the parameter string into an integer
+$i=0;
+foreach($permissions as $permission)
+{
+	$permissions[$i] = intval($permission);
+	$i++;
+}
+
 if (($actualnumber > 0) && ($shouts[0]->msg == $dataerror) && ($shouts[0]->ip == 'System'))
 {
 	// Shows the error message instead of the form if there is a database error.
 	echo JText::_('SHOUT_DATABASEERROR');
 }
-elseif (in_array($permission, $access))
+elseif (array_intersect($permissions, $access))
 {
 	?>
 	<form method="post" name="shout">
@@ -137,7 +145,7 @@ elseif (in_array($permission, $access))
 		{
 			echo JText::_('SHOUT_NAME') . ":" . $user->username;
 		}
-		elseif (($permission == 1 && $user->guest)||($displayName == 2 && !$user->guest))
+		elseif (($permissions == 1 && $user->guest)||($displayName == 2 && !$user->guest))
 		{
 			?>
 			<input name="name" type="text" value="Name" maxlength="25" id="shoutbox-name" onfocus="this.value = (this.value=='Name')? '' : this.value;" />
