@@ -378,7 +378,7 @@ class Mod_ShoutboxInstallerScript
 			// Create array of params to change
 			$param = $this->getParam('guestpost', $module);
 			
-			if ($param === 0)
+			if ($param == 1)
 			{
 				// Set the param values so that guests have no permissions
 				$groupsCopy = $groups;
