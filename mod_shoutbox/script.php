@@ -215,7 +215,15 @@ class Mod_ShoutboxInstallerScript
 				if ($type == 'edit')
 				{
 					// Add or edit the new variable(s) to the existing params
-					$params[(string) $name] = (string) $value;
+					if (is_array($value))
+					{
+						// Convert an array into a json encoded string
+						$params[(string) $name] = json_encode($value);
+					}
+					else
+					{
+						$params[(string) $name] = (string) $value;
+					}
 				}
 				elseif ($type == 'remove')
 				{
