@@ -218,7 +218,7 @@ class Mod_ShoutboxInstallerScript
 					if (is_array($value))
 					{
 						// Convert an array into a json encoded string
-						$params[(string) $name] = json_encode($value);
+						$params[(string) $name] = $value;
 					}
 					else
 					{
