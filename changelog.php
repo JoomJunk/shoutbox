@@ -16,8 +16,8 @@ $ -> Language fix or change
 
 Version 1.2.6
 ^ Updated to jQuery 1.10.2
-^ Added new date format
-^ Replaced jQuery noConflict mode http request requirement
++ Added new date format (yyyy.mm.dd)
+^ Refinement of users permissions
 
 Version 1.2.5
 # Fix a bug in the install of version 1.2.4
