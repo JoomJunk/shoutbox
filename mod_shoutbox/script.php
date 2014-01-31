@@ -378,7 +378,14 @@ class Mod_ShoutboxInstallerScript
 		$modules = $this->getInstances(true);
 		
 		// Display a notification to the user with a notification
-		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_126_UPDATE_NOTIFICATION'), 'warning');
+		if (!JError::$legacy)
+		{
+			JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_126_UPDATE_NOTIFICATION'), 'error');
+		}
+		else
+		{
+			JError::raiseWarning(null, JText::_('SHOUT_126_UPDATE_NOTIFICATION'));
+		}
 
 		foreach ($modules as $module)
 		{
