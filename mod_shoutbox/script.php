@@ -84,6 +84,14 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update124();
 				}
+
+				/**
+				 * For extensions going from < version 1.2.6 we need to update the permissions settings if guests cannot post
+				 */
+				if (version_compare($oldRelease, '1.2.5', '<='))
+				{
+					$this->update126();
+				}
 			}
 		}
 
@@ -339,5 +347,59 @@ class Mod_ShoutboxInstallerScript
 			// Unset the array for the next loop
 			unset($colours);
 		}
+	}
+
+	/**
+	 * Function to ensure guests cannot post into the shoutbox when the permission was turned
+	 * off in the previous version of the shoutbox
+	 *
+	 * @return  void
+	 *
+	 * @since  1.2.6
+	 */
+	protected function update126()
+	{
+		// Retrieve all the user groups
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select($db->quoteName('id'))
+			->from($db->quoteName('#__usergroups'));
+		$db->setQuery($query);
+		$groups = $db->loadColumn();
+
+		$modules = $this->getInstances(true);
+
+		foreach ($modules as $module)
+		{
+			// Convert string to integer and set up values array
+			$module = (int) $module;
+			$values = array();
+
+			// Create array of params to change
+			$param = $this->getParam('guestpost', $module);
+			
+			if ($param === 0)
+			{
+				// Set the param values so that guests have no permissions
+				$groupsCopy = $groups;
+				// Define the group which has the guest permissions
+				$del_val = 1;
+				if(($key = array_search($del_val, $groupsCopy)) !== false) {
+					unset($groupsCopy[$key]);
+				}
+				$values['guestpost'] = $groupsCopy;
+				$this->setParams($values, 'edit', $module);
+			}
+			else
+			{
+				// Select EVERYTHING :D
+				$values['guestpost'] = $groups;
+				$this->setParams($values, 'edit', $module);
+			}
+			
+			// Unset the array for the next loop
+			unset($values);
+		}
+
 	}
 }
