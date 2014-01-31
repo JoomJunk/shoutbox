@@ -15,7 +15,7 @@ $ -> Language fix or change
 ! -> Note
 
 Version 1.2.6
-^ Updated to jQuery 1.10.2
+^ Updated to jQuery 1.11.0
 + Added new date format (yyyy.mm.dd)
 ^ Refinement of users permissions of who can post
 ^ script updates
