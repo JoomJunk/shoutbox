@@ -93,6 +93,21 @@ class Mod_ShoutboxInstallerScript
 			}
 		}
 
+		// Check the minimum PHP version
+		if (version_compare(PHP_VERSION, '5.3.0', '<='))
+		{
+			if (!JError::$legacy)
+			{
+				JFactory::getApplication()->enqueueMessage(JText::_('MOD_SHOUTBOX_MINIMUM_PHP'), 'error');
+			}
+			else
+			{
+				JError::raiseWarning(null, JText::_('MOD_SHOUTBOX_MINIMUM_PHP'));
+			}
+			
+			return false;
+		}
+
 		return true;
 	}
 
