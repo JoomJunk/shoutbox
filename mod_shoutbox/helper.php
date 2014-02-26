@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+jimport('joomla.filesystem.file');
+
 /**
  * Shoutbox helper connector class.
  *
@@ -31,8 +33,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-		->from('#__shoutbox')
-		->order('id DESC');
+		->from($db->quoteName('#__shoutbox'))
+		->order($db->quoteName('id') . ' DESC');
 		$db->setQuery($query, 0, $number);
 
 		if (!JError::$legacy)
@@ -233,7 +235,7 @@ class ModShoutboxHelper
 	 *
 	 * @return   array  $smilies The smiley images html code.
 	 *
-	 * @since 2.5
+	 * @since 1.2
 	 */
 	public static function smileyshow()
 	{
@@ -375,7 +377,7 @@ class ModShoutboxHelper
 			$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
 		$query = $db->getQuery(true);
 
-		$query	->insert($db->quoteName('#__shoutbox'))
+		$query->insert($db->quoteName('#__shoutbox'))
 			->columns($db->quoteName($columns))
 			->values(implode(',', $values));
 
@@ -417,8 +419,8 @@ class ModShoutboxHelper
 		$db	= JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->delete()
-		->from('#__shoutbox')
-		->where('id = ' . (int) $id);
+		->from($db->quoteName('#__shoutbox'))
+		->where($db->quoteName('id') . ' = ' . (int) $id);
 		$db->setQuery($query);
 
 		if (version_compare(JVERSION, '3.0.0', 'ge'))
@@ -445,8 +447,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from('#__shoutbox')
-			->order('id DESC');
+			->from($db->quoteName('#__shoutbox'))
+			->order($db->quoteName('id') . ' DESC');
 		$db->setQuery($query, 0, $delete);
 		$rows = $db->loadObjectList();
 

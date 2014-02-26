@@ -39,7 +39,7 @@ if ($smile == 1 || $smile == 2)
 		{
 			JFactory::getApplication()->set('jquery', true);
 			JHtml::_('script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');
-			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js'); 
+			JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 		}
 	}
 }
@@ -85,7 +85,6 @@ JLog::addLogger(
 );
 
 $user = JFactory::getUser();
-require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
 if (isset($_POST))
 {
@@ -105,6 +104,8 @@ if (isset($_POST))
 
 		if ($params->get('recaptchaon') == 0)
 		{
+			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
+
 			if (isset($post["recaptcha_response_field"]))
 			{
 				if ($post["recaptcha_response_field"])
