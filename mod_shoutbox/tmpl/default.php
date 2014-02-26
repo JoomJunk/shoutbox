@@ -321,22 +321,16 @@ elseif (array_intersect($permissions, $access))
 		{ ?>
 			<form method="post" name="deleteall">
 				<input type="hidden" name="max" value="<?php echo $number; ?>" />
-				<?php
-				if (version_compare(JVERSION, '3.0.0', 'ge'))
-				{
-					?><div class="input-append">
+				<?php echo JHtml::_('form.token'); ?>
+				<?php if (version_compare(JVERSION, '3.0.0', 'ge')) : ?>
+					<div class="input-append">
 						<input class="span2" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" style="width:50px;">
 						<input class="btn btn-danger" type="submit" name="deleteall" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
 					</div>	
-					<?php
-				}
-				else
-				{
-					?>
+				<?php else : ?>
 					<input class="jj_admin_label" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
-					<input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
-				}
-				?>
+					<input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
+				<?php endif; ?>
 			</form>
 		<?php
 		}
