@@ -85,7 +85,6 @@ JLog::addLogger(
 );
 
 $user = JFactory::getUser();
-require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
 if (isset($_POST))
 {
@@ -105,6 +104,8 @@ if (isset($_POST))
 
 		if ($params->get('recaptchaon') == 0)
 		{
+			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
+
 			if (isset($post["recaptcha_response_field"]))
 			{
 				if ($post["recaptcha_response_field"])
