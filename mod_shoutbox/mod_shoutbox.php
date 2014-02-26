@@ -118,7 +118,7 @@ if (isset($_POST))
 
 					if ($resp->is_valid)
 					{
-						modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+						ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
 					}
 					else
 					{
@@ -137,7 +137,7 @@ if (isset($_POST))
 				{
 					if ($post['human'] == $que_result)
 					{
-						modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+						ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
 					}
 					else
 					{
@@ -148,7 +148,7 @@ if (isset($_POST))
 		}
 		else
 		{
-			modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+			ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
 		}
 	}
 
@@ -159,7 +159,7 @@ if (isset($_POST))
 
 		if ($user->authorise('core.delete'))
 		{
-			modShoutboxHelper::deletepost($deletepostnumber);
+			ModShoutboxHelper::deletepost($deletepostnumber);
 		}
 	}
 
@@ -180,7 +180,7 @@ if (isset($_POST))
 					}
 					if ($user->authorise('core.delete'))
 					{
-						modShoutboxHelper::deleteall($delete);
+						ModShoutboxHelper::deleteall($delete);
 					}
 				}
 				else
