@@ -117,59 +117,56 @@ class ModShoutboxHelper
 	 */
 	public static function postFiltering($shout, $user, $swearCounter, $swearNumber, $displayName)
 	{
-		if (isset($shout['shout']) && !empty($shout['message']) && $_SESSION['token'] == $shout['token'])
-		{
-			$replace = '****';
+		$replace = '****';
 
-			if (!$user->guest && $displayName == 0)
+		if (!$user->guest && $displayName == 0)
+		{
+			$name = $user->name;
+			$nameSwears = 0;
+		}
+		elseif (!$user->guest && $displayName == 1)
+		{
+			$name = $user->username;
+			$nameSwears = 0;
+		}
+		else
+		{
+			if ($swearCounter == 0)
 			{
-				$name = $user->name;
-				$nameSwears = 0;
+				$before = substr_count($shout['name'], $replace);
 			}
-			elseif (!$user->guest && $displayName == 1)
+
+			$name = self::swearfilter($shout['name'], $replace);
+
+			if ($swearCounter == 0)
 			{
-				$name = $user->username;
-				$nameSwears = 0;
+				$after = substr_count($name, $replace);
+				$nameSwears = ($after - $before);
 			}
 			else
 			{
-				if ($swearCounter == 0)
-				{
-					$before = substr_count($shout['name'], $replace);
-				}
-
-				$name = self::swearfilter($shout['name'], $replace);
-
-				if ($swearCounter == 0)
-				{
-					$after = substr_count($name, $replace);
-					$nameSwears = ($after - $before);
-				}
-				else
-				{
-					$nameSwears = 0;
-				}
+				$nameSwears = 0;
 			}
+		}
 
-			if ($swearCounter == 0)
-			{
-				$before = substr_count($shout['message'], $replace);
-			}
+		if ($swearCounter == 0)
+		{
+			$before = substr_count($shout['message'], $replace);
+		}
 
-			$message = self::swearfilter($shout['message'], $replace);
+		$message = self::swearfilter($shout['message'], $replace);
 
-			if ($swearCounter == 0)
-			{
-				$after = substr_count($message, $replace);
-				$messageSwears = ($after - $before);
-			}
+		if ($swearCounter == 0)
+		{
+			$after = substr_count($message, $replace);
+			$messageSwears = ($after - $before);
+		}
 
-			$ip = $_SERVER['REMOTE_ADDR'];
+		$ip = $_SERVER['REMOTE_ADDR'];
 
-			if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
-			{
-				self::addShout($name, $message, $ip);
-			}
+		if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
+		{
+			self::addShout($name, $message, $ip);
 		}
 	}
 
