@@ -377,7 +377,7 @@ class ModShoutboxHelper
 			$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
 		$query = $db->getQuery(true);
 
-		$query	->insert($db->quoteName('#__shoutbox'))
+		$query->insert($db->quoteName('#__shoutbox'))
 			->columns($db->quoteName($columns))
 			->values(implode(',', $values));
 
