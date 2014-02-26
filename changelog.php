@@ -14,6 +14,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.2.6
+^ Updated to jQuery 1.11.0
++ Added new date format (yyyy.mm.dd)
+^ Refinement of users permissions of who can post
+^ script updates
+
 Version 1.2.5
 # Fix a bug in the install of version 1.2.4
 $ Merge some strings together and use sprintf for some strings

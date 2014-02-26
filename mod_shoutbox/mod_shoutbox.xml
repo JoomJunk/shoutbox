@@ -3,11 +3,11 @@
 	<name>JJ Shoutbox</name> 
 	<author>JoomJunk</author> 
 	<creationDate>05-Mar-2012</creationDate> 
-	<copyright>Copyright (C) 2011 - 2013 JoomJunk</copyright> 
+	<copyright>Copyright (C) 2011 - 2014 JoomJunk</copyright> 
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>1.2.5</version> 
+	<version>1.2.6</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -77,15 +77,13 @@
 					<option value="1">SHOUT_USER</option>
 					<option value="2">SHOUT_CHOOSE</option>
 				</field>
-				<field name="guestpost" type="radio" default="0" label="SHOUT_GUESTLABEL" description="SHOUT_GUESTDESC">
-					<option value="0">JYES</option>
-					<option value="1">JNO</option>
-				</field>
+				<field name="guestpost" type="Usergroup" default="1" multiple="true" label="SHOUT_GUESTLABEL" description="SHOUT_GUESTDESC" />
 				<field name="date" type="list" default="2" label="SHOUT_SHOW_DATE" description="SHOUT_SHOW_DATEDESC">
 					<option value="0">SHOUT_DATE_ENGLAND_BACKSLASH</option>
 					<option value="3">SHOUT_DATE_AMERICAN_BACKSLASH</option>
 					<option value="1">SHOUT_DATE_SPACE</option>
 					<option value="4">SHOUT_DATE_SPACE_OPTION_TWO</option>
+					<option value="5">SHOUT_DATE_REVERSED</option>
 					<option value="2">SHOUT_DONT_SHOW</option>
 				</field>
 				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />

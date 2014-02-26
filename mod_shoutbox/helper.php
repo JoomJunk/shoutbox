@@ -1,7 +1,7 @@
 <?php
 /**
 * @package    JJ_Shoutbox
-* @copyright  Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
+* @copyright  Copyright (C) 2011 - 2014 JoomJunk. All rights reserved.
 * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
@@ -34,7 +34,6 @@ class ModShoutboxHelper
 		->from('#__shoutbox')
 		->order('id DESC');
 		$db->setQuery($query, 0, $number);
-		$i = 0;
 
 		if (!JError::$legacy)
 		{
@@ -45,16 +44,8 @@ class ModShoutboxHelper
 			}
 			catch (Exception $e)
 			{
-				// Output error to shoutbox.
-				$shouts[$i] = new stdClass;
-				$shouts[$i]->name = 'Administrator';
-				$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
-				$shouts[$i]->msg = $message;
-				$shouts[$i]->ip = 'System';
-				$shouts[$i]->user_id = 0;
-
-				// Add error to log.
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+				// Assemble Message and add log.
+				$shouts = self::createErrorMsg();
 
 				return $shouts;
 			}
@@ -65,19 +56,14 @@ class ModShoutboxHelper
 
 			if ($db->getErrorNum())
 			{
-				$shouts[$i] = new stdClass;
-				$shouts[$i]->name = 'Administrator';
-				$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
-				$shouts[$i]->msg = $message;
-				$shouts[$i]->ip = 'System';
-				$shouts[$i]->user_id = 0;
-
-				// Add error to log.
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $db->getErrorMsg()), JLog::CRITICAL, 'mod_shoutbox');
+				// Assemble Message and add log.
+				$shouts = self::createErrorMsg();
 
 				return $shouts;
 			}
 		}
+
+		$i = 0;
 
 		foreach ( $rows as $row )
 		{
@@ -400,20 +386,9 @@ class ModShoutboxHelper
 			$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
 		$query = $db->getQuery(true);
 
-		if (version_compare(JVERSION, '3.0.0', 'ge'))
-		{
-			$query
-				->insert($db->quoteName('#__shoutbox'))
-				->columns($db->quoteName($columns))
-				->values(implode(',', $values));
-		}
-		else
-		{
-			$query
-				->insert($db->nameQuote('#__shoutbox'))
-				->columns($db->nameQuote($columns))
-				->values(implode(',', $values));
-		}
+		$query	->insert($db->quoteName('#__shoutbox'))
+			->columns($db->quoteName($columns))
+			->values(implode(',', $values));
 
 		$db->setQuery($query);
 
@@ -522,5 +497,23 @@ class ModShoutboxHelper
 		}
 
 		return (rand() % $range + $start);
+	}
+
+	private static function createErrorMsg()
+	{
+		$i = 0;
+
+		// Output error to shoutbox.
+		$shouts[$i] = new stdClass;
+		$shouts[$i]->name = 'Administrator';
+		$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
+		$shouts[$i]->msg = $message;
+		$shouts[$i]->ip = 'System';
+		$shouts[$i]->user_id = 0;
+
+		// Add error to log.
+		JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+
+		return $shouts;
 	}
 }

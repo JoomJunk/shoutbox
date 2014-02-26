@@ -1,7 +1,7 @@
 <?php 
 /**
 * @package    JJ_Shoutbox
-* @copyright  Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
+* @copyright  Copyright (C) 2011 - 2014 JoomJunk. All rights reserved.
 * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
@@ -16,13 +16,13 @@ $smile = $params->get('smile');
 $swearcounter = $params->get('swearingcounter');
 $swearnumber = $params->get('swearingnumber');
 $number = $params->get('maximum');
-$guestpost = $params->get('guestpost');
 $submittext = $params->get('submittext');
 $nonmembers = $params->get('nonmembers');
 $profile = $params->get('profile');
 $date = $params->get('date');
 $securityquestion = $params->get('securityquestion');
 $mass_delete = $params->get('mass_delete');
+$permissions = $params->get('guestpost');
 
 // Add in jQuery if smilies are required
 $document = JFactory::getDocument();
@@ -38,8 +38,8 @@ if ($smile == 1 || $smile == 2)
 		if (!JFactory::getApplication()->get('jquery'))
 		{
 			JFactory::getApplication()->set('jquery', true);
-			$document->addScript("http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js");
-			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js');
+			JHtml::_('script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');
+			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js'); 
 		}
 	}
 }
@@ -60,6 +60,10 @@ elseif ($date == 3)
 elseif ($date == 4)
 {
 	$show_date = "D j M - ";
+}
+elseif ($date == 5)
+{
+	$show_date = "Y/m/d - ";
 }
 else
 {
@@ -146,7 +150,10 @@ if (isset($_POST))
 	if (isset($post['delete']))
 	{
 		$deletepostnumber = $post['idvalue'];
-		modShoutboxHelper::deletepost($deletepostnumber);
+		if ($user->authorise('core.delete'))
+		{
+			modShoutboxHelper::deletepost($deletepostnumber);
+		}
 	}
 
 	if ($mass_delete == 0)
@@ -165,8 +172,10 @@ if (isset($_POST))
 						{
 							$delete = $post['max'];
 						}
-
-						modShoutboxHelper::deleteall($delete);
+						if ($user->authorise('core.delete'))
+						{
+							modShoutboxHelper::deleteall($delete);
+						}
 					}
 					else
 					{
