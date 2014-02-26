@@ -150,7 +150,10 @@ if (isset($_POST))
 	if (isset($post['delete']))
 	{
 		$deletepostnumber = $post['idvalue'];
-		modShoutboxHelper::deletepost($deletepostnumber);
+		if ($user->authorise('core.delete'))
+		{
+			modShoutboxHelper::deletepost($deletepostnumber);
+		}
 	}
 
 	if ($mass_delete == 0)
@@ -169,8 +172,10 @@ if (isset($_POST))
 						{
 							$delete = $post['max'];
 						}
-
-						modShoutboxHelper::deleteall($delete);
+						if ($user->authorise('core.delete'))
+						{
+							modShoutboxHelper::deleteall($delete);
+						}
 					}
 					else
 					{
