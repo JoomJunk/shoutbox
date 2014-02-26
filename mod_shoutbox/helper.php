@@ -18,7 +18,7 @@ class ModShoutboxHelper
 	 * Retrieves the shouts from the database and returns them. Will return an error
 	 * message if the database retrieval fails.
 	 *
-	 * @param   int     $number   The number of posts to retrieve from the databse.
+	 * @param   int     $number   The number of posts to retrieve from the database.
 	 * @param   string  $message  The error message to return if the database retrieval fails.
 	 *
 	 * @return  array  The shoutbox posts.
@@ -117,66 +117,58 @@ class ModShoutboxHelper
 	 */
 	public static function postFiltering($shout, $user, $swearCounter, $swearNumber, $displayName)
 	{
-		if (isset($shout['shout']))
+		if (isset($shout['shout']) && !empty($shout['message']) && $_SESSION['token'] == $shout['token'])
 		{
-			JSession::checkToken() or die(JText::_('SHOUT_INVALID_TOKEN'));
+			$replace = '****';
 
-			if (!empty($shout['message']))
+			if (!$user->guest && $displayName == 0)
 			{
-				if ($_SESSION['token'] == $shout['token'])
+				$name = $user->name;
+				$nameSwears = 0;
+			}
+			elseif (!$user->guest && $displayName == 1)
+			{
+				$name = $user->username;
+				$nameSwears = 0;
+			}
+			else
+			{
+				if ($swearCounter == 0)
 				{
-					$replace = '****';
-
-					if (!$user->guest && $displayName == 0)
-					{
-						$name = $user->name;
-						$nameSwears = 0;
-					}
-					elseif (!$user->guest && $displayName == 1)
-					{
-						$name = $user->username;
-						$nameSwears = 0;
-					}
-					else
-					{
-						if ($swearCounter == 0)
-						{
-							$before = substr_count($shout['name'], $replace);
-						}
-
-						$name = self::swearfilter($shout['name'], $replace);
-
-						if ($swearCounter == 0)
-						{
-							$after = substr_count($name, $replace);
-							$nameSwears = ($after - $before);
-						}
-						else
-						{
-							$nameSwears = 0;
-						}
-					}
-
-					if ($swearCounter == 0)
-					{
-						$before = substr_count($shout['message'], $replace);
-					}
-
-					$message = self::swearfilter($shout['message'], $replace);
-
-					if ($swearCounter == 0)
-					{
-						$after = substr_count($message, $replace);
-						$messageSwears = ($after - $before);
-					}
-
-					$ip = $_SERVER['REMOTE_ADDR'];
-
-					if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
-					{
-						self::addShout($name, $message, $ip);
-					}
+					$before = substr_count($shout['name'], $replace);
 				}
+
+				$name = self::swearfilter($shout['name'], $replace);
+
+				if ($swearCounter == 0)
+				{
+					$after = substr_count($name, $replace);
+					$nameSwears = ($after - $before);
+				}
+				else
+				{
+					$nameSwears = 0;
+				}
+			}
+
+			if ($swearCounter == 0)
+			{
+				$before = substr_count($shout['message'], $replace);
+			}
+
+			$message = self::swearfilter($shout['message'], $replace);
+
+			if ($swearCounter == 0)
+			{
+				$after = substr_count($message, $replace);
+				$messageSwears = ($after - $before);
+			}
+
+			$ip = $_SERVER['REMOTE_ADDR'];
+
+			if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
+			{
+				self::addShout($name, $message, $ip);
 			}
 		}
 	}
@@ -379,7 +371,7 @@ class ModShoutboxHelper
 	 */
 	public static function addShout($name, $message, $ip)
 	{
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$config = JFactory::getConfig();
 		$columns = array('name', 'when', 'ip', 'msg', 'user_id');
 		$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)),
@@ -425,7 +417,6 @@ class ModShoutboxHelper
 	 */
 	public static function deletepost($id)
 	{
-		JSession::checkToken() or die(JText::_('SHOUT_INVALID_TOKEN'));
 		$db	= JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->delete()
