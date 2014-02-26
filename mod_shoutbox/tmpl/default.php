@@ -89,6 +89,7 @@ $document->addStyleDeclaration($style);
 						<form method="post" name="delete">
 							<input name="delete" type="submit" value="x" />
 							<input name="idvalue" type="hidden" value="<?php echo $shouts[$i]->id ?>" />
+							<?php echo JHtml::_('form.token'); ?>
 						</form>
 					<?php
 					}
