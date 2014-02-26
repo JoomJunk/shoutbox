@@ -28,7 +28,7 @@ class ModShoutboxHelper
 	public static function getShouts($number, $message)
 	{
 		$shouts	= array();
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
 		->from('#__shoutbox')
@@ -133,7 +133,7 @@ class ModShoutboxHelper
 	{
 		if (isset($shout['shout']))
 		{
-			JSession::checkToken() or die( JText::_('SHOUT_INVALID_TOKEN') );
+			JSession::checkToken() or die(JText::_('SHOUT_INVALID_TOKEN'));
 
 			if (!empty($shout['message']))
 			{
@@ -450,6 +450,7 @@ class ModShoutboxHelper
 	 */
 	public static function deletepost($id)
 	{
+		JSession::checkToken() or die(JText::_('SHOUT_INVALID_TOKEN'));
 		$db	= JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->delete()
