@@ -14,6 +14,13 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.3.0
+* People without necessary permissions could delete posts
++ Allow template overriding of jQuery no conflict file
+# Cleanup detection of posts if a shout was submitted
+# Only include recaptcha library if parameter turned on
+# Incorrect usage of JFolder removed
+
 Version 1.2.6
 ^ Updated to jQuery 1.11.0
 + Added new date format (yyyy.mm.dd)
