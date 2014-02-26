@@ -189,11 +189,7 @@ elseif (array_intersect($permissions, $access))
 				}
 			}
 
-			echo '<div id="jj_smiley_box">';
-			$path = JPATH_ROOT . "/media/mod_shoutbox/images";
-			$smilies = JFolder::files($path);
-			echo ModShoutboxHelper::smileyshow($smilies);
-			echo '</div>';
+			echo '<div id="jj_smiley_box">' . ModShoutboxHelper::smileyshow() . '</div>';
 		} ?>
 		<script type="text/javascript">
 			function textCounter(textarea, countdown, maxlimit) {

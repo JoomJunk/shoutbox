@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+jimport('joomla.filesystem.file');
+
 /**
  * Shoutbox helper connector class.
  *
@@ -233,7 +235,7 @@ class ModShoutboxHelper
 	 *
 	 * @return   array  $smilies The smiley images html code.
 	 *
-	 * @since 2.5
+	 * @since 1.2
 	 */
 	public static function smileyshow()
 	{
