@@ -89,7 +89,6 @@ require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
 if (isset($_POST))
 {
-	JSession::checkToken() or die(JText::_('SHOUT_INVALID_TOKEN'));
 	if (!get_magic_quotes_gpc())
 	{
 		$input = new JInput;
@@ -100,95 +99,100 @@ if (isset($_POST))
 		$post = JRequest::get('post');
 	}
 
-	if ($params->get('recaptchaon') == 0)
+	if (isset($post['shout']) && !empty($post['message']) && $_SESSION['token'] == $post['token'])
 	{
-		if (isset($post["recaptcha_response_field"]))
-		{
-			if ($post["recaptcha_response_field"])
-			{
-				$resp = recaptcha_check_answer(
-					$params->get('recaptcha-private'),
-					$_SERVER["REMOTE_ADDR"],
-					$post["recaptcha_challenge_field"],
-					$post["recaptcha_response_field"]
-				);
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 
-				if ($resp->is_valid)
+		if ($params->get('recaptchaon') == 0)
+		{
+			if (isset($post["recaptcha_response_field"]))
+			{
+				if ($post["recaptcha_response_field"])
 				{
-					modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-				}
-				else
-				{
-					$error = $resp->error;
+					$resp = recaptcha_check_answer(
+						$params->get('recaptcha-private'),
+						$_SERVER["REMOTE_ADDR"],
+						$post["recaptcha_challenge_field"],
+						$post["recaptcha_response_field"]
+					);
+
+					if ($resp->is_valid)
+					{
+						ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+					}
+					else
+					{
+						$error = $resp->error;
+					}
 				}
 			}
 		}
-	}
-	elseif ($securityquestion == 0)
-	{
-		if (isset($post['sum1']) && isset($post['sum2']))
+		elseif ($securityquestion == 0)
 		{
-			$que_result = $post['sum1'] + $post['sum2'];
-
-			if (isset($post['human']))
+			if (isset($post['sum1']) && isset($post['sum2']))
 			{
-				if ($post['human'] == $que_result)
+				$que_result = $post['sum1'] + $post['sum2'];
+
+				if (isset($post['human']))
 				{
-					modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-				}
-				else
-				{
-					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_ANSWER_INCORRECT'), 'error');
+					if ($post['human'] == $que_result)
+					{
+						ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+					}
+					else
+					{
+						JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_ANSWER_INCORRECT'), 'error');
+					}
 				}
 			}
 		}
-	}
-	else
-	{
-		modShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+		else
+		{
+			ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+		}
 	}
 
 	if (isset($post['delete']))
 	{
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 		$deletepostnumber = $post['idvalue'];
+
 		if ($user->authorise('core.delete'))
 		{
-			modShoutboxHelper::deletepost($deletepostnumber);
+			ModShoutboxHelper::deletepost($deletepostnumber);
 		}
 	}
 
-	if ($mass_delete == 0)
+	if ($mass_delete == 0 && (isset($post['deleteall'])))
 	{
-		if (isset($post['deleteall']))
-		{
-			$delete = $post['valueall'];
+		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
+		$delete = $post['valueall'];
 
-			if (isset($delete))
+		if (isset($delete))
+		{
+			if (is_numeric($delete) && (int) $delete == $delete)
 			{
-				if (is_numeric($delete) && (int) $delete == $delete)
+				if ($delete > 0)
 				{
-					if ($delete > 0)
+					if ($delete > $post['max'])
 					{
-						if ($delete > $post['max'])
-						{
-							$delete = $post['max'];
-						}
-						if ($user->authorise('core.delete'))
-						{
-							modShoutboxHelper::deleteall($delete);
-						}
+						$delete = $post['max'];
 					}
-					else
+					if ($user->authorise('core.delete'))
 					{
-						JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
-						JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
+						ModShoutboxHelper::deleteall($delete);
 					}
 				}
 				else
 				{
-					JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
-					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
+					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
+					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
 				}
+			}
+			else
+			{
+				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
+				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
 			}
 		}
 	}
