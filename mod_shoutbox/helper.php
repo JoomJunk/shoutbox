@@ -7,6 +7,8 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+jimport('joomla.filesystem.file');
+
 /**
  * Shoutbox helper connector class.
  *
@@ -18,7 +20,7 @@ class ModShoutboxHelper
 	 * Retrieves the shouts from the database and returns them. Will return an error
 	 * message if the database retrieval fails.
 	 *
-	 * @param   int     $number   The number of posts to retrieve from the databse.
+	 * @param   int     $number   The number of posts to retrieve from the database.
 	 * @param   string  $message  The error message to return if the database retrieval fails.
 	 *
 	 * @return  array  The shoutbox posts.
@@ -28,11 +30,11 @@ class ModShoutboxHelper
 	public static function getShouts($number, $message)
 	{
 		$shouts	= array();
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-		->from('#__shoutbox')
-		->order('id DESC');
+		->from($db->quoteName('#__shoutbox'))
+		->order($db->quoteName('id') . ' DESC');
 		$db->setQuery($query, 0, $number);
 
 		if (!JError::$legacy)
@@ -117,67 +119,56 @@ class ModShoutboxHelper
 	 */
 	public static function postFiltering($shout, $user, $swearCounter, $swearNumber, $displayName)
 	{
-		if (isset($shout['shout']))
+		$replace = '****';
+
+		if (!$user->guest && $displayName == 0)
 		{
-			JSession::checkToken() or die( JText::_('SHOUT_INVALID_TOKEN') );
-
-			if (!empty($shout['message']))
+			$name = $user->name;
+			$nameSwears = 0;
+		}
+		elseif (!$user->guest && $displayName == 1)
+		{
+			$name = $user->username;
+			$nameSwears = 0;
+		}
+		else
+		{
+			if ($swearCounter == 0)
 			{
-				if ($_SESSION['token'] == $shout['token'])
-				{
-					$replace = '****';
-
-					if (!$user->guest && $displayName == 0)
-					{
-						$name = $user->name;
-						$nameSwears = 0;
-					}
-					elseif (!$user->guest && $displayName == 1)
-					{
-						$name = $user->username;
-						$nameSwears = 0;
-					}
-					else
-					{
-						if ($swearCounter == 0)
-						{
-							$before = substr_count($shout['name'], $replace);
-						}
-
-						$name = self::swearfilter($shout['name'], $replace);
-
-						if ($swearCounter == 0)
-						{
-							$after = substr_count($name, $replace);
-							$nameSwears = ($after - $before);
-						}
-						else
-						{
-							$nameSwears = 0;
-						}
-					}
-
-					if ($swearCounter == 0)
-					{
-						$before = substr_count($shout['message'], $replace);
-					}
-
-					$message = self::swearfilter($shout['message'], $replace);
-
-					if ($swearCounter == 0)
-					{
-						$after = substr_count($message, $replace);
-						$messageSwears = ($after - $before);
-					}
-
-					$ip = $_SERVER['REMOTE_ADDR'];
-
-					if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
-					{
-						self::addShout($name, $message, $ip);
-					}
-				}
+				$before = substr_count($shout['name'], $replace);
 			}
+
+			$name = self::swearfilter($shout['name'], $replace);
+
+			if ($swearCounter == 0)
+			{
+				$after = substr_count($name, $replace);
+				$nameSwears = ($after - $before);
+			}
+			else
+			{
+				$nameSwears = 0;
+			}
+		}
+
+		if ($swearCounter == 0)
+		{
+			$before = substr_count($shout['message'], $replace);
+		}
+
+		$message = self::swearfilter($shout['message'], $replace);
+
+		if ($swearCounter == 0)
+		{
+			$after = substr_count($message, $replace);
+			$messageSwears = ($after - $before);
+		}
+
+		$ip = $_SERVER['REMOTE_ADDR'];
+
+		if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
+		{
+			self::addShout($name, $message, $ip);
 		}
 	}
 
@@ -244,7 +235,7 @@ class ModShoutboxHelper
 	 *
 	 * @return   array  $smilies The smiley images html code.
 	 *
-	 * @since 2.5
+	 * @since 1.2
 	 */
 	public static function smileyshow()
 	{
@@ -379,14 +370,14 @@ class ModShoutboxHelper
 	 */
 	public static function addShout($name, $message, $ip)
 	{
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$config = JFactory::getConfig();
 		$columns = array('name', 'when', 'ip', 'msg', 'user_id');
 		$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)),
 			$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
 		$query = $db->getQuery(true);
 
-		$query	->insert($db->quoteName('#__shoutbox'))
+		$query->insert($db->quoteName('#__shoutbox'))
 			->columns($db->quoteName($columns))
 			->values(implode(',', $values));
 
@@ -428,8 +419,8 @@ class ModShoutboxHelper
 		$db	= JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->delete()
-		->from('#__shoutbox')
-		->where('id = ' . (int) $id);
+		->from($db->quoteName('#__shoutbox'))
+		->where($db->quoteName('id') . ' = ' . (int) $id);
 		$db->setQuery($query);
 
 		if (version_compare(JVERSION, '3.0.0', 'ge'))
@@ -456,8 +447,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from('#__shoutbox')
-			->order('id DESC');
+			->from($db->quoteName('#__shoutbox'))
+			->order($db->quoteName('id') . ' DESC');
 		$db->setQuery($query, 0, $delete);
 		$rows = $db->loadObjectList();
 

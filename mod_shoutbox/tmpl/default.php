@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-JHtml::_('stylesheet', JUri::root() . 'media/mod_shoutbox/css/mod_shoutbox.css');
+JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '#jjshoutboxoutput {
 		border-color: ' . $params->get('bordercolor', '#FF3C16') . ';
 		border-width: ' . $params->get('borderwidth', '1') . 'px;
@@ -89,6 +89,7 @@ $document->addStyleDeclaration($style);
 						<form method="post" name="delete">
 							<input name="delete" type="submit" value="x" />
 							<input name="idvalue" type="hidden" value="<?php echo $shouts[$i]->id ?>" />
+							<?php echo JHtml::_('form.token'); ?>
 						</form>
 					<?php
 					}
@@ -188,11 +189,7 @@ elseif (array_intersect($permissions, $access))
 				}
 			}
 
-			echo '<div id="jj_smiley_box">';
-			$path = JPATH_ROOT . "/media/mod_shoutbox/images";
-			$smilies = JFolder::files($path);
-			echo ModShoutboxHelper::smileyshow($smilies);
-			echo '</div>';
+			echo '<div id="jj_smiley_box">' . ModShoutboxHelper::smileyshow() . '</div>';
 		} ?>
 		<script type="text/javascript">
 			function textCounter(textarea, countdown, maxlimit) {
@@ -320,22 +317,16 @@ elseif (array_intersect($permissions, $access))
 		{ ?>
 			<form method="post" name="deleteall">
 				<input type="hidden" name="max" value="<?php echo $number; ?>" />
-				<?php
-				if (version_compare(JVERSION, '3.0.0', 'ge'))
-				{
-					?><div class="input-append">
+				<?php echo JHtml::_('form.token'); ?>
+				<?php if (version_compare(JVERSION, '3.0.0', 'ge')) : ?>
+					<div class="input-append">
 						<input class="span2" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" style="width:50px;">
 						<input class="btn btn-danger" type="submit" name="deleteall" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
 					</div>	
-					<?php
-				}
-				else
-				{
-					?>
+				<?php else : ?>
 					<input class="jj_admin_label" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
-					<input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
-				}
-				?>
+					<input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
+				<?php endif; ?>
 			</form>
 		<?php
 		}
