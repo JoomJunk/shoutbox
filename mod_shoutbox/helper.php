@@ -33,8 +33,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-		->from('#__shoutbox')
-		->order('id DESC');
+		->from($db->quoteName('#__shoutbox'))
+		->order($db->quoteName('id') . ' DESC');
 		$db->setQuery($query, 0, $number);
 
 		if (!JError::$legacy)
@@ -419,8 +419,8 @@ class ModShoutboxHelper
 		$db	= JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->delete()
-		->from('#__shoutbox')
-		->where('id = ' . (int) $id);
+		->from($db->quoteName('#__shoutbox'))
+		->where($db->quoteName('id') . ' = ' . (int) $id);
 		$db->setQuery($query);
 
 		if (version_compare(JVERSION, '3.0.0', 'ge'))
@@ -447,8 +447,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from('#__shoutbox')
-			->order('id DESC');
+			->from($db->quoteName('#__shoutbox'))
+			->order($db->quoteName('id') . ' DESC');
 		$db->setQuery($query, 0, $delete);
 		$rows = $db->loadObjectList();
 
