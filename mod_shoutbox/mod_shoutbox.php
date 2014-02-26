@@ -89,6 +89,7 @@ require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
 if (isset($_POST))
 {
+	JSession::checkToken() or die(JText::_('SHOUT_INVALID_TOKEN'));
 	if (!get_magic_quotes_gpc())
 	{
 		$input = new JInput;
