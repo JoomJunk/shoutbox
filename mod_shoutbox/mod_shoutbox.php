@@ -39,7 +39,7 @@ if ($smile == 1 || $smile == 2)
 		{
 			JFactory::getApplication()->set('jquery', true);
 			JHtml::_('script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');
-			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery-conflict.js'); 
+			JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 		}
 	}
 }
