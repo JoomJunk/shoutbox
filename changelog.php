@@ -16,7 +16,7 @@ $ -> Language fix or change
 
 Version 1.3.0
 * People without necessary permissions could delete posts
-+ Allow template overriding of jQuery no conflict file
++ Allow template overriding of jQuery no conflict file and CSS file
 # Cleanup detection of posts if a shout was submitted
 # Only include recaptcha library if parameter turned on
 # Incorrect usage of JFolder removed
