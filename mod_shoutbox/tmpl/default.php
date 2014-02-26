@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-JHtml::_('stylesheet', JUri::root() . 'media/mod_shoutbox/css/mod_shoutbox.css');
+JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '#jjshoutboxoutput {
 		border-color: ' . $params->get('bordercolor', '#FF3C16') . ';
 		border-width: ' . $params->get('borderwidth', '1') . 'px;
