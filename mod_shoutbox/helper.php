@@ -159,119 +159,108 @@ class ModShoutboxHelper
 	 */
 	public static function addShout($shout, $user, $swearCounter, $swearNumber, $displayName)
 	{
-		if (isset($shout['shout']))
+		$replace = '****';
+
+		if (!$user->guest && $displayName == 0)
 		{
-			JSession::checkToken() or jexit(JText::_('SHOUT_INVALID_TOKEN'));
-
-			if (!empty($shout['message']))
+			$name = $user->name;
+			$nameSwears = 0;
+		}
+		elseif (!$user->guest && $displayName == 1)
+		{
+			$name = $user->username;
+			$nameSwears = 0;
+		}
+		else
+		{
+			if ($swearCounter == 0)
 			{
-				if ($_SESSION['token'] == $shout['token'])
+				$before = substr_count($shout['name'], $replace);
+			}
+
+			$name = static::swearFilter($shout['name'], $replace);
+
+			// Retrieve Generic Name parameters
+			$params = static::getParams('mod_shoutbox');
+			$genericName = $params->get('genericname');
+
+			if ($name == '')
+			{
+				$name = $genericName;
+			}
+
+			if ($swearCounter == 0)
+			{
+				$after = substr_count($name, $replace);
+				$nameSwears = ($after - $before);
+			}
+			else
+			{
+				$nameSwears = 0;
+			}
+		}
+
+		if ($swearCounter == 0)
+		{
+			$before = substr_count($shout['message'], $replace);
+		}
+
+		$message = nl2br(static::swearFilter($shout['message'], $replace));
+
+		if ($swearCounter == 0)
+		{
+			$after = substr_count($message, $replace);
+			$messageSwears = ($after - $before);
+		}
+		else
+		{
+			$messageSwears = 0;
+		}
+
+		$ip = $_SERVER['REMOTE_ADDR'];
+
+		if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
+		{
+			$config = JFactory::getConfig();
+			$db = JFactory::getDbo();
+			$columns = array('name', 'when', 'ip', 'msg', 'user_id');
+			$values = array($db->quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)),
+				$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
+			$query = $db->getQuery(true);
+
+			$query->insert($db->quoteName('#__shoutbox'))
+				->columns($db->quoteName($columns))
+				->values(implode(',', $values));
+
+			$db->setQuery($query);
+
+			if (version_compare(JVERSION, '3.0.0', 'ge'))
+			{
+				try
 				{
-					$replace = '****';
-
-					if (!$user->guest && $displayName == 0)
-					{
-						$name = $user->name;
-						$nameSwears = 0;
-					}
-					elseif (!$user->guest && $displayName == 1)
-					{
-						$name = $user->username;
-						$nameSwears = 0;
-					}
-					else
-					{
-						if ($swearCounter == 0)
-						{
-							$before = substr_count($shout['name'], $replace);
-						}
-
-						$name = static::swearFilter($shout['name'], $replace);
-
-						// Retrieve Generic Name parameters
-						$params = static::getParams('mod_shoutbox');
-						$genericName = $params->get('genericname');
-
-						if ($name == '')
-						{
-							$name = $genericName;
-						}
-
-						if ($swearCounter == 0)
-						{
-							$after = substr_count($name, $replace);
-							$nameSwears = ($after - $before);
-						}
-						else
-						{
-							$nameSwears = 0;
-						}
-					}
-
-					if ($swearCounter == 0)
-					{
-						$before = substr_count($shout['message'], $replace);
-					}
-
-					$message = nl2br(static::swearFilter($shout['message'], $replace));
-
-					if ($swearCounter == 0)
-					{
-						$after = substr_count($message, $replace);
-						$messageSwears = ($after - $before);
-					}
-					else
-					{
-						$messageSwears = 0;
-					}
-
-					$ip = $_SERVER['REMOTE_ADDR'];
-
-					if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
-					{
-						$config = JFactory::getConfig();
-						$db = JFactory::getDbo();
-						$columns = array('name', 'when', 'ip', 'msg', 'user_id');
-						$values = array($db->quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)),
-							$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
-						$query = $db->getQuery(true);
-
-						$query->insert($db->quoteName('#__shoutbox'))
-							->columns($db->quoteName($columns))
-							->values(implode(',', $values));
-
-						$db->setQuery($query);
-
-						if (version_compare(JVERSION, '3.0.0', 'ge'))
-						{
-							try
-							{
-								$db->execute();
-							}
-							catch (Exception $e)
-							{
-								JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
-							}
-						}
-						else
-						{
-							$db->query();
-
-							if ($db->getErrorNum())
-							{
-								JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $db->getErrorMsg()), JLog::CRITICAL, 'mod_shoutbox');
-							}
-						}
-
-						if (static::$ajax)
-						{
-							return array('value' => $db->insertid());
-						}
-
-						return true;
-					}
+					$db->execute();
+				}
+				catch (Exception $e)
+				{
+					JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
 				}
 			}
+			else
+			{
+				$db->query();
+
+				if ($db->getErrorNum())
+				{
+					JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $db->getErrorMsg()), JLog::CRITICAL, 'mod_shoutbox');
+				}
+			}
+
+			if (static::$ajax)
+			{
+				return array('value' => $db->insertid());
+			}
+
+			return true;
 		}
 
 		return false;
@@ -588,83 +577,86 @@ class ModShoutboxHelper
 			$post = JRequest::get('post');
 		}
 
-		if ($recaptcha == 0)
+		if (isset($shout['shout']) && !empty($shout['message']) && $_SESSION['token'] == $shout['token'])
 		{
-			// Recaptcha is on
-			if (isset($post["recaptcha_response_field"]))
+			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+			if ($recaptcha == 0 && (isset($post["recaptcha_response_field"])) && ($post["recaptcha_response_field"]))
 			{
-				if ($post["recaptcha_response_field"])
+				// Require Recaptcha Library
+				require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
+
+				$resp = recaptcha_check_answer(
+					$params->get('recaptcha-private'),
+					$_SERVER["REMOTE_ADDR"],
+					$post["recaptcha_challenge_field"],
+					$post["recaptcha_response_field"]
+				);
+
+				if ($resp->is_valid)
 				{
-					$resp = recaptcha_check_answer(
-						$params->get('recaptcha-private'),
-						$_SERVER["REMOTE_ADDR"],
-						$post["recaptcha_challenge_field"],
-						$post["recaptcha_response_field"]
-					);
+					$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
 
-					if ($resp->is_valid)
+					if (static::$ajax)
 					{
-						$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
-
-						if (static::$ajax)
-						{
-							return $result;
-						}
-					}
-					else
-					{
-						$error = $resp->error;
+						return $result;
 					}
 				}
-			}
-		}
-		elseif ($securityQuestion == 0)
-		{
-			// Our maths security question is on
-			if (isset($post['sum1']) && isset($post['sum2']))
-			{
-				$que_result = $post['sum1'] + $post['sum2'];
-
-				if (isset($post['human']))
+				else
 				{
-					if ($post['human'] == $que_result)
-					{
-						$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
+					$error = $resp->error;
+				}
+			}
+			elseif ($securityQuestion == 0)
+			{
+				// Our maths security question is on
+				if (isset($post['sum1']) && isset($post['sum2']))
+				{
+					$que_result = $post['sum1'] + $post['sum2'];
 
-						if (static::$ajax)
-						{
-							return $result;
-						}
-					}
-					else
+					if (isset($post['human']))
 					{
-						$errorMessage = JText::_('SHOUT_ANSWER_INCORRECT');
-
-						if (static::$ajax)
+						if ($post['human'] == $que_result)
 						{
-							return array('error' => $errorMessage);
+							$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
+
+							if (static::$ajax)
+							{
+								return $result;
+							}
 						}
 						else
 						{
-							JFactory::getApplication()->enqueueMessage($errorMessage, 'error');
-						}
+							$errorMessage = JText::_('SHOUT_ANSWER_INCORRECT');
 
-						return false;
+							if (static::$ajax)
+							{
+								return array('error' => $errorMessage);
+							}
+							else
+							{
+								JFactory::getApplication()->enqueueMessage($errorMessage, 'error');
+							}
+
+							return false;
+						}
 					}
 				}
 			}
-		}
-		else
-		{
-			$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
-
-			if (static::$ajax)
+			else
 			{
-				return $result;
-			}
-		}
+				$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
 
-		return true;
+				if (static::$ajax)
+				{
+					return $result;
+				}
+			}
+
+			return true;
+		}
+		
+		return false;
 	}
 
 	private static function createErrorMsg()
