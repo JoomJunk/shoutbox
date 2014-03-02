@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-$document->addStyleSheet(JUri::root() . 'media/mod_shoutbox/css/mod_shoutbox.css');
+JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '#jjshoutboxoutput {
 		border-color: ' . $params->get('bordercolor', '#FF3C16') . ';
 		border-width: ' . $params->get('borderwidth', '1') . 'px;
@@ -95,6 +95,7 @@ JText::script('SHOUT_REMAINING');
 						<form method="post" name="delete">
 							<input name="delete" type="submit" value="x" />
 							<input name="idvalue" type="hidden" value="<?php echo $shouts[$i]->id ?>" />
+							<?php echo JHtml::_('form.token'); ?>
 						</form>
 					<?php
 					}
@@ -248,9 +249,7 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 	</form>
 	<?php
 	// Shows mass delete button if enabled
-	if ($user->authorise('core.delete'))
-	{
-		if ($mass_delete == 0)
+	if ($user->authorise('core.delete') && $mass_delete == 0)
 		{ ?>
 			<form method="post" name="deleteall">
 				<input type="hidden" name="max" value="<?php echo $number; ?>" />
@@ -270,9 +269,9 @@ elseif (($user->guest && $guestpost == 0)||!$user->guest)
 					<input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" /><?php
 				}
 				?>
+				<?php echo JHtml::_('form.token'); ?>
 			</form>
 		<?php
-		}
 	}
 }
 elseif ($guestpost == 1 && $guestpost == 1)

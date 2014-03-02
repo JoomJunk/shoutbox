@@ -7,8 +7,6 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.filesystem.folder');
-
 require_once dirname(__FILE__) . '/helper.php';
 
 $title = 'shoutbox';
@@ -49,19 +47,20 @@ else
 		}
 		else
 		{
-			JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/jquery.js');
+			JHtml::_('script', 'mod_shoutbox/jquery.js', false, true);
 		}
-		$document->addScriptDeclaration('jQuery.noConflict();');		
+
+		JHtml::_('script', 'mod_shoutbox/jquery-noconflict.js', false, true);
 	}
 }
 
 // Add in JS and CSS for the scroll bar
-JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/scrollbar.js');
-JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/mousewheel.js');
-JHtml::_('stylesheet', JUri::root() . 'media/mod_shoutbox/css/scrollbar.css');
+JHtml::_('script', 'mod_shoutbox/scrollbar.js', false, true);
+JHtml::_('script', 'mod_shoutbox/mousewheel.js', false, true);
+JHtml::_('stylesheet', 'mod_shoutbox/scrollbar.css', array(), true);
 
 // Add in the JS for the Shoutbox
-JHtml::_('script', JUri::root() . 'media/mod_shoutbox/js/mod_shoutbox.js');
+JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
 
 // Set Date Format for when posted
 if ($date == 0)
@@ -104,7 +103,6 @@ JLog::addLogger(
 );
 
 $user = JFactory::getUser();
-require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
 if (isset($_POST))
 {
@@ -123,45 +121,45 @@ if (isset($_POST))
 
 	if (isset($post['delete']))
 	{
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 		$deletepostnumber = $post['idvalue'];
+
 		if ($user->authorise('core.delete'))
 		{
 			ModShoutboxHelper::deletepost($deletepostnumber);
 		}
 	}
 
-	if ($mass_delete == 0)
+	if ($mass_delete == 0 && isset($post['deleteall']))
 	{
-		if (isset($post['deleteall']))
-		{
-			$delete = $post['valueall'];
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+		$delete = $post['valueall'];
 
-			if (isset($delete))
+		if (isset($delete))
+		{
+			if (is_numeric($delete) && (int) $delete == $delete)
 			{
-				if (is_numeric($delete) && (int) $delete == $delete)
+				if ($delete > 0)
 				{
-					if ($delete > 0)
+					if ($delete > $post['max'])
 					{
-						if ($delete > $post['max'])
-						{
-							$delete = $post['max'];
-						}
-						if ($user->authorise('core.delete'))
-						{
-							modShoutboxHelper::deleteall($delete);
-						}
+						$delete = $post['max'];
 					}
-					else
+					if ($user->authorise('core.delete'))
 					{
-						JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
-						JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
+						modShoutboxHelper::deleteall($delete);
 					}
 				}
 				else
 				{
-					JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
-					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
+					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
+					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
 				}
+			}
+			else
+			{
+				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
+				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
 			}
 		}
 	}
