@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    JJ_Shoutbox
- * @copyright  Copyright (C) 2011 - 2013 JoomJunk. All rights reserved.
+ * @copyright  Copyright (C) 2011 - 2014 JoomJunk. All rights reserved.
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
  */
 
