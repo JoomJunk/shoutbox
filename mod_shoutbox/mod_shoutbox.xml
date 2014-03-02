@@ -87,6 +87,7 @@
 					<option value="3">SHOUT_DATE_AMERICAN_BACKSLASH</option>
 					<option value="1">SHOUT_DATE_SPACE</option>
 					<option value="4">SHOUT_DATE_SPACE_OPTION_TWO</option>
+					<option value="5">SHOUT_DATE_REVERSED</option>
 					<option value="2">SHOUT_DONT_SHOW</option>
 				</field>
 				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
