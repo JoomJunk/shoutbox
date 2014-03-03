@@ -577,7 +577,7 @@ class ModShoutboxHelper
 			$post = JRequest::get('post');
 		}
 
-		if (isset($shout['shout']) && !empty($shout['message']) && $_SESSION['token'] == $shout['token'])
+		if (isset($post['shout']) && !empty($post['message']) && $_SESSION['token'] == $post['token'])
 		{
 			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
@@ -604,7 +604,7 @@ class ModShoutboxHelper
 				}
 				else
 				{
-					$error = $resp->error;
+					return array('error' => $resp->error);
 				}
 			}
 			elseif ($securityQuestion == 0)
