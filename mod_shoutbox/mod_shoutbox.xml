@@ -53,6 +53,8 @@
     <languages>
         <language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.ini</language>
 		<language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.sys.ini</language>
+        <language tag="pl-PL">language/pl-PL/pl-PL.mod_shoutbox.ini</language>
+        <language tag="pl-PL">language/pl-PL/pl-PL.mod_shoutbox.sys.ini</language>
     </languages>
 	
 	<updateservers>
