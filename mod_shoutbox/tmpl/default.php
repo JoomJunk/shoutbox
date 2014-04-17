@@ -149,7 +149,7 @@ elseif (array_intersect($permissions, $access))
 		elseif ($user->guest||($displayName == 2 && !$user->guest))
 		{
 			?>
-			<input name="name" type="text" value="Name" maxlength="25" id="shoutbox-name" onfocus="this.value = (this.value=='Name')? '' : this.value;" />
+			<input name="name" type="text" value="<?php echo JText::_('SHOUT_NAME'); ?>" maxlength="25" id="shoutbox-name" onfocus="this.value = (this.value=='Name')? '' : this.value;" />
 		<?php
 		}
 
