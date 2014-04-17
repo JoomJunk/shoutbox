@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.3.1
+# Name input field default value now a language string
+
 Version 1.3.0
 * People without necessary permissions could delete posts
 + Allow template overriding of jQuery no conflict file and CSS file
