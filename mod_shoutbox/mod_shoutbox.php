@@ -90,8 +90,8 @@ if (isset($_POST))
 {
 	if (!get_magic_quotes_gpc())
 	{
-		$input = new JInput;
-		$post = $input->getArray($_POST);
+		$app = JFactory::getApplication();
+		$post = $app->input->post->getArray();
 	}
 	else
 	{
