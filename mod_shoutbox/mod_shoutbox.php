@@ -91,7 +91,17 @@ if (isset($_POST))
 	if (!get_magic_quotes_gpc())
 	{
 		$app = JFactory::getApplication();
-		$post = $app->input->post->getArray();
+
+		// Use a slightly better filtered post variable
+		// when we can
+		if (version_compare(JVERSION, '3.2.0', 'ge'))
+		{
+			$post = $app->input->post->getArray();
+		}
+		else
+		{
+			$post = $app->input->getArray($_POST);
+		}
 	}
 	else
 	{
