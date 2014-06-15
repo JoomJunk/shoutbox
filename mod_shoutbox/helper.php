@@ -133,6 +133,11 @@ class ModShoutboxHelper
 		}
 		else
 		{
+			if (empty($shout['name']))
+			{
+				return;
+			}
+
 			if ($swearCounter == 0)
 			{
 				$before = substr_count($shout['name'], $replace);
