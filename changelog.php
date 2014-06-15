@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.4.0
+^ Name field now is a placeholder and is required
+
 Version 1.3.1
 # Name input field default value now a language string
 
