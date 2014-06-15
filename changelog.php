@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 Version 1.4.0
 ^ Name field now is a placeholder and is required
+^ Use improved method of getting the POST array introduced in Joomla 3.2
 
 Version 1.3.1
 # Name input field default value now a language string
