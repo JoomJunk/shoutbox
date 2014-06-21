@@ -133,6 +133,12 @@ class ModShoutboxHelper
 		}
 		else
 		{
+			// Name is a required field. So return if the field is empty
+			if (empty($shout['name']))
+			{
+				return;
+			}
+
 			if ($swearCounter == 0)
 			{
 				$before = substr_count($shout['name'], $replace);
