@@ -81,7 +81,7 @@ $document->addStyleDeclaration($style);
 						echo $profile_link;
 					}
 					?> - <?php
-					echo JFactory::getDate($shouts[$i]->when)->format($show_date . 'H:i');
+					echo JHtml::date($shouts[$i]->when, $show_date . 'H:i', true);
 
 					if ($user->authorise('core.delete'))
 					{
