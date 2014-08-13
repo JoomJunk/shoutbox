@@ -379,7 +379,7 @@ class ModShoutboxHelper
 		$db = JFactory::getDbo();
 		$config = JFactory::getConfig();
 		$columns = array('name', 'when', 'ip', 'msg', 'user_id');
-		$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now', $config->get('offset'))->toSql(true)),
+		$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now')), 
 			$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
 		$query = $db->getQuery(true);
 
