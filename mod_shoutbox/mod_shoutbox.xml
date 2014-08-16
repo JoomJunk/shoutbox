@@ -7,22 +7,22 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>1.4.1</version> 
+	<version>1.4.2</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
-        <sql>
-            <file driver="mysql" charset="utf8">sql/mysql/install.mysql.utf8.sql</file>
+		<sql>
+			<file driver="mysql" charset="utf8">sql/mysql/install.mysql.utf8.sql</file>
 			<file driver="postgresql" charset="utf8">sql/postgresql/install.postgresql.utf8.sql</file>
-        </sql>
-    </install>
+		</sql>
+	</install>
               
-    <uninstall>
-        <sql>
+	<uninstall>
+		<sql>
 			<file driver="mysql" charset="utf8">sql/mysql/uninstall.mysql.utf8.sql</file>
 			<file driver="postgresql" charset="utf8">sql/postgresql/uninstall.postgresql.utf8.sql</file>
-        </sql>
-    </uninstall>
+		</sql>
+	</uninstall>
 	
 	<update> 
 		<schemas>
@@ -37,8 +37,8 @@
 		<filename>index.html</filename>
 		<folder>css</folder>
 		<folder>images</folder>
-        <folder>js</folder>
-        <folder>recaptcha</folder>
+		<folder>js</folder>
+		<folder>recaptcha</folder>
 	</media>
 	
 	<files>
@@ -50,18 +50,18 @@
 		<folder>sql</folder>
 	</files>
  
-    <languages>
-        <language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.ini</language>
+	<languages>
+		<language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.ini</language>
 		<language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.sys.ini</language>
-        <language tag="pl-PL">language/pl-PL/pl-PL.mod_shoutbox.ini</language>
-        <language tag="pl-PL">language/pl-PL/pl-PL.mod_shoutbox.sys.ini</language>
-    </languages>
+		<language tag="pl-PL">language/pl-PL/pl-PL.mod_shoutbox.ini</language>
+		<language tag="pl-PL">language/pl-PL/pl-PL.mod_shoutbox.sys.ini</language>
+	</languages>
 	
 	<updateservers>
 		<server type="extension" name="JJ Shoutbox" priority="1">http://www.joomjunk.co.uk/updates/shoutbox_update.xml</server>
 	</updateservers>
  
-    <config>
+	<config>
 		<fields name="params">
 			<fieldset name="basic">
 				<field name="profile" type="list" default="none" label="SHOUT_LINK_PROFILE" description="SHOUT_LINK_PROFILEDESC">
