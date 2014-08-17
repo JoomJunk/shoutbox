@@ -124,7 +124,6 @@ class Mod_ShoutboxInstallerScript
 	public function update($parent)
 	{
 		echo '<p>' . JText::sprintf('MOD_SHOUTBOX_UPDATE', $this->release) . '</p>';
-		echo '<p>' . JText::_('MOD_SHOUTBOX_UPDATE_CHANGELOG') . '</p>';
 	}
 
 	/**
