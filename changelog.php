@@ -14,6 +14,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 1.4.2
+# Another timezone bug fix
+^ Updated to jQuery 1.11.1
+^ Minor coding tweaks
+
 Version 1.4.1
 # Bug when user timezone was different to the default Joomla timezone
 

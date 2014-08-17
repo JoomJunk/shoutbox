@@ -9,11 +9,11 @@ defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '#jjshoutboxoutput {
-		border-color: ' . $params->get('bordercolor', '#FF3C16') . ';
-		border-width: ' . $params->get('borderwidth', '1') . 'px;
+		border-color: ' . $bordercolour . ';
+		border-width: ' . $borderwidth . 'px;
 	}
 	#jjshoutboxoutput div h1 {
-		background: ' . $params->get('headercolor', '#D0D0D0') . ';
+		background: ' . $headercolor . ';
 	}';
 
 if (version_compare(JVERSION, '3.0.0', 'le'))
@@ -28,11 +28,11 @@ $user = JFactory::getUser();
 if ($user->authorise('core.delete'))
 {
 	$style .= '#jjshoutboxoutput input[type=submit]{
-		color:' . $params->get('deletecolor', '#FF0000') . ';
+		color:' . $deletecolor . ';
 	}';
 }
 
-$document->addStyleDeclaration($style);
+$doc->addStyleDeclaration($style);
 ?>
 
 <div id="jjshoutbox">
