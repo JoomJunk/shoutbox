@@ -11,21 +11,25 @@ jimport('joomla.filesystem.folder');
 
 require_once dirname(__FILE__) . '/helper.php';
 
-$displayName = $params->get('loginname');
-$smile = $params->get('smile');
-$swearcounter = $params->get('swearingcounter');
-$swearnumber = $params->get('swearingnumber');
-$number = $params->get('maximum');
-$submittext = $params->get('submittext');
-$nonmembers = $params->get('nonmembers');
-$profile = $params->get('profile');
-$date = $params->get('date');
-$securityquestion = $params->get('securityquestion');
-$mass_delete = $params->get('mass_delete');
-$permissions = $params->get('guestpost');
+$displayName 		= $params->get('loginname');
+$smile 				= $params->get('smile');
+$swearcounter 		= $params->get('swearingcounter');
+$swearnumber 		= $params->get('swearingnumber');
+$number 			= $params->get('maximum');
+$submittext 		= $params->get('submittext');
+$nonmembers 		= $params->get('nonmembers');
+$profile 			= $params->get('profile');
+$date 				= $params->get('date');
+$securityquestion 	= $params->get('securityquestion');
+$mass_delete 		= $params->get('mass_delete');
+$permissions 		= $params->get('guestpost');
+$deletecolor		= $params->get('deletecolor', '#FF0000');
+$bordercolour 		= $params->get('bordercolor', '#FF3C16');
+$borderwidth 		= $params->get('borderwidth', '1');
+$headercolor 		= $params->get('headercolor', '#D0D0D0');
 
 // Add in jQuery if smilies are required
-$document = JFactory::getDocument();
+$doc = JFactory::getDocument();
 
 if ($smile == 1 || $smile == 2)
 {
@@ -38,7 +42,7 @@ if ($smile == 1 || $smile == 2)
 		if (!JFactory::getApplication()->get('jquery'))
 		{
 			JFactory::getApplication()->set('jquery', true);
-			JHtml::_('script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js');
+			JHtml::_('script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 			JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 		}
 	}
