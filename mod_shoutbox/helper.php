@@ -325,7 +325,7 @@ class ModShoutboxHelper
 			elseif ($profile == 2)
 			{
 				// Kunena Profile Link
-				$profile_link = '<a href="' . JRoute::_('index.php?option=com_kunena&func=fbprofile&userid=' . $user_id) . '">' . $name . '</a>';
+				$profile_link = '<a href="' . JRoute::_('index.php?option=com_kunena&view=user&userid=' . $user_id) . '">' . $name . '</a>';
 			}
 			elseif ($profile == 3)
 			{
