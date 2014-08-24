@@ -325,7 +325,14 @@ class ModShoutboxHelper
 			elseif ($profile == 2)
 			{
 				// Kunena Profile Link
-				$profile_link = '<a href="' . JRoute::_('index.php?option=com_kunena&view=user&userid=' . $user_id) . '">' . $name . '</a>';
+				if (class_exists('KunenaFactory') && class_exists('KunenaProfileKunena')) {
+					$kUser = KunenaFactory::getUser()->userid;
+					$kLink = KunenaProfileKunena::getProfileURL($kUser);
+				}
+				else {
+					$kLink = null;
+				}
+				$profile_link = '<a href="' . $kLink . '">' . $name . '</a>';
 			}
 			elseif ($profile == 3)
 			{
