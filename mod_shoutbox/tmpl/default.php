@@ -18,7 +18,7 @@ $style = '#jjshoutboxoutput {
 
 if (version_compare(JVERSION, '3.0.0', 'le'))
 {
-	$style .= '#jj_btn, #jj_btn2{
+	$style .= '#jj_btn {
 		width: 25px !important;
 	}';
 }
@@ -72,9 +72,9 @@ $doc->addStyleDeclaration($style);
 				?>
 				<h1 <?php echo ModShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
 					<?php
-					if ($smile == 0)
+					if ($smile == 0 || $bbcode == 0)
 					{
-						echo ModShoutboxHelper::smileyFilter($profile_link);
+						echo ModShoutboxHelper::bbcodeFilter($profile_link);
 					}
 					else
 					{
@@ -97,13 +97,13 @@ $doc->addStyleDeclaration($style);
 				</h1>
 				<p>
 					<?php
-					if ($smile == 0 || $smile == 1 || $smile == 2)
+					if ($smile == 0 || $smile == 1 || $smile == 2 || $bbcode == 0)
 					{
-						echo ModShoutboxHelper::smileyfilter($shouts[$i]->msg);
+						echo ModShoutboxHelper::bbcodeFilter($shouts[$i]->msg);
 					}
 					else
 					{
-						echo $shouts[$i]->msg;
+						echo nl2br($shouts[$i]->msg);
 					}
 					?>
 				</p>
@@ -162,31 +162,29 @@ elseif (array_intersect($permissions, $access))
 		<input name="token" type="hidden" value="<?php echo $_SESSION['token'];?>" />
 
 		<span id="charsLeft"></span>
-		<noscript>
-						<span id="noscript_charsleft">
-							<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
-						</span>
-		</noscript>
-		<textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+
+		<textarea id="jj_message"  cols="20" rows="5" name="message" onKeyDown="textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+		
+		<?php if ( $bbcode == 0 ) 
+		{ ?>
+			<div class="btn-toolbar">
+				<div class="btn-group">
+					<button type="button" class="btn btn-small jj-bold">B</button>
+					<button type="button" class="btn btn-small jj-italic">I</button>
+					<button type="button" class="btn btn-small jj-underline">U</button>
+					<button type="button" class="btn btn-small jj-link">Link</button>
+				</div>
+			</div>
 		<?php
+		}
+		
 		if ($smile == 1 || $smile == 2)
 		{
 			if ($smile == 2)
 			{
-				if (version_compare(JVERSION, '3.0.0', 'ge'))
-				{
-					echo '<div id="jj_smiley_button">
-											<input id="jj_btn" type="button" class="btn btn-mini" value="&#9650;" />
-											<input id="jj_btn2" type="button" class="btn btn-mini" value="&#9660;" />
-										  </div>';
-				}
-				else
-				{
-					echo '<div id="jj_smiley_button">
-											<input id="jj_btn" type="button" class="btn" value="&#9650;" />
-											<input id="jj_btn2" type="button" class="btn" value="&#9660;" />
-										  </div>';
-				}
+				echo '<div id="jj_smiley_button">
+						<a href="#" id="jj_btn" class="btn btn-mini" />&#9650;</a>
+					  </div>';
 			}
 
 			echo '<div id="jj_smiley_box">' . ModShoutboxHelper::smileyshow() . '</div>';
@@ -207,60 +205,7 @@ elseif (array_intersect($permissions, $access))
 					document.getElementById('charsLeft').style.color = "Red";
 
 			}
-			textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
-			<?php
-			if ($smile == 1 || $smile == 2 )
-			{
-			?>
-			(function($){
-				$('#jj_smiley_box img').click(function(){
-					var smiley = $(this).attr('alt');
-					var caretPos = caretPos();
-					var strBegin = $('#message').val().substring(0, caretPos);
-					var strEnd   = $('#message').val().substring(caretPos);
-					$('#message').val( strBegin + " " + smiley + " " + strEnd);
-					function caretPos(){
-						var el = document.getElementById("message");
-						var pos = 0;
-						// IE Support
-						if (document.selection){
-							el.focus ();
-							var Sel = document.selection.createRange();
-							var SelLength = document.selection.createRange().text.length;
-							Sel.moveStart ('character', -el.value.length);
-							pos = Sel.text.length - SelLength;
-						}
-						// Firefox support
-						else if (el.selectionStart || el.selectionStart == '0')
-							pos = el.selectionStart;
-
-						return pos;
-					}
-				});
-				<?php
-				if ($smile == 2)
-				{
-				?>
-				$("#jj_smiley_button").click(function () {
-					$("#jj_smiley_box").slideToggle("slow");
-				});
-
-				$('#jj_btn').click(function(){
-					$('#jj_btn2').show();
-					$('#jj_btn').hide();
-				});
-				$('#jj_btn2').click(function(){
-					$('#jj_btn').show();
-					$('#jj_btn2').hide();
-				});
-
-				<?php
-				}
-				?>
-			})(jQuery);
-			<?php
-			}
-			?>
+			textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
 		</script>
 
 		<?php

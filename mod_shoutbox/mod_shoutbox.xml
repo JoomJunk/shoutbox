@@ -103,6 +103,10 @@
 					<option value="2">SHOUT_SMILIES_ON_SLIDE</option>
 					<option value="3">SHOUT_SMILIES_DISABLE</option>
 				</field>
+				<field name="bbcode" type="radio" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JON</option>
+					<option value="1">JOFF</option>
+				</field>
 				<field name="swearingcounter" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
 					<option value="0">JON</option>
 					<option value="1">JOFF</option>

@@ -27,11 +27,12 @@ $deletecolor		= $params->get('deletecolor', '#FF0000');
 $bordercolour 		= $params->get('bordercolor', '#FF3C16');
 $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
+$bbcode 			= $params->get('bbcode', 0);
 
 // Add in jQuery if smilies are required
 $doc = JFactory::getDocument();
 
-if ($smile == 1 || $smile == 2)
+if ($smile == 1 || $smile == 2 || $bbcode = 0)
 {
 	if (version_compare(JVERSION, '3.0.0', 'ge'))
 	{
@@ -46,6 +47,7 @@ if ($smile == 1 || $smile == 2)
 			JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 		}
 	}
+	JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
 }
 
 // Set Date Format for when posted

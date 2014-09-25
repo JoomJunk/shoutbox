@@ -204,34 +204,57 @@ class ModShoutboxHelper
 	}
 
 	/**
-	 * Replaces all the smileys in the message.
-	 *
-	 * @param   string  $message  The message to be searched to add smileys in.
-	 *
-	 * @return   string  $message  The message with the smiley code in.
-	 *
-	 * @since 1.0
+	 * @var		array  The available smilies and their paths
+	 * @since   1.2.0
 	 */
-	public static function smileyFilter($message)
+	public static $smileys = array(
+		':)' => 'media/mod_shoutbox/images/icon_e_smile.gif',
+		':(' => 'media/mod_shoutbox/images/icon_e_sad.gif',
+		':D' => 'media/mod_shoutbox/images/icon_e_biggrin.gif',
+		'xD' => 'media/mod_shoutbox/images/icon_e_biggrin.gif',
+		':p' => 'media/mod_shoutbox/images/icon_razz.gif',
+		':P' => 'media/mod_shoutbox/images/icon_razz.gif',
+		';)' => 'media/mod_shoutbox/images/icon_e_wink.gif',
+		':S' => 'media/mod_shoutbox/images/icon_e_confused.gif',
+		':@' => 'media/mod_shoutbox/images/icon_mad.gif',
+		':O' => 'media/mod_shoutbox/images/icon_e_surprised.gif',
+		'lol' => 'media/mod_shoutbox/images/icon_lol.gif',
+	);
+	
+	/**
+	 * Replaces all the bbcode in the message.
+	 *
+	 * @param   string  $message  The message to be searched possibly with bbcode in.
+	 *
+	 * @return   string  The message with the replaced bbcode code in.
+	 *
+	 * @since 1.5.0
+	 */
+	public static function bbcodeFilter($message)
 	{
-		$smileys = array(
-			':)' => ' <img src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)">',
-			':(' => ' <img src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(">',
-			':D' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D">',
-			'xD' => ' <img src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD">',
-			':p' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":p">',
-			':P' => ' <img src="media/mod_shoutbox/images/icon_razz.gif" alt=":P">',
-			';)' => ' <img src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)">',
-			':S' => ' <img src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S">',
-			':@' => ' <img src="media/mod_shoutbox/images/icon_mad.gif" alt=":@">',
-			':O' => ' <img src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O">',
-			'lol' => ' <img src="media/mod_shoutbox/images/icon_lol.gif" alt="lol">',
+		// Replace the smileys
+		foreach (static::$smileys as $smile => $url)
+		{
+			$replace = '<img src="' . $url . '" alt="' . $smile . '">';
+			$message = str_replace($smile, $replace, $message);
+		}
+
+		// Parse the Bold, Italic, strikes and links
+		$search = array(
+			'/\[b\](.*?)\[\/b\]/is',
+			'/\[i\](.*?)\[\/i\]/is',
+			'/\[u\](.*?)\[\/u\]/is',
+			'/\[url=(?:http(s?):\/\/)?([^\]]+)\]\s*(.*?)\s*\[\/url\]/is'
 		);
 
-		foreach ($smileys as $key => $val)
-		{
-			$message = str_replace($key, $val, $message);
-		}
+		$replace = array(
+			'<span class="jj-bold">$1</span>',
+			'<span class="jj-italic">$1</span>',
+			'<span class="jj-underline">$1</span>',
+			'<a href="http$1://$2" target="_blank">$3</a>'
+		);
+
+		$message = preg_replace($search, $replace, $message);
 
 		return $message;
 	}
@@ -243,19 +266,14 @@ class ModShoutboxHelper
 	 *
 	 * @since 1.2
 	 */
-	public static function smileyshow()
+	public static function smileyShow()
 	{
 		$smilies = '';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_smile.gif" alt=":)" />';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_sad.gif" alt=":(" />';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt=":D" />';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_biggrin.gif" alt="xD" />';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_razz.gif" alt=":P" />';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_wink.gif" alt=";)" />';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_confused.gif" alt=":S" />';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_mad.gif" alt=":@" />';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_e_surprised.gif" alt=":O" />';
-		$smilies .= '<img class="jj_smiley" src="media/mod_shoutbox/images/icon_lol.gif" alt="lol" />';
+
+		foreach (static::$smileys as $smile => $url)
+		{
+			$smilies .= '<img class="jj_smiley" src="' . $url . '" alt="' . $smile . '" />';
+		}
 
 		return $smilies;
 	}
