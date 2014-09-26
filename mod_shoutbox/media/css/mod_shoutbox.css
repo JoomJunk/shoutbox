@@ -42,7 +42,7 @@
 }
 #jjshoutboxoutput div h1 {
     font-size: 12px;
-    font-family: arial;
+    font-family: inherit;
     color: #000;
     text-transform: none;
     margin: 8px 0;
@@ -53,7 +53,8 @@
     margin: 0;
 }
 #jjshoutboxoutput div p {
-    font: 11px helvetica, arial, sans-serif;
+    font-size: 11px;
+    font-family: inherit;
     text-align: left;
     color: #000;
     margin: 5px 0;
