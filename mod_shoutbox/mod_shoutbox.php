@@ -32,7 +32,7 @@ $bbcode 			= $params->get('bbcode', 0);
 // Add in jQuery if smilies are required
 $doc = JFactory::getDocument();
 
-if ($smile == 1 || $smile == 2 || $bbcode = 0)
+if ($smile == 1 || $smile == 2 || $bbcode == 0)
 {
 	if (version_compare(JVERSION, '3.0.0', 'ge'))
 	{
