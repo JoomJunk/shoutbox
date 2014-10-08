@@ -97,21 +97,11 @@ if (isset($_POST))
 	if (!get_magic_quotes_gpc())
 	{
 		$app = JFactory::getApplication();
-
-		// Use a slightly better filtered post variable
-		// when we can
-		if (version_compare(JVERSION, '3.2.0', 'ge'))
-		{
-			$post = $app->input->post->getArray();
-		}
-		else
-		{
-			$post = $app->input->getArray($_POST);
-		}
+		$post = $app->input->post->get('jjshout', array(), 'array');
 	}
 	else
 	{
-		$post = JRequest::get('post');
+		$post = JRequest::getVar('jjshout', array(), 'post', 'array');
 	}
 
 	if (isset($post['shout']) && !empty($post['message']) && $_SESSION['token'] == $post['token'])
@@ -122,26 +112,21 @@ if (isset($_POST))
 		{
 			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
-			if (isset($post["recaptcha_response_field"]))
-			{
-				if ($post["recaptcha_response_field"])
-				{
-					$resp = recaptcha_check_answer(
-						$params->get('recaptcha-private'),
-						$_SERVER["REMOTE_ADDR"],
-						$post["recaptcha_challenge_field"],
-						$post["recaptcha_response_field"]
-					);
+			// The recaptcha fields don't have the jjshout namespace so grab them straight from the input
+			$resp = recaptcha_check_answer(
+				$params->get('recaptcha-private'),
+				$_SERVER["REMOTE_ADDR"],
+				$app->input->get('recaptcha_challenge_field', '', 'string'),
+				$app->input->get('recaptcha_response_field', '', 'string')
+			);
 
-					if ($resp->is_valid)
-					{
-						ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-					}
-					else
-					{
-						$error = $resp->error;
-					}
-				}
+			if ($resp->is_valid)
+			{
+				ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+			}
+			else
+			{
+				$error = $resp->error;
 			}
 		}
 		elseif ($securityquestion == 0)
