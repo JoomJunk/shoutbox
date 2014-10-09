@@ -212,6 +212,8 @@ elseif (array_intersect($permissions, $access))
 		// Shows recapture or math question depending on the parameters
 		if ($params->get('recaptchaon') == 0)
 		{
+			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
+
 			if ($params->get('recaptcha-public') == '' || $params->get('recaptcha-private') == '')
 			{
 				echo JText::_('SHOUT_RECAPTCHA_KEY_ERROR');
