@@ -169,10 +169,10 @@ elseif (array_intersect($permissions, $access))
 		{ ?>
 			<div class="btn-toolbar">
 				<div class="btn-group">
-					<button type="button" class="btn btn-small jj-bold">B</button>
-					<button type="button" class="btn btn-small jj-italic">I</button>
-					<button type="button" class="btn btn-small jj-underline">U</button>
-					<button type="button" class="btn btn-small jj-link">Link</button>
+					<button type="button" class="btn btn-small jj-bold" onClick="addSmiley('[b] [/b]', 'jj_message')">B</button>
+					<button type="button" class="btn btn-small jj-italic" onClick="addSmiley('[i] [/i]', 'jj_message')">I</button>
+					<button type="button" class="btn btn-small jj-underline" onClick="addSmiley('[u] [/u]', 'jj_message')">U</button>
+					<button type="button" class="btn btn-small jj-link" onClick="addSmiley('[url=] [/url]', 'jj_message')">Link</button>
 				</div>
 			</div>
 		<?php

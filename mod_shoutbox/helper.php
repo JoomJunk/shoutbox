@@ -261,18 +261,19 @@ class ModShoutboxHelper
 
 	/**
 	 * Displays an array of smilies.
+	 
 	 *
 	 * @return   array  $smilies The smiley images html code.
 	 *
 	 * @since 1.2
 	 */
-	public static function smileyShow()
+	public static function smileyShow($id = 'jj_message')
 	{
 		$smilies = '';
 
 		foreach (static::$smileys as $smile => $url)
 		{
-			$smilies .= '<img class="jj_smiley" src="' . $url . '" alt="' . $smile . '" />';
+			$smilies .= '<img class="jj_smiley" src="' . $url . '" alt="' . $smile . '" onClick="addSmiley(\'' . $smile . '\', \'' . $id . '\')" />';
 		}
 
 		return $smilies;
