@@ -261,7 +261,8 @@ class ModShoutboxHelper
 
 	/**
 	 * Displays an array of smilies.
-	 
+	 *
+	 * @param   string  $id  The id of the textarea to insert the smiley into
 	 *
 	 * @return   array  $smilies The smiley images html code.
 	 *
