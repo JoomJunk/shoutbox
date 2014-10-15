@@ -104,54 +104,14 @@ if (isset($_POST))
 		$post = JRequest::getVar('jjshout', array(), 'post', 'array');
 	}
 
-	if (isset($post['shout']) && !empty($post['message']) && $_SESSION['token'] == $post['token'])
+	if (isset($post['shout']))
 	{
-		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
-
-		if ($params->get('recaptchaon') == 0)
+		if (!empty($post['message']))
 		{
-			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
-
-			// The recaptcha fields don't have the jjshout namespace so grab them straight from the input
-			$resp = recaptcha_check_answer(
-				$params->get('recaptcha-private'),
-				$_SERVER["REMOTE_ADDR"],
-				$app->input->get('recaptcha_challenge_field', '', 'string'),
-				$app->input->get('recaptcha_response_field', '', 'string')
-			);
-
-			if ($resp->is_valid)
-			{
-				ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-			}
-			else
-			{
-				$error = $resp->error;
-			}
+			JFactory::getApplication()->enqueueMessage('The message body is empty', 'error');				
 		}
-		elseif ($securityquestion == 0)
-		{
-			if (isset($post['sum1']) && isset($post['sum2']))
-			{
-				$que_result = $post['sum1'] + $post['sum2'];
 
-				if (isset($post['human']))
-				{
-					if ($post['human'] == $que_result)
-					{
-						ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-					}
-					else
-					{
-						JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_ANSWER_INCORRECT'), 'error');
-					}
-				}
-			}
-		}
-		else
-		{
-			ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-		}
+		ModShoutboxHelper::submitPhp($post, $params);
 	}
 
 	if (isset($post['delete']))

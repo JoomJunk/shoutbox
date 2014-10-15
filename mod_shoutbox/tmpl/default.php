@@ -289,3 +289,24 @@ else
 ?>
 </div>
 </div>
+<script type="text/javascript">
+	(function($){
+		$( "#shoutbox-submit" ).click( function() {
+			<?php if($displayName==1 && !$user->guest){ ?>
+			var name = "<?php echo $user->username;?>";
+			<?php } elseif($displayName==0 && !$user->guest) { ?>
+			var name = "<?php echo $user->name;?>";
+			<?php } else { ?>
+			if($('#shoutbox-name').val() == ""){
+				var name = "<?php echo $genericname; ?>";
+			}
+			else{
+				var name = $('#shoutbox-name').val();
+			}
+			<?php } ?>
+
+			submitPost(name, '<?php echo $title; ?>', <?php echo $recaptcha; ?>, <?php echo $securityQuestion; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
+			return false;
+		});
+	})(jQuery);
+</script>

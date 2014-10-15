@@ -17,6 +17,32 @@ jimport('joomla.filesystem.file');
 class ModShoutboxHelper
 {
 	/**
+	 * @var		boolean  Is the post being submitted by AJAX
+	 * @since   __DEPLOY_VERSION__
+	 */
+	private static $ajax = false;
+
+	/**
+	 * Fetches the parameters of the shoutbox independently of the view
+	 * so it can be used for the AJAX
+	 *
+	 * @param   string  $title  The title of the module to retrieve
+	 *
+	 * @return  JRegistry  The parameters of the module
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public static function getParams($title = null)
+	{
+		jimport('joomla.application.module.helper');
+		$module = JModuleHelper::getModule('mod_shoutbox', $title);
+		$moduleParams = new JRegistry;
+		$moduleParams->loadString($module->params);
+
+		return $moduleParams;
+	}
+
+	/**
 	 * Retrieves the shouts from the database and returns them. Will return an error
 	 * message if the database retrieval fails.
 	 *
@@ -519,6 +545,168 @@ class ModShoutboxHelper
 		}
 
 		return (rand() % $range + $start);
+	}
+
+	/**
+	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
+	 *
+	 * @param   string  $instance  The instance of the module.
+	 *
+	 * @return   array  The details of the post created.
+	 *
+	 * @throws  RuntimeException
+	 */
+	public static function submitAjax($instance = 'mod_shoutbox')
+	{
+		static::$ajax = true;
+
+		if (!get_magic_quotes_gpc())
+		{
+			$app = JFactory::getApplication();
+			$post  = $app->input->post->get('jjshoutbox', array(), 'array');
+		}
+		else
+		{
+			$post = JRequest::getVar('jjshoutbox', array(), 'post', 'array');
+		}
+
+		// Retrieve relevant parameters
+		if (!isset($post['title']))
+		{
+			throw new RuntimeException("Couldn't assemble the necessary parameters for the module");
+		}
+
+		$instance = $post['title'];
+		$params = static::getParams($instance);
+
+		// Make sure someone pressed shout and the post message isn't empty
+		if (isset($post['shout']))
+		{
+			if (empty($post['message']))
+			{
+				throw new RuntimeException ('The message body is empty');				
+			}
+
+			return static::submitPost($post, $params);
+		}
+		
+		throw new RuntimeException ('There was an error processing the form. Please try again!');
+	}
+
+	/**
+	 * Wrapper function for submitPost to allow PHP to submit a post
+	 *
+	 * @param   JInput     $post  The filtered post superglobal.
+	 * @param   JRegistry  $post  The parameters for the module.
+	 *
+	 * @return  mixed  True on success, false on failure.
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public static function submitPhp($post, $params)
+	{
+		return static::submitPost($post, $params);
+	}
+
+	/**
+	 * Method for submitting the post
+	 *
+	 * @param   JInput     $post  The filtered post superglobal.
+	 * @param   JRegistry  $post  The parameters for the module.
+	 *
+	 * @return  mixed  True on success outside of AJAX mode, false on failure. Integer on success when accessed via AJAX.
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	private static function submitPost($post, $params)
+	{
+		// Get the user instance
+		$user             = JFactory::getUser();
+		$displayName      = $params->get('loginname');
+		$recaptcha        = $params->get('recaptchaon', 1);
+		$swearCounter     = $params->get('swearingcounter');
+		$swearNumber      = $params->get('swearingnumber');
+		$securityQuestion = $params->get('securityquestion');
+
+		// If we submitted by PHP check for a session token
+		if (static::$ajax || $_SESSION['token'] == $post['token'])
+		{
+			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+			if ($recaptcha == 0)
+			{
+				// Recaptcha fields aren't in the JJ post space so we have to grab these separately
+				$input = JFactory::getApplication()->input;
+				$challengeField = $input->get('recaptcha_challenge_field', '', 'string');
+				$responseField = $input->get('recaptcha_response_field', '', 'string');
+
+				// Check we have a valid response field
+				if (!isset($responseField) || isset($responseField) && $responseField)
+				{
+					return false;
+				}
+
+				// Require Recaptcha Library
+				require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
+
+				$resp = recaptcha_check_answer(
+					$params->get('recaptcha-private'),
+					$_SERVER["REMOTE_ADDR"],
+					$challengeField,
+					$responseField
+				);
+
+				if ($resp->is_valid)
+				{
+					$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
+
+					return $result;
+				}
+				else
+				{
+					return array('error' => $resp->error);
+				}
+			}
+			elseif ($securityQuestion == 0)
+			{
+				// Our maths security question is on
+				if (isset($post['sum1']) && isset($post['sum2']))
+				{
+					$que_result = $post['sum1'] + $post['sum2'];
+
+					if (isset($post['human']))
+					{
+						if ($post['human'] == $que_result)
+						{
+							$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
+
+							return $result;
+						}
+						else
+						{
+							$errorMessage = JText::_('SHOUT_ANSWER_INCORRECT');
+
+							if (static::$ajax)
+							{
+								return array('error' => $errorMessage);
+							}
+							else
+							{
+								JFactory::getApplication()->enqueueMessage($errorMessage, 'error');
+							}
+
+							return false;
+						}
+					}
+				}
+			}
+			else
+			{
+				$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
+
+				return $result;
+			}
+		}
 	}
 
 	private static function createErrorMsg()

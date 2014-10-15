@@ -43,3 +43,77 @@ function getCurserPosition(id){
 
 	return pos;
 }
+
+function submitPost(name, title, recaptcha, maths, security, root)
+{
+    (function ($) {
+		// Assemble some commonly used vars
+		var textarea = $("textarea#jj_message"),
+		message = textarea.val();
+
+		// If no message body show an error message and stop
+		if(message == ""){
+			$('.jj-shout-error').append('<p class="inner-jj-error">Please enter a message!</p>').slideDown().show().delay(6000).queue(function(next){
+				$(this).slideUp().hide();
+				$('.inner-jj-error').remove();
+				next();
+			});
+			var $elt = $('#shoutbox-submit').attr('disabled', true);
+			setTimeout(function (){
+				$elt.attr('disabled', false);
+			}, 6000);
+			textarea.addClass('jj-redBorder').delay(6000).queue(function(next){
+				$(this).removeClass('jj-redBorder');
+				next();
+			});
+			return false;
+		}
+
+		// Assemble variables to submit
+		var request = {
+			'jjshoutbox[name]' : name,
+			'jjshoutbox[message]' : message.replace(/\n/g, "<br />"),
+			'jjshoutbox[shout]' : 'Shout!',
+			'jjshoutbox[title]' : title,
+		};
+
+		request[security] = 1;
+
+		if (recaptcha)
+		{
+			request["jjshoutbox[recaptcha_challenge_field]"] = $("input#recaptcha_challenge_field").val();
+			request["jjshoutbox[recaptcha_response_field]"] = $("input#recaptcha_response_field").val();
+		}
+
+		// AJAX request
+		$.ajax({
+			type: "POST",
+			url: root + "?option=com_ajax&module=shoutbox&method=submit&format=json",
+			data: request,
+			success:function(response){
+				if (response.success)
+				{
+					// Empty the message value
+					textarea.val('');
+
+					// Empty the name value if there is one
+					if ($('#shoutbox-name').val())
+					{
+						$('#shoutbox-name').val('');
+					}
+				}
+			},
+			error:function(ts){
+				console.log(ts);
+			}
+		});
+
+		// Valid or not refresh recaptcha
+		if (recaptcha)
+		{
+			Recaptcha.reload();
+		}
+
+		return false;
+    }(jQuery));
+}
