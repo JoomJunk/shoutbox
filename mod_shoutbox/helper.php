@@ -170,7 +170,6 @@ class ModShoutboxHelper
 			if ($name == '')
 			{
 				// Retrieve Generic Name parameters
-				$params = static::getParams();
 				$genericName = $params->get('genericname');
 				$name = $genericName;
 			}
@@ -662,7 +661,7 @@ class ModShoutboxHelper
 
 				if ($resp->is_valid)
 				{
-					$result = static::postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $params)
+					$result = static::postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $params);
 
 					return $result;
 				}
@@ -682,7 +681,7 @@ class ModShoutboxHelper
 					{
 						if ($post['human'] == $que_result)
 						{
-							$result = static::postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $params)
+							$result = static::postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $params);
 
 							return $result;
 						}
@@ -706,7 +705,7 @@ class ModShoutboxHelper
 			}
 			else
 			{
-				$result = static::postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $params)
+				$result = static::postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $params);
 
 				return $result;
 			}
