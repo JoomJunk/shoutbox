@@ -35,23 +35,21 @@ $title				= $module->title;
 // Add in jQuery if smilies are required
 $doc = JFactory::getDocument();
 
-if ($smile == 1 || $smile == 2 || $bbcode == 0)
+if (version_compare(JVERSION, '3.0.0', 'ge'))
 {
-	if (version_compare(JVERSION, '3.0.0', 'ge'))
-	{
-		JHtml::_('jquery.framework');
-	}
-	else
-	{
-		if (!JFactory::getApplication()->get('jquery'))
-		{
-			JFactory::getApplication()->set('jquery', true);
-			JHtml::_('script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
-			JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
-		}
-	}
-	JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
+	JHtml::_('jquery.framework');
 }
+else
+{
+	if (!JFactory::getApplication()->get('jquery'))
+	{
+		JFactory::getApplication()->set('jquery', true);
+		JHtml::_('script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+		JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
+	}
+}
+
+JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
 
 // Set Date Format for when posted
 if ($date == 0)

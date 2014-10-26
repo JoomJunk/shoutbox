@@ -305,7 +305,7 @@ else
 			}
 			<?php } ?>
 
-			submitPost(name, '<?php echo $title; ?>', <?php echo $recaptcha; ?>, <?php echo $securityQuestion; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
+			submitPost(name, '<?php echo $title; ?>', <?php echo $recaptcha ? '0' : '1'; ?>, <?php echo $securityQuestion ? '0' : '1'; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
 			return false;
 		});
 	})(jQuery);
