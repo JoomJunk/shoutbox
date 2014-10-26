@@ -210,7 +210,7 @@ elseif (array_intersect($permissions, $access))
 
 		<?php
 		// Shows recapture or math question depending on the parameters
-		if ($params->get('recaptchaon') == 0)
+		if ($recaptcha == 0)
 		{
 			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
@@ -236,7 +236,7 @@ elseif (array_intersect($permissions, $access))
 			}
 		}
 
-		if ($securityquestion == 0)
+		if ($securityQuestion == 0)
 		{
 			$que_number1 = ModShoutboxHelper::randomnumber(1);
 			$que_number2 = ModShoutboxHelper::randomnumber(1); ?>
@@ -247,14 +247,14 @@ elseif (array_intersect($permissions, $access))
 		<?php
 		}
 
-		if ($params->get('recaptchaon') == 0 && $securityquestion == 0)
+		if ($recaptcha == 0 && $securityQuestion == 0)
 		{
 			// Shows warning if both security questions are enabled and logs to error file.
 			JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
 			JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 		}
 		?>
-		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />
+		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($recaptcha == 0 && !$params->get('recaptcha-public')) || ($recaptcha==0 && !$params->get('recaptcha-private')) || ($recaptcha==0 && $securityQuestion==0)) { echo 'disabled="disabled"'; }?> />
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -298,7 +298,7 @@ else
 			var name = "<?php echo $user->name;?>";
 			<?php } else { ?>
 			if($('#shoutbox-name').val() == ""){
-				var name = "<?php echo $genericname; ?>";
+				var name = "<?php echo $genericName; ?>";
 			}
 			else{
 				var name = $('#shoutbox-name').val();

@@ -20,7 +20,8 @@ $submittext 		= $params->get('submittext');
 $nonmembers 		= $params->get('nonmembers');
 $profile 			= $params->get('profile');
 $date 				= $params->get('date');
-$securityquestion 	= $params->get('securityquestion');
+$recaptcha			= $params->get('recaptchaon', 1);
+$securityQuestion 	= $params->get('securityquestion');
 $mass_delete 		= $params->get('mass_delete');
 $permissions 		= $params->get('guestpost');
 $deletecolor		= $params->get('deletecolor', '#FF0000');
@@ -29,6 +30,7 @@ $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
 $bbcode 			= $params->get('bbcode', 0);
 $genericName		= $params->get('genericname');
+$title				= $module->title;
 
 // Add in jQuery if smilies are required
 $doc = JFactory::getDocument();
