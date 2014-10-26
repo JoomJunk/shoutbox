@@ -12,14 +12,14 @@ jimport('joomla.filesystem.folder');
 require_once dirname(__FILE__) . '/helper.php';
 
 $displayName 		= $params->get('loginname');
-$smile 			= $params->get('smile');
+$smile 				= $params->get('smile');
 $swearcounter 		= $params->get('swearingcounter');
 $swearnumber 		= $params->get('swearingnumber');
-$number 		= $params->get('maximum');
+$number 			= $params->get('maximum');
 $submittext 		= $params->get('submittext');
 $nonmembers 		= $params->get('nonmembers');
-$profile 		= $params->get('profile');
-$date 			= $params->get('date');
+$profile 			= $params->get('profile');
+$date 				= $params->get('date');
 $securityquestion 	= $params->get('securityquestion');
 $mass_delete 		= $params->get('mass_delete');
 $permissions 		= $params->get('guestpost');
@@ -27,7 +27,8 @@ $deletecolor		= $params->get('deletecolor', '#FF0000');
 $bordercolour 		= $params->get('bordercolor', '#FF3C16');
 $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
-$bbcode 		= $params->get('bbcode', 0);
+$bbcode 			= $params->get('bbcode', 0);
+$genericName		= $params->get('genericname');
 
 // Add in jQuery if smilies are required
 $doc = JFactory::getDocument();

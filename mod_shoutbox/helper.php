@@ -133,17 +133,18 @@ class ModShoutboxHelper
 	/**
 	 * Filters the posts before calling the add function.
 	 *
-	 * @param   int      $shout         The shout post.
-	 * @param   JUser    $user          The user id number.
-	 * @param   boolean  $swearCounter  Is the swear counter is on.
-	 * @param   int      $swearNumber   If the swear counter is on - how many swears are allowed.
-	 * @param   int      $displayName   The user display name.
+	 * @param   int        $shout         The shout post.
+	 * @param   JUser      $user          The user id number.
+	 * @param   boolean    $swearCounter  Is the swear counter is on.
+	 * @param   int        $swearNumber   If the swear counter is on - how many swears are allowed.
+	 * @param   int        $displayName   The user display name.
+	 * @param   JRegistry  $params        The parameters for the module
 	 *
 	 * @return  void
 	 *
 	 * @since 1.1.2
 	 */
-	public static function postFiltering($shout, $user, $swearCounter, $swearNumber, $displayName)
+	public static function postFiltering($shout, $user, $swearCounter, $swearNumber, $displayName, $params)
 	{
 		$replace = '****';
 
@@ -159,18 +160,20 @@ class ModShoutboxHelper
 		}
 		else
 		{
-			// Name is a required field. So return if the field is empty
-			if (empty($shout['name']))
-			{
-				return;
-			}
-
 			if ($swearCounter == 0)
 			{
 				$before = substr_count($shout['name'], $replace);
 			}
 
 			$name = self::swearfilter($shout['name'], $replace);
+
+			if ($name == '')
+			{
+				// Retrieve Generic Name parameters
+				$params = static::getParams();
+				$genericName = $params->get('genericname');
+				$name = $genericName;
+			}
 
 			if ($swearCounter == 0)
 			{
@@ -659,7 +662,7 @@ class ModShoutboxHelper
 
 				if ($resp->is_valid)
 				{
-					$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
+					$result = static::postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $params)
 
 					return $result;
 				}
@@ -679,7 +682,7 @@ class ModShoutboxHelper
 					{
 						if ($post['human'] == $que_result)
 						{
-							$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
+							$result = static::postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $params)
 
 							return $result;
 						}
@@ -703,7 +706,7 @@ class ModShoutboxHelper
 			}
 			else
 			{
-				$result = static::addShout($post, $user, $swearCounter, $swearNumber, $displayName);
+				$result = static::postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $params)
 
 				return $result;
 			}
