@@ -66,6 +66,41 @@ class ModShoutboxHelper
 		return $shouts;
 	}
 
+	/*
+	 * Wrapper function for getting the shouts in AJAX
+	 *
+	 * @param   int     $number   The number of posts to retrieve from the database.
+	 * @param   string  $message  The error message to return if the database retrieval fails.
+	 *
+	 * @return  array  The shoutbox posts.
+	 *
+	 * @since   2.0
+	 */
+	public static function getShoutsAjax()
+	{
+        // Get the number of posts from the "get" Request
+        if (!get_magic_quotes_gpc())
+        {
+            $app = JFactory::getApplication();
+            $request  = $app->input->get->get('jjshoutbox', array(), 'array');
+        }
+        else
+        {
+            $request = JRequest::getVar('jjshoutbox', array(), 'get', 'array');
+        }
+
+        $instance = $request['title'];
+        $params = static::getParams($instance);
+
+        // The number of posts comes from the params for the module.
+        $number  = $params->get('maximum');
+
+        // Get the shouts and let any exceptions propagate into com_ajax
+        $shouts = self::getShoutData($number);
+
+        return $shouts;
+    }
+
 	/**
 	 * Retrieves the shouts from the database and returns them. Will return an error
 	 * message if the database retrieval fails.
