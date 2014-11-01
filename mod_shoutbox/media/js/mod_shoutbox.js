@@ -117,3 +117,31 @@ function submitPost(name, title, recaptcha, maths, security, root)
 		return false;
     }(jQuery));
 }
+
+function getPost(title)
+{
+    (function ($) {
+        var request = {
+            'jjshoutbox[title]' : title
+        };
+
+        // AJAX request
+        $.ajax({
+            type: "GET",
+            url: root + "?option=com_ajax&module=shoutbox&method=getShouts&format=json",
+            data: request,
+            success:function(response)
+            {
+                if (response.success)
+                {
+                    // Wipe the existing posts and then add in the latest ones in the response.data property
+                }
+            },
+            error:function(ts){
+                console.log(ts);
+            }
+        });
+
+        return false;
+    }(jQuery));
+}
