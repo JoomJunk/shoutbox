@@ -17,6 +17,7 @@ jimport('joomla.filesystem.file');
 class ModShoutboxHelper
 {
 	/**
+<<<<<<< HEAD
 	 * @var		boolean  Is the post being submitted by AJAX
 	 * @since   __DEPLOY_VERSION__
 	 */
@@ -43,7 +44,7 @@ class ModShoutboxHelper
 	}
 
     /*
-	 * Wrapper function for when PHP gets the posts
+	 * Wrapper function for getting the shouts in PHP
 	 *
 	 * @param   int     $number   The number of posts to retrieve from the database.
 	 * @param   string  $message  The error message to return if the database retrieval fails.
@@ -52,11 +53,12 @@ class ModShoutboxHelper
 	 *
 	 * @since 2.0
 	 */
-	public static function getShoutsPhp($number, $message)
+
+	public static function getShouts($number, $message)
 	{
 		try
 		{
-			$shouts = $this->getShouts($number);
+			$shouts = self::getShoutData($number);
 		}
 		catch (Exception $e)
 		{
@@ -76,7 +78,7 @@ class ModShoutboxHelper
 	 *
 	 * @since 1.0
 	 */
-	private static function getShouts($number)
+	private static function getShoutData($number)
 	{
 		$shouts	= array();
 		$db = JFactory::getDbo();
@@ -98,7 +100,7 @@ class ModShoutboxHelper
 			// If we have an error with JError then we'll create an exception ourselves
 			if ($db->getErrorNum())
 			{
-				throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum())
+				throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
 			}
 		}
 
@@ -562,6 +564,7 @@ class ModShoutboxHelper
 	}
 
 	/**
+<<<<<<< HEAD
 <<<<<<< HEAD
 	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
 	 *
