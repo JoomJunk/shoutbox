@@ -41,7 +41,7 @@ $doc->addStyleDeclaration($style);
 	$shouts	= array();
 
 	// Retrieves the shouts from the database
-	$shouts = ModShoutboxHelper::getShouts($number, $dataerror);
+	$shouts = ModShoutboxHelper::getShoutsPhp($number, $dataerror);
 	$i = 0;
 
 	// Counts the number of shouts retrieved from the database
