@@ -17,17 +17,40 @@ jimport('joomla.filesystem.file');
 class ModShoutboxHelper
 {
 	/**
-	 * Retrieves the shouts from the database and returns them. Will return an error
-	 * message if the database retrieval fails.
+	 * Wrapper function for getting the shouts in PHP
 	 *
 	 * @param   int     $number   The number of posts to retrieve from the database.
 	 * @param   string  $message  The error message to return if the database retrieval fails.
 	 *
 	 * @return  array  The shoutbox posts.
 	 *
-	 * @since 1.0
+	 * @since 2.0
 	 */
 	public static function getShouts($number, $message)
+	{
+		try
+		{
+			$shouts = self::getShoutData($number);
+		}
+		catch (Exception $e)
+		{
+			$shouts = self::createErrorMsg($message, $e);
+		}
+
+		return $shouts;
+	}
+
+	/**
+	 * Retrieves the shouts from the database and returns them. Will return an error
+	 * message if the database retrieval fails.
+	 *
+	 * @param   int     $number   The number of posts to retrieve from the database.
+	 *
+	 * @return  array  The shoutbox posts.
+	 *
+	 * @since 1.0
+	 */
+	private static function getShoutData($number)
 	{
 		$shouts	= array();
 		$db = JFactory::getDbo();
@@ -39,29 +62,17 @@ class ModShoutboxHelper
 
 		if (!JError::$legacy)
 		{
-			try
-			{
-				// Execute the query.
-				$rows = $db->loadObjectList();
-			}
-			catch (Exception $e)
-			{
-				// Assemble Message and add log.
-				$shouts = self::createErrorMsg();
-
-				return $shouts;
-			}
+			// If we have an exception then we'll let it propogate up the chain
+			$rows = $db->loadObjectList();
 		}
 		else
 		{
 			$rows = $db->loadObjectList();
 
+			// If we have an error with JError then we'll create an exception ourselves
 			if ($db->getErrorNum())
 			{
-				// Assemble Message and add log.
-				$shouts = self::createErrorMsg();
-
-				return $shouts;
+				throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
 			}
 		}
 
@@ -522,20 +533,26 @@ class ModShoutboxHelper
 		return (rand() % $range + $start);
 	}
 
-	private static function createErrorMsg()
+	/**
+	 * Creates the error message to display to the user
+	 * 
+	 * @param   string     $message  The translated string to show to the user
+	 * @param   Exception  $e        The database exception when trying to retrieve the posts
+	 * 
+	 * @return  array  An array
+	 */
+	private static function createErrorMsg($message, $e)
 	{
-		$i = 0;
-
 		// Output error to shoutbox.
-		$shouts[$i] = new stdClass;
-		$shouts[$i]->name = 'Administrator';
-		$shouts[$i]->when = JFactory::getDate()->format('Y-m-d H:i:s');
-		$shouts[$i]->msg = $message;
-		$shouts[$i]->ip = 'System';
-		$shouts[$i]->user_id = 0;
+		$shouts[0] = new stdClass;
+		$shouts[0]->name = 'Administrator';
+		$shouts[0]->when = JFactory::getDate()->format('Y-m-d H:i:s');
+		$shouts[0]->msg = $message;
+		$shouts[0]->ip = 'System';
+		$shouts[0]->user_id = 0;
 
 		// Add error to log.
-		JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+		JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e->getMessage()), JLog::CRITICAL, 'mod_shoutbox');
 
 		return $shouts;
 	}
