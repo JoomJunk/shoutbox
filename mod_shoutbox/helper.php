@@ -17,7 +17,6 @@ jimport('joomla.filesystem.file');
 class ModShoutboxHelper
 {
 	/**
-<<<<<<< HEAD
 	 * @var		boolean  Is the post being submitted by AJAX
 	 * @since   __DEPLOY_VERSION__
 	 */
@@ -53,7 +52,6 @@ class ModShoutboxHelper
 	 *
 	 * @since 2.0
 	 */
-
 	public static function getShouts($number, $message)
 	{
 		try
@@ -564,8 +562,6 @@ class ModShoutboxHelper
 	}
 
 	/**
-<<<<<<< HEAD
-<<<<<<< HEAD
 	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
 	 *
 	 * @param   string  $instance  The instance of the module.
