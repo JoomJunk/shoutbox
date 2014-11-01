@@ -9,7 +9,7 @@ function addSmiley(smiley, id)
 	// If we are not passed an id, use the default 'jj_message'.
 	if (!id)
 	{
-		id = 'jj_message';
+		var id = 'jj_message';
 	}
 
 	// Get the position of the user in the text area
@@ -26,12 +26,14 @@ function addSmiley(smiley, id)
 	el.value = strBegin + " " + smiley + " " + strEnd;
 }
 
-function getCurserPosition(id){
+function getCurserPosition(id)
+{
 	var el = document.getElementById(id);
 	var pos = 0;
 	// IE Support
-	if (document.selection){
-		el.focus ();
+	if (document.selection)
+	{
+		el.focus();
 		var Sel = document.selection.createRange();
 		var SelLength = document.selection.createRange().text.length;
 		Sel.moveStart ('character', -el.value.length);
@@ -39,8 +41,9 @@ function getCurserPosition(id){
 	}
 	// Firefox support
 	else if (el.selectionStart || el.selectionStart == '0')
+	{
 		pos = el.selectionStart;
-
+	}
 	return pos;
 }
 
@@ -48,11 +51,12 @@ function submitPost(name, title, recaptcha, maths, security, root)
 {
     (function ($) {
 		// Assemble some commonly used vars
-		var textarea = $("textarea#jj_message"),
-		message = textarea.val();
+		var textarea = $('#jj_message'),
+		var message = textarea.val();
 
 		// If no message body show an error message and stop
-		if(message == ""){
+		if(message == "")
+		{
 			$('.jj-shout-error').append('<p class="inner-jj-error">Please enter a message!</p>').slideDown().show().delay(6000).queue(function(next){
 				$(this).slideUp().hide();
 				$('.inner-jj-error').remove();
@@ -81,14 +85,14 @@ function submitPost(name, title, recaptcha, maths, security, root)
 
 		if (recaptcha)
 		{
-			request["jjshoutbox[recaptcha_challenge_field]"] = $("input#recaptcha_challenge_field").val();
-			request["jjshoutbox[recaptcha_response_field]"] = $("input#recaptcha_response_field").val();
+			request['jjshoutbox[recaptcha_challenge_field]'] = $('input#recaptcha_challenge_field').val();
+			request['jjshoutbox[recaptcha_response_field]'] = $('input#recaptcha_response_field').val();
 		}
 
 		// AJAX request
 		$.ajax({
-			type: "POST",
-			url: root + "?option=com_ajax&module=shoutbox&method=submit&format=json",
+			type: 'POST',
+			url: root + '?option=com_ajax&module=shoutbox&method=submit&format=json',
 			data: request,
 			success:function(response){
 				if (response.success)
@@ -127,8 +131,8 @@ function getPost(title)
 
         // AJAX request
         $.ajax({
-            type: "GET",
-            url: root + "?option=com_ajax&module=shoutbox&method=getShouts&format=json",
+            type: 'GET',
+            url: root + '?option=com_ajax&module=shoutbox&method=getShouts&format=json',
             data: request,
             success:function(response)
             {
@@ -137,7 +141,8 @@ function getPost(title)
                     // Wipe the existing posts and then add in the latest ones in the response.data property
                 }
             },
-            error:function(ts){
+            error:function(ts)
+            {
                 console.log(ts);
             }
         });
