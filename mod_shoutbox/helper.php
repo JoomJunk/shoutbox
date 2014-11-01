@@ -42,7 +42,7 @@ class ModShoutboxHelper
 		return $moduleParams;
 	}
 
-    /*
+	/*
 	 * Wrapper function for getting the shouts in PHP
 	 *
 	 * @param   int     $number   The number of posts to retrieve from the database.
@@ -78,28 +78,28 @@ class ModShoutboxHelper
 	 */
 	public static function getShoutsAjax()
 	{
-        // Get the number of posts from the "get" Request
-        if (!get_magic_quotes_gpc())
-        {
-            $app = JFactory::getApplication();
-            $request  = $app->input->get->get('jjshoutbox', array(), 'array');
-        }
-        else
-        {
-            $request = JRequest::getVar('jjshoutbox', array(), 'get', 'array');
-        }
+		// Get the number of posts from the "get" Request
+		if (!get_magic_quotes_gpc())
+		{
+			$app = JFactory::getApplication();
+			$request  = $app->input->get->get('jjshoutbox', array(), 'array');
+		}
+		else
+		{
+			$request = JRequest::getVar('jjshoutbox', array(), 'get', 'array');
+		}
 
-        $instance = $request['title'];
-        $params = static::getParams($instance);
+		$instance = $request['title'];
+		$params = static::getParams($instance);
 
-        // The number of posts comes from the params for the module.
-        $number  = $params->get('maximum');
+		// The number of posts comes from the params for the module.
+		$number  = $params->get('maximum');
 
-        // Get the shouts and let any exceptions propagate into com_ajax
-        $shouts = self::getShoutData($number);
+		// Get the shouts and let any exceptions propagate into com_ajax
+		$shouts = self::getShoutData($number);
 
-        return $shouts;
-    }
+		return $shouts;
+	}
 
 	/**
 	 * Retrieves the shouts from the database and returns them. Will return an error
@@ -758,7 +758,7 @@ class ModShoutboxHelper
 		}
 	}
 
-    /*
+	/*
 	 * Creates the error message to display to the user
 	 * 
 	 * @param   string     $message  The translated string to show to the user
