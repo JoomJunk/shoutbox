@@ -46,7 +46,7 @@ if ($smile == 1 || $smile == 2 || $bbcode == 0)
 		if (!JFactory::getApplication()->get('jquery'))
 		{
 			JFactory::getApplication()->set('jquery', true);
-			JHtml::_('script', '//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+			$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 			JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 		}
 	}
