@@ -23,8 +23,6 @@ if (version_compare(JVERSION, '3.0.0', 'le'))
 	}';
 }
 
-$user = JFactory::getUser();
-
 if ($user->authorise('core.delete'))
 {
 	$style .= '#jjshoutboxoutput input[type=submit]{
@@ -117,7 +115,7 @@ $doc->addStyleDeclaration($style);
 <div id="jjshoutboxform">
 <?php
 // Retrieve the list of user groups the user has access to
-$access = JFactory::getUser()->getAuthorisedGroups();
+$access = $user->getAuthorisedGroups();
 
 // Convert the parameter string into an integer
 $i=0;
@@ -251,7 +249,7 @@ elseif (array_intersect($permissions, $access))
 		{
 			// Shows warning if both security questions are enabled and logs to error file.
 			JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
-			JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
+			$app->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 		}
 		?>
 		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />

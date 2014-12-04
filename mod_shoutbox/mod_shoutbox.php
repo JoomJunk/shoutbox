@@ -29,9 +29,12 @@ $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
 $bbcode 		= $params->get('bbcode', 0);
 
-// Add in jQuery if smilies are required
+// Assemble the factory variables needed
 $doc = JFactory::getDocument();
+$user = JFactory::getUser();
+$app = JFactory::getApplication();
 
+// Add in jQuery if required
 if ($smile == 1 || $smile == 2 || $bbcode == 0)
 {
 	if (version_compare(JVERSION, '3.0.0', 'ge'))
@@ -91,13 +94,10 @@ JLog::addLogger(
 	'mod_shoutbox'
 );
 
-$user = JFactory::getUser();
-
 if (isset($_POST))
 {
 	if (!get_magic_quotes_gpc())
 	{
-		$app = JFactory::getApplication();
 		$post = $app->input->post->get('jjshout', array(), 'array');
 	}
 	else
