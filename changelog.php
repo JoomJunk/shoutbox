@@ -15,7 +15,7 @@ $ -> Language fix or change
 ! -> Note
 
 Version 2.0.0
-^ Changed form names to try and avoid conflicts with other extensions
+^ Changed form names to avoid conflicts with other extensions such as Kunena
 # Fix broken recaptcha library since version 1.3.0
 + Add BBCode functionality
 
