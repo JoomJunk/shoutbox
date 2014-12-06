@@ -45,11 +45,12 @@ function getCurserPosition(id){
 }
 
 jQuery(document).ready(function($) {
-	(function() {
-		$('#jj_btn').on('click', function(e) {	
-			e.preventDefault();
-			$(this).toggleClass('rotated');
-			$('#jj_smiley_box').stop(true, false).slideToggle();
-		});
-	})
-}
+	
+	// SlideToggle for smilies
+	$('#jj_btn').on('click', function(e) {	
+		e.preventDefault();
+		$(this).toggleClass('rotated');
+		$('#jj_smiley_box').stop(true, false).slideToggle();
+	});
+	
+});
