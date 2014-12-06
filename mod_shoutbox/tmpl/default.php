@@ -18,12 +18,10 @@ $style = '#jjshoutboxoutput {
 
 if (version_compare(JVERSION, '3.0.0', 'le'))
 {
-	$style .= '#jj_btn, #jj_btn2{
+	$style .= '#jj_btn {
 		width: 25px !important;
 	}';
 }
-
-$user = JFactory::getUser();
 
 if ($user->authorise('core.delete'))
 {
@@ -72,9 +70,9 @@ $doc->addStyleDeclaration($style);
 				?>
 				<h1 <?php echo ModShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
 					<?php
-					if ($smile == 0)
+					if ($smile == 0 || $bbcode == 0)
 					{
-						echo ModShoutboxHelper::smileyFilter($profile_link);
+						echo ModShoutboxHelper::bbcodeFilter($profile_link);
 					}
 					else
 					{
@@ -87,8 +85,8 @@ $doc->addStyleDeclaration($style);
 					{
 						?>
 						<form method="post" name="delete">
-							<input name="delete" type="submit" value="x" />
-							<input name="idvalue" type="hidden" value="<?php echo $shouts[$i]->id ?>" />
+							<input name="jjshout[delete]" type="submit" value="x" />
+							<input name="jjshout[idvalue]" type="hidden" value="<?php echo $shouts[$i]->id ?>" />
 							<?php echo JHtml::_('form.token'); ?>
 						</form>
 					<?php
@@ -97,13 +95,13 @@ $doc->addStyleDeclaration($style);
 				</h1>
 				<p>
 					<?php
-					if ($smile == 0 || $smile == 1 || $smile == 2)
+					if ($smile == 0 || $smile == 1 || $smile == 2 || $bbcode == 0)
 					{
-						echo ModShoutboxHelper::smileyfilter($shouts[$i]->msg);
+						echo ModShoutboxHelper::bbcodeFilter($shouts[$i]->msg);
 					}
 					else
 					{
-						echo $shouts[$i]->msg;
+						echo nl2br($shouts[$i]->msg);
 					}
 					?>
 				</p>
@@ -117,7 +115,7 @@ $doc->addStyleDeclaration($style);
 <div id="jjshoutboxform">
 <?php
 // Retrieve the list of user groups the user has access to
-$access = JFactory::getUser()->getAuthorisedGroups();
+$access = $user->getAuthorisedGroups();
 
 // Convert the parameter string into an integer
 $i=0;
@@ -149,7 +147,7 @@ elseif (array_intersect($permissions, $access))
 		elseif ($user->guest||($displayName == 2 && !$user->guest))
 		{
 			?>
-			<input name="name" type="text" maxlength="25" required="required" id="shoutbox-name" placeholder="<?php echo JText::_('SHOUT_NAME'); ?>" />
+			<input name="jjshout[name]" type="text" maxlength="25" required="required" id="shoutbox-name" placeholder="<?php echo JText::_('SHOUT_NAME'); ?>" />
 		<?php
 		}
 
@@ -159,34 +157,32 @@ elseif (array_intersect($permissions, $access))
 		$_SESSION['token'] = uniqid("token", true);
 		echo JHtml::_('form.token');
 		?>
-		<input name="token" type="hidden" value="<?php echo $_SESSION['token'];?>" />
+		<input name="jjshout[token]" type="hidden" value="<?php echo $_SESSION['token'];?>" />
 
 		<span id="charsLeft"></span>
-		<noscript>
-						<span id="noscript_charsleft">
-							<?php echo JText::_('SHOUT_NOSCRIPT_THERE_IS_A') . $params->get('messagelength', '200') . JText::_('SHOUT_NOSCRIPT_CHARS_LIMIT'); ?>
-						</span>
-		</noscript>
-		<textarea id="message"  cols="20" rows="5" name="message" onKeyDown="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+
+		<textarea id="jj_message"  cols="20" rows="5" name="jjshout[message]" onKeyDown="textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+		
+		<?php if ( $bbcode == 0 ) 
+		{ ?>
+			<div class="btn-toolbar">
+				<div class="btn-group">
+					<button type="button" class="btn btn-small jj-bold" onClick="addSmiley('[b] [/b]', 'jj_message')">B</button>
+					<button type="button" class="btn btn-small jj-italic" onClick="addSmiley('[i] [/i]', 'jj_message')">I</button>
+					<button type="button" class="btn btn-small jj-underline" onClick="addSmiley('[u] [/u]', 'jj_message')">U</button>
+					<button type="button" class="btn btn-small jj-link" onClick="addSmiley('[url=] [/url]', 'jj_message')">Link</button>
+				</div>
+			</div>
 		<?php
+		}
+		
 		if ($smile == 1 || $smile == 2)
 		{
 			if ($smile == 2)
 			{
-				if (version_compare(JVERSION, '3.0.0', 'ge'))
-				{
-					echo '<div id="jj_smiley_button">
-											<input id="jj_btn" type="button" class="btn btn-mini" value="&#9650;" />
-											<input id="jj_btn2" type="button" class="btn btn-mini" value="&#9660;" />
-										  </div>';
-				}
-				else
-				{
-					echo '<div id="jj_smiley_button">
-											<input id="jj_btn" type="button" class="btn" value="&#9650;" />
-											<input id="jj_btn2" type="button" class="btn" value="&#9660;" />
-										  </div>';
-				}
+				echo '<div id="jj_smiley_button">
+						<a href="#" id="jj_btn" class="btn btn-mini" />&#9650;</a>
+					  </div>';
 			}
 
 			echo '<div id="jj_smiley_box">' . ModShoutboxHelper::smileyshow() . '</div>';
@@ -207,66 +203,15 @@ elseif (array_intersect($permissions, $access))
 					document.getElementById('charsLeft').style.color = "Red";
 
 			}
-			textCounter('message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
-			<?php
-			if ($smile == 1 || $smile == 2 )
-			{
-			?>
-			(function($){
-				$('#jj_smiley_box img').click(function(){
-					var smiley = $(this).attr('alt');
-					var caretPos = caretPos();
-					var strBegin = $('#message').val().substring(0, caretPos);
-					var strEnd   = $('#message').val().substring(caretPos);
-					$('#message').val( strBegin + " " + smiley + " " + strEnd);
-					function caretPos(){
-						var el = document.getElementById("message");
-						var pos = 0;
-						// IE Support
-						if (document.selection){
-							el.focus ();
-							var Sel = document.selection.createRange();
-							var SelLength = document.selection.createRange().text.length;
-							Sel.moveStart ('character', -el.value.length);
-							pos = Sel.text.length - SelLength;
-						}
-						// Firefox support
-						else if (el.selectionStart || el.selectionStart == '0')
-							pos = el.selectionStart;
-
-						return pos;
-					}
-				});
-				<?php
-				if ($smile == 2)
-				{
-				?>
-				$("#jj_smiley_button").click(function () {
-					$("#jj_smiley_box").slideToggle("slow");
-				});
-
-				$('#jj_btn').click(function(){
-					$('#jj_btn2').show();
-					$('#jj_btn').hide();
-				});
-				$('#jj_btn2').click(function(){
-					$('#jj_btn').show();
-					$('#jj_btn2').hide();
-				});
-
-				<?php
-				}
-				?>
-			})(jQuery);
-			<?php
-			}
-			?>
+			textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
 		</script>
 
 		<?php
 		// Shows recapture or math question depending on the parameters
 		if ($params->get('recaptchaon') == 0)
 		{
+			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
+
 			if ($params->get('recaptcha-public') == '' || $params->get('recaptcha-private') == '')
 			{
 				echo JText::_('SHOUT_RECAPTCHA_KEY_ERROR');
@@ -294,9 +239,9 @@ elseif (array_intersect($permissions, $access))
 			$que_number1 = ModShoutboxHelper::randomnumber(1);
 			$que_number2 = ModShoutboxHelper::randomnumber(1); ?>
 			<label class="jj_label"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
-			<input type="hidden" name="sum1" value="<?php echo $que_number1; ?>" />
-			<input type="hidden" name="sum2" value="<?php echo $que_number2; ?>" />
-			<input class="jj_input" type="text" name="human" />
+			<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
+			<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
+			<input class="jj_input" type="text" name="jjshout[human]" />
 		<?php
 		}
 
@@ -304,10 +249,10 @@ elseif (array_intersect($permissions, $access))
 		{
 			// Shows warning if both security questions are enabled and logs to error file.
 			JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
-			JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
+			$app->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
 		}
 		?>
-		<input name="shout" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />
+		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($params->get('recaptchaon')==0 && !$params->get('recaptcha-public')) || ($params->get('recaptchaon')==0 && !$params->get('recaptcha-private')) || ($params->get('recaptchaon')==0 && $securityquestion==0)) { echo 'disabled="disabled"'; }?> />
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -316,16 +261,16 @@ elseif (array_intersect($permissions, $access))
 		if ($mass_delete == 0)
 		{ ?>
 			<form method="post" name="deleteall">
-				<input type="hidden" name="max" value="<?php echo $number; ?>" />
+				<input type="hidden" name="jjshout[max]" value="<?php echo $number; ?>" />
 				<?php echo JHtml::_('form.token'); ?>
 				<?php if (version_compare(JVERSION, '3.0.0', 'ge')) : ?>
 					<div class="input-append">
-						<input class="span2" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" style="width:50px;">
-						<input class="btn btn-danger" type="submit" name="deleteall" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
+						<input class="span2" type="number" name="jjshout[valueall]" min="1" max="<?php echo $number; ?>" step="1" value="1" style="width:50px;">
+						<input class="btn btn-danger" type="submit" name="jjshout[deleteall]" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
 					</div>	
 				<?php else : ?>
-					<input class="jj_admin_label" type="number" name="valueall" min="1" max="<?php echo $number; ?>" step="1" value="0" />
-					<input class="jj_admin_button" name="deleteall" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
+					<input class="jj_admin_label" type="number" name="jjshout[valueall]" min="1" max="<?php echo $number; ?>" step="1" value="1" />
+					<input class="jj_admin_button" name="jjshout[deleteall]" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
 				<?php endif; ?>
 			</form>
 		<?php

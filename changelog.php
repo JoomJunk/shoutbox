@@ -14,6 +14,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 2.0.0
+^ Changed form names to avoid conflicts with other extensions such as Kunena
+# Fix broken recaptcha library since version 1.3.0
++ Add BBCode functionality
+
 Version 1.4.2
 # Another timezone bug fix
 ^ Updated to jQuery 1.11.1

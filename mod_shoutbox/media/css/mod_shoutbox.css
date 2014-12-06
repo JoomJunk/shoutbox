@@ -42,7 +42,7 @@
 }
 #jjshoutboxoutput div h1 {
     font-size: 12px;
-    font-family: arial;
+    font-family: inherit;
     color: #000;
     text-transform: none;
     margin: 8px 0;
@@ -53,14 +53,11 @@
     margin: 0;
 }
 #jjshoutboxoutput div p {
-    font: 11px helvetica, arial, sans-serif;
+    font-size: 11px;
+    font-family: inherit;
     text-align: left;
     color: #000;
     margin: 5px 0;
-}
-#noscript_charsleft {
-    color:red;
-    font-weight: bold;
 }
 #noguest { color: #FF0000; font-weight: bold; }
 #jjshoutbox .jj_error { color:red; font-weight:bold; }
@@ -85,15 +82,20 @@
     margin: 5px 0 0 0;
     float:right;
 }
-#jj_btn, #jj_btn2{
-    cursor: pointer;
-	padding: 2px 5px !important;
-}
 #jj_btn{
     display: block;
+	cursor: pointer;
+	padding: 2px 5px !important;
+	-webkit-transform: rotate(0deg);
+	-moz-transform: rotate(0deg);
+	-ms-transform: rotate(0deg);
+	transform: rotate(0deg);
 }
-#jj_btn2{
-    display:none;
+#jj_btn.rotated {
+	-webkit-transform: rotate(180deg);
+	-moz-transform: rotate(180deg);
+	-ms-transform: rotate(180deg);
+	transform: rotate(180deg);
 }
 .jj_smiley {
     padding: 0 2px 0 2px;
@@ -104,4 +106,38 @@
 }
 #jjshoutboxform[type='number'] {
 	padding: 4px 0px;
+}
+
+/**
+Non-bootstrap styling for BB Code
+**/
+#jjshoutbox #jj_smiley_box{
+    margin: 10px 0 10px 0;
+	white-space: normal;
+}
+#jjshoutbox #jj_smiley_box img{
+    cursor: pointer;
+	padding: 2px;
+    border:none;
+}
+#jjshoutbox .btn-toolbar {
+	margin-top: 10px;
+}
+#jjshoutbox .btn-group .btn {
+	cursor: pointer;
+	min-width: 30px;
+    padding: 2px 7px;
+}
+
+/**
+Bold, italics and underline for the BB Code
+**/
+.jj-bold {
+	font-weight: bold;
+}
+.jj-italic {
+	font-style: italic;
+}
+.jj-underline {
+	text-decoration: underline;
 }

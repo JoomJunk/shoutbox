@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>1.4.2</version> 
+	<version>2.0.0</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -48,6 +48,7 @@
 		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 		<folder>sql</folder>
+		<folder>fields</folder>
 	</files>
  
 	<languages>
@@ -55,6 +56,10 @@
 		<language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.sys.ini</language>
 		<language tag="pl-PL">language/pl-PL/pl-PL.mod_shoutbox.ini</language>
 		<language tag="pl-PL">language/pl-PL/pl-PL.mod_shoutbox.sys.ini</language>
+		<language tag="it-IT">language/it-IT/it-IT.mod_shoutbox.ini</language>
+		<language tag="it-IT">language/it-IT/it-IT.mod_shoutbox.sys.ini</language>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_shoutbox.ini</language>
+		<language tag="nl-NL">language/nl-NL/nl-NL.mod_shoutbox.sys.ini</language>
 	</languages>
 	
 	<updateservers>
@@ -63,7 +68,7 @@
  
 	<config>
 		<fields name="params">
-			<fieldset name="basic">
+			<fieldset name="basic" addfieldpath="/modules/mod_shoutbox/fields">
 				<field name="profile" type="list" default="none" label="SHOUT_LINK_PROFILE" description="SHOUT_LINK_PROFILEDESC">
 					<option value="0">SHOUT_NO_USERS</option>
 					<option value="1">SHOUT_CB_USERS</option>
@@ -98,6 +103,10 @@
 					<option value="2">SHOUT_SMILIES_ON_SLIDE</option>
 					<option value="3">SHOUT_SMILIES_DISABLE</option>
 				</field>
+				<field name="bbcode" type="radio" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JON</option>
+					<option value="1">JOFF</option>
+				</field>
 				<field name="swearingcounter" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
 					<option value="0">JON</option>
 					<option value="1">JOFF</option>
@@ -106,6 +115,7 @@
 				<field name="messagelength" type="text" default="200" label="SHOUT_MESSAGELABEL" description="SHOUT_MESSAGEDESC" />
 				<field name="alertlength" type="text" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
 				<field name="warnlength" type="text" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
+				<field name="check" type="check" label="FreiChat" />
 			</fieldset>
 
 			<fieldset name="security" label="SHOUT_SECURITY">

@@ -12,14 +12,14 @@ jimport('joomla.filesystem.folder');
 require_once dirname(__FILE__) . '/helper.php';
 
 $displayName 		= $params->get('loginname');
-$smile 				= $params->get('smile');
+$smile 			= $params->get('smile');
 $swearcounter 		= $params->get('swearingcounter');
 $swearnumber 		= $params->get('swearingnumber');
-$number 			= $params->get('maximum');
+$number 		= $params->get('maximum');
 $submittext 		= $params->get('submittext');
 $nonmembers 		= $params->get('nonmembers');
-$profile 			= $params->get('profile');
-$date 				= $params->get('date');
+$profile 		= $params->get('profile');
+$date 			= $params->get('date');
 $securityquestion 	= $params->get('securityquestion');
 $mass_delete 		= $params->get('mass_delete');
 $permissions 		= $params->get('guestpost');
@@ -27,11 +27,15 @@ $deletecolor		= $params->get('deletecolor', '#FF0000');
 $bordercolour 		= $params->get('bordercolor', '#FF3C16');
 $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
+$bbcode 		= $params->get('bbcode', 0);
 
-// Add in jQuery if smilies are required
+// Assemble the factory variables needed
 $doc = JFactory::getDocument();
+$user = JFactory::getUser();
+$app = JFactory::getApplication();
 
-if ($smile == 1 || $smile == 2)
+// Add in jQuery if required
+if ($smile == 1 || $smile == 2 || $bbcode == 0)
 {
 	if (version_compare(JVERSION, '3.0.0', 'ge'))
 	{
@@ -42,10 +46,12 @@ if ($smile == 1 || $smile == 2)
 		if (!JFactory::getApplication()->get('jquery'))
 		{
 			JFactory::getApplication()->set('jquery', true);
-			JHtml::_('script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+			$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 			JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 		}
 	}
+
+	JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
 }
 
 // Set Date Format for when posted
@@ -88,28 +94,15 @@ JLog::addLogger(
 	'mod_shoutbox'
 );
 
-$user = JFactory::getUser();
-
 if (isset($_POST))
 {
 	if (!get_magic_quotes_gpc())
 	{
-		$app = JFactory::getApplication();
-
-		// Use a slightly better filtered post variable
-		// when we can
-		if (version_compare(JVERSION, '3.2.0', 'ge'))
-		{
-			$post = $app->input->post->getArray();
-		}
-		else
-		{
-			$post = $app->input->getArray($_POST);
-		}
+		$post = $app->input->post->get('jjshout', array(), 'array');
 	}
 	else
 	{
-		$post = JRequest::get('post');
+		$post = JRequest::getVar('jjshout', array(), 'post', 'array');
 	}
 
 	if (isset($post['shout']) && !empty($post['message']) && $_SESSION['token'] == $post['token'])
@@ -120,26 +113,21 @@ if (isset($_POST))
 		{
 			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
-			if (isset($post["recaptcha_response_field"]))
-			{
-				if ($post["recaptcha_response_field"])
-				{
-					$resp = recaptcha_check_answer(
-						$params->get('recaptcha-private'),
-						$_SERVER["REMOTE_ADDR"],
-						$post["recaptcha_challenge_field"],
-						$post["recaptcha_response_field"]
-					);
+			// The recaptcha fields don't have the jjshout namespace so grab them straight from the input
+			$resp = recaptcha_check_answer(
+				$params->get('recaptcha-private'),
+				$_SERVER["REMOTE_ADDR"],
+				$app->input->get('recaptcha_challenge_field', '', 'string'),
+				$app->input->get('recaptcha_response_field', '', 'string')
+			);
 
-					if ($resp->is_valid)
-					{
-						ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
-					}
-					else
-					{
-						$error = $resp->error;
-					}
-				}
+			if ($resp->is_valid)
+			{
+				ModShoutboxHelper::postFiltering($post, $user, $swearcounter, $swearnumber, $displayName);
+			}
+			else
+			{
+				$error = $resp->error;
 			}
 		}
 		elseif ($securityquestion == 0)
