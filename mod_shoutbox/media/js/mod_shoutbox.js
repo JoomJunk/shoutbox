@@ -4,11 +4,10 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-function addSmiley(smiley, id)
-{
+function addSmiley(smiley, id) {
+
 	// If we are not passed an id, use the default 'jj_message'.
-	if (!id)
-	{
+	if (!id) {
 		id = 'jj_message';
 	}
 
@@ -26,31 +25,41 @@ function addSmiley(smiley, id)
 	el.value = strBegin + " " + smiley + " " + strEnd;
 }
 
-function getCurserPosition(id){
-	var el = document.getElementById(id);
+function getCurserPosition(id) {
+
+	var el 	= document.getElementById(id);
 	var pos = 0;
 	// IE Support
-	if (document.selection){
-		el.focus ();
-		var Sel = document.selection.createRange();
-		var SelLength = document.selection.createRange().text.length;
+	if (document.selection) {
+		el.focus();
+		var Sel 		= document.selection.createRange();
+		var SelLength 	= document.selection.createRange().text.length;
+		
 		Sel.moveStart ('character', -el.value.length);
 		pos = Sel.text.length - SelLength;
 	}
 	// Firefox support
-	else if (el.selectionStart || el.selectionStart == '0')
+	else if (el.selectionStart || el.selectionStart == '0') {
 		pos = el.selectionStart;
+	}
 
 	return pos;
 }
 
 jQuery(document).ready(function($) {
-	
+
 	// SlideToggle for smilies
-	$('#jj_btn').on('click', function(e) {	
-		e.preventDefault();
-		$(this).toggleClass('rotated');
-		$('#jj_smiley_box').stop(true, false).slideToggle();
-	});
-	
+	(function() {
+		
+		var smileyBox 	= $('#jj_smiley_box');
+		var jj_btn		= $('#jj_btn');
+		
+		jj_btn.on('click', function(e) {	
+			e.preventDefault();
+			$(this).toggleClass('rotated');
+			smileyBox.stop(true, false).slideToggle();
+		});
+		
+	})();
+		
 });
