@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 2.0.1
+- Removed a lot of word from swearwords.php
+
 Version 2.0.0
 ^ Changed form names to avoid conflicts with other extensions such as Kunena
 # Fix broken recaptcha library since version 1.3.0
