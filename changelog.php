@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 Version 2.0.1
 - Removed a lot of word from swearwords.php
+^ Tweak and cleanup of variables + Javascript
 
 Version 2.0.0
 ^ Changed form names to avoid conflicts with other extensions such as Kunena
