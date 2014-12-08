@@ -12,14 +12,14 @@ jimport('joomla.filesystem.folder');
 require_once dirname(__FILE__) . '/helper.php';
 
 $displayName 		= $params->get('loginname');
-$smile 			= $params->get('smile');
+$smile 				= $params->get('smile');
 $swearcounter 		= $params->get('swearingcounter');
 $swearnumber 		= $params->get('swearingnumber');
-$number 		= $params->get('maximum');
+$number 			= $params->get('maximum');
 $submittext 		= $params->get('submittext');
 $nonmembers 		= $params->get('nonmembers');
-$profile 		= $params->get('profile');
-$date 			= $params->get('date');
+$profile 			= $params->get('profile');
+$date 				= $params->get('date');
 $securityquestion 	= $params->get('securityquestion');
 $mass_delete 		= $params->get('mass_delete');
 $permissions 		= $params->get('guestpost');
@@ -27,12 +27,12 @@ $deletecolor		= $params->get('deletecolor', '#FF0000');
 $bordercolour 		= $params->get('bordercolor', '#FF3C16');
 $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
-$bbcode 		= $params->get('bbcode', 0);
+$bbcode 			= $params->get('bbcode', 0);
 
 // Assemble the factory variables needed
-$doc = JFactory::getDocument();
-$user = JFactory::getUser();
-$app = JFactory::getApplication();
+$doc 	= JFactory::getDocument();
+$user 	= JFactory::getUser();
+$app 	= JFactory::getApplication();
 
 // Add in jQuery if required
 if ($smile == 1 || $smile == 2 || $bbcode == 0)
@@ -43,9 +43,9 @@ if ($smile == 1 || $smile == 2 || $bbcode == 0)
 	}
 	else
 	{
-		if (!JFactory::getApplication()->get('jquery'))
+		if (!$app->get('jquery'))
 		{
-			JFactory::getApplication()->set('jquery', true);
+			$app->set('jquery', true);
 			$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 			JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 		}
