@@ -43,8 +43,8 @@ class JFormFieldCheck extends JFormField
 			// Detect Joomla version and render the message
 			if (version_compare(JVERSION, '3.0.0', 'ge'))
 			{			
-				$application = JFactory::getApplication();
-				$application->enqueueMessage(JText::_('WARNING_FREICHAT_IS_INSTALLED'), 'warning');
+				$app = JFactory::getApplication();
+				$app->enqueueMessage(JText::_('WARNING_FREICHAT_IS_INSTALLED'), 'warning');
 			}
 			else
 			{
