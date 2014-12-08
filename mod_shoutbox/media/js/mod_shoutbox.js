@@ -4,8 +4,8 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-function addSmiley(smiley, id)
-{
+function addSmiley(smiley, id) {
+
 	// If we are not passed an id, use the default 'jj_message'.
 	if (!id)
 	{
@@ -44,6 +44,7 @@ function getCurserPosition(id)
 	{
 		pos = el.selectionStart;
 	}
+
 	return pos;
 }
 

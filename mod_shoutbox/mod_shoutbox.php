@@ -21,7 +21,7 @@ $nonmembers 		= $params->get('nonmembers');
 $profile 			= $params->get('profile');
 $date 				= $params->get('date');
 $recaptcha			= $params->get('recaptchaon', 1);
-$securityQuestion 	= $params->get('securityquestion');
+$securityQuestion	= $params->get('securityquestion');
 $mass_delete 		= $params->get('mass_delete');
 $permissions 		= $params->get('guestpost');
 $deletecolor		= $params->get('deletecolor', '#FF0000');
@@ -33,9 +33,9 @@ $genericName		= $params->get('genericname');
 $title				= $module->title;
 
 // Assemble the factory variables needed
-$doc = JFactory::getDocument();
-$user = JFactory::getUser();
-$app = JFactory::getApplication();
+$doc 	= JFactory::getDocument();
+$user 	= JFactory::getUser();
+$app 	= JFactory::getApplication();
 
 if (version_compare(JVERSION, '3.0.0', 'ge'))
 {
@@ -43,9 +43,9 @@ if (version_compare(JVERSION, '3.0.0', 'ge'))
 }
 else
 {
-	if (!JFactory::getApplication()->get('jquery'))
+	if (!$app->get('jquery'))
 	{
-		JFactory::getApplication()->set('jquery', true);
+		$app->set('jquery', true);
 		$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 		JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 	}
