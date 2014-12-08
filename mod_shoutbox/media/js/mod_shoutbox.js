@@ -47,6 +47,15 @@ function getCurserPosition(id)
 	return pos;
 }
 
+jQuery(document).ready(function($) {
+	// SlideToggle for smilies
+	$('#jj_btn').on('click', function(e) {	
+		e.preventDefault();
+		$(this).toggleClass('rotated');
+		$('#jj_smiley_box').stop(true, false).slideToggle();
+	});
+});
+
 function submitPost(name, title, recaptcha, maths, security, root)
 {
     (function ($) {

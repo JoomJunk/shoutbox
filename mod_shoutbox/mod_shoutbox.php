@@ -32,8 +32,10 @@ $bbcode 			= $params->get('bbcode', 0);
 $genericName		= $params->get('genericname');
 $title				= $module->title;
 
-// Add in jQuery if smilies are required
+// Assemble the factory variables needed
 $doc = JFactory::getDocument();
+$user = JFactory::getUser();
+$app = JFactory::getApplication();
 
 if (version_compare(JVERSION, '3.0.0', 'ge'))
 {
@@ -44,7 +46,7 @@ else
 	if (!JFactory::getApplication()->get('jquery'))
 	{
 		JFactory::getApplication()->set('jquery', true);
-		JHtml::_('script', 'http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
+		$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js');
 		JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 	}
 }
@@ -91,13 +93,10 @@ JLog::addLogger(
 	'mod_shoutbox'
 );
 
-$user = JFactory::getUser();
-
 if (isset($_POST))
 {
 	if (!get_magic_quotes_gpc())
 	{
-		$app = JFactory::getApplication();
 		$post = $app->input->post->get('jjshout', array(), 'array');
 	}
 	else
