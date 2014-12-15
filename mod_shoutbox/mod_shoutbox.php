@@ -11,6 +11,10 @@ jimport('joomla.filesystem.folder');
 
 require_once dirname(__FILE__) . '/helper.php';
 
+$title  = $module->title;
+$helper = new ModShoutboxHelper($title);
+$params = $helper->getParams();
+
 $displayName 		= $params->get('loginname');
 $smile 				= $params->get('smile');
 $swearcounter 		= $params->get('swearingcounter');
@@ -30,7 +34,13 @@ $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
 $bbcode 			= $params->get('bbcode', 0);
 $genericName		= $params->get('genericname');
-$title				= $module->title;
+
+// Shows warning if both security questions are enabled and logs to error file.
+if ($recaptcha == 0 && $securityQuestion == 0)
+{
+	JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
+	$app->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
+}
 
 // Assemble the factory variables needed
 $doc 	= JFactory::getDocument();
@@ -52,32 +62,6 @@ else
 }
 
 JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
-
-// Set Date Format for when posted
-if ($date == 0)
-{
-	$show_date = "d/m/Y - ";
-}
-elseif ($date == 1)
-{
-	$show_date = "D m Y - ";
-}
-elseif ($date == 3)
-{
-	$show_date = "m/d/Y - ";
-}
-elseif ($date == 4)
-{
-	$show_date = "D j M - ";
-}
-elseif ($date == 5)
-{
-	$show_date = "Y/m/d - ";
-}
-else
-{
-	$show_date = "";
-}
 
 $dataerror = JText::_('SHOUT_DATABASEERRORSHOUT');
 
@@ -106,12 +90,7 @@ if (isset($_POST))
 
 	if (isset($post['shout']))
 	{
-		if (!empty($post['message']))
-		{
-			JFactory::getApplication()->enqueueMessage('The message body is empty', 'error');				
-		}
-
-		ModShoutboxHelper::submitPhp($post, $params);
+		$helper->submitPhp($post);
 	}
 
 	if (isset($post['delete']))
@@ -121,7 +100,7 @@ if (isset($_POST))
 
 		if ($user->authorise('core.delete'))
 		{
-			ModShoutboxHelper::deletepost($deletepostnumber);
+			$helper->deletepost($deletepostnumber);
 		}
 	}
 
@@ -142,7 +121,7 @@ if (isset($_POST))
 					}
 					if ($user->authorise('core.delete'))
 					{
-						ModShoutboxHelper::deleteall($delete);
+						$helper->deleteall($delete);
 					}
 				}
 				else

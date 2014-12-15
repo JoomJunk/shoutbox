@@ -35,82 +35,20 @@ $doc->addStyleDeclaration($style);
 
 <div id="jjshoutbox">
 <div id="jjshoutboxoutput">
-	<?php
-	$shouts	= array();
+	<div class="jj-shout-error"></div>
+	<?php // Retrieves the shouts from the database ?>
+	<?php $shouts = $helper->getShouts($number, $dataerror); ?>
 
-	// Retrieves the shouts from the database
-	$shouts = ModShoutboxHelper::getShoutsPhp($number, $dataerror);
-	$i = 0;
+	<?php // Counts the number of shouts retrieved from the database ?>
+	<?php $actualnumber = count($shouts); ?>
 
-	// Counts the number of shouts retrieved from the database
-	$actualnumber = count($shouts);
-
-	if ($actualnumber == 0)
-	{
-		// Display shout empty message if there are no posts
-		?>
+	<?php if ($actualnumber == 0) : ?>
 		<div><p><?php echo JText::_('SHOUT_EMPTY') ?></p></div>
-	<?php
-	}
-	else
-	{
-		if ($actualnumber < $number)
-		{
-			$number = $actualnumber;
-		}
-
-		// Loops through the shouts
-		while ($i < $number)
-		{
-			?>
-			<div>
-				<?php
-				// Displays Name or Name with link to profile
-				$profile_link = ModShoutboxHelper::linkUser($profile, $shouts[$i]->name, $shouts[$i]->user_id);
-				?>
-				<h1 <?php echo ModShoutboxHelper::shouttitle($user, $shouts[$i]->ip); ?>>
-					<?php
-					if ($smile == 0 || $bbcode == 0)
-					{
-						echo ModShoutboxHelper::bbcodeFilter($profile_link);
-					}
-					else
-					{
-						echo $profile_link;
-					}
-					?> - <?php
-					echo JHtml::date($shouts[$i]->when, $show_date . 'H:i', true);
-
-					if ($user->authorise('core.delete'))
-					{
-						?>
-						<form method="post" name="delete">
-							<input name="jjshout[delete]" type="submit" value="x" />
-							<input name="jjshout[idvalue]" type="hidden" value="<?php echo $shouts[$i]->id ?>" />
-							<?php echo JHtml::_('form.token'); ?>
-						</form>
-					<?php
-					}
-					?>
-				</h1>
-				<p>
-					<?php
-					if ($smile == 0 || $smile == 1 || $smile == 2 || $bbcode == 0)
-					{
-						echo ModShoutboxHelper::bbcodeFilter($shouts[$i]->msg);
-					}
-					else
-					{
-						echo nl2br($shouts[$i]->msg);
-					}
-					?>
-				</p>
-			</div>
-			<?php
-			$i++;
-		}
-	}
-	?>
+	<?php else : ?>
+		<?php foreach ($shouts as $shout) : ?>
+			<?php echo $helper->renderPost($shout); ?>
+		<?php endforeach; ?>
+	<?php endif; ?>
 </div>
 <div id="jjshoutboxform">
 <?php
@@ -118,7 +56,8 @@ $doc->addStyleDeclaration($style);
 $access = $user->getAuthorisedGroups();
 
 // Convert the parameter string into an integer
-$i=0;
+$i = 0;
+
 foreach($permissions as $permission)
 {
 	$permissions[$i] = intval($permission);
@@ -163,8 +102,7 @@ elseif (array_intersect($permissions, $access))
 
 		<textarea id="jj_message"  cols="20" rows="5" name="jjshout[message]" onKeyDown="textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
 		
-		<?php if ( $bbcode == 0 ) 
-		{ ?>
+		<?php if ( $bbcode == 0 ) : ?>
 			<div class="btn-toolbar">
 				<div class="btn-group">
 					<button type="button" class="btn btn-small jj-bold" onClick="addSmiley('[b] [/b]', 'jj_message')">B</button>
@@ -173,38 +111,17 @@ elseif (array_intersect($permissions, $access))
 					<button type="button" class="btn btn-small jj-link" onClick="addSmiley('[url=] [/url]', 'jj_message')">Link</button>
 				</div>
 			</div>
-		<?php
-		}
-		
-		if ($smile == 1 || $smile == 2)
-		{
-			if ($smile == 2)
-			{
-				echo '<div id="jj_smiley_button">
-						<a href="#" id="jj_btn" class="btn btn-mini" />&#9650;</a>
-					  </div>';
-			}
+		<?php endif; ?>
 
-			echo '<div id="jj_smiley_box">' . ModShoutboxHelper::smileyshow() . '</div>';
-		} ?>
-		<script type="text/javascript">
-			function textCounter(textarea, countdown, maxlimit) {
-				textareaid = document.getElementById(textarea);
-				if (textareaid.value.length > maxlimit)
-					textareaid.value = textareaid.value.substring(0, maxlimit);
-				else
-					document.getElementById('charsLeft').innerHTML = (maxlimit-textareaid.value.length)+' <?php echo JText::_('SHOUT_REMAINING') ?>';
+		<?php if ($smile == 1 || $smile == 2) : ?>
+			<?php if ($smile == 2) : ?>
+				<div id="jj_smiley_button">
+					<a href="#" id="jj_btn" class="btn btn-mini" />&#9650;</a>
+				</div>
+			<?php endif; ?>
 
-				if (maxlimit-textareaid.value.length > <?php echo $params->get('alertlength', '50'); ?>)
-					document.getElementById('charsLeft').style.color = "Black";
-				if (maxlimit-textareaid.value.length <= <?php echo $params->get('alertlength', '50'); ?> && maxlimit-textareaid.value.length > <?php echo $params->get('warnlength', '10'); ?>)
-					document.getElementById('charsLeft').style.color = "Orange";
-				if (maxlimit-textareaid.value.length <= <?php echo $params->get('warnlength', '10'); ?>)
-					document.getElementById('charsLeft').style.color = "Red";
-
-			}
-			textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
-		</script>
+			<div id="jj_smiley_box"><?php echo $helper->smileyshow(); ?></div>
+		<?php endif; ?>
 
 		<?php
 		// Shows recapture or math question depending on the parameters
@@ -233,25 +150,17 @@ elseif (array_intersect($permissions, $access))
 				echo recaptcha_get_html($publickey, $error);
 			}
 		}
+		?>
 
-		if ($securityQuestion == 0)
-		{
-			$que_number1 = ModShoutboxHelper::randomnumber(1);
-			$que_number2 = ModShoutboxHelper::randomnumber(1); ?>
+		<?php if ($securityQuestion == 0) : ?>
+			<?php $que_number1 = $helper->randomnumber(1); ?>
+			<?php $que_number2 = $helper->randomnumber(1); ?>
 			<label class="jj_label"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
 			<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
 			<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
 			<input class="jj_input" type="text" name="jjshout[human]" />
-		<?php
-		}
+		<?php endif; ?>
 
-		if ($recaptcha == 0 && $securityQuestion == 0)
-		{
-			// Shows warning if both security questions are enabled and logs to error file.
-			JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
-			$app->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
-		}
-		?>
 		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($recaptcha == 0 && !$params->get('recaptcha-public')) || ($recaptcha==0 && !$params->get('recaptcha-private')) || ($recaptcha==0 && $securityQuestion==0)) { echo 'disabled="disabled"'; }?> />
 	</form>
 	<?php
@@ -261,15 +170,15 @@ elseif (array_intersect($permissions, $access))
 		if ($mass_delete == 0)
 		{ ?>
 			<form method="post" name="deleteall">
-				<input type="hidden" name="jjshout[max]" value="<?php echo $number; ?>" />
+				<input type="hidden" name="jjshout[max]" value="<?php echo $actualnumber; ?>" />
 				<?php echo JHtml::_('form.token'); ?>
 				<?php if (version_compare(JVERSION, '3.0.0', 'ge')) : ?>
 					<div class="input-append">
-						<input class="span2" type="number" name="jjshout[valueall]" min="1" max="<?php echo $number; ?>" step="1" value="1" style="width:50px;">
+						<input class="span2" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" style="width:50px;">
 						<input class="btn btn-danger" type="submit" name="jjshout[deleteall]" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
 					</div>	
 				<?php else : ?>
-					<input class="jj_admin_label" type="number" name="jjshout[valueall]" min="1" max="<?php echo $number; ?>" step="1" value="1" />
+					<input class="jj_admin_label" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" />
 					<input class="jj_admin_button" name="jjshout[deleteall]" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
 				<?php endif; ?>
 			</form>
@@ -288,6 +197,27 @@ else
 </div>
 </div>
 <script type="text/javascript">
+	function textCounter(textarea, countdown, maxlimit)
+	{
+		textareaid = document.getElementById(textarea);
+		if (textareaid.value.length > maxlimit)
+			textareaid.value = textareaid.value.substring(0, maxlimit);
+		else
+			document.getElementById('charsLeft').innerHTML = (maxlimit-textareaid.value.length)+' <?php echo JText::_('SHOUT_REMAINING') ?>';
+
+		if (maxlimit-textareaid.value.length > <?php echo $params->get('alertlength', '50'); ?>)
+			document.getElementById('charsLeft').style.color = "Black";
+		if (maxlimit-textareaid.value.length <= <?php echo $params->get('alertlength', '50'); ?> && maxlimit-textareaid.value.length > <?php echo $params->get('warnlength', '10'); ?>)
+			document.getElementById('charsLeft').style.color = "Orange";
+		if (maxlimit-textareaid.value.length <= <?php echo $params->get('warnlength', '10'); ?>)
+			document.getElementById('charsLeft').style.color = "Red";
+
+	}
+
+	textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
+
+	<?php // The ajax uses com_ajax in Joomla core from Joomla 3.2 and available as an install for Joomla 2.5 - so check if its available ?>
+	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	(function($){
 		$( "#shoutbox-submit" ).click( function() {
 			<?php if($displayName==1 && !$user->guest){ ?>
@@ -307,4 +237,9 @@ else
 			return false;
 		});
 	})(jQuery);
+
+	// Refresh the shoutbox posts every 10 seconds - TODO: Time should probably be a parameter as the will increase server resources doing this
+	setTimeout(getPosts(), 10000);
+	<?php endif; ?>
 </script>
+

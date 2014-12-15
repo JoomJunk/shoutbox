@@ -62,7 +62,7 @@ function submitPost(name, title, recaptcha, maths, security, root)
     (function ($) {
 		// Assemble some commonly used vars
 		var textarea = $('#jj_message'),
-		var message = textarea.val();
+		message = textarea.val();
 
 		// If no message body show an error message and stop
 		if(message == "")
@@ -85,18 +85,18 @@ function submitPost(name, title, recaptcha, maths, security, root)
 
 		// Assemble variables to submit
 		var request = {
-			'jjshoutbox[name]' : name,
-			'jjshoutbox[message]' : message.replace(/\n/g, "<br />"),
-			'jjshoutbox[shout]' : 'Shout!',
-			'jjshoutbox[title]' : title,
+			'jjshout[name]' : name,
+			'jjshout[message]' : message.replace(/\n/g, "<br />"),
+			'jjshout[shout]' : 'Shout!',
+			'jjshout[title]' : title,
 		};
 
 		request[security] = 1;
 
 		if (recaptcha)
 		{
-			request['jjshoutbox[recaptcha_challenge_field]'] = $('input#recaptcha_challenge_field').val();
-			request['jjshoutbox[recaptcha_response_field]'] = $('input#recaptcha_response_field').val();
+			request['jjshout[recaptcha_challenge_field]'] = $('input#recaptcha_challenge_field').val();
+			request['jjshout[recaptcha_response_field]'] = $('input#recaptcha_response_field').val();
 		}
 
 		// AJAX request
@@ -115,6 +115,40 @@ function submitPost(name, title, recaptcha, maths, security, root)
 					{
 						$('#shoutbox-name').val('');
 					}
+
+					// Refresh the output
+					getPosts(title, root)
+				}
+			},
+			error:function(ts){
+				console.log(ts);
+			}
+		});
+
+		return false;
+    }(jQuery));
+}
+
+function getPosts(title, root)
+{
+    (function ($) {
+		// Assemble variables to submit
+		var request = {
+			'jjshout[title]' : title,
+		};
+
+		// AJAX request
+		$.ajax({
+			type: 'POST',
+			url: root + '?option=com_ajax&module=shoutbox&method=getPosts&format=json',
+			data: request,
+			success:function(response){
+				if (response.success)
+				{
+					$('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-error"></div>'));
+
+					// Grab the html output and append it to the shoutbox message
+					$('.jj-shout-error').after(response.data.html);
 				}
 			},
 			error:function(ts){
@@ -129,34 +163,5 @@ function submitPost(name, title, recaptcha, maths, security, root)
 		}
 
 		return false;
-    }(jQuery));
-}
-
-function getPost(title)
-{
-    (function ($) {
-        var request = {
-            'jjshoutbox[title]' : title
-        };
-
-        // AJAX request
-        $.ajax({
-            type: 'GET',
-            url: root + '?option=com_ajax&module=shoutbox&method=getShouts&format=json',
-            data: request,
-            success:function(response)
-            {
-                if (response.success)
-                {
-                    // Wipe the existing posts and then add in the latest ones in the response.data property
-                }
-            },
-            error:function(ts)
-            {
-                console.log(ts);
-            }
-        });
-
-        return false;
     }(jQuery));
 }
