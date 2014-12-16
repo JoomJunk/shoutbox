@@ -4,6 +4,9 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
+var getPosts 	= null;
+var submitPost 	= null;
+
 function addSmiley(smiley, id) {
 
 	// If we are not passed an id, use the default 'jj_message'.
@@ -49,17 +52,19 @@ function getCurserPosition(id)
 }
 
 jQuery(document).ready(function($) {
-	// SlideToggle for smilies
+
+
+	// SMILEY SLIDETOGGLE
 	$('#jj_btn').on('click', function(e) {	
 		e.preventDefault();
 		$(this).toggleClass('rotated');
 		$('#jj_smiley_box').stop(true, false).slideToggle();
 	});
-});
-
-function submitPost(name, title, recaptcha, maths, security, root)
-{
-    (function ($) {
+	
+	
+	// SUBMIT POST
+	submitPost = function(name, title, recaptcha, maths, security, root)
+	{
 		// Assemble some commonly used vars
 		var textarea = $('#jj_message'),
 		message = textarea.val();
@@ -96,13 +101,13 @@ function submitPost(name, title, recaptcha, maths, security, root)
 		if (recaptcha)
 		{
 			request['jjshout[recaptcha_challenge_field]'] = $('input#recaptcha_challenge_field').val();
-			request['jjshout[recaptcha_response_field]'] = $('input#recaptcha_response_field').val();
+			request['jjshout[recaptcha_response_field]']  = $('input#recaptcha_response_field').val();
 		}
 
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: root + '?option=com_ajax&module=shoutbox&method=submit&format=json',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&format=json',
 			data: request,
 			success:function(response){
 				if (response.success)
@@ -126,12 +131,12 @@ function submitPost(name, title, recaptcha, maths, security, root)
 		});
 
 		return false;
-    }(jQuery));
-}
-
-function getPosts(title, root)
-{
-    (function ($) {
+	}
+	
+	
+	// GET POSTS
+	getPosts = function(title, root)
+	{
 		// Assemble variables to submit
 		var request = {
 			'jjshout[title]' : title,
@@ -140,7 +145,7 @@ function getPosts(title, root)
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: root + '?option=com_ajax&module=shoutbox&method=getPosts&format=json',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&format=json',
 			data: request,
 			success:function(response){
 				if (response.success)
@@ -163,5 +168,6 @@ function getPosts(title, root)
 		}
 
 		return false;
-    }(jQuery));
-}
+	}
+	
+});

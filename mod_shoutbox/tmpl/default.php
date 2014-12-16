@@ -218,8 +218,9 @@ else
 
 	<?php // The ajax uses com_ajax in Joomla core from Joomla 3.2 and available as an install for Joomla 2.5 - so check if its available ?>
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
-	(function($){
-		$( "#shoutbox-submit" ).click( function() {
+	jQuery(document).ready(function($) {
+	
+		$( "#shoutbox-submit" ).on('click', function() {
 			<?php if($displayName==1 && !$user->guest){ ?>
 			var name = "<?php echo $user->username;?>";
 			<?php } elseif($displayName==0 && !$user->guest) { ?>
@@ -236,10 +237,11 @@ else
 			submitPost(name, '<?php echo $title; ?>', <?php echo $recaptcha ? '0' : '1'; ?>, <?php echo $securityQuestion ? '0' : '1'; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
 			return false;
 		});
-	})(jQuery);
-
-	// Refresh the shoutbox posts every 10 seconds - TODO: Time should probably be a parameter as the will increase server resources doing this
-	setTimeout(getPosts(), 10000);
+		
+		// Refresh the shoutbox posts every 10 seconds - TODO: Time should probably be a parameter as the will increase server resources doing this
+		setTimeout(getPosts(), 10000);
+		
+	});
 	<?php endif; ?>
 </script>
 
