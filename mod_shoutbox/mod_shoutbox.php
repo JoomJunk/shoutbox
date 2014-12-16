@@ -34,6 +34,10 @@ $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
 $bbcode 			= $params->get('bbcode', 0);
 $genericName		= $params->get('genericname');
+$alertLength		= $params->get('alertlength', '50');
+$warnLength			= $params->get('warnlength', '10');
+$messageLength		= $params->get('messagelength', '200');
+$remainingLength 	= JText::_('SHOUT_REMAINING');
 
 // Shows warning if both security questions are enabled and logs to error file.
 if ($recaptcha == 0 && $securityQuestion == 0)

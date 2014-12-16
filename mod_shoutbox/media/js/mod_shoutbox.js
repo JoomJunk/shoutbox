@@ -51,6 +51,35 @@ function getCurserPosition(id)
 	return pos;
 }
 
+function textCounter(textarea, countdown, maxlimit, alertLength, warnLength, shoutRemainingText)
+{
+	textareaid = document.getElementById(textarea);
+	
+	if (textareaid.value.length > maxlimit)
+	{
+		textareaid.value = textareaid.value.substring(0, maxlimit);
+	}
+	else
+	{
+		document.getElementById('charsLeft').innerHTML = (maxlimit-textareaid.value.length)+' ' + shoutRemainingText;
+	}
+	
+	if (maxlimit-textareaid.value.length > alertLength)
+	{
+		document.getElementById('charsLeft').style.color = "Black";
+	}	
+	if (maxlimit-textareaid.value.length <= alertLength && maxlimit-textareaid.value.length > warnLength)
+	{
+		document.getElementById('charsLeft').style.color = "Orange";
+	}	
+	if (maxlimit-textareaid.value.length <= warnLength)
+	{
+		document.getElementById('charsLeft').style.color = "Red";
+	}
+}
+
+
+
 jQuery(document).ready(function($) {
 
 

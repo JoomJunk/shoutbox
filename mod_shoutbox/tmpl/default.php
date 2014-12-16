@@ -100,7 +100,14 @@ elseif (array_intersect($permissions, $access))
 
 		<span id="charsLeft"></span>
 
-		<textarea id="jj_message"  cols="20" rows="5" name="jjshout[message]" onKeyDown="textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);" onKeyUp="textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);"></textarea>
+		<textarea 
+			id="jj_message"  
+			cols="20" 
+			rows="5" 
+			name="jjshout[message]" 
+			onKeyDown="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
+			onKeyUp="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
+		></textarea>
 		
 		<?php if ( $bbcode == 0 ) : ?>
 			<div class="btn-toolbar">
@@ -197,24 +204,6 @@ else
 </div>
 </div>
 <script type="text/javascript">
-	function textCounter(textarea, countdown, maxlimit)
-	{
-		textareaid = document.getElementById(textarea);
-		if (textareaid.value.length > maxlimit)
-			textareaid.value = textareaid.value.substring(0, maxlimit);
-		else
-			document.getElementById('charsLeft').innerHTML = (maxlimit-textareaid.value.length)+' <?php echo JText::_('SHOUT_REMAINING') ?>';
-
-		if (maxlimit-textareaid.value.length > <?php echo $params->get('alertlength', '50'); ?>)
-			document.getElementById('charsLeft').style.color = "Black";
-		if (maxlimit-textareaid.value.length <= <?php echo $params->get('alertlength', '50'); ?> && maxlimit-textareaid.value.length > <?php echo $params->get('warnlength', '10'); ?>)
-			document.getElementById('charsLeft').style.color = "Orange";
-		if (maxlimit-textareaid.value.length <= <?php echo $params->get('warnlength', '10'); ?>)
-			document.getElementById('charsLeft').style.color = "Red";
-
-	}
-
-	textCounter('jj_message','messagecount',<?php echo $params->get('messagelength', '200'); ?>);
 
 	<?php // The ajax uses com_ajax in Joomla core from Joomla 3.2 and available as an install for Joomla 2.5 - so check if its available ?>
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
