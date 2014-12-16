@@ -190,12 +190,6 @@ jQuery(document).ready(function($) {
 			}
 		});
 
-		// Valid or not refresh recaptcha
-		if (recaptcha)
-		{
-			Recaptcha.reload();
-		}
-
 		return false;
 	}
 	
