@@ -782,12 +782,6 @@ class ModShoutboxHelper
 				$challengeField = $input->get('recaptcha_challenge_field', '', 'string');
 				$responseField = $input->get('recaptcha_response_field', '', 'string');
 
-				// Check we have a valid response field
-				if (!isset($responseField) || isset($responseField) && $responseField)
-				{
-					return false;
-				}
-
 				// Require Recaptcha Library
 				require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
@@ -802,10 +796,9 @@ class ModShoutboxHelper
 				{
 					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 				}
-				else
-				{
-					return array('error' => $resp->error);
-				}
+
+				// Invalid submission of post. Throw an error.
+				throw new RuntimeException($resp->error);
 			}
 			elseif ($securityQuestion == 0)
 			{

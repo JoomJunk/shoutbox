@@ -136,8 +136,8 @@ jQuery(document).ready(function($) {
 
 		if (recaptcha)
 		{
-			request['jjshout[recaptcha_challenge_field]'] = $('input#recaptcha_challenge_field').val();
-			request['jjshout[recaptcha_response_field]']  = $('input#recaptcha_response_field').val();
+			request['recaptcha_challenge_field'] = $('input#recaptcha_challenge_field').val();
+			request['recaptcha_response_field']  = $('input#recaptcha_response_field').val();
 		}
 
 		if (maths)
