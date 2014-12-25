@@ -225,12 +225,11 @@ else
 
 			submitPost(name, '<?php echo $title; ?>', <?php echo $recaptcha ? '0' : '1'; ?>, <?php echo $securityQuestion ? '0' : '1'; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
 			return false;
-		});
-		
-		// Refresh the shoutbox posts every 10 seconds - TODO: Time should probably be a parameter as the will increase server resources doing this
-		setTimeout(getPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>'), 10000);
-		
+		});		
 	});
+
+	// Refresh the shoutbox posts every 10 seconds - TODO: Time should probably be a parameter as the will increase server resources doing this
+	setInterval(function(){getPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>');}, 10000);
 	<?php endif; ?>
 </script>
 
