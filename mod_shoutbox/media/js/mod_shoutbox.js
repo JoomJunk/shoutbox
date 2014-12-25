@@ -78,7 +78,14 @@ function textCounter(textarea, countdown, maxlimit, alertLength, warnLength, sho
 	}
 }
 
-
+/**
+ * Returns a random integer number between min (inclusive) and max (exclusive)
+ */
+function getRandomArbitrary(min, max) {
+	var random = 0;
+    random = Math.random() * (max - min) + min;
+	return parseInt(random);
+}
 
 jQuery(document).ready(function($) {
 
@@ -133,6 +140,13 @@ jQuery(document).ready(function($) {
 			request['jjshout[recaptcha_response_field]']  = $('input#recaptcha_response_field').val();
 		}
 
+		if (maths)
+		{
+			request['jjshout[sum1]'] = $('input[name="jjshout[sum1]"]').val();
+			request['jjshout[sum2]'] = $('input[name="jjshout[sum2]"]').val();
+			request['jjshout[human]'] = $('input[name="jjshout[human]"]').val();
+		}
+
 		// AJAX request
 		$.ajax({
 			type: 'POST',
@@ -158,6 +172,24 @@ jQuery(document).ready(function($) {
 				console.log(ts);
 			}
 		});
+
+		// Valid or not refresh recaptcha
+		if (recaptcha)
+		{
+			Recaptcha.reload();
+		}
+
+		// Valid or not refresh maths values and empty answer
+		if (maths)
+		{
+			var val1, val2;
+			val1 = getRandomArbitrary(0,9);
+			val2 = getRandomArbitrary(0,9);
+			$('input[name="jjshout[sum1]"]').val(val1);
+			$('input[name="jjshout[sum2]"]').val(val2);
+			$('label[for="math_output"]').text(val1 + ' + ' + val2);
+			$('input[name="jjshout[human]"]').val('');
+		}
 
 		return false;
 	}
@@ -192,5 +224,4 @@ jQuery(document).ready(function($) {
 
 		return false;
 	}
-	
 });
