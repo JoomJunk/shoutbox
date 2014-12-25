@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 3.0.0
++ Add AJAX submission of content
+
 Version 2.0.1
 - Removed a lot of word from swearwords.php
 ^ Tweak and cleanup of variables + Javascript
