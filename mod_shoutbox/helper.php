@@ -332,19 +332,19 @@ class ModShoutboxHelper
 	{
 		$replace = '****';
 
-		if (!$user->guest && $displayName == 0)
+		if (!$user->guest && $displayName == 'real')
 		{
 			$name = $user->name;
 			$nameSwears = 0;
 		}
-		elseif (!$user->guest && $displayName == 1)
+		elseif (!$user->guest && $displayName == 'user')
 		{
 			$name = $user->username;
 			$nameSwears = 0;
 		}
 		else
 		{
-			if ($swearCounter == 0)
+			if ($swearCounter == 1)
 			{
 				$before = substr_count($shout['name'], $replace);
 			}
@@ -358,7 +358,7 @@ class ModShoutboxHelper
 				$name = $genericName;
 			}
 
-			if ($swearCounter == 0)
+			if ($swearCounter == 1)
 			{
 				$after = substr_count($name, $replace);
 				$nameSwears = ($after - $before);
@@ -764,18 +764,18 @@ class ModShoutboxHelper
 	{
 		// Get the user instance
 		$user             = JFactory::getUser();
-		$displayName      = $this->params->get('loginname');
-		$recaptcha        = $this->params->get('recaptchaon', 1);
+		$displayName      = $this->params->get('loginname', 'user');
+		$recaptcha        = $this->params->get('recaptchaon', 0);
 		$swearCounter     = $this->params->get('swearingcounter');
 		$swearNumber      = $this->params->get('swearingnumber');
-		$securityQuestion = $this->params->get('securityquestion');
+		$securityQuestion = $this->params->get('securityquestion', 0);
 
 		// If we submitted by PHP check for a session token
 		if ($this->ajax || $_SESSION['token'] == $post['token'])
 		{
 			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-			if ($recaptcha == 0)
+			if ($recaptcha == 1)
 			{
 				// Recaptcha fields aren't in the JJ post space so we have to grab these separately
 				$input = JFactory::getApplication()->input;

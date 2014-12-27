@@ -15,24 +15,24 @@ $title  = $module->title;
 $helper = new ModShoutboxHelper($title);
 $params = $helper->getParams();
 
-$displayName 		= $params->get('loginname');
+$displayName 		= $params->get('loginname', 'user');
 $smile 				= $params->get('smile');
-$swearcounter 		= $params->get('swearingcounter');
+$swearcounter 		= $params->get('swearingcounter', 1);
 $swearnumber 		= $params->get('swearingnumber');
 $number 			= $params->get('maximum');
 $submittext 		= $params->get('submittext');
 $nonmembers 		= $params->get('nonmembers');
 $profile 			= $params->get('profile');
 $date 				= $params->get('date');
-$recaptcha			= $params->get('recaptchaon', 1);
-$securityQuestion	= $params->get('securityquestion');
-$mass_delete 		= $params->get('mass_delete');
+$recaptcha			= $params->get('recaptchaon', 0);
+$securityQuestion	= $params->get('securityquestion', 0);
+$mass_delete 		= $params->get('mass_delete', 0);
 $permissions 		= $params->get('guestpost');
 $deletecolor		= $params->get('deletecolor', '#FF0000');
 $bordercolour 		= $params->get('bordercolor', '#FF3C16');
 $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
-$bbcode 			= $params->get('bbcode', 0);
+$bbcode 			= $params->get('bbcode', 1);
 $genericName		= $params->get('genericname');
 $alertLength		= $params->get('alertlength', '50');
 $warnLength			= $params->get('warnlength', '10');
@@ -108,7 +108,7 @@ if (isset($_POST))
 		}
 	}
 
-	if ($mass_delete == 0 && (isset($post['deleteall'])))
+	if ($mass_delete == 1 && (isset($post['deleteall'])))
 	{
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 		$delete = $post['valueall'];

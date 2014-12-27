@@ -86,7 +86,7 @@ function getRandomArbitrary(min, max)
 {
 	var random = 0;
     random = Math.random() * (max - min) + min;
-	
+
 	return parseInt(random);
 }
 

@@ -75,15 +75,15 @@ elseif (array_intersect($permissions, $access))
 	<form method="post" name="shout">
 		<?php
 		// Displays the Name of the user if logged in unless stated in the parameters to be a input box
-		if ($displayName == 0 && !$user->guest)
+		if ($displayName == 'real' && !$user->guest)
 		{
 			echo JText::_('SHOUT_NAME') . ":" . $user->name;
 		}
-		elseif ($displayName == 1 && !$user->guest)
+		elseif ($displayName == 'user' && !$user->guest)
 		{
 			echo JText::_('SHOUT_NAME') . ":" . $user->username;
 		}
-		elseif ($user->guest||($displayName == 2 && !$user->guest))
+		elseif ($user->guest||($displayName == 'choose' && !$user->guest))
 		{
 			?>
 			<input name="jjshout[name]" type="text" maxlength="25" required="required" id="shoutbox-name" placeholder="<?php echo JText::_('SHOUT_NAME'); ?>" />
@@ -109,7 +109,7 @@ elseif (array_intersect($permissions, $access))
 			onKeyUp="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
 		></textarea>
 		
-		<?php if ( $bbcode == 0 ) : ?>
+		<?php if ( $bbcode == 1 ) : ?>
 			<div class="btn-toolbar">
 				<div class="btn-group">
 					<button type="button" class="btn btn-small jj-bold" onClick="addSmiley('[b] [/b]', 'jj_message')">B</button>
@@ -132,7 +132,7 @@ elseif (array_intersect($permissions, $access))
 
 		<?php
 		// Shows recapture or math question depending on the parameters
-		if ($recaptcha == 0)
+		if ($recaptcha == 1)
 		{
 			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
@@ -159,7 +159,7 @@ elseif (array_intersect($permissions, $access))
 		}
 		?>
 
-		<?php if ($securityQuestion == 0) : ?>
+		<?php if ($securityQuestion == 1) : ?>
 			<?php $que_number1 = $helper->randomnumber(1); ?>
 			<?php $que_number2 = $helper->randomnumber(1); ?>
 			<label class="jj_label" for="math_output"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
@@ -168,13 +168,13 @@ elseif (array_intersect($permissions, $access))
 			<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
 		<?php endif; ?>
 
-		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($recaptcha == 0 && !$params->get('recaptcha-public')) || ($recaptcha==0 && !$params->get('recaptcha-private')) || ($recaptcha==0 && $securityQuestion==0)) { echo 'disabled="disabled"'; }?> />
+		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($recaptcha == 1 && !$params->get('recaptcha-public')) || ($recaptcha == 1 && !$params->get('recaptcha-private')) || ($recaptcha == 1 && $securityQuestion == 1)) { echo 'disabled="disabled"'; }?> />
 	</form>
 	<?php
 	// Shows mass delete button if enabled
 	if ($user->authorise('core.delete'))
 	{
-		if ($mass_delete == 0)
+		if ($mass_delete == 1)
 		{ ?>
 			<form method="post" name="deleteall">
 				<input type="hidden" name="jjshout[max]" value="<?php echo $actualnumber; ?>" />
@@ -210,9 +210,9 @@ else
 	jQuery(document).ready(function($) {
 	
 		$( "#shoutbox-submit" ).on('click', function() {
-			<?php if($displayName==1 && !$user->guest){ ?>
+			<?php if($displayName == 'user' && !$user->guest){ ?>
 			var name = "<?php echo $user->username;?>";
-			<?php } elseif($displayName==0 && !$user->guest) { ?>
+			<?php } elseif($displayName == 'real' && !$user->guest) { ?>
 			var name = "<?php echo $user->name;?>";
 			<?php } else { ?>
 			if($('#shoutbox-name').val() == ""){
@@ -223,13 +223,16 @@ else
 			}
 			<?php } ?>
 
-			submitPost(name, '<?php echo $title; ?>', <?php echo $recaptcha ? '0' : '1'; ?>, <?php echo $securityQuestion ? '0' : '1'; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
+			submitPost(name, '<?php echo $title; ?>', <?php echo $recaptcha ? '1' : '0'; ?>, <?php echo $securityQuestion ? '1' : '0'; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
 			return false;
 		});		
 	});
 
 	// Refresh the shoutbox posts every 10 seconds - TODO: Time should probably be a parameter as the will increase server resources doing this
-	setInterval(function(){getPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>');}, 10000);
+	setInterval(function(){
+		getPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>');
+	}, 10000);
+	
 	<?php endif; ?>
 </script>
 

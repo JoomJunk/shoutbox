@@ -79,10 +79,10 @@
 				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
 				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
 				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
-				<field name="loginname" type="radio" default="1" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
-					<option value="0">SHOUT_REAL</option>
-					<option value="1">SHOUT_USER</option>
-					<option value="2">SHOUT_CHOOSE</option>
+				<field name="loginname" type="radio" class="btn-group" default="user" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
+					<option value="real">SHOUT_REAL</option>
+					<option value="user">SHOUT_USER</option>
+					<option value="choose">SHOUT_CHOOSE</option>
 				</field>
 				<field name="guestpost" type="Usergroup" default="1" multiple="true" label="SHOUT_GUESTLABEL" description="SHOUT_GUESTDESC" />
 				<field name="date" type="list" default="2" label="SHOUT_SHOW_DATE" description="SHOUT_SHOW_DATEDESC">
@@ -103,13 +103,13 @@
 					<option value="2">SHOUT_SMILIES_ON_SLIDE</option>
 					<option value="3">SHOUT_SMILIES_DISABLE</option>
 				</field>
-				<field name="bbcode" type="radio" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
-					<option value="0">JON</option>
-					<option value="1">JOFF</option>
+				<field name="bbcode" type="radio" class="btn-group" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
 				</field>
-				<field name="swearingcounter" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
-					<option value="0">JON</option>
-					<option value="1">JOFF</option>
+				<field name="swearingcounter" class="btn-group" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
 				</field>
 				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
 				<field name="messagelength" type="text" default="200" label="SHOUT_MESSAGELABEL" description="SHOUT_MESSAGEDESC" />
@@ -119,23 +119,23 @@
 			</fieldset>
 
 			<fieldset name="security" label="SHOUT_SECURITY">
-				<field name="recaptchaon" type="radio" default="1" label="SHOUT_RECAPTCHAON_LABEL" description="SHOUT_RECAPTCHAON_DESC">
-					<option value="0">JYES</option>
-					<option value="1">JNO</option>
+				<field name="recaptchaon" class="btn-group" type="radio" default="0" label="SHOUT_RECAPTCHAON_LABEL" description="SHOUT_RECAPTCHAON_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 				<field name="recaptcha-public" type="text" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
 				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />
 				
-				<field name="securityquestion" type="radio" default="1" label="SHOUT_SECURITY_QUESTION_LABEL" description="SHOUT_SECURITY_QUESTION_DESC">
-					<option value="0">JYES</option>
-					<option value="1">JNO</option>
+				<field name="securityquestion" class="btn-group" type="radio" default="0" label="SHOUT_SECURITY_QUESTION_LABEL" description="SHOUT_SECURITY_QUESTION_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 			</fieldset>
 			
 			<fieldset name="advanced">
-				<field name="mass_delete" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
-					<option value="0">JYES</option>
-					<option value="1">JNO</option>
+				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 			</fieldset>
