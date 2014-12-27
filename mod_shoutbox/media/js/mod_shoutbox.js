@@ -54,6 +54,7 @@ function getCurserPosition(id)
 function textCounter(textarea, countdown, maxlimit, alertLength, warnLength, shoutRemainingText)
 {
 	textareaid = document.getElementById(textarea);
+	var charsLeft = document.getElementById('charsLeft');
 	
 	if (textareaid.value.length > maxlimit)
 	{
@@ -61,29 +62,31 @@ function textCounter(textarea, countdown, maxlimit, alertLength, warnLength, sho
 	}
 	else
 	{
-		document.getElementById('charsLeft').innerHTML = (maxlimit-textareaid.value.length)+' ' + shoutRemainingText;
+		charsLeft.innerHTML = (maxlimit-textareaid.value.length)+' ' + shoutRemainingText;
 	}
 	
 	if (maxlimit-textareaid.value.length > alertLength)
 	{
-		document.getElementById('charsLeft').style.color = "Black";
+		charsLeft.style.color = "Black";
 	}	
 	if (maxlimit-textareaid.value.length <= alertLength && maxlimit-textareaid.value.length > warnLength)
 	{
-		document.getElementById('charsLeft').style.color = "Orange";
+		charsLeft.style.color = "Orange";
 	}	
 	if (maxlimit-textareaid.value.length <= warnLength)
 	{
-		document.getElementById('charsLeft').style.color = "Red";
+		charsLeft.style.color = "Red";
 	}
 }
 
 /**
  * Returns a random integer number between min (inclusive) and max (exclusive)
  */
-function getRandomArbitrary(min, max) {
+function getRandomArbitrary(min, max) 
+{
 	var random = 0;
     random = Math.random() * (max - min) + min;
+	
 	return parseInt(random);
 }
 
