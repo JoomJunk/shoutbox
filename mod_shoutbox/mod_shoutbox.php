@@ -37,6 +37,7 @@ $genericName		= $params->get('genericname');
 $alertLength		= $params->get('alertlength', '50');
 $warnLength			= $params->get('warnlength', '10');
 $messageLength		= $params->get('messagelength', '200');
+$refresh			= $params->get('refresh', 10) * 1000;
 $remainingLength 	= JText::_('SHOUT_REMAINING');
 
 // Shows warning if both security questions are enabled and logs to error file.

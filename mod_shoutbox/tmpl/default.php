@@ -231,7 +231,7 @@ else
 	// Refresh the shoutbox posts every 10 seconds - TODO: Time should probably be a parameter as the will increase server resources doing this
 	setInterval(function(){
 		getPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>');
-	}, 10000);
+	}, <?php echo $refresh; ?>);
 	
 	<?php endif; ?>
 </script>

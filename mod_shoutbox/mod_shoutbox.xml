@@ -77,8 +77,6 @@
 					<option value="4">SHOUT_K2_BLOG_USERS</option>
 				</field>
 				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
-				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
-				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
 				<field name="loginname" type="radio" class="btn-group" default="user" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
 					<option value="real">SHOUT_REAL</option>
 					<option value="user">SHOUT_USER</option>
@@ -92,11 +90,14 @@
 					<option value="4">SHOUT_DATE_SPACE_OPTION_TWO</option>
 					<option value="5">SHOUT_DATE_REVERSED</option>
 					<option value="2">SHOUT_DONT_SHOW</option>
-				</field>
+				</field>		
+				<field name="refresh" type="text" default="10" label="SHOUT_AUTO_REFRESH" description="SHOUT_AUTO_REFRESH_DESC" />		
 				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
 				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
 				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
 				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
+				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
+				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
 				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
 					<option value="0">SHOUT_SMILIES_ON</option>
 					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
