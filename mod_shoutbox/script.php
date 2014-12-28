@@ -447,9 +447,11 @@ class Mod_ShoutboxInstallerScript
 			// Convert string to integer
 			$module = (int) $module;
 
-			// Create array of params to change
-			$param 	   = $this->getParam('loginname', $module);
+			// Initialise the values to be updated
 			$newParams = array();
+
+			// Name to show is now a set of string values rather than numerical values.
+			$param = $this->getParam('loginname', $module);
 			
 			if ($param == 0)
 			{
@@ -462,6 +464,24 @@ class Mod_ShoutboxInstallerScript
 			else
 			{
 				$newParams['loginname'] = 'choose';
+			}
+
+			// To standardise off is 0 and on is 1. Swap some field names around.
+			$params = array('bbcode', 'swearingcounter', 'recaptchaon', 'securityquestion', 'mass_delete');
+
+			foreach ($params as $paramName)
+			{
+				$param = $this->getParam($paramName, $module);
+
+				// If the param was 1 make it 0 and vice versa
+				if ($param == 0)
+				{
+					$newParams[$paramName] = 1;
+				}
+				else
+				{
+					$newParams[$paramName] = 0;
+				}
 			}
 
 			// Set the param values
