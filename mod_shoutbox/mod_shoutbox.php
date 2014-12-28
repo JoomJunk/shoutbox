@@ -41,7 +41,7 @@ $refresh			= $params->get('refresh', 10) * 1000;
 $remainingLength 	= JText::_('SHOUT_REMAINING');
 
 // Shows warning if both security questions are enabled and logs to error file.
-if ($recaptcha == 0 && $securityQuestion == 0)
+if ($recaptcha == 1 && $securityQuestion == 1)
 {
 	JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
 	$app->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');

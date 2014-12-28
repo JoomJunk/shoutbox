@@ -369,14 +369,14 @@ class ModShoutboxHelper
 			}
 		}
 
-		if ($swearCounter == 0)
+		if ($swearCounter == 1)
 		{
 			$before = substr_count($shout['message'], $replace);
 		}
 
 		$message = $this->swearfilter($shout['message'], $replace);
 
-		if ($swearCounter == 0)
+		if ($swearCounter == 1)
 		{
 			$after = substr_count($message, $replace);
 			$messageSwears = ($after - $before);
@@ -384,7 +384,7 @@ class ModShoutboxHelper
 
 		$ip = $_SERVER['REMOTE_ADDR'];
 
-		if ($swearCounter == 1 || $swearCounter == 0 && (($nameSwears + $messageSwears) <= $swearNumber))
+		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
 			return $this->addShout($name, $message, $ip);
 		}
@@ -873,7 +873,7 @@ class ModShoutboxHelper
 
 		// Grab the bbcode and smiley params
 		$smile  = $this->params->get('smile');
-		$bbcode = $this->params->get('bbcode', 0);
+		$bbcode = $this->params->get('bbcode', 1);
 
 		// Expression to search for in the message template ({{VAR}}
 		$regex = '/{(.*?)}/';
@@ -896,7 +896,7 @@ class ModShoutboxHelper
 					$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
 
 					// Check if we need to do smiley or bbcode filtering
-					if ($smile == 0 || $bbcode == 0)
+					if ($smile == 0 || $bbcode == 1)
 					{
 						$user = $this->bbcodeFilter($profile_link);
 					}
@@ -941,7 +941,7 @@ class ModShoutboxHelper
 					break;
 
 				case 'MESSAGE':
-					if ($smile == 0 || $smile == 1 || $smile == 2 || $bbcode == 0)
+					if ($smile == 0 || $smile == 1 || $smile == 2 || $bbcode == 1)
 					{
 						$post = $this->bbcodeFilter($shout->msg);
 					}
