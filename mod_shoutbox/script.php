@@ -432,7 +432,7 @@ class Mod_ShoutboxInstallerScript
 	}
 	
 	/**
-	 * Function to update the params for the Shoutbox Version 2.0.1 updates
+	 * Function to update the params for the Shoutbox Version 3.0.0 updates
 	 *
 	 * @return  void
 	 *
@@ -448,27 +448,28 @@ class Mod_ShoutboxInstallerScript
 			$module = (int) $module;
 
 			// Create array of params to change
-			$param 	= array();
-			$param 	= $this->getParam('loginname', $module);
+			$param 	   = $this->getParam('loginname', $module);
+			$newParams = array();
 			
-			if( $param == 0 )
+			if ($param == 0)
 			{
-				$set = 'real';
+				$newParams['loginname'] = 'real';
 			}
-			elseif( $param == 1 )
+			elseif ($param == 1)
 			{
-				$set = 'user';
+				$newParams['loginname'] = 'user';
 			}
-			else 
+			else
 			{
-				$set = 'choose';
+				$newParams['loginname'] = 'choose';
 			}
 
 			// Set the param values
-			$this->setParams($set, 'edit', $module);
+			$this->setParams($newParams, 'edit', $module);
 
 			// Unset the array for the next loop
 			unset($param);
+			unset($newParams);
 		}
 	}
 	
