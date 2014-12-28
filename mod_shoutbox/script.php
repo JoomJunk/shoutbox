@@ -92,6 +92,14 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update126();
 				}
+				
+				/**
+				 * For extensions going from < version 3.0.0 we need to change the loginname field option values
+				 */
+				if (version_compare($oldRelease, '2.0.1', '<='))
+				{
+					$this->update300();
+				}
 			}
 		}
 
@@ -422,4 +430,48 @@ class Mod_ShoutboxInstallerScript
 			unset($values);
 		}
 	}
+	
+	/**
+	 * Function to update the params for the Shoutbox Version 2.0.1 updates
+	 *
+	 * @return  void
+	 *
+	 * @since  3.0.0
+	 */
+	protected function update300()
+	{
+		$modules = $this->getInstances(true);
+
+		foreach ($modules as $module)
+		{
+			// Convert string to integer
+			$module = (int) $module;
+
+			// Create array of params to change
+			$param 	= array();
+			$param 	= $this->getParam('loginname', $module);
+			
+			if( $param == 0 )
+			{
+				$set = 'real';
+			}
+			elseif( $param == 1 )
+			{
+				$set = 'user';
+			}
+			else 
+			{
+				$set = 'choose';
+			}
+
+			// Set the param values
+			$this->setParams($set, 'edit', $module);
+
+			// Unset the array for the next loop
+			unset($param);
+		}
+	}
+	
+	
+	
 }
