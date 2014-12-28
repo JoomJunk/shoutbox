@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS `#__shoutbox` (
 	`user_id` int(11) NOT NULL DEFAULT '0',
 
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;
 
 INSERT INTO `#__shoutbox` (`name`, `when`, `msg`, `user_id`) VALUES ('JoomJunk', '2012-01-16 20:00:00', 'Welcome to the Shoutbox', '0');

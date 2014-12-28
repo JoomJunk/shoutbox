@@ -1,1 +1,1 @@
-# Placeholder file for database changes for version 3.0.0
+ALTER TABLE `#__shoutbox` ENGINE=InnoDB;
