@@ -120,14 +120,13 @@ elseif (array_intersect($permissions, $access))
 			</div>
 		<?php endif; ?>
 
-		<?php if ($smile == 1 || $smile == 2) : ?>
-			<?php if ($smile == 2) : ?>
+		<?php if ($smile == 1 || $smile == 2  || $smile == 3) : ?>
+			<?php if ($smile == 2 || $smile == 3) : ?>
 				<div id="jj_smiley_button">
-					<a href="#" id="jj_btn" class="btn btn-mini" />&#9650;</a>
+					<a href="#" id="jj_btn" class="btn btn-mini <?php echo ($smile == 2 ? 'rotated' : ''); ?>" />&#9650;</a>
 				</div>
 			<?php endif; ?>
-
-			<div id="jj_smiley_box"><?php echo $helper->smileyshow(); ?></div>
+			<div id="jj_smiley_box" style="<?php echo ($smile == 2 ? 'display:none;' : 'display:block;'); ?>"><?php echo $helper->smileyshow(); ?></div>
 		<?php endif; ?>
 
 		<?php
