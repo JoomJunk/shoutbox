@@ -804,7 +804,7 @@ class ModShoutboxHelper
 				// Invalid submission of post. Throw an error.
 				throw new RuntimeException($resp->error);
 			}
-			elseif ($securityQuestion == 0)
+			elseif ($securityQuestion == 1)
 			{
 				// Our maths security question is on
 				if (isset($post['sum1']) && isset($post['sum2']))
