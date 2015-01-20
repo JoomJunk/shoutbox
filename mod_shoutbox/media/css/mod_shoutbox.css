@@ -61,8 +61,8 @@
 }
 #noguest { color: #FF0000; font-weight: bold; }
 #jjshoutbox .jj_error { color:red; font-weight:bold; }
-#jjshoutbox .jj_label { width: 50%; }
-#jjshoutbox .jj_input {	width: 50%; }
+#jjshoutbox .jj_label { width: 70px; display: inline-block; }
+#jjshoutbox .jj_input {	width: 80px; display: inline-block; }
 #jjshoutbox .jj_admin_label { width: 30%; }
 #jjshoutbox .jj_admin_button {
     width: 65%;
@@ -112,7 +112,7 @@
 Non-bootstrap styling for BB Code
 **/
 #jjshoutbox #jj_smiley_box{
-    margin: 10px 0 10px 0;
+    margin: 5px 0 10px;
 	white-space: normal;
 }
 #jjshoutbox #jj_smiley_box img{
