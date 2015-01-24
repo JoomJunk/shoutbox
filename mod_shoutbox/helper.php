@@ -545,7 +545,14 @@ class ModShoutboxHelper
 				// Kunena Profile Link
 				if (class_exists('KunenaFactory') && class_exists('KunenaProfileKunena')) {
 					$kUser = KunenaFactory::getUser()->userid;
-					$kLink = KunenaProfileKunena::getProfileURL($kUser);
+					if($kUser != 0)
+					{
+						$kLink = KunenaProfileKunena::getProfileURL($kUser);
+					}
+					else 
+					{					
+						$kLink = JRoute::_('index.php?option=com_kunena&view=user&userid=' . $user_id . '&Itemid=');
+					}
 				}
 				else {
 					$kLink = null;
