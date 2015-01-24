@@ -131,17 +131,17 @@ elseif (array_intersect($permissions, $access))
 
 		<?php
 		// Shows recapture or math question depending on the parameters
-		if ($recaptcha == 1)
+		if ($securitytype == 1)
 		{
 			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
 
-			if ($params->get('recaptcha-public') == '' || $params->get('recaptcha-private') == '')
+			if ($publicKey == '' || $privateKey == '')
 			{
 				echo JText::_('SHOUT_RECAPTCHA_KEY_ERROR');
 			}
 			else
 			{
-				$publickey = $params->get('recaptcha-public');
+				$publickey = $publicKey;
 
 				if (!isset($resp))
 				{
@@ -158,7 +158,7 @@ elseif (array_intersect($permissions, $access))
 		}
 		?>
 
-		<?php if ($securityQuestion == 1) : ?>
+		<?php if ($securitytype == 2) : ?>
 			<?php $que_number1 = $helper->randomnumber(1); ?>
 			<?php $que_number2 = $helper->randomnumber(1); ?>
 			<label class="jj_label" for="math_output"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
@@ -167,7 +167,7 @@ elseif (array_intersect($permissions, $access))
 			<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
 		<?php endif; ?>
 
-		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($recaptcha == 1 && !$params->get('recaptcha-public')) || ($recaptcha == 1 && !$params->get('recaptcha-private')) || ($recaptcha == 1 && $securityQuestion == 1)) { echo 'disabled="disabled"'; }?> />
+		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -222,12 +222,12 @@ else
 			}
 			<?php } ?>
 
-			submitPost(name, '<?php echo $title; ?>', <?php echo $recaptcha ? '1' : '0'; ?>, <?php echo $securityQuestion ? '1' : '0'; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
+			submitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
 			return false;
 		});		
 	});
 
-	// Refresh the shoutbox posts every 10 seconds - TODO: Time should probably be a parameter as the will increase server resources doing this
+	// Refresh the shoutbox posts every X seconds
 	setInterval(function(){
 		getPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>');
 	}, <?php echo $refresh; ?>);

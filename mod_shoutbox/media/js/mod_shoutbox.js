@@ -102,7 +102,7 @@ jQuery(document).ready(function($) {
 	
 	
 	// SUBMIT POST
-	submitPost = function(name, title, recaptcha, maths, security, root)
+	submitPost = function(name, title, securityType, security, root)
 	{
 		// Assemble some commonly used vars
 		var textarea = $('#jj_message'),
@@ -137,13 +137,13 @@ jQuery(document).ready(function($) {
 
 		request[security] = 1;
 
-		if (recaptcha)
+		if (securityType == 1)
 		{
 			request['recaptcha_challenge_field'] = $('input#recaptcha_challenge_field').val();
 			request['recaptcha_response_field']  = $('input#recaptcha_response_field').val();
 		}
 
-		if (maths)
+		if (securityType == 2)
 		{
 			request['jjshout[sum1]'] = $('input[name="jjshout[sum1]"]').val();
 			request['jjshout[sum2]'] = $('input[name="jjshout[sum2]"]').val();
@@ -177,13 +177,13 @@ jQuery(document).ready(function($) {
 		});
 
 		// Valid or not refresh recaptcha
-		if (recaptcha)
+		if (securityType == 1)
 		{
 			Recaptcha.reload();
 		}
 
 		// Valid or not refresh maths values and empty answer
-		if (maths)
+		if (securityType == 2)
 		{
 			var val1, val2;
 			val1 = getRandomArbitrary(0,9);

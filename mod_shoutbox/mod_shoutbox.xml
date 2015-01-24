@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>3.0.0-beta1</version> 
+	<version>3.0.0-beta2</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -120,18 +120,15 @@
 				<field name="check" type="check" label="FreiChat" />
 			</fieldset>
 
-			<fieldset name="security" label="SHOUT_SECURITY">
-				<field name="recaptchaon" class="btn-group" type="radio" default="0" label="SHOUT_RECAPTCHAON_LABEL" description="SHOUT_RECAPTCHAON_DESC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
+			<fieldset name="security" label="SHOUT_SECURITY" addfieldpath="/modules/mod_shoutbox/fields">		
+				<field name="securitytype" type="list" default="0" label="SHOUT_SECURITY_TYPE" description="SHOUT_SECURITY_TYPE_DESC">
+					<option value="0">SHOUT_NONE</option>
+					<option value="1">SHOUT_RECAPTCHA</option>
+					<option value="2">SHOUT_MATHS_QUESTION</option>
+				</field>			
 				<field name="recaptcha-public" type="text" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
-				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />
-				
-				<field name="securityquestion" class="btn-group" type="radio" default="0" label="SHOUT_SECURITY_QUESTION_LABEL" description="SHOUT_SECURITY_QUESTION_DESC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
+				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />		
+				<field name="fade" type="fade" label="Fade" />
 			</fieldset>
 			
 			<fieldset name="advanced">

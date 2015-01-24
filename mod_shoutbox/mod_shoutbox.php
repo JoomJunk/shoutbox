@@ -24,8 +24,9 @@ $submittext 		= $params->get('submittext');
 $nonmembers 		= $params->get('nonmembers');
 $profile 			= $params->get('profile');
 $date 				= $params->get('date');
-$recaptcha			= $params->get('recaptchaon', 0);
-$securityQuestion	= $params->get('securityquestion', 0);
+$securitytype		= $params->get('securitytype', 0);
+$publicKey			= $params->get('recaptcha-public');
+$privateKey			= $params->get('recaptcha-private');
 $mass_delete 		= $params->get('mass_delete', 0);
 $permissions 		= $params->get('guestpost');
 $deletecolor		= $params->get('deletecolor', '#FF0000');
@@ -39,13 +40,6 @@ $warnLength			= $params->get('warnlength', '10');
 $messageLength		= $params->get('messagelength', '200');
 $refresh			= $params->get('refresh', 10) * 1000;
 $remainingLength 	= JText::_('SHOUT_REMAINING');
-
-// Shows warning if both security questions are enabled and logs to error file.
-if ($recaptcha == 1 && $securityQuestion == 1)
-{
-	JLog::add(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), JLog::CRITICAL, 'mod_shoutbox');
-	$app->enqueueMessage(JText::_('SHOUT_BOTH_SECURITY_ENABLED'), 'error');
-}
 
 // Assemble the factory variables needed
 $doc 	= JFactory::getDocument();

@@ -769,17 +769,16 @@ class ModShoutboxHelper
 		// Get the user instance
 		$user             = JFactory::getUser();
 		$displayName      = $this->params->get('loginname', 'user');
-		$recaptcha        = $this->params->get('recaptchaon', 0);
+		$securityType     = $this->params->get('securitytype', 0);
 		$swearCounter     = $this->params->get('swearingcounter');
 		$swearNumber      = $this->params->get('swearingnumber');
-		$securityQuestion = $this->params->get('securityquestion', 0);
 
 		// If we submitted by PHP check for a session token
 		if ($this->ajax || $_SESSION['token'] == $post['token'])
 		{
 			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-			if ($recaptcha == 1)
+			if ($securityType == 1)
 			{
 				// Recaptcha fields aren't in the JJ post space so we have to grab these separately
 				$input = JFactory::getApplication()->input;
@@ -804,7 +803,7 @@ class ModShoutboxHelper
 				// Invalid submission of post. Throw an error.
 				throw new RuntimeException($resp->error);
 			}
-			elseif ($securityQuestion == 1)
+			elseif ($securityType == 2)
 			{
 				// Our maths security question is on
 				if (isset($post['sum1']) && isset($post['sum2']))
