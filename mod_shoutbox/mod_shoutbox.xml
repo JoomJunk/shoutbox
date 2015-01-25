@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>3.0.0-beta2</version> 
+	<version>3.0.0-beta1</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -94,10 +94,6 @@
 				<field name="refresh" type="text" default="10" label="SHOUT_AUTO_REFRESH" description="SHOUT_AUTO_REFRESH_DESC" />		
 				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
 				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
-				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
-				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
-				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
-				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
 				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
 					<option value="0">SHOUT_SMILIES_ON</option>
 					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
@@ -120,7 +116,18 @@
 				<field name="check" type="check" label="FreiChat" />
 			</fieldset>
 
-			<fieldset name="security" label="SHOUT_SECURITY" addfieldpath="/modules/mod_shoutbox/fields">		
+			<fieldset name="styling" label="SHOUT_STYLING">
+				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
+				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
+				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
+				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
+			</fieldset>
+			
+			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
+				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 				<field name="securitytype" type="list" default="0" label="SHOUT_SECURITY_TYPE" description="SHOUT_SECURITY_TYPE_DESC">
 					<option value="0">SHOUT_NONE</option>
 					<option value="1">SHOUT_RECAPTCHA</option>
@@ -129,13 +136,7 @@
 				<field name="recaptcha-public" type="text" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
 				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />		
 				<field name="fade" type="fade" label="Fade" />
-			</fieldset>
-			
-			<fieldset name="advanced">
-				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
-					<option value="0">JNO</option>
-					<option value="1">JYES</option>
-				</field>
+				
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 			</fieldset>
 

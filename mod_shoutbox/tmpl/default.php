@@ -12,7 +12,7 @@ $style = '#jjshoutboxoutput {
 		border-color: ' . $bordercolour . ';
 		border-width: ' . $borderwidth . 'px;
 	}
-	#jjshoutboxoutput div h1 {
+	#jjshoutboxoutput .shout-header {
 		background: ' . $headercolor . ';
 	}';
 

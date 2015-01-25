@@ -61,6 +61,8 @@ class JFormFieldFade extends JFormField
 		';
 		
 		$doc->addScriptDeclaration($js);
+		
+		return "<hr>";
 
 	}
 

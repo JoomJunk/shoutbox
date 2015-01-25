@@ -10,8 +10,8 @@ defined('_JEXEC') or die('Restricted access');
 $user = JFactory::getUser();
 ?>
 <div>
-	<h1{TITLE}>
-		{USER} -  {DATE}
+	<div class="shout-header"{TITLE}>
+		{USER} - {DATE}
 		<?php if ($user->authorise('core.delete')) : ?>
 			<form method="post" name="delete">
 				<input name="jjshout[delete]" type="submit" value="x" />
@@ -19,6 +19,6 @@ $user = JFactory::getUser();
 				<?php echo JHtml::_('form.token'); ?>
 			</form>
 		<?php endif; ?>
-	</h1>
+	</div>
 	<p>{MESSAGE}</p>
 </div>

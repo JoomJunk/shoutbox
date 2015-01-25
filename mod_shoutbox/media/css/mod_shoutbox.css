@@ -4,18 +4,27 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-#jjshoutbox { margin: auto; }
-#jjshoutboxform { margin: 0 auto; }
+#jjshoutbox { 
+	margin: auto; 
+	width: 100%; 
+}
+#jjshoutboxform { 
+	margin: 0 auto; 
+}
+#jjshoutbox > div,
+#jjshoutbox textarea,
+#jjshoutbox input {
+    box-sizing: border-box;
+}
 #jjshoutboxform textarea {
     width: 100%;
     margin: 5px 0 0 0;
-    padding: 4px 0;
 }
 #jjshoutboxform input {
     margin-top: 5px;
     color: #000;
     width: 100%;
-    padding: 5px 0;
+    min-height: 30px;
 }
 #jjshoutboxoutput {
     height: 200px;
@@ -26,29 +35,32 @@
     margin-top: 5px;
     word-wrap: break-word;
 }
-#jjshoutboxoutput div {
-    padding-bottom: 5px;
-}
-#jjshoutboxoutput input[type=submit]{
+#jjshoutboxoutput input[type=submit] {
     cursor: pointer;
     text-align: center;
-    font: bold 10px Arial, Helvetica, sans-serif;
+    font-family: inherit;
+	font-weight: bold;
+	font-size: 10px;
     text-decoration: none;
     background: none;
     padding: 0;
     margin: 0;
     border: 0;
     height: 15px;
+	vertical-align: top;
 }
-#jjshoutboxoutput div h1 {
-    font-size: 12px;
+#jjshoutboxoutput .shout-header {
     font-family: inherit;
+    font-size: 12px;
+	font-weight: bold;
     color: #000;
     text-transform: none;
-    margin: 8px 0;
-    line-height: 125%;
+    margin: 8px 0 0;
+	padding: 0 0 0 5px;
+	height: 20px;
+    line-height: 20px;
 }
-#jjshoutboxoutput div h1 form {
+#jjshoutboxoutput div form {
     display: inline-block;
     margin: 0;
 }
@@ -57,13 +69,28 @@
     font-family: inherit;
     text-align: left;
     color: #000;
-    margin: 5px 0;
+    margin: 5px 0 10px;
+	padding: 0 0 0 5px;
 }
-#noguest { color: #FF0000; font-weight: bold; }
-#jjshoutbox .jj_error { color:red; font-weight:bold; }
-#jjshoutbox .jj_label { width: 70px; display: inline-block; }
-#jjshoutbox .jj_input {	width: 80px; display: inline-block; }
-#jjshoutbox .jj_admin_label { width: 30%; }
+#noguest { 
+	color: #FF0000; 
+	font-weight: bold; 
+}
+#jjshoutbox .jj_error { 
+	color:red; 
+	font-weight:bold; 
+}
+#jjshoutbox .jj_label { 
+	width: 70px; 
+	display: inline-block; 
+}
+#jjshoutbox .jj_input {	
+	width: 80px; 
+	display: inline-block;
+}
+#jjshoutbox .jj_admin_label { 
+	width: 30%; 
+}
 #jjshoutbox .jj_admin_button {
     width: 65%;
     min-width: 90px;
@@ -72,17 +99,17 @@
     border: 1px solid #CC0000;
     cursor: pointer;
 }
-#jj_smiley_box{
+#jj_smiley_box {
     margin: 10px 0 10px 0;
 }
-#jj_smiley_box img{
+#jj_smiley_box img {
     cursor: pointer;
 }
-#jj_smiley_button{
+#jj_smiley_button {
     margin: 5px 0 0 0;
     float:right;
 }
-#jj_btn{
+#jj_btn {
     display: block;
 	cursor: pointer;
 	padding: 2px 5px !important;
@@ -99,10 +126,12 @@
 }
 .jj_smiley {
     padding: 0 2px 0 2px;
-    border:none;
+    border: none;
 }
-.outter_jj_smiley:hover {
+#jj_smiley_box img:hover {
     background:none !important;
+	border: 0;
+	outline: 0;
 }
 #jjshoutboxform[type='number'] {
 	padding: 4px 0px;
@@ -111,11 +140,11 @@
 /**
 Non-bootstrap styling for BB Code
 **/
-#jjshoutbox #jj_smiley_box{
+#jjshoutbox #jj_smiley_box {
     margin: 5px 0 10px;
 	white-space: normal;
 }
-#jjshoutbox #jj_smiley_box img{
+#jjshoutbox #jj_smiley_box img {
     cursor: pointer;
 	padding: 2px;
     border:none;
