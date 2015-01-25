@@ -46,6 +46,26 @@ $doc 	= JFactory::getDocument();
 $user 	= JFactory::getUser();
 $app 	= JFactory::getApplication();
 
+
+// Detect a UIKit based theme
+$template 	= $app->getTemplate('template')->template;
+$uikit 		= JPATH_SITE . '/templates/' . $template . '/warp/vendor/uikit/js/uikit.js';
+if(JFile::exists($uikit))
+{
+	$form 			= 'uk-form';
+	$button_group 	= 'uk-button-group';
+	$button 		= 'uk-button';
+	$button_danger 	= ' uk-button-danger';
+}
+else 
+{
+	$form 			= null;
+	$button_group 	= 'btn-group';
+	$button 		= 'btn';
+	$button_danger 	= ' btn-danger';
+}
+
+// Import jQuery
 if (version_compare(JVERSION, '3.0.0', 'ge'))
 {
 	JHtml::_('jquery.framework');

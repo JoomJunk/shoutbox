@@ -72,7 +72,7 @@ if (($actualnumber > 0) && ($shouts[0]->msg == $dataerror) && ($shouts[0]->ip ==
 elseif (array_intersect($permissions, $access))
 {
 	?>
-	<form method="post" name="shout">
+	<form method="post" name="shout" class="<?php echo $form; ?>">
 		<?php
 		// Displays the Name of the user if logged in unless stated in the parameters to be a input box
 		if ($displayName == 'real' && !$user->guest)
@@ -111,11 +111,11 @@ elseif (array_intersect($permissions, $access))
 		
 		<?php if ( $bbcode == 1 ) : ?>
 			<div class="btn-toolbar">
-				<div class="btn-group">
-					<button type="button" class="btn btn-small jj-bold" onClick="addSmiley('[b] [/b]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
-					<button type="button" class="btn btn-small jj-italic" onClick="addSmiley('[i] [/i]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
-					<button type="button" class="btn btn-small jj-underline" onClick="addSmiley('[u] [/u]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
-					<button type="button" class="btn btn-small jj-link" onClick="addSmiley('[url=] [/url]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
+				<div class="<?php echo $button_group; ?>">
+					<button type="button" class="<?php echo $button; ?> btn-small jj-bold" onClick="addSmiley('[b] [/b]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-italic" onClick="addSmiley('[i] [/i]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-underline" onClick="addSmiley('[u] [/u]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-link" onClick="addSmiley('[url=] [/url]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
 				</div>
 			</div>
 		<?php endif; ?>
@@ -123,7 +123,7 @@ elseif (array_intersect($permissions, $access))
 		<?php if ($smile == 1 || $smile == 2  || $smile == 3) : ?>
 			<?php if ($smile == 2 || $smile == 3) : ?>
 				<div id="jj_smiley_button">
-					<a href="#" id="jj_btn" class="btn btn-mini <?php echo ($smile == 2 ? 'rotated' : ''); ?>" />&#9650;</a>
+					<a href="#" id="jj_btn" class="<?php echo $button; ?> btn-mini <?php echo ($smile == 2 ? 'rotated' : ''); ?>" />&#9650;</a>
 				</div>
 			<?php endif; ?>
 			<div id="jj_smiley_box" style="<?php echo ($smile == 2 ? 'display:none;' : 'display:block;'); ?>"><?php echo $helper->smileyshow(); ?></div>
@@ -167,7 +167,7 @@ elseif (array_intersect($permissions, $access))
 			<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
 		<?php endif; ?>
 
-		<input name="jjshout[shout]" id="shoutbox-submit" class="btn" type="submit" value="<?php echo $submittext ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
+		<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo $submittext ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -181,7 +181,7 @@ elseif (array_intersect($permissions, $access))
 				<?php if (version_compare(JVERSION, '3.0.0', 'ge')) : ?>
 					<div class="input-append">
 						<input class="span2" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" style="width:50px;">
-						<input class="btn btn-danger" type="submit" name="jjshout[deleteall]" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
+						<input class="<?php echo $button . $button_danger; ?>" type="submit" name="jjshout[deleteall]" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
 					</div>	
 				<?php else : ?>
 					<input class="jj_admin_label" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" />
