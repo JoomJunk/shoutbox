@@ -112,10 +112,10 @@ elseif (array_intersect($permissions, $access))
 		<?php if ( $bbcode == 1 ) : ?>
 			<div class="btn-toolbar">
 				<div class="btn-group">
-					<button type="button" class="btn btn-small jj-bold" onClick="addSmiley('[b] [/b]', 'jj_message')">B</button>
-					<button type="button" class="btn btn-small jj-italic" onClick="addSmiley('[i] [/i]', 'jj_message')">I</button>
-					<button type="button" class="btn btn-small jj-underline" onClick="addSmiley('[u] [/u]', 'jj_message')">U</button>
-					<button type="button" class="btn btn-small jj-link" onClick="addSmiley('[url=] [/url]', 'jj_message')">Link</button>
+					<button type="button" class="btn btn-small jj-bold" onClick="addSmiley('[b] [/b]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
+					<button type="button" class="btn btn-small jj-italic" onClick="addSmiley('[i] [/i]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
+					<button type="button" class="btn btn-small jj-underline" onClick="addSmiley('[u] [/u]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
+					<button type="button" class="btn btn-small jj-link" onClick="addSmiley('[url=] [/url]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
 				</div>
 			</div>
 		<?php endif; ?>
