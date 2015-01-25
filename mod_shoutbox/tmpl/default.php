@@ -77,11 +77,11 @@ elseif (array_intersect($permissions, $access))
 		// Displays the Name of the user if logged in unless stated in the parameters to be a input box
 		if ($displayName == 'real' && !$user->guest)
 		{
-			echo JText::_('SHOUT_NAME') . ":" . $user->name;
+			echo '<p>' . JText::_('SHOUT_NAME') . ": " . $user->name . '</p>';
 		}
 		elseif ($displayName == 'user' && !$user->guest)
 		{
-			echo JText::_('SHOUT_NAME') . ":" . $user->username;
+			echo '<p>' . JText::_('SHOUT_NAME') . ": " . $user->username . '</p>';
 		}
 		elseif ($user->guest||($displayName == 'choose' && !$user->guest))
 		{
@@ -89,8 +89,6 @@ elseif (array_intersect($permissions, $access))
 			<input name="jjshout[name]" type="text" maxlength="25" required="required" id="shoutbox-name" placeholder="<?php echo JText::_('SHOUT_NAME'); ?>" />
 		<?php
 		}
-
-		echo '<br />';
 
 		// Adds in session token to prevent re-posts and a security token to prevent CRSF attacks
 		$_SESSION['token'] = uniqid("token", true);

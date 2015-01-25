@@ -18,13 +18,16 @@
 }
 #jjshoutboxform textarea {
     width: 100%;
-    margin: 5px 0 0 0;
+    margin: 0;
 }
 #jjshoutboxform input {
     margin-top: 5px;
     color: #000;
     width: 100%;
     min-height: 30px;
+}
+#jjshoutboxform p {
+    margin: 4px 0;
 }
 #jjshoutboxoutput {
     height: 200px;
