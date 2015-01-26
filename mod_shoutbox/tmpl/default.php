@@ -154,16 +154,15 @@ elseif (array_intersect($permissions, $access))
 				echo recaptcha_get_html($publickey, $error);
 			}
 		}
-		?>
-
-		<?php if ($securitytype == 2) : ?>
+		elseif ($securitytype == 2)
+		{
 			<?php $que_number1 = $helper->randomnumber(1); ?>
 			<?php $que_number2 = $helper->randomnumber(1); ?>
 			<label class="jj_label" for="math_output"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
 			<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
 			<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
 			<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
-		<?php endif; ?>
+		<?php } ?>
 
 		<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo $submittext ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
 	</form>
