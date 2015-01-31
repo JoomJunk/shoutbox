@@ -156,6 +156,7 @@ elseif (array_intersect($permissions, $access))
 		}
 		elseif ($securitytype == 2)
 		{
+		?>
 			<?php $que_number1 = $helper->randomnumber(1); ?>
 			<?php $que_number2 = $helper->randomnumber(1); ?>
 			<label class="jj_label" for="math_output"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
