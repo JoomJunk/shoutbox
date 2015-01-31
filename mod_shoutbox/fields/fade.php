@@ -26,6 +26,9 @@ class JFormFieldFade extends JFormField
 	 */
 	protected function getLabel()
 	{
+		$doc = JFactory::getDocument();
+		$app = JFactory::getApplication();
+
 		// Import jQuery
 		if (version_compare(JVERSION, '3.0.0', 'ge'))
 		{
@@ -33,8 +36,6 @@ class JFormFieldFade extends JFormField
 		}
 		else
 		{
-			$app = JFactory::getApplication();
-
 			if (!$app->get('jquery'))
 			{
 				$app->set('jquery', true);
@@ -43,7 +44,6 @@ class JFormFieldFade extends JFormField
 			}
 		}
 		
-		$doc = JFactory::getDocument();
 		
 		$js = '		
 			jQuery(document).ready(function($) {
