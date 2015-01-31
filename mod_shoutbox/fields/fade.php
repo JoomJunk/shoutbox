@@ -43,22 +43,32 @@ class JFormFieldFade extends JFormField
 				JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 			}
 		}
+
+		if (version_compare(JVERSION, '3.0.0', 'ge'))
+		{
+			$parent = '.control-group';
+		}
+		else
+		{
+			$parent = 'li';
+		}
 		
 		
 		$js = '		
 			jQuery(document).ready(function($) {
-				
+
 				var select  = $("#jform_params_securitytype");
-				var public  = $("#jform_params_recaptcha_public-lbl").parents(".control-group");
-				var private = $("#jform_params_recaptcha_private-lbl").parents(".control-group");
+
+				var public  = $("#jform_params_recaptcha_public-lbl").parents("' . $parent . '");
+				var private = $("#jform_params_recaptcha_private-lbl").parents("' . $parent . '");
 				
 				if( select.val() == 0 || select.val()  == 2 ) {
 					public.hide();
 					private.hide();
 				}
-				
+
 				select.on("change", function() {
-					
+
 					var value = this.value;
 
 					if( value == 0 || value == 2 ) {						
@@ -69,16 +79,20 @@ class JFormFieldFade extends JFormField
 						public.fadeIn();
 						private.fadeIn();						
 					}
-					
+
 				});
-				
+
 			});			
 		';
-		
-		$doc->addScriptDeclaration($js);
-		
-		return "<hr>";
 
+		$doc->addScriptDeclaration($js);
+
+		if (version_compare(JVERSION, '3.0.0', 'ge'))
+		{
+			return '<hr>';
+		}
+
+		return '';
 	}
 
 	/**
