@@ -33,6 +33,8 @@ class JFormFieldFade extends JFormField
 		}
 		else
 		{
+			$app = JFactory::getApplication();
+
 			if (!$app->get('jquery'))
 			{
 				$app->set('jquery', true);
