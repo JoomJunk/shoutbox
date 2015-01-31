@@ -113,7 +113,7 @@
 				<field name="messagelength" type="text" default="200" label="SHOUT_MESSAGELABEL" description="SHOUT_MESSAGEDESC" />
 				<field name="alertlength" type="text" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
 				<field name="warnlength" type="text" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
-				<field name="check" type="check" label="FreiChat" />
+				<field name="check" type="shoutbox.check" label="FreiChat" />
 			</fieldset>
 
 			<fieldset name="styling" label="SHOUT_STYLING">
@@ -135,7 +135,7 @@
 				</field>			
 				<field name="recaptcha-public" type="text" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
 				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />		
-				<field name="fade" type="fade" label="Fade" />
+				<field name="fade" type="shoutbox.fade" label="Fade" />
 				
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 			</fieldset>

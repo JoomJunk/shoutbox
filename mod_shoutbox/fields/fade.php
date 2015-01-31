@@ -14,12 +14,12 @@ defined('JPATH_PLATFORM') or die;
  * @package     JJ_Shoutbox
  * @since       3.0.0
  */
-class JFormFieldFade extends JFormField
+class ShoutboxFormFieldFade extends JFormField
 {
 	/**
 	 * @var string
 	 */
-	protected $type = 'Fade';
+	protected $type = 'fade';
 
 	/**
 	 * @return string

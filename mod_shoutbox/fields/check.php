@@ -14,7 +14,7 @@ defined('JPATH_PLATFORM') or die;
  * @package     JJ_Shoutbox
  * @since       2.0.0
  */
-class JFormFieldCheck extends JFormField
+class ShoutboxFormFieldCheck extends JFormField
 {
 	/**
 	 * @var string
