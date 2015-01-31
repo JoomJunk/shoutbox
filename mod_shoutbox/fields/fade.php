@@ -26,7 +26,20 @@ class JFormFieldFade extends JFormField
 	 */
 	protected function getLabel()
 	{
-		JHtml::_('jquery.framework');
+		// Import jQuery
+		if (version_compare(JVERSION, '3.0.0', 'ge'))
+		{
+			JHtml::_('jquery.framework');
+		}
+		else
+		{
+			if (!$app->get('jquery'))
+			{
+				$app->set('jquery', true);
+				$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js');
+				JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
+			}
+		}
 		
 		$doc = JFactory::getDocument();
 		
