@@ -47,7 +47,6 @@ $doc 	= JFactory::getDocument();
 $user 	= JFactory::getUser();
 $app 	= JFactory::getApplication();
 
-
 // Detect a UIKit based theme
 $template 	= $app->getTemplate('template')->template;
 $uikit 		= JPATH_SITE . '/templates/' . $template . '/warp/vendor/uikit/js/uikit.js';

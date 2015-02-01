@@ -14,6 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+
 Version 3.0.0
 + Integrated AJAX for submittin and retreiving posts
 + Initially hide smilies with toggle option
@@ -22,6 +23,10 @@ Version 3.0.0
 # Fixed Kunena profile links
 ^ Enhanced HTML markup
 ^ Other small PHP anhancements
+
+Version 2.0.2
+^ Updated to jQuery 1.11.2
+- Removed FreiChat check as this extension conflict is now fixed
 
 Version 2.0.1
 - Removed a lot of word from swearwords.php
