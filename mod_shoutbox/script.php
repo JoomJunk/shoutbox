@@ -92,6 +92,14 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update126();
 				}
+
+				/**
+				 * In 2.0.0 we fixed the Freichat broken compatability so remove the check form field
+				 */
+				if (version_compare($oldRelease, '2.0.1', '<='))
+				{
+					$this->update202();
+				}
 			}
 		}
 
@@ -421,5 +429,21 @@ class Mod_ShoutboxInstallerScript
 			// Unset the array for the next loop
 			unset($values);
 		}
+	}
+
+	/**
+	 * Function to remove the fields directory. We won't remove the entire folder as it's
+	 * coming back in Shoutbox 3.x and if people upgrade in one go there might be issues
+	 *
+	 * @return  void
+	 *
+	 * @since  2.0.2
+	 */
+	protected function update202()
+	{
+		// Import dependencies
+		jimport('joomla.filesystem.file');
+
+		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/fields/check.php');
 	}
 }
