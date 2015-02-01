@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 2.0.2
+^ Updated to jQuery 1.11.2
+- Removed FreiChat check as this extension conflict is now fixed
+
 Version 2.0.1
 - Removed a lot of word from swearwords.php
 ^ Tweak and cleanup of variables + Javascript
