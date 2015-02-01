@@ -93,7 +93,7 @@
 					<option value="2">SHOUT_DONT_SHOW</option>
 				</field>		
 				<field name="refresh" type="text" default="10" label="SHOUT_AUTO_REFRESH" description="SHOUT_AUTO_REFRESH_DESC" />
-				<field name="sound" type="radio" class="btn-group" default="1" label="SHOUT_SOUNDLABEL" description="SHOUT_SOUNDDESC">
+				<field name="sound" type="radio" class="btn-group" default="0" label="SHOUT_SOUNDLABEL" description="SHOUT_SOUNDDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
