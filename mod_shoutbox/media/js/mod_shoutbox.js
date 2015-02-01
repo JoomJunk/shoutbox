@@ -199,7 +199,7 @@ jQuery(document).ready(function($) {
 	
 	
 	// GET POSTS
-	getPosts = function(title, root)
+	getPosts = function(title, root, sound)
 	{
 		// Assemble variables to submit
 		var request = {
@@ -218,6 +218,12 @@ jQuery(document).ready(function($) {
 
 					// Grab the html output and append it to the shoutbox message
 					$('.jj-shout-error').after(response.data.html);
+					
+					// Play notification sound if enabled
+					if (sound == 1) 
+					{
+						document.getElementById('jjshoutbox-audio').play();
+					}
 				}
 			},
 			error:function(ts){

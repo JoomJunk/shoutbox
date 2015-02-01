@@ -34,6 +34,7 @@ $bordercolour 		= $params->get('bordercolor', '#FF3C16');
 $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
 $bbcode 			= $params->get('bbcode', 1);
+$sound				= $params->get('sound', 1);
 $genericName		= $params->get('genericname');
 $alertLength		= $params->get('alertlength', '50');
 $warnLength			= $params->get('warnlength', '10');

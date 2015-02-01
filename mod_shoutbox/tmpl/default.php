@@ -50,6 +50,13 @@ $doc->addStyleDeclaration($style);
 		<?php endforeach; ?>
 	<?php endif; ?>
 </div>
+
+<?php if ( $sound == 1 ) : ?>
+<audio id="jjshoutbox-audio" preload="auto">
+	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/pop.mp3" type="audio/mpeg">
+</audio>
+<?php endif; ?>
+
 <div id="jjshoutboxform">
 <?php
 // Retrieve the list of user groups the user has access to
@@ -227,7 +234,7 @@ else
 
 	// Refresh the shoutbox posts every X seconds
 	setInterval(function(){
-		getPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>');
+		getPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>', '<?php echo $sound; ?>');
 	}, <?php echo $refresh; ?>);
 	
 	<?php endif; ?>
