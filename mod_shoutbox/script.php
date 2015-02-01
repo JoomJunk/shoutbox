@@ -92,7 +92,15 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update126();
 				}
-				
+
+				/**
+				 * In 2.0.0 we fixed the Freichat broken compatability so remove the check form field
+				 */
+				if (version_compare($oldRelease, '2.0.1', '<='))
+				{
+					$this->update202();
+				}
+
 				/**
 				 * For extensions going from < version 3.0.0 we need to change the loginname field option values
 				 */
@@ -430,6 +438,21 @@ class Mod_ShoutboxInstallerScript
 			unset($values);
 		}
 	}
+
+	/**
+	 * Function to remove the fields directory
+	 *
+	 * @return  void
+	 *
+	 * @since  2.0.2
+	 */
+	protected function update202()
+	{
+		// Import dependencies
+		jimport('joomla.filesystem.folder');
+
+		JFolder::delete(JPATH_ROOT . '/modules/mod_shoutbox/fields');
+	}
 	
 	/**
 	 * Function to update the params for the Shoutbox Version 3.0.0 updates
@@ -511,5 +534,4 @@ class Mod_ShoutboxInstallerScript
 			unset($newParams);
 		}
 	}
-	
 }
