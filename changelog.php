@@ -14,7 +14,6 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-
 Version 3.0.0
 + Integrated AJAX for submitting and retrieving posts
 + Initially hide smilies with toggle option

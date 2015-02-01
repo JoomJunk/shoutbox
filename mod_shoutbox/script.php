@@ -100,6 +100,7 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update202();
 				}
+<<<<<<< HEAD
 
 				/**
 				 * For extensions going from < version 3.0.0 we need to change the loginname field option values
@@ -108,6 +109,8 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update300();
 				}
+=======
+>>>>>>> development
 			}
 		}
 
@@ -440,7 +443,8 @@ class Mod_ShoutboxInstallerScript
 	}
 
 	/**
-	 * Function to remove the fields directory
+	 * Function to remove the fields directory. We won't remove the entire folder as it's
+	 * coming back in Shoutbox 3.x and if people upgrade in one go there might be issues
 	 *
 	 * @return  void
 	 *
@@ -449,9 +453,9 @@ class Mod_ShoutboxInstallerScript
 	protected function update202()
 	{
 		// Import dependencies
-		jimport('joomla.filesystem.folder');
+		jimport('joomla.filesystem.file');
 
-		JFolder::delete(JPATH_ROOT . '/modules/mod_shoutbox/fields');
+		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/fields/check.php');
 	}
 	
 	/**
