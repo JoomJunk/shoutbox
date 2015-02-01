@@ -100,17 +100,14 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update202();
 				}
-<<<<<<< HEAD
 
 				/**
 				 * For extensions going from < version 3.0.0 we need to change the loginname field option values
 				 */
-				if (version_compare($oldRelease, '2.0.1', '<='))
+				if (version_compare($oldRelease, '2.0.2', '<='))
 				{
 					$this->update300();
 				}
-=======
->>>>>>> development
 			}
 		}
 
