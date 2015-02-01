@@ -15,7 +15,13 @@ $ -> Language fix or change
 ! -> Note
 
 Version 3.0.0
-+ Add AJAX submission of content
++ Integrated AJAX for submittin and retreiving posts
++ Initially hide smilies with toggle option
++ Added Bootstrap and UIKit styling support
+# Fixed Freichat conflict
+# Fixed Kunena profile links
+^ Enhanced HTML markup
+^ Other small PHP anhancements
 
 Version 2.0.1
 - Removed a lot of word from swearwords.php
