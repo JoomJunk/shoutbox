@@ -466,8 +466,26 @@ class Mod_ShoutboxInstallerScript
 				$newParams['loginname'] = 'choose';
 			}
 
+
+			// Apply security param value to new securitytype param
+			$recaptcha = $this->getParam('recaptcha', $module);
+			$question  = $this->getParam('securityquestion', $module);
+			
+			if ($recaptcha == 0)
+			{
+				$newParams['securitytype'] = 1;
+			}
+			elseif ($question == 0)
+			{
+				$newParams['securitytype'] = 2;
+			}
+			else
+			{
+				$newParams['securitytype'] = 0;
+			}
+
 			// To standardise off is 0 and on is 1. Swap some field names around.
-			$params = array('bbcode', 'swearingcounter', 'recaptchaon', 'securityquestion', 'mass_delete');
+			$params   = array('bbcode', 'swearingcounter', 'mass_delete');
 
 			foreach ($params as $paramName)
 			{
@@ -483,6 +501,7 @@ class Mod_ShoutboxInstallerScript
 					$newParams[$paramName] = 0;
 				}
 			}
+			
 
 			// Set the param values
 			$this->setParams($newParams, 'edit', $module);
@@ -492,7 +511,5 @@ class Mod_ShoutboxInstallerScript
 			unset($newParams);
 		}
 	}
-	
-	
 	
 }
