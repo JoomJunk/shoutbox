@@ -16,13 +16,13 @@ $ -> Language fix or change
 
 
 Version 3.0.0
-+ Integrated AJAX for submittin and retreiving posts
++ Integrated AJAX for submitting and retrieving posts
 + Initially hide smilies with toggle option
 + Added Bootstrap and UIKit styling support
 # Fixed Freichat conflict
 # Fixed Kunena profile links
 ^ Enhanced HTML markup
-^ Other small PHP anhancements
+^ Other small PHP enhancements
 
 Version 2.0.2
 ^ Updated to jQuery 1.11.2
