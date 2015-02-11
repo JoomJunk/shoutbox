@@ -741,7 +741,7 @@ class ModShoutboxHelper
 		}
 		catch (Exception $e)
 		{
-			JFactory::enqueueMessage($e->getMessage(), 'error');
+			JFactory::getApplication()->enqueueMessage($e->getMessage(), 'error');
 		}
 
 		return;
