@@ -227,14 +227,14 @@ else
 			}
 			<?php } ?>
 
-			submitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
+			JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
 			return false;
 		});		
 	});
 
 	// Refresh the shoutbox posts every X seconds
 	setInterval(function(){
-		getPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>', '<?php echo $sound; ?>');
+		JJgetPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>', '<?php echo $sound; ?>');
 	}, <?php echo $refresh; ?>);
 	
 	<?php endif; ?>
