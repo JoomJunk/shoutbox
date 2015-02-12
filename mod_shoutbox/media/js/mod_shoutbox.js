@@ -4,8 +4,8 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-var getPosts 	= null;
-var submitPost 	= null;
+var JJgetPosts 	 = null;
+var JJsubmitPost = null;
 
 function addSmiley(smiley, id) {
 
@@ -102,7 +102,7 @@ jQuery(document).ready(function($) {
 	
 	
 	// SUBMIT POST
-	submitPost = function(name, title, securityType, security, root)
+	JJsubmitPost = function(name, title, securityType, security, root)
 	{
 		// Assemble some commonly used vars
 		var textarea = $('#jj_message'),
@@ -168,7 +168,7 @@ jQuery(document).ready(function($) {
 					}
 
 					// Refresh the output
-					getPosts(title, root)
+					JJgetPosts(title, root)
 				}
 			},
 			error:function(ts){
@@ -199,7 +199,7 @@ jQuery(document).ready(function($) {
 	
 	
 	// GET POSTS
-	getPosts = function(title, root, sound)
+	JJgetPosts = function(title, root, sound)
 	{
 		// Assemble variables to submit
 		var request = {
