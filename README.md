@@ -1,5 +1,8 @@
 Shoutbox
 ========
+
+[![Code Climate](https://codeclimate.com/github/JoomJunk/shoutbox/badges/gpa.svg)](https://codeclimate.com/github/JoomJunk/shoutbox)
+
 JoomJunk Shoutbox - A PHP shoutbox designed for use on Joomla sites
 
 Please see the changelog for detailed information about recent changes
