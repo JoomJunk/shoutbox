@@ -201,6 +201,10 @@ jQuery(document).ready(function($) {
 	// GET POSTS
 	JJgetPosts = function(title, root, sound)
 	{
+		
+		// Get the ID of the last shout
+		var lastID = getLastID();
+		
 		// Assemble variables to submit
 		var request = {
 			'jjshout[title]' : title,
@@ -219,8 +223,11 @@ jQuery(document).ready(function($) {
 					// Grab the html output and append it to the shoutbox message
 					$('.jj-shout-error').after(response.data.html);
 					
+					// Get the ID of the last shout after the output has been updated
+					var newLastID = getLastID();
+					
 					// Play notification sound if enabled
-					if (sound == 1) 
+					if (sound == 1 && newLastID > lastID) 
 					{
 						document.getElementById('jjshoutbox-audio').play();
 					}
@@ -232,5 +239,13 @@ jQuery(document).ready(function($) {
 		});
 
 		return false;
+	}
+	
+	// Get the last ID of the shoutbox output
+	function getLastID()
+	{
+		var lastId = $('#jjshoutboxoutput').find('.shout-header:first-child').data('shout-id');
+		
+		return lastId;
 	}
 });

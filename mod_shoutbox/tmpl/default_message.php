@@ -10,7 +10,7 @@ defined('_JEXEC') or die('Restricted access');
 $user = JFactory::getUser();
 ?>
 <div>
-	<div class="shout-header"{TITLE}>
+	<div data-shout-id="{POSTID}" class="shout-header"{TITLE}>
 		{USER} - {DATE}
 		<?php if ($user->authorise('core.delete')) : ?>
 			<form method="post" name="delete">
