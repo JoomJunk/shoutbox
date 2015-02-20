@@ -53,7 +53,8 @@ $doc->addStyleDeclaration($style);
 
 <?php if ( $sound == 1 ) : ?>
 <audio id="jjshoutbox-audio" preload="auto">
-	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/pop.mp3" type="audio/mpeg">
+	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.mp3" type="audio/mpeg">
+	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.ogg" type="audio/ogg">
 </audio>
 <?php endif; ?>
 
