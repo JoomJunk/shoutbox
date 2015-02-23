@@ -18,6 +18,7 @@ Version 3.0.0
 + Integrated AJAX for submitting and retrieving posts
 + Initially hide smilies with toggle option
 + Added Bootstrap and UIKit styling support
++ Added sound notifications for new shouts
 # Fixed Freichat conflict
 # Fixed Kunena profile links
 ^ Enhanced HTML markup
