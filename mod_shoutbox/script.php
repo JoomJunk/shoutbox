@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    JJ_Shoutbox
- * @copyright  Copyright (C) 2011 - 2014 JoomJunk. All rights reserved.
+ * @copyright  Copyright (C) 2011 - 2015 JoomJunk. All rights reserved.
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
  */
 // No direct access to this file
@@ -91,6 +91,22 @@ class Mod_ShoutboxInstallerScript
 				if (version_compare($oldRelease, '1.2.5', '<='))
 				{
 					$this->update126();
+				}
+
+				/**
+				 * In 2.0.0 we fixed the Freichat broken compatability so remove the check form field
+				 */
+				if (version_compare($oldRelease, '2.0.1', '<='))
+				{
+					$this->update202();
+				}
+
+				/**
+				 * For extensions going from < version 3.0.0 we need to change the loginname field option values
+				 */
+				if (version_compare($oldRelease, '2.0.2', '<='))
+				{
+					$this->update300();
 				}
 			}
 		}
@@ -420,6 +436,103 @@ class Mod_ShoutboxInstallerScript
 			
 			// Unset the array for the next loop
 			unset($values);
+		}
+	}
+
+	/**
+	 * Function to remove the fields directory. We won't remove the entire folder as it's
+	 * coming back in Shoutbox 3.x and if people upgrade in one go there might be issues
+	 *
+	 * @return  void
+	 *
+	 * @since  2.0.2
+	 */
+	protected function update202()
+	{
+		// Import dependencies
+		jimport('joomla.filesystem.file');
+
+		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/fields/check.php');
+	}
+	
+	/**
+	 * Function to update the params for the Shoutbox Version 3.0.0 updates
+	 *
+	 * @return  void
+	 *
+	 * @since  3.0.0
+	 */
+	protected function update300()
+	{
+		$modules = $this->getInstances(true);
+
+		foreach ($modules as $module)
+		{
+			// Convert string to integer
+			$module = (int) $module;
+
+			// Initialise the values to be updated
+			$newParams = array();
+
+			// Name to show is now a set of string values rather than numerical values.
+			$param = $this->getParam('loginname', $module);
+			
+			if ($param == 0)
+			{
+				$newParams['loginname'] = 'real';
+			}
+			elseif ($param == 1)
+			{
+				$newParams['loginname'] = 'user';
+			}
+			else
+			{
+				$newParams['loginname'] = 'choose';
+			}
+
+
+			// Apply security param value to new securitytype param
+			$recaptcha = $this->getParam('recaptcha', $module);
+			$question  = $this->getParam('securityquestion', $module);
+			
+			if ($recaptcha == 0)
+			{
+				$newParams['securitytype'] = 1;
+			}
+			elseif ($question == 0)
+			{
+				$newParams['securitytype'] = 2;
+			}
+			else
+			{
+				$newParams['securitytype'] = 0;
+			}
+
+			// To standardise off is 0 and on is 1. Swap some field names around.
+			$params   = array('bbcode', 'swearingcounter', 'mass_delete');
+
+			foreach ($params as $paramName)
+			{
+				$param = $this->getParam($paramName, $module);
+
+				// If the param was 1 make it 0 and vice versa
+				if ($param == 0)
+				{
+					$newParams[$paramName] = 1;
+				}
+				else
+				{
+					$newParams[$paramName] = 0;
+				}
+			}
+			
+
+			// Set the param values
+			$this->setParams($newParams, 'edit', $module);
+
+			// Unset the array for the next loop
+			unset($param);
+			unset($newParams);
 		}
 	}
 }

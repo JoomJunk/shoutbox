@@ -3,11 +3,11 @@
 	<name>JJ Shoutbox</name> 
 	<author>JoomJunk</author> 
 	<creationDate>05-Mar-2012</creationDate> 
-	<copyright>Copyright (C) 2011 - 2014 JoomJunk</copyright> 
+	<copyright>Copyright (C) 2011 - 2015 JoomJunk</copyright> 
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>2.0.1</version> 
+	<version>3.0.0-beta3</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -39,6 +39,7 @@
 		<folder>images</folder>
 		<folder>js</folder>
 		<folder>recaptcha</folder>
+		<folder>sounds</folder>
 	</media>
 	
 	<files>
@@ -68,7 +69,7 @@
  
 	<config>
 		<fields name="params">
-			<fieldset name="basic" addfieldpath="/modules/mod_shoutbox/fields">
+			<fieldset name="basic">
 				<field name="profile" type="list" default="none" label="SHOUT_LINK_PROFILE" description="SHOUT_LINK_PROFILEDESC">
 					<option value="0">SHOUT_NO_USERS</option>
 					<option value="1">SHOUT_CB_USERS</option>
@@ -77,12 +78,10 @@
 					<option value="4">SHOUT_K2_BLOG_USERS</option>
 				</field>
 				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
-				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
-				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
-				<field name="loginname" type="radio" default="1" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
-					<option value="0">SHOUT_REAL</option>
-					<option value="1">SHOUT_USER</option>
-					<option value="2">SHOUT_CHOOSE</option>
+				<field name="loginname" type="radio" class="btn-group" default="user" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
+					<option value="real">SHOUT_REAL</option>
+					<option value="user">SHOUT_USER</option>
+					<option value="choose">SHOUT_CHOOSE</option>
 				</field>
 				<field name="guestpost" type="Usergroup" default="1" multiple="true" label="SHOUT_GUESTLABEL" description="SHOUT_GUESTDESC" />
 				<field name="date" type="list" default="2" label="SHOUT_SHOW_DATE" description="SHOUT_SHOW_DATEDESC">
@@ -92,51 +91,56 @@
 					<option value="4">SHOUT_DATE_SPACE_OPTION_TWO</option>
 					<option value="5">SHOUT_DATE_REVERSED</option>
 					<option value="2">SHOUT_DONT_SHOW</option>
+				</field>		
+				<field name="refresh" type="text" default="10" label="SHOUT_AUTO_REFRESH" description="SHOUT_AUTO_REFRESH_DESC" />
+				<field name="sound" type="radio" class="btn-group" default="0" label="SHOUT_SOUNDLABEL" description="SHOUT_SOUNDDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
 				</field>
 				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
 				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
-				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
-				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
 				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
 					<option value="0">SHOUT_SMILIES_ON</option>
 					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
-					<option value="2">SHOUT_SMILIES_ON_SLIDE</option>
-					<option value="3">SHOUT_SMILIES_DISABLE</option>
+					<option value="2">SHOUT_SMILIES_ON_SLIDE_HIDE</option>
+					<option value="3">SHOUT_SMILIES_ON_SLIDE_SHOW</option>
+					<option value="4">SHOUT_SMILIES_DISABLE</option>
 				</field>
-				<field name="bbcode" type="radio" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
-					<option value="0">JON</option>
-					<option value="1">JOFF</option>
+				<field name="bbcode" type="radio" class="btn-group" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
 				</field>
-				<field name="swearingcounter" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
-					<option value="0">JON</option>
-					<option value="1">JOFF</option>
+				<field name="swearingcounter" class="btn-group" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
 				</field>
 				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
 				<field name="messagelength" type="text" default="200" label="SHOUT_MESSAGELABEL" description="SHOUT_MESSAGEDESC" />
 				<field name="alertlength" type="text" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
 				<field name="warnlength" type="text" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
-				<field name="check" type="check" label="FreiChat" />
 			</fieldset>
 
-			<fieldset name="security" label="SHOUT_SECURITY">
-				<field name="recaptchaon" type="radio" default="1" label="SHOUT_RECAPTCHAON_LABEL" description="SHOUT_RECAPTCHAON_DESC">
-					<option value="0">JYES</option>
-					<option value="1">JNO</option>
-				</field>
-				<field name="recaptcha-public" type="text" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
-				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />
-				
-				<field name="securityquestion" type="radio" default="1" label="SHOUT_SECURITY_QUESTION_LABEL" description="SHOUT_SECURITY_QUESTION_DESC">
-					<option value="0">JYES</option>
-					<option value="1">JNO</option>
-				</field>
+			<fieldset name="styling" label="SHOUT_STYLING">
+				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
+				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
+				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
+				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
 			</fieldset>
 			
-			<fieldset name="advanced">
-				<field name="mass_delete" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
-					<option value="0">JYES</option>
-					<option value="1">JNO</option>
+			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
+				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
+				<field name="securitytype" type="list" default="0" label="SHOUT_SECURITY_TYPE" description="SHOUT_SECURITY_TYPE_DESC">
+					<option value="0">SHOUT_NONE</option>
+					<option value="1">SHOUT_RECAPTCHA</option>
+					<option value="2">SHOUT_MATHS_QUESTION</option>
+				</field>			
+				<field name="recaptcha-public" type="text" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
+				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />		
+				<field name="fade" type="shoutbox.fade" label="Fade" />
+				
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 			</fieldset>
 

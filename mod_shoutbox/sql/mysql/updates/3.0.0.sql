@@ -1,0 +1,1 @@
+ALTER TABLE `#__shoutbox` ENGINE=InnoDB;
