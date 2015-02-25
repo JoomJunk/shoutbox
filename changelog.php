@@ -18,6 +18,7 @@ WIP (Version 3.0.1)
 + Added option for required name
 + Added generic name as parameter if none used
 ^ Improved error reporting
+# Fixed smiley path for multilingual sites
 
 Version 3.0.0
 + Integrated AJAX for submitting and retrieving posts
