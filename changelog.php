@@ -14,6 +14,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP (Version 3.0.1)
++ Added option for required name
++ Added generic name as parameter if none used
+^ Improved error reporting
+
 Version 3.0.0
 + Integrated AJAX for submitting and retrieving posts
 + Initially hide smilies with toggle option
