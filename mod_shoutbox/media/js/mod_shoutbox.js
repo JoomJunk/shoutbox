@@ -6,6 +6,7 @@
 
 var JJgetPosts 	 = null;
 var JJsubmitPost = null;
+var showError 	 = null;
 
 function addSmiley(smiley, id) {
 
@@ -99,33 +100,13 @@ jQuery(document).ready(function($) {
 		$(this).toggleClass('rotated');
 		$('#jj_smiley_box').stop(true, false).slideToggle();
 	});
-	
-	
+		
 	// SUBMIT POST
 	JJsubmitPost = function(name, title, securityType, security, root)
 	{
 		// Assemble some commonly used vars
 		var textarea = $('#jj_message'),
 		message = textarea.val();
-
-		// If no message body show an error message and stop
-		if(message == "")
-		{
-			$('.jj-shout-error').append('<p class="inner-jj-error">Please enter a message!</p>').slideDown().show().delay(6000).queue(function(next){
-				$(this).slideUp().hide();
-				$('.inner-jj-error').remove();
-				next();
-			});
-			var $elt = $('#shoutbox-submit').attr('disabled', true);
-			setTimeout(function (){
-				$elt.attr('disabled', false);
-			}, 6000);
-			textarea.addClass('jj-redBorder').delay(6000).queue(function(next){
-				$(this).removeClass('jj-redBorder');
-				next();
-			});
-			return false;
-		}
 
 		// Assemble variables to submit
 		var request = {
@@ -218,10 +199,10 @@ jQuery(document).ready(function($) {
 			success:function(response){
 				if (response.success)
 				{
-					$('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-error"></div>'));
+					$('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
 
 					// Grab the html output and append it to the shoutbox message
-					$('.jj-shout-error').after(response.data.html);
+					$('.jj-shout-new').after(response.data.html);
 					
 					// Get the ID of the last shout after the output has been updated
 					var newLastID = getLastID();
@@ -248,4 +229,27 @@ jQuery(document).ready(function($) {
 		
 		return lastId;
 	}
+	
+	// Check if the name or message fields are empty
+	showError = function(field)
+	{
+		var errorBox = $('.jj-shout-error');
+		
+		if( field == '' )
+		{
+			errorMsg = '<p>Please enter a message</p>';
+		}
+		else
+		{
+			errorMsg = '<p>Please enter a name</p>';
+		}
+		
+		errorBox.html(errorMsg)
+				.slideDown().delay(5000).slideUp(400, function() {
+					$(this).empty();
+				});
+		
+		return false
+	}
+	
 });

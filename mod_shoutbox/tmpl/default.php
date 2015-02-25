@@ -35,7 +35,7 @@ $doc->addStyleDeclaration($style);
 
 <div id="jjshoutbox">
 <div id="jjshoutboxoutput">
-	<div class="jj-shout-error"></div>
+	<div class="jj-shout-new"></div>
 	<?php // Retrieves the shouts from the database ?>
 	<?php $shouts = $helper->getShouts($number, $dataerror); ?>
 
@@ -50,6 +50,7 @@ $doc->addStyleDeclaration($style);
 		<?php endforeach; ?>
 	<?php endif; ?>
 </div>
+<div class="jj-shout-error"></div>
 
 <?php if ( $sound == 1 ) : ?>
 <audio id="jjshoutbox-audio" preload="auto">
@@ -213,24 +214,48 @@ else
 	<?php // The ajax uses com_ajax in Joomla core from Joomla 3.2 and available as an install for Joomla 2.5 - so check if its available ?>
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
-	
-		$( "#shoutbox-submit" ).on('click', function() {
+		
+		$('#shoutbox-submit').on('click', function() {
+			
+			var shoutboxName 	= $('#shoutbox-name');
+			var shoutboxMsg		= $('#jj_message').val();
+			
 			<?php if($displayName == 'user' && !$user->guest){ ?>
-			var name = "<?php echo $user->username;?>";
+				var name = "<?php echo $user->username;?>";
 			<?php } elseif($displayName == 'real' && !$user->guest) { ?>
-			var name = "<?php echo $user->name;?>";
+				var name = "<?php echo $user->name;?>";
 			<?php } else { ?>
-			if($('#shoutbox-name').val() == ""){
-				var name = "<?php echo $genericName; ?>";
+			if( shoutboxName == '' )
+			{			
+				<?php if($nameRequired == 0 && $user->guest){ ?>
+					var name = "<?php echo $genericName;?>";
+				<?php } else { ?>		
+					var name = "JJ_None";
+				<?php } ?>			
 			}
-			else{
-				var name = $('#shoutbox-name').val();
+			else
+			{			
+				var name = shoutboxName.val();
 			}
 			<?php } ?>
-
-			JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
+			
+			// Run error reporting
+			if( shoutboxMsg == '' )
+			{
+				showError(shoutboxMsg);
+			}
+			else if ( name == 'JJ_None' )
+			{
+				showError(name);
+			}			
+			else
+			{
+				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
+			}
+			
 			return false;
-		});		
+		});	
+		
 	});
 
 	// Refresh the shoutbox posts every X seconds

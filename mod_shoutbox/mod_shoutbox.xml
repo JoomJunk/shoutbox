@@ -128,6 +128,11 @@
 			</fieldset>
 			
 			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
+				<field name="namerequired" type="list" default="0" label="SHOUT_NAME_REQUIRED" description="SHOUT_NAME_REQUIRED_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>			
+				<field name="genericname" type="text" default="Anonymous" label="SHOUT_GENERIC_NAME" description="SHOUT_GENERIC_NAME_DESC" />
 				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>

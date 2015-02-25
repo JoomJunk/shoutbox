@@ -83,6 +83,17 @@
 	color:red; 
 	font-weight:bold; 
 }
+#jjshoutbox .jj-shout-error {
+	display: none;
+	background: #F00;
+	color: #FFF;
+	margin: 7px 0 5px;
+	padding: 5px;
+}
+#jjshoutbox .jj-shout-error p {
+	margin: 0;
+	font-size: 12px;
+}
 #jjshoutbox .jj_label { 
 	width: 70px; 
 	display: inline-block; 
