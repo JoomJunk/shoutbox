@@ -433,7 +433,7 @@ class ModShoutboxHelper
 		// Replace the smileys
 		foreach ($this->smileys as $smile => $url)
 		{
-			$replace = '<img src="' . $url . '" alt="' . $smile . '">';
+			$replace = '<img src="' . JUri::root() . $url . '" alt="' . $smile . '">';
 			$message = str_replace($smile, $replace, $message);
 		}
 
