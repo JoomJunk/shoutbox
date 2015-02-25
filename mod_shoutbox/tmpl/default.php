@@ -217,7 +217,7 @@ else
 		
 		$('#shoutbox-submit').on('click', function() {
 			
-			var shoutboxName 	= $('#shoutbox-name');
+			var shoutboxName 	= $('#shoutbox-name').val();
 			var shoutboxMsg		= $('#jj_message').val();
 			
 			<?php if($displayName == 'user' && !$user->guest){ ?>
@@ -235,7 +235,7 @@ else
 			}
 			else
 			{			
-				var name = shoutboxName.val();
+				var name = shoutboxName;
 			}
 			<?php } ?>
 			
