@@ -472,7 +472,7 @@ class ModShoutboxHelper
 
 		foreach ($this->smileys as $smile => $url)
 		{
-			$smilies .= '<img class="jj_smiley" src="' . $url . '" alt="' . $smile . '" onClick="addSmiley(\'' . $smile . '\', \'' . $id . '\')" />';
+			$smilies .= '<img class="jj_smiley" src="' . $url . '" alt="' . $smile . '" onClick="addSmiley(\'' . $smile . '\', \'' . $id . '\',  \'smiley\')" />';
 		}
 
 		return $smilies;

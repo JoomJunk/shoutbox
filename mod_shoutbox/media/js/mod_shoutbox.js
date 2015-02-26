@@ -8,32 +8,17 @@ var JJgetPosts 	 = null;
 var JJsubmitPost = null;
 var showError 	 = null;
 
-function addSmiley(smiley, id) {
-
-	// If we are not passed an id, use the default 'jj_message'.
+function addSmiley(smiley, id) 
+{
+	// Get the text area object
+	var el = document.getElementById(id);
+	
+	// Define ID is not already defined
 	if (!id)
 	{
 		var id = 'jj_message';
 	}
-
-	// Get the position of the user in the text area
-	var position = getCurserPosition(id);
-
-	// Get the text area object
-	var el = document.getElementById(id);
-
-	// Split the text either side of the cursor
-	var strBegin = el.value.substring(0, position);
-	var strEnd   = el.value.substring(position);
-
-	// Piece the text back together with the cursor in the midle
-	el.value = strBegin + " " + smiley + " " + strEnd;
-}
-
-function getCurserPosition(id)
-{
-	var el = document.getElementById(id);
-	var pos = 0;
+	
 	// IE Support
 	if (document.selection)
 	{
@@ -48,8 +33,36 @@ function getCurserPosition(id)
 	{
 		pos = el.selectionStart;
 	}
+	
+	var strBegin = el.value.substring(0, pos);
+	var strEnd   = el.value.substring(pos);
 
-	return pos;
+	// Piece the text back together with the cursor in the midle
+	el.value = strBegin + " " + smiley + " " + strEnd;
+}
+
+
+function insertBBCode(start, end, el) 
+{
+	// IE Support
+	if (document.selection) 
+	{
+		el.focus();
+		sel = document.selection.createRange();
+		sel.text = start + sel.text + end;
+	} 
+	// Firefox support
+	else if (el.selectionStart || el.selectionStart == '0') 
+	{
+		el.focus();
+		var startPos = el.selectionStart;
+		var endPos = el.selectionEnd;
+		el.value = el.value.substring(0, startPos) + start + el.value.substring(startPos, endPos) + end + el.value.substring(endPos, el.value.length);
+	} 
+	else 
+	{			
+		el.value += start + end;
+	}	
 }
 
 function textCounter(textarea, countdown, maxlimit, alertLength, warnLength, shoutRemainingText)
@@ -93,7 +106,27 @@ function getRandomArbitrary(min, max)
 
 jQuery(document).ready(function($) {
 
+	// Append BBCode 
+	$('#jjshoutbox .btn-toolbar button').on('click', function() {
+		
+		var bbcode 		= $(this).data('bbcode-type');
+		var start 		= '[' + bbcode + ']';
+		var end 		= '[/' + bbcode + ']';
+		var element 	= $('#jj_message').get(0);
 
+		var param = '';
+
+		if ( bbcode == 'url' )
+		{
+			start = '[url=' + param + ']';
+		}
+		
+		insertBBCode(start, end, element);
+		
+		return false;
+	  
+    });
+	
 	// SMILEY SLIDETOGGLE
 	$('#jj_btn').on('click', function(e) {	
 		e.preventDefault();
