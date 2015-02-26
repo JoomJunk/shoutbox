@@ -870,7 +870,6 @@ class ModShoutboxHelper
 			$s 		= 30;
 			$d 		= 'mm';
 			$r 		= 'g';
-			$img 	= true;
 			$atts 	= array();		
 			
 			$url = 'http://www.gravatar.com/avatar/';
