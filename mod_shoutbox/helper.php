@@ -850,6 +850,50 @@ class ModShoutboxHelper
 
 		return $output;
 	}
+	
+	/**
+	 * Gets the avatar of a user
+	 *
+	 * @param   int     $type  The type of avatar.
+	 *
+	 * @return  string  The id of the user
+	 *
+	 * @since   3.0.1
+	 */
+	public function getAvatar( $type, $id ) 
+	{		
+		$user 	= JFactory::getUser($id);
+		$email 	= $user->email;
+		
+		if ($type == 'gravatar')
+		{
+			$s 		= 30;
+			$d 		= 'mm';
+			$r 		= 'g';
+			$img 	= true;
+			$atts 	= array();		
+			
+			$url = 'http://www.gravatar.com/avatar/';
+			$url .= md5( strtolower( trim( $email ) ) );
+			$url .= "?s=$s&d=$d&r=$r";
+			$url = '<img src="' . $url . '"';
+			foreach ( $atts as $key => $val )
+			{
+				$url .= ' ' . $key . '="' . $val . '"';
+			}
+			$url .= ' />';
+		}
+		else if ($type == 'kunena')
+		{
+			// To-Do: Get Kunena avatar
+		}
+		else if ($type == 'cb')
+		{
+			// To-Do: Get CB avatar
+		}
+		
+		return $url;
+	}
 
 	/**
 	 * Processes the template output and puts in the shout variables
@@ -882,6 +926,12 @@ class ModShoutboxHelper
 		{
 			switch (strtoupper($match[1]))
 			{
+				case 'AVATAR':
+					$avatar = $this->getAvatar($this->params->get('avatar', 'none'), $shout->user_id);
+					$message = str_replace('{' . $match[1] . '}', $avatar, $message);
+					
+					break;
+					
 				case 'TITLE':
 					$title =  $this->shouttitle($user, $shout->ip);
 					$message = str_replace('{' . $match[1] . '}', $title, $message);

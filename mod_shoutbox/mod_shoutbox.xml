@@ -77,6 +77,10 @@
 					<option value="3">SHOUT_JOM_SOCIAL_USERS</option>
 					<option value="4">SHOUT_K2_BLOG_USERS</option>
 				</field>
+				<field name="avatar" type="list" default="none" label="SHOUT_AVATAR" description="SHOUT_AVATAR_DESC">
+					<option value="none">SHOUT_NONE</option>
+					<option value="gravatar">SHOUT_GRAVATAR</option>
+				</field>
 				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
 				<field name="loginname" type="radio" class="btn-group" default="user" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
 					<option value="real">SHOUT_REAL</option>

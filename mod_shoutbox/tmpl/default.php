@@ -30,6 +30,16 @@ if ($user->authorise('core.delete'))
 	}';
 }
 
+if ($avatar != 'none')
+{
+	$style .= '#jjshoutboxoutput .shout-header {
+		height: auto;
+	}
+	#jjshoutboxoutput .avatar {
+		margin-right: 5px;
+	}';
+}
+
 $doc->addStyleDeclaration($style);
 ?>
 

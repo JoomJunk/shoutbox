@@ -23,6 +23,7 @@ $number 			= $params->get('maximum');
 $submittext 		= $params->get('submittext');
 $nonmembers 		= $params->get('nonmembers');
 $profile 			= $params->get('profile');
+$avatar 			= $params->get('avatar', 'none');
 $date 				= $params->get('date');
 $securitytype		= $params->get('securitytype', 0);
 $publicKey			= $params->get('recaptcha-public');

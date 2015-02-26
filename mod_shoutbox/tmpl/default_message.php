@@ -11,7 +11,7 @@ $user = JFactory::getUser();
 ?>
 <div>
 	<div data-shout-id="{POSTID}" class="shout-header"{TITLE}>
-		{USER} - {DATE}
+		<span class="avatar">{AVATAR}</span> {USER} - {DATE}
 		<?php if ($user->authorise('core.delete')) : ?>
 			<form method="post" name="delete">
 				<input name="jjshout[delete]" type="submit" value="x" />
