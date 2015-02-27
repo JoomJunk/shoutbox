@@ -18,6 +18,7 @@ WIP (Version 3.0.1)
 + Added option for required name
 + Added generic name as parameter if none used
 + Added Gravatar integration
++ Added Kunena avatar integration
 ^ Improved error reporting
 ^ Improved BBCode (now works with highlighted strings)
 # Fixed smiley path for multilingual sites
