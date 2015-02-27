@@ -884,7 +884,13 @@ class ModShoutboxHelper
 		}
 		else if ($type == 'kunena')
 		{
-			// To-Do: Get Kunena avatar
+			if (class_exists('KunenaFactory')) 
+			{			
+				$profile 	= KunenaFactory::getUser($user->id);				
+				$avatar 	= $profile->getAvatarImage('kavatar','profile');
+				
+				$url = $profile->getAvatarImage('kavatar','profile');
+			}
 		}
 		else if ($type == 'cb')
 		{
