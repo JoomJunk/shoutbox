@@ -36,11 +36,8 @@ if ($avatar != 'none')
 	#jjshoutboxoutput .shout-header {
 		height: auto;
 	}
-	#jjshoutboxoutput .avatar {
+	#jjshoutboxoutput .avatar img {
 		margin-right: 5px;
-	}
-	#jjshoutboxoutput .kavatar {
-		height: 30px;
 	}';
 }
 
