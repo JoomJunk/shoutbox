@@ -4,16 +4,16 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
  */
 
-#jjshoutbox { 
+.jjshoutbox { 
 	margin: auto; 
 	width: 100%; 
 }
 #jjshoutboxform { 
 	margin: 0 auto; 
 }
-#jjshoutbox > div,
-#jjshoutbox textarea,
-#jjshoutbox input {
+.jjshoutbox > div,
+.jjshoutbox textarea,
+.jjshoutbox input {
     box-sizing: border-box;
 }
 #jjshoutboxform textarea {
@@ -79,33 +79,33 @@
 	color: #FF0000; 
 	font-weight: bold; 
 }
-#jjshoutbox .jj_error { 
+.jjshoutbox .jj_error { 
 	color:red; 
 	font-weight:bold; 
 }
-#jjshoutbox .jj-shout-error {
+.jjshoutbox .jj-shout-error {
 	display: none;
 	background: #F00;
 	color: #FFF;
 	margin: 7px 0 5px;
 	padding: 5px;
 }
-#jjshoutbox .jj-shout-error p {
+.jjshoutbox .jj-shout-error p {
 	margin: 0;
 	font-size: 12px;
 }
-#jjshoutbox .jj_label { 
+.jjshoutbox .jj_label { 
 	width: 70px; 
 	display: inline-block; 
 }
-#jjshoutbox .jj_input {	
+.jjshoutbox .jj_input {	
 	width: 70px; 
 	display: inline-block;
 }
-#jjshoutbox .jj_admin_label { 
+.jjshoutbox .jj_admin_label { 
 	width: 30%; 
 }
-#jjshoutbox .jj_admin_button {
+.jjshoutbox .jj_admin_button {
     width: 65%;
     min-width: 90px;
     background-color: #FF3333;
@@ -154,19 +154,19 @@
 /**
 Non-bootstrap styling for BB Code
 **/
-#jjshoutbox #jj_smiley_box {
+.jjshoutbox #jj_smiley_box {
     margin: 5px 0 10px;
 	white-space: normal;
 }
-#jjshoutbox #jj_smiley_box img {
+.jjshoutbox #jj_smiley_box img {
     cursor: pointer;
 	padding: 2px;
     border:none;
 }
-#jjshoutbox .btn-toolbar {
+.jjshoutbox .btn-toolbar {
 	margin-top: 10px;
 }
-#jjshoutbox .btn-group .btn {
+.jjshoutbox .btn-group .btn {
 	cursor: pointer;
 	min-width: 30px;
     padding: 2px 7px;

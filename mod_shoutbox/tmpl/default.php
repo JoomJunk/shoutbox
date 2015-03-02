@@ -38,6 +38,7 @@ if ($avatar != 'none')
 	}
 	#jjshoutboxoutput .avatar img {
 		margin-right: 5px;
+		height: 30px;
 	}';
 }
 
@@ -45,7 +46,7 @@ $doc->addStyleDeclaration($style);
 $uniqueIdentifier = 'jjshoutbox' . $uniqueId;
 ?>
 
-<div id="<?php echo $uniqueIdentifier; ?>">
+<div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
 <div id="jjshoutboxoutput">
 	<div class="jj-shout-new"></div>
 	<?php // Retrieves the shouts from the database ?>
