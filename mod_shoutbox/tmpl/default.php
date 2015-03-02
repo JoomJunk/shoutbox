@@ -235,8 +235,8 @@ else
 
 		instance.find('#shoutbox-submit').on('click', function()
 		{
-			var shoutboxName 	= $('#shoutbox-name').val();
-			var shoutboxMsg		= $('#jj_message').val();
+			var shoutboxName 	= instance.find('#shoutbox-name').val();
+			var shoutboxMsg		= instance.find('#jj_message').val();
 			
 			<?php if($displayName == 'user' && !$user->guest){ ?>
 				var name = "<?php echo $user->username;?>";
