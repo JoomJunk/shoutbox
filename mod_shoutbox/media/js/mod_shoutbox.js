@@ -135,7 +135,7 @@ jQuery(document).ready(function($) {
 	});
 		
 	// SUBMIT POST
-	JJsubmitPost = function(name, title, securityType, security, root)
+	JJsubmitPost = function(name, title, securityType, security, root, Itemid)
 	{
 		// Assemble some commonly used vars
 		var textarea = $('#jj_message'),
@@ -167,7 +167,7 @@ jQuery(document).ready(function($) {
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&format=json',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&Itemid='+Itemid+'&format=json',
 			data: request,
 			success:function(response){
 				if (response.success)
@@ -182,7 +182,7 @@ jQuery(document).ready(function($) {
 					}
 
 					// Refresh the output
-					JJgetPosts(title, root)
+					JJgetPosts(title, root, false, Itemid)
 				}
 			},
 			error:function(ts){
@@ -213,7 +213,7 @@ jQuery(document).ready(function($) {
 	
 	
 	// GET POSTS
-	JJgetPosts = function(title, root, sound)
+	JJgetPosts = function(title, root, sound, Itemid)
 	{
 		
 		// Get the ID of the last shout
@@ -227,7 +227,7 @@ jQuery(document).ready(function($) {
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&format=json',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&Itemid='+Itemid+'&format=json',
 			data: request,
 			success:function(response){
 				if (response.success)

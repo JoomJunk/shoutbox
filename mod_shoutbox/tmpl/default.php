@@ -229,6 +229,8 @@ else
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
 		
+		var Itemid = '<?php echo $Itemid; ?>';
+		
 		$('#shoutbox-submit').on('click', function() {
 			
 			var shoutboxName 	= $('#shoutbox-name').val();
@@ -264,7 +266,7 @@ else
 			}			
 			else
 			{
-				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
+				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>', Itemid);
 			}
 			
 			return false;
@@ -274,7 +276,8 @@ else
 
 	// Refresh the shoutbox posts every X seconds
 	setInterval(function(){
-		JJgetPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>', '<?php echo $sound; ?>');
+		var Itemid = '<?php echo $Itemid; ?>';
+		JJgetPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>', '<?php echo $sound; ?>', Itemid);
 	}, <?php echo $refresh; ?>);
 	
 	<?php endif; ?>

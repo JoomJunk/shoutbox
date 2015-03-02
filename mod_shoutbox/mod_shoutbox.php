@@ -48,6 +48,7 @@ $remainingLength 	= JText::_('SHOUT_REMAINING');
 $doc 	= JFactory::getDocument();
 $user 	= JFactory::getUser();
 $app 	= JFactory::getApplication();
+$Itemid = $app->getMenu()->getActive()->id;
 
 // Detect a UIKit based theme
 $template 	= $app->getTemplate('template')->template;
