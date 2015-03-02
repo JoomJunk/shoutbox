@@ -11,9 +11,10 @@ jimport('joomla.filesystem.folder');
 
 require_once dirname(__FILE__) . '/helper.php';
 
-$title  = $module->title;
-$helper = new ModShoutboxHelper($title);
-$params = $helper->getParams();
+$title    = $module->title;
+$uniqueId = $module->id;
+$helper   = new ModShoutboxHelper($title);
+$params   = $helper->getParams();
 
 $displayName 		= $params->get('loginname', 'user');
 $smile 				= $params->get('smile');

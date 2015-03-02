@@ -45,9 +45,10 @@ if ($avatar != 'none')
 }
 
 $doc->addStyleDeclaration($style);
+$uniqueIdentifier = 'jjshoutbox' . $uniqueId;
 ?>
 
-<div id="jjshoutbox">
+<div id="<?php echo $uniqueIdentifier; ?>">
 <div id="jjshoutboxoutput">
 	<div class="jj-shout-new"></div>
 	<?php // Retrieves the shouts from the database ?>
@@ -67,7 +68,7 @@ $doc->addStyleDeclaration($style);
 <div class="jj-shout-error"></div>
 
 <?php if ( $sound == 1 ) : ?>
-<audio id="jjshoutbox-audio" preload="auto">
+<audio class="jjshoutbox-audio" preload="auto">
 	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.mp3" type="audio/mpeg">
 	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.ogg" type="audio/ogg">
 </audio>
@@ -228,11 +229,12 @@ else
 	<?php // The ajax uses com_ajax in Joomla core from Joomla 3.2 and available as an install for Joomla 2.5 - so check if its available ?>
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
-		
-		var Itemid = '<?php echo $Itemid; ?>';
-		
-		$('#shoutbox-submit').on('click', function() {
-			
+
+		var Itemid   = '<?php echo $Itemid; ?>';
+		var instance = $('#<?php echo $uniqueIdentifier; ?>');
+
+		instance.find('#shoutbox-submit').on('click', function()
+		{
 			var shoutboxName 	= $('#shoutbox-name').val();
 			var shoutboxMsg		= $('#jj_message').val();
 			
@@ -254,30 +256,29 @@ else
 				var name = shoutboxName;
 			}
 			<?php } ?>
-			
+
 			// Run error reporting
 			if( shoutboxMsg == '' )
 			{
-				showError(shoutboxMsg);
+				showError(shoutboxMsg, instance);
 			}
 			else if ( name == 'JJ_None' )
 			{
-				showError(name);
+				showError(name, instance);
 			}			
 			else
 			{
-				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>', Itemid);
+				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance);
 			}
-			
+
 			return false;
-		});	
-		
+		});
 	});
 
 	// Refresh the shoutbox posts every X seconds
 	setInterval(function(){
 		var Itemid = '<?php echo $Itemid; ?>';
-		JJgetPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>', '<?php echo $sound; ?>', Itemid);
+		JJgetPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
 	}, <?php echo $refresh; ?>);
 	
 	<?php endif; ?>

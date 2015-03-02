@@ -128,17 +128,17 @@ jQuery(document).ready(function($) {
     });
 	
 	// SMILEY SLIDETOGGLE
-	$('#jj_btn').on('click', function(e) {	
+	$('#jj_btn').on('click', function(e) {
 		e.preventDefault();
 		$(this).toggleClass('rotated');
 		$('#jj_smiley_box').stop(true, false).slideToggle();
 	});
 		
 	// SUBMIT POST
-	JJsubmitPost = function(name, title, securityType, security, root, Itemid)
+	JJsubmitPost = function(name, title, securityType, security, Itemid, instance)
 	{
 		// Assemble some commonly used vars
-		var textarea = $('#jj_message'),
+		var textarea = instance.find('#jj_message'),
 		message = textarea.val();
 
 		// Assemble variables to submit
@@ -153,15 +153,15 @@ jQuery(document).ready(function($) {
 
 		if (securityType == 1)
 		{
-			request['recaptcha_challenge_field'] = $('input#recaptcha_challenge_field').val();
-			request['recaptcha_response_field']  = $('input#recaptcha_response_field').val();
+			request['recaptcha_challenge_field'] = instance.find('input#recaptcha_challenge_field').val();
+			request['recaptcha_response_field']  = instance.find('input#recaptcha_response_field').val();
 		}
 
 		if (securityType == 2)
 		{
-			request['jjshout[sum1]'] = $('input[name="jjshout[sum1]"]').val();
-			request['jjshout[sum2]'] = $('input[name="jjshout[sum2]"]').val();
-			request['jjshout[human]'] = $('input[name="jjshout[human]"]').val();
+			request['jjshout[sum1]'] = instance.find('input[name="jjshout[sum1]"]').val();
+			request['jjshout[sum2]'] = instance.find('input[name="jjshout[sum2]"]').val();
+			request['jjshout[human]'] = instance.find('input[name="jjshout[human]"]').val();
 		}
 
 		// AJAX request
@@ -176,13 +176,13 @@ jQuery(document).ready(function($) {
 					textarea.val('');
 
 					// Empty the name value if there is one
-					if ($('#shoutbox-name').val())
+					if (instance.find('#shoutbox-name').val())
 					{
-						$('#shoutbox-name').val('');
+						instance.find('#shoutbox-name').val('');
 					}
 
 					// Refresh the output
-					JJgetPosts(title, root, false, Itemid)
+					JJgetPosts(title, false, Itemid, instance)
 				}
 			},
 			error:function(ts){
@@ -202,10 +202,10 @@ jQuery(document).ready(function($) {
 			var val1, val2;
 			val1 = getRandomArbitrary(0,9);
 			val2 = getRandomArbitrary(0,9);
-			$('input[name="jjshout[sum1]"]').val(val1);
-			$('input[name="jjshout[sum2]"]').val(val2);
-			$('label[for="math_output"]').text(val1 + ' + ' + val2);
-			$('input[name="jjshout[human]"]').val('');
+			instance.find('input[name="jjshout[sum1]"]').val(val1);
+			instance.find('input[name="jjshout[sum2]"]').val(val2);
+			instance.find('label[for="math_output"]').text(val1 + ' + ' + val2);
+			instance.find('input[name="jjshout[human]"]').val('');
 		}
 
 		return false;
@@ -213,11 +213,11 @@ jQuery(document).ready(function($) {
 	
 	
 	// GET POSTS
-	JJgetPosts = function(title, root, sound, Itemid)
+	JJgetPosts = function(title, sound, Itemid, instance)
 	{
 		
 		// Get the ID of the last shout
-		var lastID = getLastID();
+		var lastID = getLastID(instance);
 		
 		// Assemble variables to submit
 		var request = {
@@ -232,10 +232,10 @@ jQuery(document).ready(function($) {
 			success:function(response){
 				if (response.success)
 				{
-					$('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
+					instance.find('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
 
 					// Grab the html output and append it to the shoutbox message
-					$('.jj-shout-new').after(response.data.html);
+					instance.find('.jj-shout-new').after(response.data.html);
 					
 					// Get the ID of the last shout after the output has been updated
 					var newLastID = getLastID();
@@ -243,7 +243,7 @@ jQuery(document).ready(function($) {
 					// Play notification sound if enabled
 					if (sound == 1 && newLastID > lastID) 
 					{
-						document.getElementById('jjshoutbox-audio').play();
+						instance.find('.jjshoutbox-audio').get(0).play();
 					}
 				}
 			},
@@ -256,17 +256,17 @@ jQuery(document).ready(function($) {
 	}
 	
 	// Get the last ID of the shoutbox output
-	function getLastID()
+	function getLastID(instance)
 	{
-		var lastId = $('#jjshoutboxoutput').find('.shout-header:first-child').data('shout-id');
+		var lastId = instance.find('.shout-header:first-child').data('shout-id');
 		
 		return lastId;
 	}
 	
 	// Check if the name or message fields are empty
-	showError = function(field)
+	showError = function(field, instance)
 	{
-		var errorBox = $('.jj-shout-error');
+		var errorBox = instance.find('.jj-shout-error');
 		
 		if( field == '' )
 		{
