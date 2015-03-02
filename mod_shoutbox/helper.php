@@ -883,7 +883,7 @@ class ModShoutboxHelper
 			}
 			$url .= ' />';
 		}
-		else if ($type == 'kunena')
+		elseif ($type == 'kunena')
 		{
 			if (class_exists('KunenaFactory')) 
 			{			
@@ -893,7 +893,26 @@ class ModShoutboxHelper
 				$url = $profile->getAvatarImage('kavatar','profile');
 			}
 		}
-		else if ($type == 'cb')
+		elseif ($type == 'jomsocial')
+		{
+			// JomSocial Profile Link
+			$jspath = JPATH_ROOT . '/components/com_community/libraries/core.php';
+
+			if (JFile::exists($jspath))
+			{
+				include_once $jspath;
+				$cuser      = CFactory::getUser($user->id);
+				$avatarUrl  = $cuser->getThumbAvatar();
+
+				$url = '<img src="' . $avatarUrl . '" height="30" width="30">';
+			}
+			else
+			{
+				JLog::add(JText::_('SHOUT_JOM_SOCIAL_NOT_INSTALLED'), JLog::WARNING, 'mod_shoutbox');
+				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_JOM_SOCIAL_NOT_INSTALLED'), 'error');
+			}
+		}
+		elseif ($type == 'cb')
 		{
 			// To-Do: Get CB avatar
 		}
