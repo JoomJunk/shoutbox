@@ -6,33 +6,19 @@
 
 var JJgetPosts 	 = null;
 var JJsubmitPost = null;
+var showError 	 = null;
 
-function addSmiley(smiley, id) {
-
-	// If we are not passed an id, use the default 'jj_message'.
-	if (!id)
-	{
-		var id = 'jj_message';
-	}
-
-	// Get the position of the user in the text area
-	var position = getCurserPosition(id);
-
+function addSmiley(smiley, id) 
+{
 	// Get the text area object
 	var el = document.getElementById(id);
-
-	// Split the text either side of the cursor
-	var strBegin = el.value.substring(0, position);
-	var strEnd   = el.value.substring(position);
-
-	// Piece the text back together with the cursor in the midle
-	el.value = strBegin + " " + smiley + " " + strEnd;
-}
-
-function getCurserPosition(id)
-{
-	var el = document.getElementById(id);
-	var pos = 0;
+	
+	// Define ID is not already defined
+	if (!el)
+	{
+		var el = 'jj_message';
+	}
+	
 	// IE Support
 	if (document.selection)
 	{
@@ -47,8 +33,36 @@ function getCurserPosition(id)
 	{
 		pos = el.selectionStart;
 	}
+	
+	var strBegin = el.value.substring(0, pos);
+	var strEnd   = el.value.substring(pos);
 
-	return pos;
+	// Piece the text back together with the cursor in the midle
+	el.value = strBegin + " " + smiley + " " + strEnd;
+}
+
+
+function insertBBCode(start, end, el) 
+{
+	// IE Support
+	if (document.selection) 
+	{
+		el.focus();
+		sel = document.selection.createRange();
+		sel.text = start + sel.text + end;
+	} 
+	// Firefox support
+	else if (el.selectionStart || el.selectionStart == '0') 
+	{
+		el.focus();
+		var startPos = el.selectionStart;
+		var endPos = el.selectionEnd;
+		el.value = el.value.substring(0, startPos) + start + el.value.substring(startPos, endPos) + end + el.value.substring(endPos, el.value.length);
+	} 
+	else 
+	{			
+		el.value += start + end;
+	}	
 }
 
 function textCounter(textarea, countdown, maxlimit, alertLength, warnLength, shoutRemainingText)
@@ -92,40 +106,40 @@ function getRandomArbitrary(min, max)
 
 jQuery(document).ready(function($) {
 
+	// Append BBCode 
+	$('#jjshoutbox .btn-toolbar button').on('click', function() {
+		
+		var bbcode 		= $(this).data('bbcode-type');
+		var start 		= '[' + bbcode + ']';
+		var end 		= '[/' + bbcode + ']';
+		var element 	= $('#jj_message').get(0);
 
+		var param = '';
+
+		if ( bbcode == 'url' )
+		{
+			start = '[url=' + param + ']';
+		}
+		
+		insertBBCode(start, end, element);
+		
+		return false;
+	  
+    });
+	
 	// SMILEY SLIDETOGGLE
-	$('#jj_btn').on('click', function(e) {	
+	$('#jj_btn').on('click', function(e) {
 		e.preventDefault();
 		$(this).toggleClass('rotated');
 		$('#jj_smiley_box').stop(true, false).slideToggle();
 	});
-	
-	
+		
 	// SUBMIT POST
-	JJsubmitPost = function(name, title, securityType, security, root)
+	JJsubmitPost = function(name, title, securityType, security, Itemid, instance)
 	{
 		// Assemble some commonly used vars
-		var textarea = $('#jj_message'),
+		var textarea = instance.find('#jj_message'),
 		message = textarea.val();
-
-		// If no message body show an error message and stop
-		if(message == "")
-		{
-			$('.jj-shout-error').append('<p class="inner-jj-error">Please enter a message!</p>').slideDown().show().delay(6000).queue(function(next){
-				$(this).slideUp().hide();
-				$('.inner-jj-error').remove();
-				next();
-			});
-			var $elt = $('#shoutbox-submit').attr('disabled', true);
-			setTimeout(function (){
-				$elt.attr('disabled', false);
-			}, 6000);
-			textarea.addClass('jj-redBorder').delay(6000).queue(function(next){
-				$(this).removeClass('jj-redBorder');
-				next();
-			});
-			return false;
-		}
 
 		// Assemble variables to submit
 		var request = {
@@ -139,21 +153,21 @@ jQuery(document).ready(function($) {
 
 		if (securityType == 1)
 		{
-			request['recaptcha_challenge_field'] = $('input#recaptcha_challenge_field').val();
-			request['recaptcha_response_field']  = $('input#recaptcha_response_field').val();
+			request['recaptcha_challenge_field'] = instance.find('input#recaptcha_challenge_field').val();
+			request['recaptcha_response_field']  = instance.find('input#recaptcha_response_field').val();
 		}
 
 		if (securityType == 2)
 		{
-			request['jjshout[sum1]'] = $('input[name="jjshout[sum1]"]').val();
-			request['jjshout[sum2]'] = $('input[name="jjshout[sum2]"]').val();
-			request['jjshout[human]'] = $('input[name="jjshout[human]"]').val();
+			request['jjshout[sum1]'] = instance.find('input[name="jjshout[sum1]"]').val();
+			request['jjshout[sum2]'] = instance.find('input[name="jjshout[sum2]"]').val();
+			request['jjshout[human]'] = instance.find('input[name="jjshout[human]"]').val();
 		}
 
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&format=json',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&Itemid='+Itemid+'&format=json',
 			data: request,
 			success:function(response){
 				if (response.success)
@@ -162,13 +176,13 @@ jQuery(document).ready(function($) {
 					textarea.val('');
 
 					// Empty the name value if there is one
-					if ($('#shoutbox-name').val())
+					if (instance.find('#shoutbox-name').val())
 					{
-						$('#shoutbox-name').val('');
+						instance.find('#shoutbox-name').val('');
 					}
 
 					// Refresh the output
-					JJgetPosts(title, root)
+					JJgetPosts(title, false, Itemid, instance)
 				}
 			},
 			error:function(ts){
@@ -188,10 +202,10 @@ jQuery(document).ready(function($) {
 			var val1, val2;
 			val1 = getRandomArbitrary(0,9);
 			val2 = getRandomArbitrary(0,9);
-			$('input[name="jjshout[sum1]"]').val(val1);
-			$('input[name="jjshout[sum2]"]').val(val2);
-			$('label[for="math_output"]').text(val1 + ' + ' + val2);
-			$('input[name="jjshout[human]"]').val('');
+			instance.find('input[name="jjshout[sum1]"]').val(val1);
+			instance.find('input[name="jjshout[sum2]"]').val(val2);
+			instance.find('label[for="math_output"]').text(val1 + ' + ' + val2);
+			instance.find('input[name="jjshout[human]"]').val('');
 		}
 
 		return false;
@@ -199,11 +213,11 @@ jQuery(document).ready(function($) {
 	
 	
 	// GET POSTS
-	JJgetPosts = function(title, root, sound)
+	JJgetPosts = function(title, sound, Itemid, instance)
 	{
 		
 		// Get the ID of the last shout
-		var lastID = getLastID();
+		var lastID = getLastID(instance);
 		
 		// Assemble variables to submit
 		var request = {
@@ -213,23 +227,23 @@ jQuery(document).ready(function($) {
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&format=json',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&Itemid='+Itemid+'&format=json',
 			data: request,
 			success:function(response){
 				if (response.success)
 				{
-					$('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-error"></div>'));
+					instance.find('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
 
 					// Grab the html output and append it to the shoutbox message
-					$('.jj-shout-error').after(response.data.html);
+					instance.find('.jj-shout-new').after(response.data.html);
 					
 					// Get the ID of the last shout after the output has been updated
-					var newLastID = getLastID();
+					var newLastID = getLastID(instance);
 					
 					// Play notification sound if enabled
 					if (sound == 1 && newLastID > lastID) 
 					{
-						document.getElementById('jjshoutbox-audio').play();
+						instance.find('.jjshoutbox-audio').get(0).play();
 					}
 				}
 			},
@@ -242,10 +256,33 @@ jQuery(document).ready(function($) {
 	}
 	
 	// Get the last ID of the shoutbox output
-	function getLastID()
+	function getLastID(instance)
 	{
-		var lastId = $('#jjshoutboxoutput').find('.shout-header:first-child').data('shout-id');
+		var lastId = instance.find('.shout-header:first-child').data('shout-id');
 		
 		return lastId;
 	}
+	
+	// Check if the name or message fields are empty
+	showError = function(field, instance)
+	{
+		var errorBox = instance.find('.jj-shout-error');
+		
+		if( field == '' )
+		{
+			errorMsg = '<p>Please enter a message</p>';
+		}
+		else
+		{
+			errorMsg = '<p>Please enter a name</p>';
+		}
+		
+		errorBox.html(errorMsg)
+				.slideDown().delay(5000).slideUp(400, function() {
+					$(this).empty();
+				});
+		
+		return false
+	}
+	
 });

@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>3.0.0</version> 
+	<version>3.1.0</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -77,6 +77,12 @@
 					<option value="3">SHOUT_JOM_SOCIAL_USERS</option>
 					<option value="4">SHOUT_K2_BLOG_USERS</option>
 				</field>
+				<field name="avatar" type="list" default="none" label="SHOUT_AVATAR" description="SHOUT_AVATAR_DESC">
+					<option value="none">SHOUT_NONE</option>
+					<option value="gravatar">SHOUT_GRAVATAR</option>
+					<option value="kunena">SHOUT_KUNENA_USERS</option>
+					<option value="jomsocial">SHOUT_JOM_SOCIAL_USERS</option>
+				</field>
 				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
 				<field name="loginname" type="radio" class="btn-group" default="user" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
 					<option value="real">SHOUT_REAL</option>
@@ -124,10 +130,20 @@
 				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
 				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
 				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
-				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
+				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />			
+				<field name="framework" type="list" default="bootstrap" label="SHOUT_FRAMEWORK" description="SHOUT_FRAMEWORK_DESC">
+					<option value="none">SHOUT_NONE</option>
+					<option value="bootstrap">SHOUT_BOOTSTRAP</option>
+					<option value="uikit">SHOUT_UIKIT</option>
+				</field>
 			</fieldset>
 			
 			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
+				<field name="namerequired" type="list" default="0" label="SHOUT_NAME_REQUIRED" description="SHOUT_NAME_REQUIRED_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>			
+				<field name="genericname" type="text" default="Anonymous" label="SHOUT_GENERIC_NAME" description="SHOUT_GENERIC_NAME_DESC" />
 				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>

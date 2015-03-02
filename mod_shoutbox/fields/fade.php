@@ -57,17 +57,16 @@ class ShoutboxFormFieldFade extends JFormField
 		$js = '		
 			jQuery(document).ready(function($) {
 
-				var select  = $("#jform_params_securitytype");
-
+				var securityType  = $("#jform_params_securitytype");
 				var public  = $("#jform_params_recaptcha_public-lbl").parents("' . $parent . '");
 				var private = $("#jform_params_recaptcha_private-lbl").parents("' . $parent . '");
 				
-				if( select.val() == 0 || select.val()  == 2 ) {
+				if( securityType.val() == 0 || securityType.val()  == 2 ) {
 					public.hide();
 					private.hide();
 				}
 
-				select.on("change", function() {
+				securityType.on("change", function() {
 
 					var value = this.value;
 
@@ -78,6 +77,28 @@ class ShoutboxFormFieldFade extends JFormField
 					else {						
 						public.fadeIn();
 						private.fadeIn();						
+					}
+
+				});
+				
+				
+				
+				var nameRequired  	= $("#jform_params_namerequired");
+				var genericName 	= $("#jform_params_genericname-lbl").parents("' . $parent . '");
+				
+				if( nameRequired.val() == 1 ) {
+					genericName.hide();
+				}
+
+				nameRequired.on("change", function() {
+
+					var value = this.value;
+
+					if( value == 0 ) {						
+						genericName.fadeIn();
+					}
+					else {						
+						genericName.fadeOut();						
 					}
 
 				});

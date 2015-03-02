@@ -11,9 +11,10 @@ jimport('joomla.filesystem.folder');
 
 require_once dirname(__FILE__) . '/helper.php';
 
-$title  = $module->title;
-$helper = new ModShoutboxHelper($title);
-$params = $helper->getParams();
+$title    = $module->title;
+$uniqueId = $module->id;
+$helper   = new ModShoutboxHelper($title);
+$params   = $helper->getParams();
 
 $displayName 		= $params->get('loginname', 'user');
 $smile 				= $params->get('smile');
@@ -23,6 +24,7 @@ $number 			= $params->get('maximum');
 $submittext 		= $params->get('submittext');
 $nonmembers 		= $params->get('nonmembers');
 $profile 			= $params->get('profile');
+$avatar 			= $params->get('avatar', 'none');
 $date 				= $params->get('date');
 $securitytype		= $params->get('securitytype', 0);
 $publicKey			= $params->get('recaptcha-public');
@@ -35,7 +37,9 @@ $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
 $bbcode 			= $params->get('bbcode', 1);
 $sound				= $params->get('sound', 1);
-$genericName		= $params->get('genericname');
+$framework			= $params->get('framework', 'bootstrap');
+$genericName		= $params->get('genericname', 'Anonymous');
+$nameRequired		= $params->get('namerequired', 0);
 $alertLength		= $params->get('alertlength', '50');
 $warnLength			= $params->get('warnlength', '10');
 $messageLength		= $params->get('messagelength', '200');
@@ -46,23 +50,29 @@ $remainingLength 	= JText::_('SHOUT_REMAINING');
 $doc 	= JFactory::getDocument();
 $user 	= JFactory::getUser();
 $app 	= JFactory::getApplication();
+$Itemid = $app->getMenu()->getActive()->id;
 
-// Detect a UIKit based theme
-$template 	= $app->getTemplate('template')->template;
-$uikit 		= JPATH_SITE . '/templates/' . $template . '/warp/vendor/uikit/js/uikit.js';
-if(JFile::exists($uikit))
+// Apply UI framework styling
+switch ($framework)
 {
-	$form 			= 'uk-form';
-	$button_group 	= 'uk-button-group';
-	$button 		= 'uk-button';
-	$button_danger 	= ' uk-button-danger';
-}
-else 
-{
-	$form 			= null;
-	$button_group 	= 'btn-group';
-	$button 		= 'btn';
-	$button_danger 	= ' btn-danger';
+	case 'uikit':
+		$form 			= 'uk-form';
+		$button_group 	= 'uk-button-group';
+		$button 		= 'uk-button';
+		$button_danger 	= ' uk-button-danger';
+		break;
+	case 'bootstrap':
+		$form 			= null;
+		$button_group 	= 'btn-group';
+		$button 		= 'btn';
+		$button_danger 	= ' btn-danger';
+		break;
+	default:
+		$form 			= null;
+		$button_group 	= null;
+		$button 		= null;
+		$button_danger 	= null;
+		break;
 }
 
 // Import jQuery

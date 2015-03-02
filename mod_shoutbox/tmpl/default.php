@@ -30,12 +30,25 @@ if ($user->authorise('core.delete'))
 	}';
 }
 
+if ($avatar != 'none')
+{
+	$style .= '
+	#jjshoutboxoutput .shout-header {
+		height: auto;
+	}
+	#jjshoutboxoutput .avatar img {
+		margin-right: 5px;
+		height: 30px;
+	}';
+}
+
 $doc->addStyleDeclaration($style);
+$uniqueIdentifier = 'jjshoutbox' . $uniqueId;
 ?>
 
-<div id="jjshoutbox">
+<div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
 <div id="jjshoutboxoutput">
-	<div class="jj-shout-error"></div>
+	<div class="jj-shout-new"></div>
 	<?php // Retrieves the shouts from the database ?>
 	<?php $shouts = $helper->getShouts($number, $dataerror); ?>
 
@@ -50,9 +63,10 @@ $doc->addStyleDeclaration($style);
 		<?php endforeach; ?>
 	<?php endif; ?>
 </div>
+<div class="jj-shout-error"></div>
 
 <?php if ( $sound == 1 ) : ?>
-<audio id="jjshoutbox-audio" preload="auto">
+<audio class="jjshoutbox-audio" preload="auto">
 	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.mp3" type="audio/mpeg">
 	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.ogg" type="audio/ogg">
 </audio>
@@ -118,10 +132,10 @@ elseif (array_intersect($permissions, $access))
 		<?php if ( $bbcode == 1 ) : ?>
 			<div class="btn-toolbar">
 				<div class="<?php echo $button_group; ?>">
-					<button type="button" class="<?php echo $button; ?> btn-small jj-bold" onClick="addSmiley('[b] [/b]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
-					<button type="button" class="<?php echo $button; ?> btn-small jj-italic" onClick="addSmiley('[i] [/i]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
-					<button type="button" class="<?php echo $button; ?> btn-small jj-underline" onClick="addSmiley('[u] [/u]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
-					<button type="button" class="<?php echo $button; ?> btn-small jj-link" onClick="addSmiley('[url=] [/url]', 'jj_message')"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-bold" data-bbcode-type="b"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-italic" data-bbcode-type="i"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-underline" data-bbcode-type="u"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-link" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
 				</div>
 			</div>
 		<?php endif; ?>
@@ -213,31 +227,57 @@ else
 	<?php // The ajax uses com_ajax in Joomla core from Joomla 3.2 and available as an install for Joomla 2.5 - so check if its available ?>
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
-	
-		$( "#shoutbox-submit" ).on('click', function() {
+
+		var Itemid   = '<?php echo $Itemid; ?>';
+		var instance = $('#<?php echo $uniqueIdentifier; ?>');
+
+		instance.find('#shoutbox-submit').on('click', function()
+		{
+			var shoutboxName 	= instance.find('#shoutbox-name').val();
+			var shoutboxMsg		= instance.find('#jj_message').val();
+			
 			<?php if($displayName == 'user' && !$user->guest){ ?>
-			var name = "<?php echo $user->username;?>";
+				var name = "<?php echo $user->username;?>";
 			<?php } elseif($displayName == 'real' && !$user->guest) { ?>
-			var name = "<?php echo $user->name;?>";
+				var name = "<?php echo $user->name;?>";
 			<?php } else { ?>
-			if($('#shoutbox-name').val() == ""){
-				var name = "<?php echo $genericName; ?>";
+			if( shoutboxName == '' )
+			{			
+				<?php if($nameRequired == 0 && $user->guest){ ?>
+					var name = "<?php echo $genericName;?>";
+				<?php } else { ?>		
+					var name = "JJ_None";
+				<?php } ?>			
 			}
-			else{
-				var name = $('#shoutbox-name').val();
+			else
+			{			
+				var name = shoutboxName;
 			}
 			<?php } ?>
 
-			JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', '<?php echo JUri::current(); ?>');
-			return false;
-		});		
-	});
+			// Run error reporting
+			if( shoutboxMsg == '' )
+			{
+				showError(shoutboxMsg, instance);
+			}
+			else if ( name == 'JJ_None' )
+			{
+				showError(name, instance);
+			}			
+			else
+			{
+				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance);
+			}
 
-	// Refresh the shoutbox posts every X seconds
-	setInterval(function(){
-		JJgetPosts('<?php echo $title; ?>', '<?php echo JUri::current(); ?>', '<?php echo $sound; ?>');
-	}, <?php echo $refresh; ?>);
-	
+			return false;
+		});
+
+		// Refresh the shoutbox posts every X seconds
+		setInterval(function(){
+			var Itemid = '<?php echo $Itemid; ?>';
+			JJgetPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
+		}, <?php echo $refresh; ?>);
+	});	
 	<?php endif; ?>
 </script>
 

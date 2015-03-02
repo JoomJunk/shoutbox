@@ -14,6 +14,16 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 3.1.0
++ Added option for required name
++ Added generic name as parameter if none used
++ Added Avatar integration for Gravatar, Kunena and JomSocial
+^ Improved error reporting
+^ Improved BBCode (now works with highlighted strings)
+^ Replaced UI Framework detection with parameter
+# Fixed smiley path for multilingual sites
+# Fixed shout submits not working when assigned to single menu item
+
 Version 3.0.0
 + Integrated AJAX for submitting and retrieving posts
 + Initially hide smilies with toggle option
