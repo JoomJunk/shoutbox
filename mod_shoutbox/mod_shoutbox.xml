@@ -129,7 +129,12 @@
 				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
 				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
 				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
-				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
+				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />			
+				<field name="framework" type="list" default="bootstrap" label="SHOUT_FRAMEWORK" description="SHOUT_FRAMEWORK_DESC">
+					<option value="none">SHOUT_NONE</option>
+					<option value="bootstrap">SHOUT_BOOTSTRAP</option>
+					<option value="uikit">SHOUT_UIKIT</option>
+				</field>
 			</fieldset>
 			
 			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
