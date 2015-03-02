@@ -273,14 +273,13 @@ else
 
 			return false;
 		});
-	});
 
-	// Refresh the shoutbox posts every X seconds
-	setInterval(function(){
-		var Itemid = '<?php echo $Itemid; ?>';
-		JJgetPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
-	}, <?php echo $refresh; ?>);
-	
+		// Refresh the shoutbox posts every X seconds
+		setInterval(function(){
+			var Itemid = '<?php echo $Itemid; ?>';
+			JJgetPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
+		}, <?php echo $refresh; ?>);
+	});	
 	<?php endif; ?>
 </script>
 

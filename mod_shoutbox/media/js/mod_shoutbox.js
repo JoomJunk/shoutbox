@@ -238,7 +238,7 @@ jQuery(document).ready(function($) {
 					instance.find('.jj-shout-new').after(response.data.html);
 					
 					// Get the ID of the last shout after the output has been updated
-					var newLastID = getLastID();
+					var newLastID = getLastID(instance);
 					
 					// Play notification sound if enabled
 					if (sound == 1 && newLastID > lastID) 
