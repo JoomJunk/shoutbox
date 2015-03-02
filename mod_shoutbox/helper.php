@@ -860,10 +860,11 @@ class ModShoutboxHelper
 	 *
 	 * @since   3.0.1
 	 */
-	public function getAvatar( $type, $id ) 
+	public function getAvatar($type, $id) 
 	{		
 		$user 	= JFactory::getUser($id);
 		$email 	= $user->email;
+		$url    = '';
 		
 		if ($type == 'gravatar')
 		{
