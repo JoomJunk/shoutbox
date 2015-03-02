@@ -14,11 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-WIP (Version 3.1.0)
+Version 3.1.0
 + Added option for required name
 + Added generic name as parameter if none used
-+ Added Gravatar integration
-+ Added Kunena avatar integration
++ Added Avatar integration for Gravatar, Kunena and JomSocial
 ^ Improved error reporting
 ^ Improved BBCode (now works with highlighted strings)
 ^ Replaced UI Framework detection with parameter
