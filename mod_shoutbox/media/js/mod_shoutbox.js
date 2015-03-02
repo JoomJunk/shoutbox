@@ -14,9 +14,9 @@ function addSmiley(smiley, id)
 	var el = document.getElementById(id);
 	
 	// Define ID is not already defined
-	if (!id)
+	if (!el)
 	{
-		var id = 'jj_message';
+		var el = 'jj_message';
 	}
 	
 	// IE Support
