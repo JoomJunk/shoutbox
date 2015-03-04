@@ -107,7 +107,7 @@ function getRandomArbitrary(min, max)
 jQuery(document).ready(function($) {
 
 	// Append BBCode 
-	$('#jjshoutbox .btn-toolbar button').on('click', function() {
+	$('#jjshoutboxform .btn-toolbar button').on('click', function() {
 		
 		var bbcode 		= $(this).data('bbcode-type');
 		var start 		= '[' + bbcode + ']';
