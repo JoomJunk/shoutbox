@@ -390,7 +390,7 @@ class ModShoutboxHelper
 
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
-			return $this->addShout($name, $message, $ip);
+			return $this->addShout(htmlspecialchars($name), htmlspecialchars($message), $ip);
 		}
 	}
 
