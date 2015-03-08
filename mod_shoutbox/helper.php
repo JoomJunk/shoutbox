@@ -388,9 +388,14 @@ class ModShoutboxHelper
 
 		$ip = $_SERVER['REMOTE_ADDR'];
 
+		// Sanity check on the contents of the user fields
+		$filter = JFilterInput::getInstance();
+		$name = $filter->clean($name, 'string');
+		$message = $filter->clean($message, 'string');
+
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
-			return $this->addShout(htmlspecialchars($name), htmlspecialchars($message), $ip);
+			return $this->addShout($name, $message, $ip);
 		}
 	}
 
