@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 3.1.2
+* Fix XSS vunerability where script tags could be placed in the message body
+
 Version 3.1.1
 # Fixed BBCode not working
 # Fixed name/date overlapping header if too long
