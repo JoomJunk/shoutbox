@@ -187,7 +187,7 @@ elseif (array_intersect($permissions, $access))
 			<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
 		<?php } ?>
 
-		<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo $submittext ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
+		<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -216,7 +216,7 @@ else
 {
 	// Shows no members allowed to post text
 	?>
-	<p id="noguest"><?php echo $nonmembers; ?></p>
+	<p id="noguest"><?php echo JText::_('SHOUT_NONMEMBER'); ?></p>
 <?php
 }
 ?>

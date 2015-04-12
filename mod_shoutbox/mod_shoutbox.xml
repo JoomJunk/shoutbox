@@ -106,8 +106,6 @@
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
-				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
-				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
 				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
 					<option value="0">SHOUT_SMILIES_ON</option>
 					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
