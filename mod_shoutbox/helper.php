@@ -929,8 +929,23 @@ class ModShoutboxHelper
 				  ->where($db->quoteName('user_id') . ' = '. $db->quote($user->id));
 			 
 			$db->setQuery($query);
-			$result = $db->loadResult();
-			
+
+			try
+			{
+				$result = $db->loadResult();
+
+				// If in Joomla 2.5 we'll just throw our own exception to deal with any DB errors
+				if (JError::$legacy && $db->getErrorNum())
+				{
+					throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
+				}
+			}
+			catch (Exception $e)
+			{
+				// If there is an error in the database request show the default avatar
+				$result = false;
+			}
+
 			if ($result)
 			{
 				$avatar = JUri::root() . 'images/comprofiler/tn' . $result;
