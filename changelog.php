@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
++ Added Norwegian language pack (Thanks Johan)
+
 Version 3.1.2
 * Fix XSS vunerability where script tags could be placed in the message body
 
