@@ -918,8 +918,29 @@ class ModShoutboxHelper
 			}
 		}
 		elseif ($type == 'cb')
-		{
-			// To-Do: Get CB avatar
+		{	
+			// Use a database query as the CB framework is horrible
+			$db = JFactory::getDbo();
+ 
+			$query = $db->getQuery(true);
+			 
+			$query->select($db->quoteName('avatar'))
+				  ->from($db->quoteName('#__comprofiler'))
+				  ->where($db->quoteName('user_id') . ' = '. $db->quote($user->id));
+			 
+			$db->setQuery($query);
+			$result = $db->loadResult();
+			
+			if ($result)
+			{
+				$avatar = JUri::root() . 'images/comprofiler/tn' . $result;
+			}
+			else
+			{
+				$avatar = JUri::root() . 'components/com_comprofiler/plugin/templates/default/images/avatar/tnnophoto_n.png';
+			}
+			
+			$url = '<img src="' . $avatar . '" height="30" width="30">';
 		}
 		
 		return $url;
