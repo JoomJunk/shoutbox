@@ -17,7 +17,9 @@ $ -> Language fix or change
 WIP
 + Added Norwegian language pack (Thanks Johan)
 + Added Community Builder avatar integration
++ Added Popover for BBCode Link example
 $ Button and permissions message now language strings
+- Removed support for Joomla 2.5
 
 Version 3.1.2
 * Fix XSS vunerability where script tags could be placed in the message body
