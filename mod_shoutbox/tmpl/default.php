@@ -16,13 +16,6 @@ $style = '#jjshoutboxoutput {
 		background: ' . $headercolor . ';
 	}';
 
-if (version_compare(JVERSION, '3.0.0', 'le'))
-{
-	$style .= '#jj_btn {
-		width: 25px !important;
-	}';
-}
-
 if ($user->authorise('core.delete'))
 {
 	$style .= '#jjshoutboxoutput input[type=submit]{

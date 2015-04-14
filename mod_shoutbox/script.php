@@ -56,14 +56,7 @@ class Mod_ShoutboxInstallerScript
 
 			if (version_compare($this->release, $oldRelease, '<'))
 			{
-				if (!JError::$legacy)
-				{
-					JFactory::getApplication()->enqueueMessage(JText::sprintf('MOD_SHOUTBOX_INCORRECT_SEQUENCE', $oldRelease, $this->release), 'error');
-				}
-				else
-				{
-					JError::raiseWarning(null, JText::sprintf('MOD_SHOUTBOX_INCORRECT_SEQUENCE', $oldRelease, $this->release));
-				}
+				JFactory::getApplication()->enqueueMessage(JText::sprintf('MOD_SHOUTBOX_INCORRECT_SEQUENCE', $oldRelease, $this->release), 'error');
 
 				return false;
 			}
@@ -393,14 +386,7 @@ class Mod_ShoutboxInstallerScript
 		$modules = $this->getInstances(true);
 		
 		// Display a notification to the user with a notification
-		if (!JError::$legacy)
-		{
-			JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_126_UPDATE_NOTIFICATION'), 'error');
-		}
-		else
-		{
-			JError::raiseWarning(null, JText::_('SHOUT_126_UPDATE_NOTIFICATION'));
-		}
+		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_126_UPDATE_NOTIFICATION'), 'error');
 
 		foreach ($modules as $module)
 		{
