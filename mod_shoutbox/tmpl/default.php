@@ -44,6 +44,9 @@ if ($avatar != 'none')
 
 $doc->addStyleDeclaration($style);
 $uniqueIdentifier = 'jjshoutbox' . $uniqueId;
+
+JHtml::_('bootstrap.popover');
+$popover = '[url=http://example.com]Text Here[/url]';
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
@@ -135,7 +138,7 @@ elseif (array_intersect($permissions, $access))
 					<button type="button" class="<?php echo $button; ?> btn-small jj-bold" data-bbcode-type="b"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
 					<button type="button" class="<?php echo $button; ?> btn-small jj-italic" data-bbcode-type="i"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
 					<button type="button" class="<?php echo $button; ?> btn-small jj-underline" data-bbcode-type="u"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
-					<button type="button" class="<?php echo $button; ?> btn-small jj-link" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-link hasPopover" data-bbcode-type="url" data-placement="top" data-content="<?php echo $popover; ?>"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
 				</div>
 			</div>
 		<?php endif; ?>
