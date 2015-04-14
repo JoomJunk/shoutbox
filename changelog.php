@@ -18,6 +18,7 @@ WIP
 + Added Norwegian language pack (Thanks Johan)
 + Added Community Builder avatar integration
 + Added Popover for BBCode Link example
++ Added option to submit using the Enter key
 $ Button and permissions message now language strings
 - Removed support for Joomla 2.5
 

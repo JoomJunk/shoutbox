@@ -182,8 +182,11 @@ elseif (array_intersect($permissions, $access))
 			<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
 			<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
 		<?php } ?>
-
-		<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
+		
+		<?php if ($entersubmit == 0) : ?>
+			<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
+		<?php endif; ?>
+		
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -226,11 +229,35 @@ else
 
 		var Itemid   = '<?php echo $Itemid; ?>';
 		var instance = $('#<?php echo $uniqueIdentifier; ?>');
+		
+		
+		var entersubmit = '<?php echo $entersubmit; ?>';
+		
+		if (entersubmit == 0)
+		{
+			instance.find('#shoutbox-submit').on('click', function(e){
+				e.preventDefault();
+				doShoutboxSubmission();
+			});
+		}
+		else
+		{
+			instance.find('#jj_message').keypress(function(e) {
+				if (e.which == 13) 
+				{
+					e.preventDefault();					
+					doShoutboxSubmission();
+				}
+			});
+		}
 
-		instance.find('#shoutbox-submit').on('click', function()
+		
+		function doShoutboxSubmission() 
 		{
 			var shoutboxName 	= instance.find('#shoutbox-name').val();
 			var shoutboxMsg		= instance.find('#jj_message').val();
+			
+			console.log(instance);
 			
 			<?php if($displayName == 'user' && !$user->guest){ ?>
 				var name = "<?php echo $user->username;?>";
@@ -243,7 +270,7 @@ else
 					var name = "<?php echo $genericName;?>";
 				<?php } else { ?>		
 					var name = "JJ_None";
-				<?php } ?>			
+				<?php } ?>
 			}
 			else
 			{			
@@ -264,9 +291,8 @@ else
 			{
 				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance);
 			}
-
-			return false;
-		});
+		}
+			
 
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){
@@ -276,4 +302,3 @@ else
 	});	
 	<?php endif; ?>
 </script>
-

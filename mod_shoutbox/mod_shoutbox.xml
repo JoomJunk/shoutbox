@@ -117,6 +117,10 @@
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
+				<field name="bbcode" type="radio" class="btn-group" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
 				<field name="swearingcounter" class="btn-group" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
