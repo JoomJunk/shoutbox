@@ -197,15 +197,10 @@ elseif (array_intersect($permissions, $access))
 			<form method="post" name="deleteall">
 				<input type="hidden" name="jjshout[max]" value="<?php echo $actualnumber; ?>" />
 				<?php echo JHtml::_('form.token'); ?>
-				<?php if (version_compare(JVERSION, '3.0.0', 'ge')) : ?>
-					<div class="input-append">
-						<input class="span2" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" style="width:50px;">
-						<input class="<?php echo $button . $button_danger; ?>" type="submit" name="jjshout[deleteall]" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
-					</div>	
-				<?php else : ?>
-					<input class="jj_admin_label" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" />
-					<input class="jj_admin_button" name="jjshout[deleteall]" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
-				<?php endif; ?>
+				<div class="input-append">
+					<input class="span2" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" style="width:50px;">
+					<input class="<?php echo $button . $button_danger; ?>" type="submit" name="jjshout[deleteall]" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
+				</div>	
 			</form>
 		<?php
 		}
