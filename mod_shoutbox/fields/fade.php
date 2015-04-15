@@ -30,36 +30,14 @@ class ShoutboxFormFieldFade extends JFormField
 		$app = JFactory::getApplication();
 
 		// Import jQuery
-		if (version_compare(JVERSION, '3.0.0', 'ge'))
-		{
-			JHtml::_('jquery.framework');
-		}
-		else
-		{
-			if (!$app->get('jquery'))
-			{
-				$app->set('jquery', true);
-				$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js');
-				JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
-			}
-		}
+		JHtml::_('jquery.framework');
 
-		if (version_compare(JVERSION, '3.0.0', 'ge'))
-		{
-			$parent = '.control-group';
-		}
-		else
-		{
-			$parent = 'li';
-		}
-		
-		
 		$js = '		
 			jQuery(document).ready(function($) {
 
 				var securityType  = $("#jform_params_securitytype");
-				var public  = $("#jform_params_recaptcha_public-lbl").parents("' . $parent . '");
-				var private = $("#jform_params_recaptcha_private-lbl").parents("' . $parent . '");
+				var public  = $("#jform_params_recaptcha_public-lbl").parents(".control-group");
+				var private = $("#jform_params_recaptcha_private-lbl").parents(".control-group");
 				
 				if( securityType.val() == 0 || securityType.val()  == 2 ) {
 					public.hide();
@@ -84,7 +62,7 @@ class ShoutboxFormFieldFade extends JFormField
 				
 				
 				var nameRequired  	= $("#jform_params_namerequired");
-				var genericName 	= $("#jform_params_genericname-lbl").parents("' . $parent . '");
+				var genericName 	= $("#jform_params_genericname-lbl").parents(".control-group");
 				
 				if( nameRequired.val() == 1 ) {
 					genericName.hide();
@@ -108,12 +86,7 @@ class ShoutboxFormFieldFade extends JFormField
 
 		$doc->addScriptDeclaration($js);
 
-		if (version_compare(JVERSION, '3.0.0', 'ge'))
-		{
-			return '<hr>';
-		}
-
-		return '';
+		return '<hr>';
 	}
 
 	/**

@@ -16,13 +16,6 @@ $style = '#jjshoutboxoutput {
 		background: ' . $headercolor . ';
 	}';
 
-if (version_compare(JVERSION, '3.0.0', 'le'))
-{
-	$style .= '#jj_btn {
-		width: 25px !important;
-	}';
-}
-
 if ($user->authorise('core.delete'))
 {
 	$style .= '#jjshoutboxoutput input[type=submit]{
@@ -44,6 +37,9 @@ if ($avatar != 'none')
 
 $doc->addStyleDeclaration($style);
 $uniqueIdentifier = 'jjshoutbox' . $uniqueId;
+
+JHtml::_('bootstrap.popover');
+$popover = '[url=http://example.com]Text Here[/url]';
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
@@ -135,7 +131,7 @@ elseif (array_intersect($permissions, $access))
 					<button type="button" class="<?php echo $button; ?> btn-small jj-bold" data-bbcode-type="b"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
 					<button type="button" class="<?php echo $button; ?> btn-small jj-italic" data-bbcode-type="i"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
 					<button type="button" class="<?php echo $button; ?> btn-small jj-underline" data-bbcode-type="u"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
-					<button type="button" class="<?php echo $button; ?> btn-small jj-link" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-link hasPopover" data-bbcode-type="url" data-placement="top" data-content="<?php echo $popover; ?>"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
 				</div>
 			</div>
 		<?php endif; ?>
@@ -186,8 +182,11 @@ elseif (array_intersect($permissions, $access))
 			<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
 			<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
 		<?php } ?>
-
-		<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo $submittext ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
+		
+		<?php if ($entersubmit == 0) : ?>
+			<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
+		<?php endif; ?>
+		
 	</form>
 	<?php
 	// Shows mass delete button if enabled
@@ -198,15 +197,10 @@ elseif (array_intersect($permissions, $access))
 			<form method="post" name="deleteall">
 				<input type="hidden" name="jjshout[max]" value="<?php echo $actualnumber; ?>" />
 				<?php echo JHtml::_('form.token'); ?>
-				<?php if (version_compare(JVERSION, '3.0.0', 'ge')) : ?>
-					<div class="input-append">
-						<input class="span2" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" style="width:50px;">
-						<input class="<?php echo $button . $button_danger; ?>" type="submit" name="jjshout[deleteall]" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
-					</div>	
-				<?php else : ?>
-					<input class="jj_admin_label" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" />
-					<input class="jj_admin_button" name="jjshout[deleteall]" type="submit" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>" />
-				<?php endif; ?>
+				<div class="input-append">
+					<input class="span2" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" style="width:50px;">
+					<input class="<?php echo $button . $button_danger; ?>" type="submit" name="jjshout[deleteall]" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
+				</div>	
 			</form>
 		<?php
 		}
@@ -216,25 +210,45 @@ else
 {
 	// Shows no members allowed to post text
 	?>
-	<p id="noguest"><?php echo $nonmembers; ?></p>
+	<p id="noguest"><?php echo JText::_('SHOUT_NONMEMBER'); ?></p>
 <?php
 }
 ?>
 </div>
 </div>
 <script type="text/javascript">
-
-	<?php // The ajax uses com_ajax in Joomla core from Joomla 3.2 and available as an install for Joomla 2.5 - so check if its available ?>
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
 
 		var Itemid   = '<?php echo $Itemid; ?>';
-		var instance = $('#<?php echo $uniqueIdentifier; ?>');
-
-		instance.find('#shoutbox-submit').on('click', function()
+		var instance = $('#<?php echo $uniqueIdentifier; ?>');		
+		
+		var entersubmit = '<?php echo $entersubmit; ?>';
+		
+		if (entersubmit == 0)
+		{
+			instance.find('#shoutbox-submit').on('click', function(e){
+				e.preventDefault();
+				doShoutboxSubmission();
+			});
+		}
+		else
+		{
+			instance.find('#jj_message').keypress(function(e) {
+				if (e.which == 13) 
+				{
+					e.preventDefault();					
+					doShoutboxSubmission();
+				}
+			});
+		}
+		
+		function doShoutboxSubmission() 
 		{
 			var shoutboxName 	= instance.find('#shoutbox-name').val();
 			var shoutboxMsg		= instance.find('#jj_message').val();
+			
+			console.log(instance);
 			
 			<?php if($displayName == 'user' && !$user->guest){ ?>
 				var name = "<?php echo $user->username;?>";
@@ -247,7 +261,7 @@ else
 					var name = "<?php echo $genericName;?>";
 				<?php } else { ?>		
 					var name = "JJ_None";
-				<?php } ?>			
+				<?php } ?>
 			}
 			else
 			{			
@@ -268,9 +282,7 @@ else
 			{
 				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance);
 			}
-
-			return false;
-		});
+		}		
 
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){
@@ -280,4 +292,3 @@ else
 	});	
 	<?php endif; ?>
 </script>
-

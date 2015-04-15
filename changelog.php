@@ -14,6 +14,14 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 4.0.0
++ Added Norwegian language pack (Thanks Johan)
++ Added Community Builder avatar integration
++ Added Popover for BBCode Link example
++ Added option to submit using the Enter key
+$ Button and permissions message now language strings
+- Removed support for Joomla 2.5
+
 Version 3.1.2
 * Fix XSS vunerability where script tags could be placed in the message body
 

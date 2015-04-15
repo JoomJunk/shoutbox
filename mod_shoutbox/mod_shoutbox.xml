@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="2.5.0" client="site" method="upgrade">
+<extension type="module" version="3.0" client="site" method="upgrade">
 	<name>JJ Shoutbox</name> 
 	<author>JoomJunk</author> 
 	<creationDate>05-Mar-2012</creationDate> 
@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>3.1.2</version> 
+	<version>4.0.0</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -61,6 +61,8 @@
 		<language tag="it-IT">language/it-IT/it-IT.mod_shoutbox.sys.ini</language>
 		<language tag="nl-NL">language/nl-NL/nl-NL.mod_shoutbox.ini</language>
 		<language tag="nl-NL">language/nl-NL/nl-NL.mod_shoutbox.sys.ini</language>
+		<language tag="nb-NO">language/nb-NO/nb-NO.mod_shoutbox.ini</language>
+		<language tag="nb-NO">language/nb-NO/nb-NO.mod_shoutbox.sys.ini</language>
 	</languages>
 	
 	<updateservers>
@@ -80,6 +82,7 @@
 				<field name="avatar" type="list" default="none" label="SHOUT_AVATAR" description="SHOUT_AVATAR_DESC">
 					<option value="none">SHOUT_NONE</option>
 					<option value="gravatar">SHOUT_GRAVATAR</option>
+					<option value="cb">SHOUT_CB_USERS</option>
 					<option value="kunena">SHOUT_KUNENA_USERS</option>
 					<option value="jomsocial">SHOUT_JOM_SOCIAL_USERS</option>
 				</field>
@@ -103,14 +106,16 @@
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
-				<field name="nonmembers" type="text" size="50" default="The shoutbox is unavailable to non-members" label="SHOUT_NONMEMBER" description="SHOUT_NONMEMBERDESC" />
-				<field name="submittext" type="text" default="Shout!" label="SHOUT_SUBMITTEXT" description="SHOUT_SUBMITTEXTDESC" />
 				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
 					<option value="0">SHOUT_SMILIES_ON</option>
 					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
 					<option value="2">SHOUT_SMILIES_ON_SLIDE_HIDE</option>
 					<option value="3">SHOUT_SMILIES_ON_SLIDE_SHOW</option>
 					<option value="4">SHOUT_SMILIES_DISABLE</option>
+				</field>
+				<field name="bbcode" type="radio" class="btn-group" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
 				</field>
 				<field name="bbcode" type="radio" class="btn-group" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
 					<option value="0">JOFF</option>

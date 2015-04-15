@@ -56,15 +56,8 @@ class ModShoutboxHelper
 	 */
 	public static function submitAjax()
 	{
-		if (!get_magic_quotes_gpc())
-		{
-			$app = JFactory::getApplication();
-			$post  = $app->input->post->get('jjshout', array(), 'array');
-		}
-		else
-		{
-			$post = JRequest::getVar('jjshout', array(), 'post', 'array');
-		}
+		$app = JFactory::getApplication();
+		$post  = $app->input->post->get('jjshout', array(), 'array');
 
 		// Retrieve relevant parameters
 		if (!isset($post['title']))
@@ -111,15 +104,8 @@ class ModShoutboxHelper
 	 */
 	public static function getPostsAjax()
 	{
-		if (!get_magic_quotes_gpc())
-		{
-			$app = JFactory::getApplication();
-			$post  = $app->input->post->get('jjshout', array(), 'array');
-		}
-		else
-		{
-			$post = JRequest::getVar('jjshout', array(), 'post', 'array');
-		}
+		$app = JFactory::getApplication();
+		$post  = $app->input->post->get('jjshout', array(), 'array');
 
 		// Retrieve required parameter
 		if (!isset($post['title']))
@@ -225,20 +211,12 @@ class ModShoutboxHelper
 			->order($db->quoteName('id') . ' DESC');
 		$db->setQuery($query, 0, $number);
 
-		if (!JError::$legacy)
-		{
-			// If we have an exception then we'll let it propagate up the chain
-			$rows = $db->loadObjectList();
-		}
-		else
-		{
-			$rows = $db->loadObjectList();
+		$rows = $db->loadObjectList();
 
-			// If we have an error with JError then we'll create an exception ourselves
-			if ($db->getErrorNum())
-			{
-				throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
-			}
+		// If we have an error then we'll create an exception
+		if ($db->getErrorNum())
+		{
+			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
 		}
 
 		// Ensure the date formatting
@@ -270,20 +248,12 @@ class ModShoutboxHelper
 			->where($db->quoteName('id') . ' = ' . $id);
 		$db->setQuery($query);
 
-		if (!JError::$legacy)
-		{
-			// If we have an exception then we'll let it propagate up the chain
-			$row = $db->loadObject();
-		}
-		else
-		{
-			$row = $db->loadObject();
+		$row = $db->loadObject();
 
-			// If we have an error with JError then we'll create an exception ourselves
-			if ($db->getErrorNum())
-			{
-				throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
-			}
+		// If we have an error then we'll create an exception
+		if ($db->getErrorNum())
+		{
+			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
 		}
 
 		// Format the when correctly
@@ -389,9 +359,9 @@ class ModShoutboxHelper
 		$ip = $_SERVER['REMOTE_ADDR'];
 
 		// Sanity check on the contents of the user fields
-		$filter = JFilterInput::getInstance();
-		$name = $filter->clean($name, 'string');
-		$message = $filter->clean($message, 'string');
+		$filter 	= JFilterInput::getInstance();
+		$name 		= $filter->clean($name, 'string');
+		$message 	= $filter->clean($message, 'string');
 
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
@@ -610,27 +580,16 @@ class ModShoutboxHelper
 			->columns($db->quoteName($columns))
 			->values(implode(',', $values));
 
+
 		$db->setQuery($query);
 
-		if (version_compare(JVERSION, '3.0.0', 'ge'))
+		try
 		{
-			try
-			{
-				$db->execute();
-			}
-			catch (Exception $e)
-			{
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
-			}
+			$db->execute();
 		}
-		else
+		catch (Exception $e)
 		{
-			$db->query();
-
-			if ($db->getErrorNum())
-			{
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $db->getErrorMsg()), JLog::CRITICAL, 'mod_shoutbox');
-			}
+			JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
 		}
 
 		return $db->insertid();
@@ -650,18 +609,11 @@ class ModShoutboxHelper
 		$db	= JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->delete()
-		->from($db->quoteName('#__shoutbox'))
-		->where($db->quoteName('id') . ' = ' . (int) $id);
+			  ->from($db->quoteName('#__shoutbox'))
+			  ->where($db->quoteName('id') . ' = ' . (int) $id);
 		$db->setQuery($query);
 
-		if (version_compare(JVERSION, '3.0.0', 'ge'))
-		{
-			$db->execute();
-		}
-		else
-		{
-			$db->query();
-		}
+		$db->execute();
 	}
 
 	/**
@@ -678,9 +630,10 @@ class ModShoutboxHelper
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from($db->quoteName('#__shoutbox'))
-			->order($db->quoteName('id') . ' DESC');
+			  ->from($db->quoteName('#__shoutbox'))
+			  ->order($db->quoteName('id') . ' DESC');
 		$db->setQuery($query, 0, $delete);
+
 		$rows = $db->loadObjectList();
 
 		foreach ($rows as $row)
@@ -918,8 +871,38 @@ class ModShoutboxHelper
 			}
 		}
 		elseif ($type == 'cb')
-		{
-			// To-Do: Get CB avatar
+		{	
+			// Use a database query as the CB framework is horrible
+			$db = JFactory::getDbo();
+ 
+			$query = $db->getQuery(true);
+			 
+			$query->select($db->quoteName('avatar'))
+				  ->from($db->quoteName('#__comprofiler'))
+				  ->where($db->quoteName('user_id') . ' = '. $db->quote($user->id));
+			 
+			$db->setQuery($query);
+
+			try
+			{
+				$result = $db->loadResult();
+			}
+			catch (Exception $e)
+			{
+				// If there is an error in the database request show the default avatar
+				$result = false;
+			}
+
+			if ($result)
+			{
+				$avatar = JUri::root() . 'images/comprofiler/tn' . $result;
+			}
+			else
+			{
+				$avatar = JUri::root() . 'components/com_comprofiler/plugin/templates/default/images/avatar/tnnophoto_n.png';
+			}
+			
+			$url = '<img src="' . $avatar . '" height="30" width="30">';
 		}
 		
 		return $url;

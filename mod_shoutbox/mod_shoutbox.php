@@ -21,8 +21,6 @@ $smile 				= $params->get('smile');
 $swearcounter 		= $params->get('swearingcounter', 1);
 $swearnumber 		= $params->get('swearingnumber');
 $number 			= $params->get('maximum');
-$submittext 		= $params->get('submittext');
-$nonmembers 		= $params->get('nonmembers');
 $profile 			= $params->get('profile');
 $avatar 			= $params->get('avatar', 'none');
 $date 				= $params->get('date');
@@ -36,6 +34,7 @@ $bordercolour 		= $params->get('bordercolor', '#FF3C16');
 $borderwidth 		= $params->get('borderwidth', '1');
 $headercolor 		= $params->get('headercolor', '#D0D0D0');
 $bbcode 			= $params->get('bbcode', 1);
+$entersubmit 		= $params->get('entersubmit', 0);
 $sound				= $params->get('sound', 1);
 $framework			= $params->get('framework', 'bootstrap');
 $genericName		= $params->get('genericname', 'Anonymous');
@@ -75,21 +74,7 @@ switch ($framework)
 		break;
 }
 
-// Import jQuery
-if (version_compare(JVERSION, '3.0.0', 'ge'))
-{
-	JHtml::_('jquery.framework');
-}
-else
-{
-	if (!$app->get('jquery'))
-	{
-		$app->set('jquery', true);
-		$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js');
-		JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
-	}
-}
-
+JHtml::_('jquery.framework');
 JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
 
 $dataerror = JText::_('SHOUT_DATABASEERRORSHOUT');
@@ -108,14 +93,7 @@ JLog::addLogger(
 
 if (isset($_POST))
 {
-	if (!get_magic_quotes_gpc())
-	{
-		$post = $app->input->post->get('jjshout', array(), 'array');
-	}
-	else
-	{
-		$post = JRequest::getVar('jjshout', array(), 'post', 'array');
-	}
+	$post = $app->input->post->get('jjshout', array(), 'array');
 
 	if (isset($post['shout']))
 	{

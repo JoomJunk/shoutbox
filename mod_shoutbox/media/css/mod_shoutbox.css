@@ -102,17 +102,6 @@
 	width: 70px; 
 	display: inline-block;
 }
-.jjshoutbox .jj_admin_label { 
-	width: 30%; 
-}
-.jjshoutbox .jj_admin_button {
-    width: 65%;
-    min-width: 90px;
-    background-color: #FF3333;
-    border-radius: 2px;
-    border: 1px solid #CC0000;
-    cursor: pointer;
-}
 #jj_smiley_box {
     margin: 10px 0 10px 0;
 }
