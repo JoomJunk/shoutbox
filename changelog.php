@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-WIP
+Version 4.0.0
 + Added Norwegian language pack (Thanks Johan)
 + Added Community Builder avatar integration
 + Added Popover for BBCode Link example

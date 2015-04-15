@@ -217,14 +217,11 @@ else
 </div>
 </div>
 <script type="text/javascript">
-
-	<?php // The ajax uses com_ajax in Joomla core from Joomla 3.2 and available as an install for Joomla 2.5 - so check if its available ?>
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
 
 		var Itemid   = '<?php echo $Itemid; ?>';
-		var instance = $('#<?php echo $uniqueIdentifier; ?>');
-		
+		var instance = $('#<?php echo $uniqueIdentifier; ?>');		
 		
 		var entersubmit = '<?php echo $entersubmit; ?>';
 		
@@ -245,7 +242,6 @@ else
 				}
 			});
 		}
-
 		
 		function doShoutboxSubmission() 
 		{
@@ -286,8 +282,7 @@ else
 			{
 				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance);
 			}
-		}
-			
+		}		
 
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){
