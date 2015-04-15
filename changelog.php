@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 4.0.1
+# Fixed parameter
+
 Version 4.0.0
 + Added Norwegian language pack (Thanks Johan)
 + Added Community Builder avatar integration

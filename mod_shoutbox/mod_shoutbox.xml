@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>4.0.0</version> 
+	<version>4.0.1</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -117,7 +117,7 @@
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
-				<field name="bbcode" type="radio" class="btn-group" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+				<field name="entersubmit" type="radio" class="btn-group" default="0" label="SHOUT_ENTERTOSUBMIT" description="SHOUT_ENTERTOSUBMITDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
