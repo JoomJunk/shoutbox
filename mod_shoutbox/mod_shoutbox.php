@@ -49,7 +49,8 @@ $remainingLength = JText::_('SHOUT_REMAINING');
 $doc 	= JFactory::getDocument();
 $user 	= JFactory::getUser();
 $app 	= JFactory::getApplication();
-$Itemid = isset($app->getMenu()->getActive()->id) ? $app->getMenu()->getActive()->id : '';
+$activeMenuItem = $app->getMenu()->getActive();
+$Itemid = is_null($activeMenuItem) ? null : $activeMenuItem->id;
 
 // Apply UI framework styling
 switch ($framework)
