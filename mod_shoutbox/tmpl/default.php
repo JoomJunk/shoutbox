@@ -220,7 +220,7 @@ else
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
 
-		var Itemid   = <?php echo $Itemid ? "'" . $Itemid . "'" : 'null'; ?>;
+		var Itemid   = <?php echo $Itemid ? $Itemid : 'null'; ?>;
 		var instance = $('#<?php echo $uniqueIdentifier; ?>');		
 		
 		var entersubmit = '<?php echo $entersubmit; ?>';
