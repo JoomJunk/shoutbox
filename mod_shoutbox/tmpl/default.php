@@ -248,8 +248,6 @@ else
 			var shoutboxName 	= instance.find('#shoutbox-name').val();
 			var shoutboxMsg		= instance.find('#jj_message').val();
 			
-			console.log(instance);
-			
 			<?php if($displayName == 'user' && !$user->guest){ ?>
 				var name = "<?php echo $user->username;?>";
 			<?php } elseif($displayName == 'real' && !$user->guest) { ?>
