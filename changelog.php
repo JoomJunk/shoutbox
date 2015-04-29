@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 4.0.2
+# Fixed PHP error when no menu item ID exists
+^ Minor code tweaks
+
 Version 4.0.1
 # Fixed parameter
 
