@@ -164,10 +164,16 @@ jQuery(document).ready(function($) {
 			request['jjshout[human]'] = instance.find('input[name="jjshout[human]"]').val();
 		}
 
+		// If there is an active menu item then we need to add it to the request.
+		if (Itemid !== null)
+		{
+			request['Itemid'] = Itemid;
+		}
+
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&Itemid='+Itemid+'&format=json',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&format=json',
 			data: request,
 			success:function(response){
 				if (response.success)
@@ -224,10 +230,16 @@ jQuery(document).ready(function($) {
 			'jjshout[title]' : title,
 		};
 
+		// If there is an active menu item then we need to add it to the request.
+		if (Itemid !== null)
+		{
+			request['Itemid'] = Itemid;
+		}
+
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&Itemid='+Itemid+'&format=json',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&format=json',
 			data: request,
 			success:function(response){
 				if (response.success)
