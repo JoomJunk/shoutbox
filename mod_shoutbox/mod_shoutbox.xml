@@ -63,6 +63,8 @@
 		<language tag="nl-NL">language/nl-NL/nl-NL.mod_shoutbox.sys.ini</language>
 		<language tag="nb-NO">language/nb-NO/nb-NO.mod_shoutbox.ini</language>
 		<language tag="nb-NO">language/nb-NO/nb-NO.mod_shoutbox.sys.ini</language>
+		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.ini</language>
+		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.sys.ini</language>
 	</languages>
 	
 	<updateservers>

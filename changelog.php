@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
++ Added German translation (thanks Betteryouthanme)
+^ Updates to Polish language files (thanks PLFoxNET)
+
 Version 4.0.2
 # Fixed PHP error when no menu item ID exists
 ^ Minor code tweaks
