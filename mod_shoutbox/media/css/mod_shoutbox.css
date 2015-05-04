@@ -139,6 +139,9 @@
 #jjshoutboxform[type='number'] {
 	padding: 4px 0px;
 }
+.jjshoutbox-audio {
+    display: none;
+}
 
 /**
 Non-bootstrap styling for BB Code
