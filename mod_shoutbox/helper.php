@@ -354,7 +354,7 @@ class ModShoutboxHelper
 
 		// Ensure the max length of posts is the parameter value
 		$length  = $this->params->get('messagelength', '200');
-		$message = substr($message, 0, $length);
+		$message = JString::substr($message, 0, $length);
 
 		$ip = $_SERVER['REMOTE_ADDR'];
 

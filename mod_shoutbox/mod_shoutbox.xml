@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>4.0.2</version> 
+	<version>4.0.3</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -63,6 +63,8 @@
 		<language tag="nl-NL">language/nl-NL/nl-NL.mod_shoutbox.sys.ini</language>
 		<language tag="nb-NO">language/nb-NO/nb-NO.mod_shoutbox.ini</language>
 		<language tag="nb-NO">language/nb-NO/nb-NO.mod_shoutbox.sys.ini</language>
+		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.ini</language>
+		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.sys.ini</language>
 	</languages>
 	
 	<updateservers>

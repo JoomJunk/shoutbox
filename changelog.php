@@ -14,6 +14,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 4.0.3
++ Added German translation (thanks Betteryouthanme)
+^ Updates to Polish language files (thanks PLFoxNET)
+# Fixed update script for J3.4+
+# Fixed issue with message length in UTF-8 languages
+
 Version 4.0.2
 # Fixed PHP error when no menu item ID exists
 ^ Minor code tweaks

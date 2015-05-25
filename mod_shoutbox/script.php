@@ -49,7 +49,7 @@ class Mod_ShoutboxInstallerScript
 		$this->release = $parent->get("manifest")->version;
 
 		// Abort if the module being installed is not newer than the currently installed version
-		if ($type == 'Update')
+		if (strtolower($type) == 'update')
 		{
 			$manifest = $this->getItemArray('manifest_cache', '#__extensions', 'element', JFactory::getDbo()->quote($this->extension));
 			$oldRelease = $manifest['version'];
