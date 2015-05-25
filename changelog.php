@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-WIP
+Version 4.0.3
 + Added German translation (thanks Betteryouthanme)
 ^ Updates to Polish language files (thanks PLFoxNET)
 # Fixed update script for J3.4+
