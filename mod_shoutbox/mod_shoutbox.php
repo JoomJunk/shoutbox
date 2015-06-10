@@ -85,7 +85,7 @@ else
 	if (!$app->get('jquery'))
 	{
 		$app->set('jquery', true);
-		$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js');
+		$doc->addScript('//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js');
 		JHtml::_('script', 'mod_shoutbox/jquery-conflict.js', false, true);
 	}
 }
