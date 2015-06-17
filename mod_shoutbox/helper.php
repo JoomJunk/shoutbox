@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.filesystem.file');
+JLoader::register('JFolder', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
 
 /**
  * Shoutbox helper connector class.
