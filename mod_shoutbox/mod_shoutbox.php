@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.filesystem.folder');
+JLoader::register('JFolder', JPATH_LIBRARIES . '/joomla/filesystem/folder.php');
 
 require_once dirname(__FILE__) . '/helper.php';
 
