@@ -135,13 +135,13 @@ if (isset($_POST))
 				else
 				{
 					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
-					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
+					$app->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
 				}
 			}
 			else
 			{
 				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
-				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
+				$app->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
 			}
 		}
 	}
