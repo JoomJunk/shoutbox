@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-JLoader::register('JFolder', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
+JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
 
 /**
  * Shoutbox helper connector class.
