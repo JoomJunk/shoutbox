@@ -32,6 +32,7 @@ if ($avatar != 'none')
 	#jjshoutboxoutput .avatar img {
 		margin-right: 5px;
 		height: 30px;
+		width: 30px;
 	}';
 }
 
