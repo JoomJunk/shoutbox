@@ -40,6 +40,7 @@ $uniqueIdentifier = 'jjshoutbox' . $uniqueId;
 
 JHtml::_('bootstrap.popover');
 $popover = '[url=http://example.com]Text Here[/url]';
+JText::script('SHOUT_NEW_SHOUT_ALERT');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
@@ -217,6 +218,7 @@ else
 </div>
 </div>
 <script type="text/javascript">
+	performNotificationCheck();
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
 
