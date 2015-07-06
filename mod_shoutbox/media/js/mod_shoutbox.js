@@ -8,6 +8,38 @@ var JJgetPosts 	 = null;
 var JJsubmitPost = null;
 var showError 	 = null;
 
+function performNotificationCheck() {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+	// Browser does not support Notifications. Abort
+    return;
+  }
+
+  Notification.requestPermission(function (permission) {
+  });
+}
+
+function createNotification(title, options) {
+  // Let's check if the browser supports notifications
+  if (!("Notification" in window)) {
+	// Browser does not support Notifications. Abort
+    return;
+  }
+
+  if (Notification.permission === "granted")
+  {
+    var notification = new Notification(title, options);
+  }
+  else if (Notification.permission !== 'denied') {
+    Notification.requestPermission(function (permission) {
+      // If the user accepts, let's create a notification
+      if (permission === "granted") {
+        var notification = new Notification(title, options);
+      }
+    });
+  }
+}
+
 function addSmiley(smiley, id) 
 {
 	// Get the text area object
@@ -252,10 +284,15 @@ jQuery(document).ready(function($) {
 					// Get the ID of the last shout after the output has been updated
 					var newLastID = getLastID(instance);
 					
-					// Play notification sound if enabled
-					if (sound == 1 && newLastID > lastID) 
+					if (newLastID > lastID)
 					{
-						instance.find('.jjshoutbox-audio').get(0).play();
+						createNotification(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
+
+						// Play notification sound if enabled
+						if (sound == 1) 
+						{
+							instance.find('.jjshoutbox-audio').get(0).play();
+						}
 					}
 				}
 			},
