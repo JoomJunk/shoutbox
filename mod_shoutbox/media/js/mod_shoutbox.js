@@ -4,9 +4,9 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-var JJgetPosts 	 = null;
-var JJsubmitPost = null;
-var showError 	 = null;
+var JJgetPosts;
+var JJsubmitPost;
+var showError;
 
 function addSmiley(smiley, id) 
 {
@@ -40,7 +40,6 @@ function addSmiley(smiley, id)
 	// Piece the text back together with the cursor in the midle
 	el.value = strBegin + " " + smiley + " " + strEnd;
 }
-
 
 function insertBBCode(start, end, el) 
 {
@@ -76,20 +75,20 @@ function textCounter(textarea, countdown, maxlimit, alertLength, warnLength, sho
 	}
 	else
 	{
-		charsLeft.innerHTML = (maxlimit-textareaid.value.length)+' ' + shoutRemainingText;
+		charsLeft.innerHTML = (maxlimit-textareaid.value.length) + ' ' + shoutRemainingText;
 	}
 	
 	if (maxlimit-textareaid.value.length > alertLength)
 	{
-		charsLeft.style.color = "Black";
+		charsLeft.style.color = 'Black';
 	}	
 	if (maxlimit-textareaid.value.length <= alertLength && maxlimit-textareaid.value.length > warnLength)
 	{
-		charsLeft.style.color = "Orange";
+		charsLeft.style.color = 'Orange';
 	}	
 	if (maxlimit-textareaid.value.length <= warnLength)
 	{
-		charsLeft.style.color = "Red";
+		charsLeft.style.color = 'Red';
 	}
 }
 
@@ -175,7 +174,7 @@ jQuery(document).ready(function($) {
 			type: 'POST',
 			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&format=json',
 			data: request,
-			success:function(response){
+			success: function(response){
 				if (response.success)
 				{
 					// Empty the message value
@@ -191,7 +190,7 @@ jQuery(document).ready(function($) {
 					JJgetPosts(title, false, Itemid, instance)
 				}
 			},
-			error:function(ts){
+			error: function(ts){
 				console.log(ts);
 			}
 		});
@@ -221,7 +220,6 @@ jQuery(document).ready(function($) {
 	// GET POSTS
 	JJgetPosts = function(title, sound, Itemid, instance)
 	{
-		
 		// Get the ID of the last shout
 		var lastID = getLastID(instance);
 		
@@ -241,7 +239,7 @@ jQuery(document).ready(function($) {
 			type: 'POST',
 			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&format=json',
 			data: request,
-			success:function(response){
+			success: function(response){
 				if (response.success)
 				{
 					instance.find('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
@@ -259,7 +257,7 @@ jQuery(document).ready(function($) {
 					}
 				}
 			},
-			error:function(ts){
+			error: function(ts){
 				console.log(ts);
 			}
 		});
@@ -280,7 +278,7 @@ jQuery(document).ready(function($) {
 	{
 		var errorBox = instance.find('.jj-shout-error');
 		
-		if( field == '' )
+		if (field == '')
 		{
 			errorMsg = '<p>Please enter a message</p>';
 		}
@@ -294,7 +292,7 @@ jQuery(document).ready(function($) {
 					$(this).empty();
 				});
 		
-		return false
+		return false;
 	}
 	
 });
