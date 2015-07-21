@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
+JLoader::register('JJShoutboxLayoutFile', JPATH_SITE . '/modules/mod_shoutbox/libraries/layout.php');
 
 /**
  * Shoutbox helper connector class.
@@ -782,29 +782,76 @@ class ModShoutboxHelper
 	/**
 	 * Renders the message contents with the special variables
 	 *
-	 * @param   string  $layout  The layout to render for the post (defaults to 'default'). The sub layout will always be message
+	 * @param   string  $layout  The layout to render for the post (defaults to 'message')
 	 *
 	 * @return  string  The rendered post contents
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
-	public function renderPost($shout, $layout = 'default')
+	public function renderPost($shout, $layout = 'message')
 	{
-		$path = JModuleHelper::getLayoutPath('mod_shoutbox', $layout . '_message');
+		// Grab the current user object
+		$user = JFactory::getUser();
 
-		// Start capturing output into a buffer
-		ob_start();
+		// Grab the bbcode and smiley params
+		$smile  = $this->params->get('smile');
+		$bbcode = $this->params->get('bbcode', 1);
 
-		// Include the requested template filename in the local scope
-		// (this will execute the view logic).
-		include $path;
+		// Get the date format
+		switch ($this->params->get('date'))
+		{
+			case 0:
+				$show_date = "d/m/Y - ";
+				break;
+			case 1:
+				$show_date = "D m Y - ";
+				break;
+			case 3:
+				$show_date = "m/d/Y - ";
+				break;
+			case 4:
+				$show_date = "D j M - ";
+				break;
+			case 5:
+				$show_date = "D j M - ";
+				break;
+			default:
+				$show_date = "";
+				break;
+		}
 
-		// Done with the requested template; get the buffer and
-		// clear it.
-		$template = ob_get_contents();
-		ob_end_clean();
+		$shout->when = JHtml::date($shout->when, $show_date . 'H:i', true);
 
-		$output = $this->processTemplate($template, $shout);
+		$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
+
+		// Perform Smiley and BBCode filtering if required
+		if ($smile != 4 || $bbcode == 1)
+		{
+			$shout->msg = $this->bbcodeFilter($shout->msg);
+			$shout->name = $this->bbcodeFilter($profile_link);
+		}
+		else
+		{
+			$shout->msg = nl2br($shout->msg);
+			$shout->name = $profile_link;
+		}
+
+		// Assemble the data together
+		$data = array(
+			'post' => $shout,
+			'user' => $user,
+			'title' => $this->shouttitle($user, $shout->ip),
+			'avatar' => $this->getAvatar($this->params->get('avatar', 'none'), $shout->user_id),
+		);
+
+		// Render the layout
+		$options = array(
+			'module' => 'mod_shoutbox',
+			'client' => 0
+		);
+		$registry = new JRegistry($options);
+		$layout = new JJShoutboxLayoutFile($layout, null, $registry);
+		$output = $layout->render($data);
 
 		return $output;
 	}
@@ -812,9 +859,10 @@ class ModShoutboxHelper
 	/**
 	 * Gets the avatar of a user
 	 *
-	 * @param   int     $type  The type of avatar.
+	 * @param   int   $type  The type of avatar.
+	 * @param   int   $id    The id of the currently logged in user
 	 *
-	 * @return  string  The id of the user
+	 * @return  string  An empty string if invalid avatar type. Else the image tag containing the user's avatar
 	 *
 	 * @since   3.0.1
 	 */
@@ -906,114 +954,6 @@ class ModShoutboxHelper
 		}
 		
 		return $url;
-	}
-
-	/**
-	 * Processes the template output and puts in the shout variables
-	 *
-	 * @param   string  $template  The template variables
-	 * @param   array   $shout     The shout to inject into the template
-	 *
-	 * @return  string  The html for the post with the appropriate shout injected in
-	 *
-	 * @since   __DEPLOY_VERSION__
-	 */
-	private function processTemplate($template, $shout)
-	{
-		// Get user object
-		$user    = JFactory::getUser();
-		$message = $template;
-
-		// Grab the bbcode and smiley params
-		$smile  = $this->params->get('smile');
-		$bbcode = $this->params->get('bbcode', 1);
-
-		// Expression to search for in the message template ({{VAR}}
-		$regex = '/{(.*?)}/';
-
-		// Find all instances of plugin and put in $matches for loadposition
-		// $matches[0] is full pattern match, $matches[1] is the variable to replace
-		preg_match_all($regex, $template, $matches, PREG_SET_ORDER);
-
-		foreach ($matches as $match)
-		{
-			switch (strtoupper($match[1]))
-			{
-				case 'AVATAR':
-					$avatar = $this->getAvatar($this->params->get('avatar', 'none'), $shout->user_id);
-					$message = str_replace('{' . $match[1] . '}', $avatar, $message);
-					
-					break;
-					
-				case 'TITLE':
-					$title =  $this->shouttitle($user, $shout->ip);
-					$message = str_replace('{' . $match[1] . '}', $title, $message);
-
-					break;
-				
-				case 'USER':
-					$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
-
-					// Check if we need to do smiley or bbcode filtering
-					if ($smile == 0 || $bbcode == 1)
-					{
-						$user = $this->bbcodeFilter($profile_link);
-					}
-					else
-					{
-						$user = $profile_link;
-					}
-
-					$message = str_replace('{' . $match[1] . '}', $user, $message);
-					break;
-
-				case 'DATE':
-					switch ($this->params->get('date'))
-					{
-						case 0:
-							$show_date = "d/m/Y - ";
-							break;
-						case 1:
-							$show_date = "D m Y - ";
-							break;
-						case 3:
-							$show_date = "m/d/Y - ";
-							break;
-						case 4:
-							$show_date = "D j M - ";
-							break;
-						case 5:
-							$show_date = "D j M - ";
-							break;
-						default:
-							$show_date = "";
-							break;
-					}
-
-					$date = JHtml::date($shout->when, $show_date . 'H:i', true);
-					$message = str_replace('{' . $match[1] . '}', $date, $message);
-					break;
-
-				case 'POSTID':
-					$id = $shout->id;
-					$message = str_replace('{' . $match[1] . '}', $id, $message);
-					break;
-
-				case 'MESSAGE':
-					if ($smile == 0 || $smile == 1 || $smile == 2 || $bbcode == 1)
-					{
-						$post = $this->bbcodeFilter($shout->msg);
-					}
-					else
-					{
-						$post = nl2br($shout->msg);
-					}
-
-					$message = str_replace('{' . $match[1] . '}', $post, $message);
-			}
-		}
-
-		return $message;
 	}
 
 	/*
