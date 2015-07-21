@@ -144,7 +144,7 @@
 				</field>
 			</fieldset>
 			
-			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
+			<fieldset name="advanced">
 				<field name="enablelimit" class="btn-group" type="radio" default="1" label="SHOUT_CHARACTERLIMIT" description="SHOUT_CHARACTERLIMITDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
@@ -156,7 +156,7 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>			
-				<field name="genericname" type="text" default="Anonymous" label="SHOUT_GENERIC_NAME" description="SHOUT_GENERIC_NAME_DESC" />
+				<field name="genericname" type="text" showon="namerequired:0" default="Anonymous" label="SHOUT_GENERIC_NAME" description="SHOUT_GENERIC_NAME_DESC" />
 				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -166,10 +166,8 @@
 					<option value="1">SHOUT_RECAPTCHA</option>
 					<option value="2">SHOUT_MATHS_QUESTION</option>
 				</field>			
-				<field name="recaptcha-public" type="text" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
-				<field name="recaptcha-private" type="text" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />		
-				<field name="fade" type="shoutbox.fade" label="Fade" />
-				
+				<field name="recaptcha-public" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
+				<field name="recaptcha-private" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />		
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 			</fieldset>
 
