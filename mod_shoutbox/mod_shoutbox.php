@@ -41,6 +41,7 @@ $genericName     = $params->get('genericname', 'Anonymous');
 $nameRequired    = $params->get('namerequired', 0);
 $alertLength     = $params->get('alertlength', '50');
 $warnLength      = $params->get('warnlength', '10');
+$enablelimit     = $params->get('enablelimit', 1);
 $messageLength   = $params->get('messagelength', '200');
 $refresh         = $params->get('refresh', 10) * 1000;
 $remainingLength = JText::_('SHOUT_REMAINING');

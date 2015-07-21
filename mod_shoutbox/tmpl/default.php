@@ -115,16 +115,19 @@ elseif (array_intersect($permissions, $access))
 		?>
 		<input name="jjshout[token]" type="hidden" value="<?php echo $_SESSION['token'];?>" />
 
-		<span id="charsLeft"></span>
-
-		<textarea 
-			id="jj_message"  
-			cols="20" 
-			rows="5" 
-			name="jjshout[message]" 
-			onKeyDown="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
-			onKeyUp="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
-		></textarea>
+		<?php if ($enablelimit == 1) : ?>
+			<span id="charsLeft"></span>
+			<textarea 
+				id="jj_message"  
+				cols="20" 
+				rows="5" 
+				name="jjshout[message]" 
+				onKeyDown="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
+				onKeyUp="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
+			></textarea>
+		<?php else: ?>
+			<textarea id="jj_message" cols="20" rows="5" name="jjshout[message]"></textarea>
+		<?php endif; ?>
 		
 		<?php if ($bbcode == 1) : ?>
 			<div class="btn-toolbar">

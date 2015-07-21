@@ -130,9 +130,6 @@
 					<option value="1">JON</option>
 				</field>
 				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
-				<field name="messagelength" type="text" default="200" label="SHOUT_MESSAGELABEL" description="SHOUT_MESSAGEDESC" />
-				<field name="alertlength" type="text" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
-				<field name="warnlength" type="text" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
 			</fieldset>
 
 			<fieldset name="styling" label="SHOUT_STYLING">
@@ -148,6 +145,13 @@
 			</fieldset>
 			
 			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
+				<field name="enablelimit" class="btn-group" type="radio" default="1" label="SHOUT_CHARACTERLIMIT" description="SHOUT_CHARACTERLIMITDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+				<field name="messagelength" type="text" showon="enablelimit:1" default="200" label="SHOUT_MESSAGELABEL" description="SHOUT_MESSAGEDESC" />
+				<field name="alertlength" type="text" showon="enablelimit:1" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
+				<field name="warnlength" type="text" showon="enablelimit:1" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
 				<field name="namerequired" type="list" default="0" label="SHOUT_NAME_REQUIRED" description="SHOUT_NAME_REQUIRED_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
