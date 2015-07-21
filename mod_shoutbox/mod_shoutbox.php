@@ -44,6 +44,7 @@ $warnLength      = $params->get('warnlength', '10');
 $enablelimit     = $params->get('enablelimit', 1);
 $messageLength   = $params->get('messagelength', '200');
 $refresh         = $params->get('refresh', 10) * 1000;
+$deleteown       = $params->get('deleteown', 0);
 $remainingLength = JText::_('SHOUT_REMAINING');
 
 // Assemble the factory variables needed
@@ -105,9 +106,10 @@ if (isset($_POST))
 	if (isset($post['delete']))
 	{
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
-		$deletepostnumber = $post['idvalue'];
+		$deletepostnumber	= $post['idvalue'];
+		$postnamevalue		= $post['namevalue'];
 
-		if ($user->authorise('core.delete'))
+		if ($user->authorise('core.delete') || ($postnamevalue == $user->username && $deleteown == 1))
 		{
 			$helper->deletepost($deletepostnumber);
 		}

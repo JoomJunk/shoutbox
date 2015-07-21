@@ -145,6 +145,10 @@
 			</fieldset>
 			
 			<fieldset name="advanced">
+				<field name="deleteown" class="btn-group" type="radio" default="0" label="SHOUT_DELETEOWN" description="SHOUT_DELETEOWNDESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 				<field name="enablelimit" class="btn-group" type="radio" default="1" label="SHOUT_CHARACTERLIMIT" description="SHOUT_CHARACTERLIMITDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>

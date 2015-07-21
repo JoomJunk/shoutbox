@@ -9,19 +9,15 @@ defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '#jjshoutboxoutput {
-		border-color: ' . $bordercolour . ';
-		border-width: ' . $borderwidth . 'px;
-	}
-	#jjshoutboxoutput .shout-header {
-		background: ' . $headercolor . ';
-	}';
-
-if ($user->authorise('core.delete'))
-{
-	$style .= '#jjshoutboxoutput input[type=submit]{
-		color:' . $deletecolor . ';
-	}';
-}
+			border-color: ' . $bordercolour . ';
+			border-width: ' . $borderwidth . 'px;
+		}
+		#jjshoutboxoutput .shout-header {
+			background: ' . $headercolor . ';
+		}
+		#jjshoutboxoutput input[type=submit]{
+			color:' . $deletecolor . ';
+		}';
 
 if ($avatar != 'none')
 {
