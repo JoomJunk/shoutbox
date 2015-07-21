@@ -35,11 +35,12 @@ class ShoutboxFormFieldFade extends JFormField
 		$js = '		
 			jQuery(document).ready(function($) {
 
-				var securityType  = $("#jform_params_securitytype");
-				var public  = $("#jform_params_recaptcha_public-lbl").parents(".control-group");
-				var private = $("#jform_params_recaptcha_private-lbl").parents(".control-group");
+				var securityType  	= $("#jform_params_securitytype");
+				var public  		= $("#jform_params_recaptcha_public-lbl").parents(".control-group");
+				var private 		= $("#jform_params_recaptcha_private-lbl").parents(".control-group");
 				
-				if( securityType.val() == 0 || securityType.val()  == 2 ) {
+				if (securityType.val() == 0 || securityType.val()  == 2) 
+				{
 					public.hide();
 					private.hide();
 				}
@@ -48,23 +49,25 @@ class ShoutboxFormFieldFade extends JFormField
 
 					var value = this.value;
 
-					if( value == 0 || value == 2 ) {						
+					if (value == 0 || value == 2)
+					{						
 						public.fadeOut();
 						private.fadeOut();
 					}
-					else {						
+					else 
+					{						
 						public.fadeIn();
 						private.fadeIn();						
 					}
 
 				});
-				
-				
+		
 				
 				var nameRequired  	= $("#jform_params_namerequired");
 				var genericName 	= $("#jform_params_genericname-lbl").parents(".control-group");
 				
-				if( nameRequired.val() == 1 ) {
+				if (nameRequired.val() == 1) 
+				{
 					genericName.hide();
 				}
 
@@ -72,10 +75,12 @@ class ShoutboxFormFieldFade extends JFormField
 
 					var value = this.value;
 
-					if( value == 0 ) {						
+					if (value == 0) 
+					{						
 						genericName.fadeIn();
 					}
-					else {						
+					else 
+					{						
 						genericName.fadeOut();						
 					}
 

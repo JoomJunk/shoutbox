@@ -32,6 +32,7 @@ if ($avatar != 'none')
 	#jjshoutboxoutput .avatar img {
 		margin-right: 5px;
 		height: 30px;
+		width: 30px;
 	}';
 }
 
@@ -61,7 +62,7 @@ $popover = '[url=http://example.com]Text Here[/url]';
 </div>
 <div class="jj-shout-error"></div>
 
-<?php if ( $sound == 1 ) : ?>
+<?php if ($sound == 1) : ?>
 <audio class="jjshoutbox-audio" preload="auto">
 	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.mp3" type="audio/mpeg">
 	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.ogg" type="audio/ogg">
@@ -125,7 +126,7 @@ elseif (array_intersect($permissions, $access))
 			onKeyUp="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
 		></textarea>
 		
-		<?php if ( $bbcode == 1 ) : ?>
+		<?php if ($bbcode == 1) : ?>
 			<div class="btn-toolbar">
 				<div class="<?php echo $button_group; ?>">
 					<button type="button" class="<?php echo $button; ?> btn-small jj-bold" data-bbcode-type="b"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
@@ -248,14 +249,14 @@ else
 			var shoutboxName 	= instance.find('#shoutbox-name').val();
 			var shoutboxMsg		= instance.find('#jj_message').val();
 			
-			<?php if($displayName == 'user' && !$user->guest){ ?>
+			<?php if ($displayName == 'user' && !$user->guest) { ?>
 				var name = "<?php echo $user->username;?>";
 			<?php } elseif($displayName == 'real' && !$user->guest) { ?>
 				var name = "<?php echo $user->name;?>";
 			<?php } else { ?>
-			if( shoutboxName == '' )
+			if (shoutboxName == '')
 			{			
-				<?php if($nameRequired == 0 && $user->guest){ ?>
+				<?php if ($nameRequired == 0 && $user->guest) { ?>
 					var name = "<?php echo $genericName;?>";
 				<?php } else { ?>		
 					var name = "JJ_None";
@@ -268,11 +269,11 @@ else
 			<?php } ?>
 
 			// Run error reporting
-			if( shoutboxMsg == '' )
+			if (shoutboxMsg == '')
 			{
 				showError(shoutboxMsg, instance);
 			}
-			else if ( name == 'JJ_None' )
+			else if (name == 'JJ_None')
 			{
 				showError(name, instance);
 			}			

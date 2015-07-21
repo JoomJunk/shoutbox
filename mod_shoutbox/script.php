@@ -325,8 +325,8 @@ class Mod_ShoutboxInstallerScript
 	protected function update124()
 	{
 		// Import dependencies
-		jimport('joomla.filesystem.folder');
-		jimport('joomla.filesystem.file');
+		JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
+		JLoader::register('JFolder', JPATH_LIBRARIES . '/joomla/filesystem/folder.php');
 
 		// Move the assets
 		if (JFolder::create('media/mod_shoutbox')
@@ -436,7 +436,7 @@ class Mod_ShoutboxInstallerScript
 	protected function update202()
 	{
 		// Import dependencies
-		jimport('joomla.filesystem.file');
+		JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
 
 		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/fields/check.php');
 	}

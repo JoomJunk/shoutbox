@@ -7,7 +7,6 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.filesystem.file');
 JLoader::register('JJShoutboxLayoutFile', JPATH_SITE . '/modules/mod_shoutbox/libraries/layout.php');
 
 /**

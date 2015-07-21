@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.filesystem.folder');
+JLoader::register('JFolder', JPATH_LIBRARIES . '/joomla/filesystem/folder.php');
 
 require_once dirname(__FILE__) . '/helper.php';
 
@@ -135,13 +135,13 @@ if (isset($_POST))
 				else
 				{
 					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
-					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
+					$app->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
 				}
 			}
 			else
 			{
 				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
-				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
+				$app->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
 			}
 		}
 	}
