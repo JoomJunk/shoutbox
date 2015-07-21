@@ -850,6 +850,7 @@ class ModShoutboxHelper
 			'user' => $user,
 			'title' => $this->shouttitle($user, $shout->ip),
 			'avatar' => $this->getAvatar($this->params->get('avatar', 'none'), $shout->user_id),
+			'params' => $this->params,
 		);
 
 		// Render the layout
