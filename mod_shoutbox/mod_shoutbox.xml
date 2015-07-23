@@ -49,7 +49,6 @@
 		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 		<folder>sql</folder>
-		<folder>fields</folder>
 		<folder>libraries</folder>
 		<folder>layouts</folder>
 	</files>
