@@ -952,7 +952,14 @@ class ModShoutboxHelper
 
 			if ($result)
 			{
-				$avatar = JUri::root() . 'images/comprofiler/tn' . $result;
+				$avatar = JUri::root() . 'images/comprofiler/';
+				
+				if (strrpos($result, 'gallery', -strlen($result)) === false)
+				{
+					$avatar .= 'tn';
+				}
+				
+				$avatar .= $result;               
 			}
 			else
 			{
