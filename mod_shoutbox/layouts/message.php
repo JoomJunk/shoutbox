@@ -20,26 +20,36 @@ extract($displayData);
  
 $user = JFactory::getUser();
 
-$postName = '';
+$userName = '';
 
 if ($params->get('loginname') == 'user')
 {
-	$postName = $user->username;
+	$userName = $user->username;
 }
 else if ($params->get('loginname') == 'real')
 {
-	$postName = $user->name;
+	$userName = $user->name;
+}
+
+// Strip <a> from the username
+if (in_array($params->get('profile'), array(1, 2, 3, 4)))
+{
+	$postName = strip_tags($post->name);
+}
+else
+{
+	$postName = $post->name;
 }
 ?>
 
 <div>
 	<div data-shout-id="<?php echo $post->id; ?>" class="shout-header" <?php echo $title; ?>>
 		<span class="avatar"><?php echo $avatar; ?></span> <?php echo $post->name; ?> - <?php echo $post->when; ?>
-		<?php if ($user->authorise('core.delete') || ($post->name == $postName && $params->get('deleteown') == 1)) : ?>
+		<?php if ($user->authorise('core.delete') || ($post->name == $userName && $params->get('deleteown') == 1)) : ?>
 			<form method="post" name="delete">
 				<input name="jjshout[delete]" type="submit" value="x" />
 				<input name="jjshout[idvalue]" type="hidden" value="<?php echo $post->id; ?>" />
-				<input name="jjshout[namevalue]" type="hidden" value="<?php echo $post->name; ?>" />
+				<input name="jjshout[namevalue]" type="hidden" value="<?php echo $postName; ?>" />
 				<?php echo JHtml::_('form.token'); ?>
 			</form>
 		<?php endif; ?>
