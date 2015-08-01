@@ -58,22 +58,22 @@ $Itemid = is_null($activeMenuItem) ? null : $activeMenuItem->id;
 switch ($framework)
 {
 	case 'uikit':
-		$form 			= 'uk-form';
-		$button_group 	= 'uk-button-group';
-		$button 		= 'uk-button';
-		$button_danger 	= ' uk-button-danger';
+		$form          = 'uk-form';
+		$button_group  = 'uk-button-group';
+		$button        = 'uk-button';
+		$button_danger = ' uk-button-danger';
 		break;
 	case 'bootstrap':
-		$form 			= null;
-		$button_group 	= 'btn-group';
-		$button 		= 'btn';
-		$button_danger 	= ' btn-danger';
+		$form          = null;
+		$button_group  = 'btn-group';
+		$button        = 'btn';
+		$button_danger = ' btn-danger';
 		break;
 	default:
-		$form 			= null;
-		$button_group 	= null;
-		$button 		= null;
-		$button_danger 	= null;
+		$form          = null;
+		$button_group  = null;
+		$button        = null;
+		$button_danger = null;
 		break;
 }
 
