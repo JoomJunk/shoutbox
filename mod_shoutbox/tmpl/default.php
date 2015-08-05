@@ -123,8 +123,8 @@ elseif (array_intersect($permissions, $access))
 				cols="20" 
 				rows="5" 
 				name="jjshout[message]" 
-				onKeyDown="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
-				onKeyUp="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
+				onKeyDown="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
+				onKeyUp="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
 			></textarea>
 		<?php else: ?>
 			<textarea id="jj_message" cols="20" rows="5" name="jjshout[message]"></textarea>
@@ -225,16 +225,15 @@ else
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
 
-		var Itemid   = <?php echo $Itemid ? $Itemid : 'null'; ?>;
-		var instance = $('#<?php echo $uniqueIdentifier; ?>');		
-		
+		var Itemid   	= <?php echo $Itemid ? $Itemid : 'null'; ?>;
+		var instance 	= $('#<?php echo $uniqueIdentifier; ?>');		
 		var entersubmit = '<?php echo $entersubmit; ?>';
 		
 		if (entersubmit == 0)
 		{
 			instance.find('#shoutbox-submit').on('click', function(e){
 				e.preventDefault();
-				doShoutboxSubmission();
+				JJShoutbox.doShoutboxSubmission();
 			});
 		}
 		else
@@ -243,12 +242,12 @@ else
 				if (e.which == 13) 
 				{
 					e.preventDefault();					
-					doShoutboxSubmission();
+					JJShoutbox.doShoutboxSubmission();
 				}
 			});
 		}
 		
-		function doShoutboxSubmission() 
+		JJShoutbox.doShoutboxSubmission = function() 
 		{
 			var shoutboxName 	= instance.find('#shoutbox-name').val();
 			var shoutboxMsg		= instance.find('#jj_message').val();
@@ -275,22 +274,22 @@ else
 			// Run error reporting
 			if (shoutboxMsg == '')
 			{
-				showError(Joomla.JText._('SHOUT_MESSAGE_EMPTY'), instance);
+				JJShoutbox.showError(Joomla.JText._('SHOUT_MESSAGE_EMPTY'), instance);
 			}
 			else if (name == 'JJ_None')
 			{
-				showError(Joomla.JText._('SHOUT_NAME_EMPTY'), instance);
+				JJShoutbox.showError(Joomla.JText._('SHOUT_NAME_EMPTY'), instance);
 			}			
 			else
 			{
-				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance);
+				JJShoutbox.submitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance);
 			}
 		}		
 
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){
 			var Itemid = '<?php echo $Itemid; ?>';
-			JJgetPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
+			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
 		}, <?php echo $refresh; ?>);
 	});	
 	<?php endif; ?>
