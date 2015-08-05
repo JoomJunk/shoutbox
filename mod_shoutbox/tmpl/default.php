@@ -36,7 +36,10 @@ $doc->addStyleDeclaration($style);
 $uniqueIdentifier = 'jjshoutbox' . $uniqueId;
 
 JHtml::_('bootstrap.popover');
-$popover = '[url=http://example.com]Text Here[/url]';
+$popover = JText::_('SHOUT_URL_EXAMPLE');
+
+JText::script('SHOUT_MESSAGE_EMPTY');
+JText::script('SHOUT_NAME_EMPTY');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
@@ -139,7 +142,7 @@ elseif (array_intersect($permissions, $access))
 		<?php if ($smile == 1 || $smile == 2  || $smile == 3) : ?>
 			<?php if ($smile == 2 || $smile == 3) : ?>
 				<div id="jj_smiley_button">
-					<a href="#" id="jj_btn" class="<?php echo $button; ?> btn-mini <?php echo ($smile == 2 ? 'rotated' : ''); ?>" />&#9650;</a>
+					<a href="#" id="jj_btn" class="<?php echo $button; ?> btn-mini <?php echo ($smile == 2 ? 'rotated' : ''); ?>" >&#9650;</a>
 				</div>
 			<?php endif; ?>
 			<div id="jj_smiley_box" style="<?php echo ($smile == 2 ? 'display:none;' : 'display:block;'); ?>"><?php echo $helper->smileyshow(); ?></div>
@@ -270,11 +273,11 @@ else
 			// Run error reporting
 			if (shoutboxMsg == '')
 			{
-				showError(shoutboxMsg, instance);
+				showError(Joomla.JText._('SHOUT_MESSAGE_EMPTY'), instance);
 			}
 			else if (name == 'JJ_None')
 			{
-				showError(name, instance);
+				showError(Joomla.JText._('SHOUT_NAME_EMPTY'), instance);
 			}			
 			else
 			{

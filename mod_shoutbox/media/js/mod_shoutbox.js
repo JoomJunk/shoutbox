@@ -105,7 +105,7 @@ function getRandomArbitrary(min, max)
 
 jQuery(document).ready(function($) {
 
-	// Append BBCode 
+	// Append BBCode
 	$('#jjshoutboxform .btn-toolbar button').on('click', function() {
 		
 		var bbcode 		= $(this).data('bbcode-type');
@@ -269,25 +269,17 @@ jQuery(document).ready(function($) {
 	function getLastID(instance)
 	{
 		var lastId = instance.find('.shout-header:first-child').data('shout-id');
-		
+
 		return lastId;
 	}
 	
 	// Check if the name or message fields are empty
-	showError = function(field, instance)
+	showError = function(errorMsg, instance)
 	{
 		var errorBox = instance.find('.jj-shout-error');
-		
-		if (field == '')
-		{
-			errorMsg = '<p>Please enter a message</p>';
-		}
-		else
-		{
-			errorMsg = '<p>Please enter a name</p>';
-		}
-		
-		errorBox.html(errorMsg)
+		var errorMsgWithPTag = '<p>' + errorMsg + '</p>';
+
+		errorBox.html(errorMsgWithPTag)
 				.slideDown().delay(5000).slideUp(400, function() {
 					$(this).empty();
 				});
