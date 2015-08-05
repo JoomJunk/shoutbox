@@ -38,6 +38,8 @@ $uniqueIdentifier = 'jjshoutbox' . $uniqueId;
 JHtml::_('bootstrap.popover');
 $popover = JText::_('SHOUT_URL_EXAMPLE');
 
+// Load core.js for the javascript translating
+JHtml::_('behavior.core');
 JText::script('SHOUT_MESSAGE_EMPTY');
 JText::script('SHOUT_NAME_EMPTY');
 ?>
