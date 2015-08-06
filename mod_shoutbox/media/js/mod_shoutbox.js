@@ -102,6 +102,7 @@ JJShoutbox.textCounter = function(textarea, countdown, maxlimit, alertLength, wa
 	}
 }
 
+
 /**
  * Returns a random integer number between min (inclusive) and max (exclusive)
  */
@@ -130,14 +131,14 @@ JJShoutbox.getLastID = function(instance)
  *
  * TODO: Make this the general error handling function and improve it
  */
-JJShoutbox.showError = function(errorMsg, instance)
+JJShoutbox.showError = function(msg, instance)
 {
-	var errorBox 		= instance.find('.jj-shout-error');
-	var errorMsgHtml 	= '<p>' + errorMsg + '</p>';
+	var errorBox 	= instance.find('.jj-shout-error');
+	var errorMsg 	= '<div class="alert alert-error">' + msg + '</div>';
 
-	errorBox.html(errorMsgHtml)
+	errorBox.html(errorMsg)
 			.slideDown().delay(5000).slideUp(400, function() {
-				$(this).empty();
+				errorBox.empty();
 			});
 	
 	return false;
@@ -146,18 +147,19 @@ JJShoutbox.showError = function(errorMsg, instance)
 	
 
 jQuery(document).ready(function($) {
-
-	// Append BBCode
+	
+	/**
+	 * Compile the BBCode ready to insert
+	 */
 	$('#jjshoutboxform .btn-toolbar button').on('click', function() {
 		
-		var bbcode 		= $(this).data('bbcode-type');
-		var start 		= '[' + bbcode + ']';
-		var end 		= '[/' + bbcode + ']';
-		var element 	= $('#jj_message').get(0);
+		var bbcode 	= $(this).data('bbcode-type');
+		var start 	= '[' + bbcode + ']';
+		var end 	= '[/' + bbcode + ']';
+		var element = $('#jj_message').get(0);
+		var param 	= '';
 
-		var param = '';
-
-		if ( bbcode == 'url' )
+		if (bbcode == 'url')
 		{
 			start = '[url=' + param + ']';
 		}
@@ -168,14 +170,20 @@ jQuery(document).ready(function($) {
 	  
     });
 	
-	// SMILEY SLIDETOGGLE
+	
+	/**
+	 * slideToggle the smiley box on click
+	 */
 	$('#jj_btn').on('click', function(e) {
 		e.preventDefault();
 		$(this).toggleClass('rotated');
 		$('#jj_smiley_box').stop(true, false).slideToggle();
 	});
 		
-	// SUBMIT POST
+		
+	/**
+	 * Submit a shout
+	 */
 	JJShoutbox.submitPost = function(name, title, securityType, security, Itemid, instance)
 	{
 		// Assemble some commonly used vars
@@ -259,7 +267,10 @@ jQuery(document).ready(function($) {
 	}
 	
 	
-	// GET POSTS
+	/**
+	 * Get the latest shouts
+	 * Play a sound notification if new shouts are shown
+	 */
 	JJShoutbox.getPosts = function(title, sound, Itemid, instance)
 	{
 		// Get the ID of the last shout
