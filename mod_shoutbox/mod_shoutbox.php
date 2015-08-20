@@ -7,7 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
-jimport('joomla.filesystem.folder');
+JLoader::register('JFolder', JPATH_LIBRARIES . '/joomla/filesystem/folder.php');
 
 require_once dirname(__FILE__) . '/helper.php';
 
@@ -41,8 +41,10 @@ $genericName     = $params->get('genericname', 'Anonymous');
 $nameRequired    = $params->get('namerequired', 0);
 $alertLength     = $params->get('alertlength', '50');
 $warnLength      = $params->get('warnlength', '10');
+$enablelimit     = $params->get('enablelimit', 1);
 $messageLength   = $params->get('messagelength', '200');
 $refresh         = $params->get('refresh', 10) * 1000;
+$deleteown       = $params->get('deleteown', 0);
 $remainingLength = JText::_('SHOUT_REMAINING');
 
 // Assemble the factory variables needed
@@ -56,22 +58,22 @@ $Itemid = is_null($activeMenuItem) ? null : $activeMenuItem->id;
 switch ($framework)
 {
 	case 'uikit':
-		$form 			= 'uk-form';
-		$button_group 	= 'uk-button-group';
-		$button 		= 'uk-button';
-		$button_danger 	= ' uk-button-danger';
+		$form          = 'uk-form';
+		$button_group  = 'uk-button-group';
+		$button        = 'uk-button';
+		$button_danger = ' uk-button-danger';
 		break;
 	case 'bootstrap':
-		$form 			= null;
-		$button_group 	= 'btn-group';
-		$button 		= 'btn';
-		$button_danger 	= ' btn-danger';
+		$form          = null;
+		$button_group  = 'btn-group';
+		$button        = 'btn';
+		$button_danger = ' btn-danger';
 		break;
 	default:
-		$form 			= null;
-		$button_group 	= null;
-		$button 		= null;
-		$button_danger 	= null;
+		$form          = null;
+		$button_group  = null;
+		$button        = null;
+		$button_danger = null;
 		break;
 }
 
@@ -104,9 +106,10 @@ if (isset($_POST))
 	if (isset($post['delete']))
 	{
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
-		$deletepostnumber = $post['idvalue'];
+		$deletepostnumber	= $post['idvalue'];
+		$postnamevalue		= $post['namevalue'];
 
-		if ($user->authorise('core.delete'))
+		if ($user->authorise('core.delete') || ($postnamevalue == $user->username && $deleteown == 1))
 		{
 			$helper->deletepost($deletepostnumber);
 		}
@@ -135,13 +138,13 @@ if (isset($_POST))
 				else
 				{
 					JLog::add(JText::_('SHOUT_GREATER_THAN_ZERO'), JLog::WARNING, 'mod_shoutbox');
-					JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
+					$app->enqueueMessage(JText::_('SHOUT_GREATER_THAN_ZERO'), 'error');
 				}
 			}
 			else
 			{
 				JLog::add(JText::_('SHOUT_NOT_INT'), JLog::WARNING, 'mod_shoutbox');
-				JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
+				$app->enqueueMessage(JText::_('SHOUT_NOT_INT'), 'error');
 			}
 		}
 	}

@@ -4,11 +4,13 @@
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
-var JJgetPosts 	 = null;
-var JJsubmitPost = null;
-var showError 	 = null;
+var JJShoutbox = JJShoutbox || {};
 
-function addSmiley(smiley, id) 
+
+/**
+ * Adds a smiley to the textarea
+ */
+JJShoutbox.addSmiley = function(smiley, id) 
 {
 	// Get the text area object
 	var el = document.getElementById(id);
@@ -42,7 +44,10 @@ function addSmiley(smiley, id)
 }
 
 
-function insertBBCode(start, end, el) 
+/**
+ * Inserts the BBCode selected to the textarea
+ */
+JJShoutbox.insertBBCode = function(start, end, el) 
 {
 	// IE Support
 	if (document.selection) 
@@ -65,9 +70,13 @@ function insertBBCode(start, end, el)
 	}	
 }
 
-function textCounter(textarea, countdown, maxlimit, alertLength, warnLength, shoutRemainingText)
+
+/**
+ * Changes the text counter colour based on the max, alert and warning limits
+ */
+JJShoutbox.textCounter = function(textarea, countdown, maxlimit, alertLength, warnLength, shoutRemainingText)
 {
-	textareaid = document.getElementById(textarea);
+	var textareaid = document.getElementById(textarea);
 	var charsLeft = document.getElementById('charsLeft');
 	
 	if (textareaid.value.length > maxlimit)
@@ -76,27 +85,28 @@ function textCounter(textarea, countdown, maxlimit, alertLength, warnLength, sho
 	}
 	else
 	{
-		charsLeft.innerHTML = (maxlimit-textareaid.value.length)+' ' + shoutRemainingText;
+		charsLeft.innerHTML = (maxlimit-textareaid.value.length) + ' ' + shoutRemainingText;
 	}
 	
 	if (maxlimit-textareaid.value.length > alertLength)
 	{
-		charsLeft.style.color = "Black";
+		charsLeft.style.color = 'Black';
 	}	
 	if (maxlimit-textareaid.value.length <= alertLength && maxlimit-textareaid.value.length > warnLength)
 	{
-		charsLeft.style.color = "Orange";
+		charsLeft.style.color = 'Orange';
 	}	
 	if (maxlimit-textareaid.value.length <= warnLength)
 	{
-		charsLeft.style.color = "Red";
+		charsLeft.style.color = 'Red';
 	}
 }
+
 
 /**
  * Returns a random integer number between min (inclusive) and max (exclusive)
  */
-function getRandomArbitrary(min, max) 
+JJShoutbox.getRandomArbitrary = function(min, max) 
 {
 	var random = 0;
     random = Math.random() * (max - min) + min;
@@ -104,38 +114,77 @@ function getRandomArbitrary(min, max)
 	return parseInt(random);
 }
 
-jQuery(document).ready(function($) {
 
-	// Append BBCode 
+/**
+ * Returns the last ID of the shoutbox output
+ */
+JJShoutbox.getLastID = function(instance)
+{
+	var lastId = instance.find('.shout-header:first-child').data('shout-id');
+
+	return lastId;
+}
+
+
+/**
+ * Check if the name or message fields are empty
+ *
+ * TODO: Make this the general error handling function and improve it
+ */
+JJShoutbox.showError = function(msg, instance)
+{
+	var errorBox 	= instance.find('.jj-shout-error');
+	var errorMsg 	= '<div class="alert alert-error">' + msg + '</div>';
+
+	errorBox.html(errorMsg)
+			.slideDown().delay(5000).slideUp(400, function() {
+				errorBox.empty();
+			});
+	
+	return false;
+}
+	
+	
+
+jQuery(document).ready(function($) {
+	
+	/**
+	 * Compile the BBCode ready to insert
+	 */
 	$('#jjshoutboxform .btn-toolbar button').on('click', function() {
 		
-		var bbcode 		= $(this).data('bbcode-type');
-		var start 		= '[' + bbcode + ']';
-		var end 		= '[/' + bbcode + ']';
-		var element 	= $('#jj_message').get(0);
+		var bbcode 	= $(this).data('bbcode-type');
+		var start 	= '[' + bbcode + ']';
+		var end 	= '[/' + bbcode + ']';
+		var element = $('#jj_message').get(0);
+		var param 	= '';
 
-		var param = '';
-
-		if ( bbcode == 'url' )
+		if (bbcode == 'url')
 		{
 			start = '[url=' + param + ']';
 		}
 		
-		insertBBCode(start, end, element);
+		JJShoutbox.insertBBCode(start, end, element);
 		
 		return false;
 	  
     });
 	
-	// SMILEY SLIDETOGGLE
+	
+	/**
+	 * slideToggle the smiley box on click
+	 */
 	$('#jj_btn').on('click', function(e) {
 		e.preventDefault();
 		$(this).toggleClass('rotated');
 		$('#jj_smiley_box').stop(true, false).slideToggle();
 	});
 		
-	// SUBMIT POST
-	JJsubmitPost = function(name, title, securityType, security, Itemid, instance)
+		
+	/**
+	 * Submit a shout
+	 */
+	JJShoutbox.submitPost = function(name, title, securityType, security, Itemid, instance)
 	{
 		// Assemble some commonly used vars
 		var textarea = instance.find('#jj_message'),
@@ -175,7 +224,7 @@ jQuery(document).ready(function($) {
 			type: 'POST',
 			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&format=json',
 			data: request,
-			success:function(response){
+			success: function(response){
 				if (response.success)
 				{
 					// Empty the message value
@@ -188,10 +237,10 @@ jQuery(document).ready(function($) {
 					}
 
 					// Refresh the output
-					JJgetPosts(title, false, Itemid, instance)
+					JJShoutbox.getPosts(title, false, Itemid, instance)
 				}
 			},
-			error:function(ts){
+			error: function(ts){
 				console.log(ts);
 			}
 		});
@@ -206,8 +255,8 @@ jQuery(document).ready(function($) {
 		if (securityType == 2)
 		{
 			var val1, val2;
-			val1 = getRandomArbitrary(0,9);
-			val2 = getRandomArbitrary(0,9);
+			val1 = JJShoutbox.getRandomArbitrary(0,9);
+			val2 = JJShoutbox.getRandomArbitrary(0,9);
 			instance.find('input[name="jjshout[sum1]"]').val(val1);
 			instance.find('input[name="jjshout[sum2]"]').val(val2);
 			instance.find('label[for="math_output"]').text(val1 + ' + ' + val2);
@@ -218,12 +267,14 @@ jQuery(document).ready(function($) {
 	}
 	
 	
-	// GET POSTS
-	JJgetPosts = function(title, sound, Itemid, instance)
+	/**
+	 * Get the latest shouts
+	 * Play a sound notification if new shouts are shown
+	 */
+	JJShoutbox.getPosts = function(title, sound, Itemid, instance)
 	{
-		
 		// Get the ID of the last shout
-		var lastID = getLastID(instance);
+		var lastID = JJShoutbox.getLastID(instance);
 		
 		// Assemble variables to submit
 		var request = {
@@ -241,7 +292,7 @@ jQuery(document).ready(function($) {
 			type: 'POST',
 			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&format=json',
 			data: request,
-			success:function(response){
+			success: function(response){
 				if (response.success)
 				{
 					instance.find('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
@@ -250,7 +301,7 @@ jQuery(document).ready(function($) {
 					instance.find('.jj-shout-new').after(response.data.html);
 					
 					// Get the ID of the last shout after the output has been updated
-					var newLastID = getLastID(instance);
+					var newLastID = JJShoutbox.getLastID(instance);
 					
 					// Play notification sound if enabled
 					if (sound == 1 && newLastID > lastID) 
@@ -259,42 +310,12 @@ jQuery(document).ready(function($) {
 					}
 				}
 			},
-			error:function(ts){
+			error: function(ts){
 				console.log(ts);
 			}
 		});
 
 		return false;
-	}
-	
-	// Get the last ID of the shoutbox output
-	function getLastID(instance)
-	{
-		var lastId = instance.find('.shout-header:first-child').data('shout-id');
-		
-		return lastId;
-	}
-	
-	// Check if the name or message fields are empty
-	showError = function(field, instance)
-	{
-		var errorBox = instance.find('.jj-shout-error');
-		
-		if( field == '' )
-		{
-			errorMsg = '<p>Please enter a message</p>';
-		}
-		else
-		{
-			errorMsg = '<p>Please enter a name</p>';
-		}
-		
-		errorBox.html(errorMsg)
-				.slideDown().delay(5000).slideUp(400, function() {
-					$(this).empty();
-				});
-		
-		return false
 	}
 	
 });

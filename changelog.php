@@ -14,6 +14,15 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
+^ Move messaging system to use JLayouts
+^ Improvements to dependency importing
+^ Namespaced Javascript to avoid conflicts
++ Added option for users to delete their own shouts
++ Added option to disable character limit
++ Added language strings for untranslated text
+# Fixed Avatar width
+
 Version 4.0.3
 + Added German translation (thanks Betteryouthanme)
 ^ Updates to Polish language files (thanks PLFoxNET)

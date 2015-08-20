@@ -85,14 +85,11 @@
 }
 .jjshoutbox .jj-shout-error {
 	display: none;
-	background: #F00;
-	color: #FFF;
-	margin: 7px 0 5px;
-	padding: 5px;
+	margin-top: 5px;
 }
-.jjshoutbox .jj-shout-error p {
-	margin: 0;
-	font-size: 12px;
+.jjshoutbox .jj-shout-error .alert {
+	margin-bottom: 0;
+	padding-right: 14px
 }
 .jjshoutbox .jj_label { 
 	width: 70px; 
@@ -118,13 +115,11 @@
 	padding: 2px 5px !important;
 	-webkit-transform: rotate(0deg);
 	-moz-transform: rotate(0deg);
-	-ms-transform: rotate(0deg);
 	transform: rotate(0deg);
 }
 #jj_btn.rotated {
 	-webkit-transform: rotate(180deg);
 	-moz-transform: rotate(180deg);
-	-ms-transform: rotate(180deg);
 	transform: rotate(180deg);
 }
 .jj_smiley {

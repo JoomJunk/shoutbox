@@ -9,19 +9,15 @@ defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '#jjshoutboxoutput {
-		border-color: ' . $bordercolour . ';
-		border-width: ' . $borderwidth . 'px;
-	}
-	#jjshoutboxoutput .shout-header {
-		background: ' . $headercolor . ';
-	}';
-
-if ($user->authorise('core.delete'))
-{
-	$style .= '#jjshoutboxoutput input[type=submit]{
-		color:' . $deletecolor . ';
-	}';
-}
+			border-color: ' . $bordercolour . ';
+			border-width: ' . $borderwidth . 'px;
+		}
+		#jjshoutboxoutput .shout-header {
+			background: ' . $headercolor . ';
+		}
+		#jjshoutboxoutput input[type=submit]{
+			color:' . $deletecolor . ';
+		}';
 
 if ($avatar != 'none')
 {
@@ -32,6 +28,7 @@ if ($avatar != 'none')
 	#jjshoutboxoutput .avatar img {
 		margin-right: 5px;
 		height: 30px;
+		width: 30px;
 	}';
 }
 
@@ -39,7 +36,12 @@ $doc->addStyleDeclaration($style);
 $uniqueIdentifier = 'jjshoutbox' . $uniqueId;
 
 JHtml::_('bootstrap.popover');
-$popover = '[url=http://example.com]Text Here[/url]';
+$popover = JText::_('SHOUT_URL_EXAMPLE');
+
+// Load core.js for the javascript translating
+JHtml::_('behavior.core');
+JText::script('SHOUT_MESSAGE_EMPTY');
+JText::script('SHOUT_NAME_EMPTY');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
@@ -61,7 +63,7 @@ $popover = '[url=http://example.com]Text Here[/url]';
 </div>
 <div class="jj-shout-error"></div>
 
-<?php if ( $sound == 1 ) : ?>
+<?php if ($sound == 1) : ?>
 <audio class="jjshoutbox-audio" preload="auto">
 	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.mp3" type="audio/mpeg">
 	<source src="<?php echo JUri::root(); ?>/media/mod_shoutbox/sounds/notification.ogg" type="audio/ogg">
@@ -114,18 +116,21 @@ elseif (array_intersect($permissions, $access))
 		?>
 		<input name="jjshout[token]" type="hidden" value="<?php echo $_SESSION['token'];?>" />
 
-		<span id="charsLeft"></span>
-
-		<textarea 
-			id="jj_message"  
-			cols="20" 
-			rows="5" 
-			name="jjshout[message]" 
-			onKeyDown="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
-			onKeyUp="textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
-		></textarea>
+		<?php if ($enablelimit == 1) : ?>
+			<span id="charsLeft"></span>
+			<textarea 
+				id="jj_message"  
+				cols="20" 
+				rows="5" 
+				name="jjshout[message]" 
+				onKeyDown="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
+				onKeyUp="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
+			></textarea>
+		<?php else: ?>
+			<textarea id="jj_message" cols="20" rows="5" name="jjshout[message]"></textarea>
+		<?php endif; ?>
 		
-		<?php if ( $bbcode == 1 ) : ?>
+		<?php if ($bbcode == 1) : ?>
 			<div class="btn-toolbar">
 				<div class="<?php echo $button_group; ?>">
 					<button type="button" class="<?php echo $button; ?> btn-small jj-bold" data-bbcode-type="b"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
@@ -139,7 +144,7 @@ elseif (array_intersect($permissions, $access))
 		<?php if ($smile == 1 || $smile == 2  || $smile == 3) : ?>
 			<?php if ($smile == 2 || $smile == 3) : ?>
 				<div id="jj_smiley_button">
-					<a href="#" id="jj_btn" class="<?php echo $button; ?> btn-mini <?php echo ($smile == 2 ? 'rotated' : ''); ?>" />&#9650;</a>
+					<a href="#" id="jj_btn" class="<?php echo $button; ?> btn-mini <?php echo ($smile == 2 ? 'rotated' : ''); ?>" >&#9650;</a>
 				</div>
 			<?php endif; ?>
 			<div id="jj_smiley_box" style="<?php echo ($smile == 2 ? 'display:none;' : 'display:block;'); ?>"><?php echo $helper->smileyshow(); ?></div>
@@ -220,16 +225,15 @@ else
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	jQuery(document).ready(function($) {
 
-		var Itemid   = <?php echo $Itemid ? $Itemid : 'null'; ?>;
-		var instance = $('#<?php echo $uniqueIdentifier; ?>');		
-		
+		var Itemid   	= <?php echo $Itemid ? $Itemid : 'null'; ?>;
+		var instance 	= $('#<?php echo $uniqueIdentifier; ?>');		
 		var entersubmit = '<?php echo $entersubmit; ?>';
 		
 		if (entersubmit == 0)
 		{
 			instance.find('#shoutbox-submit').on('click', function(e){
 				e.preventDefault();
-				doShoutboxSubmission();
+				JJShoutbox.doShoutboxSubmission();
 			});
 		}
 		else
@@ -238,24 +242,24 @@ else
 				if (e.which == 13) 
 				{
 					e.preventDefault();					
-					doShoutboxSubmission();
+					JJShoutbox.doShoutboxSubmission();
 				}
 			});
 		}
 		
-		function doShoutboxSubmission() 
+		JJShoutbox.doShoutboxSubmission = function() 
 		{
 			var shoutboxName 	= instance.find('#shoutbox-name').val();
 			var shoutboxMsg		= instance.find('#jj_message').val();
 			
-			<?php if($displayName == 'user' && !$user->guest){ ?>
+			<?php if ($displayName == 'user' && !$user->guest) { ?>
 				var name = "<?php echo $user->username;?>";
 			<?php } elseif($displayName == 'real' && !$user->guest) { ?>
 				var name = "<?php echo $user->name;?>";
 			<?php } else { ?>
-			if( shoutboxName == '' )
+			if (shoutboxName == '')
 			{			
-				<?php if($nameRequired == 0 && $user->guest){ ?>
+				<?php if ($nameRequired == 0 && $user->guest) { ?>
 					var name = "<?php echo $genericName;?>";
 				<?php } else { ?>		
 					var name = "JJ_None";
@@ -268,24 +272,24 @@ else
 			<?php } ?>
 
 			// Run error reporting
-			if( shoutboxMsg == '' )
+			if (shoutboxMsg == '')
 			{
-				showError(shoutboxMsg, instance);
+				JJShoutbox.showError(Joomla.JText._('SHOUT_MESSAGE_EMPTY'), instance);
 			}
-			else if ( name == 'JJ_None' )
+			else if (name == 'JJ_None')
 			{
-				showError(name, instance);
+				JJShoutbox.showError(Joomla.JText._('SHOUT_NAME_EMPTY'), instance);
 			}			
 			else
 			{
-				JJsubmitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance);
+				JJShoutbox.submitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance);
 			}
 		}		
 
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){
 			var Itemid = '<?php echo $Itemid; ?>';
-			JJgetPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
+			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
 		}, <?php echo $refresh; ?>);
 	});	
 	<?php endif; ?>
