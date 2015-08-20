@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-WIP
+Version 5.0.0
 ^ Move messaging system to use JLayouts
 ^ Improvements to dependency importing
 ^ Namespaced Javascript to avoid conflicts
