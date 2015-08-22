@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 5.0.1
+# Fixed delete own post when Kunena Profile links enabled
+
 Version 5.0.0
 ^ Move messaging system to use JLayouts
 ^ Improvements to dependency importing
