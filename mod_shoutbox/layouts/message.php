@@ -45,7 +45,7 @@ else
 <div>
 	<div data-shout-id="<?php echo $post->id; ?>" class="shout-header" <?php echo $title; ?>>
 		<span class="avatar"><?php echo $avatar; ?></span> <?php echo $post->name; ?> - <?php echo $post->when; ?>
-		<?php if ($user->authorise('core.delete') || ($post->name == $userName && $params->get('deleteown') == 1)) : ?>
+		<?php if ($user->authorise('core.delete') || ($postName == $userName && $params->get('deleteown') == 1)) : ?>
 			<form method="post" name="delete">
 				<input name="jjshout[delete]" type="submit" value="x" />
 				<input name="jjshout[idvalue]" type="hidden" value="<?php echo $post->id; ?>" />
