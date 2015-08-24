@@ -74,7 +74,7 @@ class ModShoutboxHelper
 		{
 			if (empty($post['message']))
 			{
-				throw new RuntimeException ('The message body is empty');				
+				throw new RuntimeException('The message body is empty');				
 			}
 
 			$id = $helper->submitPost($post);
@@ -92,7 +92,7 @@ class ModShoutboxHelper
 			return $result;
 		}
 		
-		throw new RuntimeException ('There was an error processing the form. Please try again!');
+		throw new RuntimeException('There was an error processing the form. Please try again!');
 	}
 
 	/**
@@ -133,7 +133,7 @@ class ModShoutboxHelper
 
 		return $result;
 		
-		throw new RuntimeException ('There was an error processing the form. Please try again!');
+		throw new RuntimeException('There was an error processing the form. Please try again!');
 	}
 
 	/**
@@ -883,16 +883,13 @@ class ModShoutboxHelper
 		
 		if ($type == 'gravatar')
 		{
-			$s 		= 30;
-			$d 		= 'mm';
-			$r 		= 'g';
 			$atts 	= array();		
 			
 			$url = 'http://www.gravatar.com/avatar/';
-			$url .= md5( strtolower( trim( $email ) ) );
-			$url .= "?s=$s&d=$d&r=$r";
+			$url .= md5(strtolower(trim($email)));
+			$url .= "?s=30&d=mm&r=g";
 			$url = '<img src="' . $url . '"';
-			foreach ( $atts as $key => $val )
+			foreach ($atts as $key => $val)
 			{
 				$url .= ' ' . $key . '="' . $val . '"';
 			}
