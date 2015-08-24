@@ -209,8 +209,10 @@ class ModShoutboxHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__shoutbox'))
-			->order($db->quoteName('id') . ' DESC');
-		$db->setQuery($query, 0, $number);
+			->order($db->quoteName('id') . ' DESC')
+			->setLimit($number, 0);
+			
+		$db->setQuery($query);
 
 		$rows = $db->loadObjectList();
 
@@ -588,7 +590,6 @@ class ModShoutboxHelper
 			->columns($db->quoteName($columns))
 			->values(implode(',', $values));
 
-
 		$db->setQuery($query);
 
 		try
@@ -639,8 +640,10 @@ class ModShoutboxHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			  ->from($db->quoteName('#__shoutbox'))
-			  ->order($db->quoteName('id') . ' DESC');
-		$db->setQuery($query, 0, $delete);
+			  ->order($db->quoteName('id') . ' DESC')
+			  ->setLimit($delete, 0);
+			  
+		$db->setQuery($query);
 
 		$rows = $db->loadObjectList();
 
