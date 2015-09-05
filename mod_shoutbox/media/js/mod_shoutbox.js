@@ -239,6 +239,10 @@ jQuery(document).ready(function($) {
 					// Refresh the output
 					JJShoutbox.getPosts(title, false, Itemid, instance)
 				}
+				else
+				{
+					JJShoutbox.showError(response.message, instance);
+				}
 			},
 			error: function(ts){
 				console.log(ts);
@@ -308,6 +312,10 @@ jQuery(document).ready(function($) {
 					{
 						instance.find('.jjshoutbox-audio').get(0).play();
 					}
+				}
+				else
+				{
+					JJShoutbox.showError(response.message, instance);
 				}
 			},
 			error: function(ts){
