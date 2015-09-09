@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 5.0.2
++ Show error messages from the response
+# Fixed custom form fields not being included on installation
+
 Version 5.0.1
 # Fixed delete own post when Kunena Profile links enabled
 
