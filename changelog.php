@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
+^ Moved swear words to repeatable form fields
+- Removed support for Joomla 3.3
+
 Version 5.0.2
 + Show error messages from the response
 ^ Categorised advanced parameters for ease of view

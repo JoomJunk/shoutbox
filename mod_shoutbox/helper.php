@@ -464,7 +464,30 @@ class ModShoutboxHelper
 	}
 
 	/**
-	 * Retrieves swear words from a file and then filters them.
+	 * Groups an array by key
+	 *
+	 * @param   array  $array  The json decoded array
+	 *
+	 * @return  array  $array  The array group by key
+	 *
+	 * @since   6.0
+	 */
+	public function group_by_key($array) 
+	{
+		$result = array();
+
+		foreach ($array as $sub) 
+		{
+			foreach ($sub as $k => $v) 
+			{
+				$result[$k][] = $v;
+			}
+		}
+		return $result;
+	}	
+
+	/**
+	 * Retrieves swear words from the parameters and then filters them.
 	 *
 	 * @param   string  $post     The post to be searched.
 	 * @param   string  $replace  The thing to be replace the swear words in the string.
@@ -475,25 +498,10 @@ class ModShoutboxHelper
 	 */
 	public function swearfilter($post, $replace)
 	{
-		$myfile = 'modules/mod_shoutbox/swearWords.php';
+		$list_swearwords 	= $this->params->get('list_swearwords');
+		$json 				= json_decode($list_swearwords, true);
 
-		if (!JFile::exists($myfile))
-		{
-			JLog::add(JText::_('SHOUT_SWEAR_FILE_NOT_FOUND'), JLog::WARNING, 'mod_shoutbox');
-
-			return $post;
-		}
-
-		$words = file($myfile, FILE_IGNORE_NEW_LINES);
-		$i = 0;
-
-		while ($i < 10)
-		{
-			unset($words[$i]);
-			$i++;
-		}
-
-		$swearwords = array_values($words);
+		$swearwords = array_values($json['word']);
 
 		foreach ($swearwords as $key => $word )
 		{
