@@ -74,7 +74,7 @@ class ModShoutboxHelper
 		{
 			if (empty($post['message']))
 			{
-				throw new RuntimeException ('The message body is empty');				
+				throw new RuntimeException('The message body is empty');				
 			}
 
 			$id = $helper->submitPost($post);
@@ -92,7 +92,7 @@ class ModShoutboxHelper
 			return $result;
 		}
 		
-		throw new RuntimeException ('There was an error processing the form. Please try again!');
+		throw new RuntimeException('There was an error processing the form. Please try again!');
 	}
 
 	/**
@@ -133,7 +133,7 @@ class ModShoutboxHelper
 
 		return $result;
 		
-		throw new RuntimeException ('There was an error processing the form. Please try again!');
+		throw new RuntimeException('There was an error processing the form. Please try again!');
 	}
 
 	/**
@@ -209,8 +209,10 @@ class ModShoutboxHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__shoutbox'))
-			->order($db->quoteName('id') . ' DESC');
-		$db->setQuery($query, 0, $number);
+			->order($db->quoteName('id') . ' DESC')
+			->setLimit($number, 0);
+			
+		$db->setQuery($query);
 
 		$rows = $db->loadObjectList();
 
@@ -588,7 +590,6 @@ class ModShoutboxHelper
 			->columns($db->quoteName($columns))
 			->values(implode(',', $values));
 
-
 		$db->setQuery($query);
 
 		try
@@ -639,8 +640,10 @@ class ModShoutboxHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			  ->from($db->quoteName('#__shoutbox'))
-			  ->order($db->quoteName('id') . ' DESC');
-		$db->setQuery($query, 0, $delete);
+			  ->order($db->quoteName('id') . ' DESC')
+			  ->setLimit($delete, 0);
+			  
+		$db->setQuery($query);
 
 		$rows = $db->loadObjectList();
 
@@ -883,16 +886,13 @@ class ModShoutboxHelper
 		
 		if ($type == 'gravatar')
 		{
-			$s 		= 30;
-			$d 		= 'mm';
-			$r 		= 'g';
 			$atts 	= array();		
 			
 			$url = 'http://www.gravatar.com/avatar/';
-			$url .= md5( strtolower( trim( $email ) ) );
-			$url .= "?s=$s&d=$d&r=$r";
+			$url .= md5(strtolower(trim($email)));
+			$url .= "?s=30&d=mm&r=g";
 			$url = '<img src="' . $url . '"';
-			foreach ( $atts as $key => $val )
+			foreach ($atts as $key => $val)
 			{
 				$url .= ' ' . $key . '="' . $val . '"';
 			}
