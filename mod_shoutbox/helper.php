@@ -799,7 +799,7 @@ class ModShoutboxHelper
 				}
 
 				// Invalid submission of post. Throw an error.
-				throw new RuntimeException($resp->error);
+				throw new RuntimeException($resp->getErrorCodes());
 			}
 			elseif ($securityType == 2)
 			{
