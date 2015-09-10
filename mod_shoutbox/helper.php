@@ -755,14 +755,41 @@ class ModShoutboxHelper
 				$challengeField = $input->get('g-recaptcha-response', '', 'string');
 				
 				// Require Recaptcha Library
-				JLoader::register('ReCaptcha', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/ReCaptcha.php');
-				JLoader::register('RequestMethod', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/RequestMethod.php');
-				JLoader::register('Response', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/Response.php');
-				JLoader::register('RequestParameters', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/RequestParameters.php');
-                JLoader::register('Post', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/RequestMethod/Post.php');
-				
-				// Throws the error "Fatal error: Class 'ReCaptcha' not found"
-				$recaptcha = new ReCaptcha($this->params->get('recaptcha-private'));
+				spl_autoload_register(function ($class)
+				{
+					// Project-specific namespace prefix
+					$prefix = 'ReCaptcha\\';
+	
+					// Base directory for the namespace prefix
+					$base_dir = JPATH_ROOT . '/media/mod_shoutbox/recaptcha/';
+	
+					// Does the class use the namespace prefix?
+					$len = strlen($prefix);
+
+					if (strncmp($prefix, $class, $len) !== 0)
+					{
+						// No, move to the next registered autoloader
+						return;
+					}
+	
+					// Get the relative class name
+					$relative_class = substr($class, $len);
+	
+					/**
+					 * replace the namespace prefix with the base directory, replace namespace
+					 * separators with directory separators in the relative class name, append
+					 * with .php
+					 */
+					$file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+	
+					// if the file exists, require it
+					if (file_exists($file))
+					{
+						require $file;
+					}
+				});
+
+				$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
 						
 				$resp = $recaptcha->verify($challengeField, $_SERVER['REMOTE_ADDR']);			
 
