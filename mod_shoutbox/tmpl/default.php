@@ -149,20 +149,21 @@ elseif (array_intersect($permissions, $access))
 			<?php endif; ?>
 			<div id="jj_smiley_box" style="<?php echo ($smile == 2 ? 'display:none;' : 'display:block;'); ?>"><?php echo $helper->smileyshow(); ?></div>
 		<?php endif; ?>
-
+		
 		<?php
 		// Shows recapture or math question depending on the parameters
 		if ($securitytype == 1)
 		{
-			require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
+			JLoader::registerNamespace('Recaptcha', JPATH_ROOT . '/media/mod_shoutbox/recaptcha');
+			JHtml::_('script', 'https://www.google.com/recaptcha/api.js');
 
-			if ($publicKey == '' || $privateKey == '')
+			if ($siteKey == '' || $secretKey == '')
 			{
 				echo JText::_('SHOUT_RECAPTCHA_KEY_ERROR');
 			}
 			else
 			{
-				$publickey = $publicKey;
+				$siteKey = $siteKey;
 
 				if (!isset($resp))
 				{
@@ -174,7 +175,7 @@ elseif (array_intersect($permissions, $access))
 					$error = null;
 				}
 
-				echo recaptcha_get_html($publickey, $error);
+				echo '<div class="g-recaptcha" data-sitekey="' . $siteKey . '"></div>';
 			}
 		}
 		elseif ($securitytype == 2)
@@ -189,7 +190,7 @@ elseif (array_intersect($permissions, $access))
 		<?php } ?>
 		
 		<?php if ($entersubmit == 0) : ?>
-			<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$publicKey) || ($securitytype == 1 && !$privateKey)) { echo 'disabled="disabled"'; }?> />
+			<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> />
 		<?php endif; ?>
 		
 	</form>

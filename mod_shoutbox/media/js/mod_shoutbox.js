@@ -252,7 +252,7 @@ jQuery(document).ready(function($) {
 		// Valid or not refresh recaptcha
 		if (securityType == 1)
 		{
-			Recaptcha.reload();
+			grecaptcha.reset();
 		}
 
 		// Valid or not refresh maths values and empty answer

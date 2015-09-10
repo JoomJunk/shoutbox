@@ -752,20 +752,21 @@ class ModShoutboxHelper
 			{
 				// Recaptcha fields aren't in the JJ post space so we have to grab these separately
 				$input = JFactory::getApplication()->input;
-				$challengeField = $input->get('recaptcha_challenge_field', '', 'string');
-				$responseField = $input->get('recaptcha_response_field', '', 'string');
-
+				$challengeField = $input->get('g-recaptcha-response', '', 'string');
+				
 				// Require Recaptcha Library
-				require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
+				JLoader::register('ReCaptcha', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/ReCaptcha.php');
+				JLoader::register('RequestMethod', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/RequestMethod.php');
+				JLoader::register('Response', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/Response.php');
+				JLoader::register('RequestParameters', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/RequestParameters.php');
+                JLoader::register('Post', JPATH_ROOT . '/media/mod_shoutbox/recaptcha/RequestMethod/Post.php');
+				
+				// Throws the error "Fatal error: Class 'ReCaptcha' not found"
+				$recaptcha = new ReCaptcha($this->params->get('recaptcha-private'));
+						
+				$resp = $recaptcha->verify($challengeField, $_SERVER['REMOTE_ADDR']);			
 
-				$resp = recaptcha_check_answer(
-					$this->params->get('recaptcha-private'),
-					$_SERVER["REMOTE_ADDR"],
-					$challengeField,
-					$responseField
-				);
-
-				if ($resp->is_valid)
+				if ($resp->isSuccess())
 				{
 					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 				}
