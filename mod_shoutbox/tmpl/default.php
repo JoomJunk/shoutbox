@@ -149,22 +149,17 @@ elseif (array_intersect($permissions, $access))
 			<?php endif; ?>
 			<div id="jj_smiley_box" style="<?php echo ($smile == 2 ? 'display:none;' : 'display:block;'); ?>"><?php echo $helper->smileyshow(); ?></div>
 		<?php endif; ?>
-		
+
 		<?php
 		// Shows recapture or math question depending on the parameters
 		if ($securitytype == 1)
 		{
-			JLoader::registerNamespace('Recaptcha', JPATH_ROOT . '/media/mod_shoutbox/recaptcha');
-			JHtml::_('script', 'https://www.google.com/recaptcha/api.js');
-
 			if ($siteKey == '' || $secretKey == '')
 			{
 				echo JText::_('SHOUT_RECAPTCHA_KEY_ERROR');
 			}
 			else
 			{
-				$siteKey = $siteKey;
-
 				if (!isset($resp))
 				{
 					$resp = null;
