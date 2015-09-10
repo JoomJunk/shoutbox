@@ -790,7 +790,7 @@ class ModShoutboxHelper
 				});
 
 				$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
-						
+
 				$resp = $recaptcha->verify($challengeField, $_SERVER['REMOTE_ADDR']);			
 
 				if ($resp->isSuccess())
