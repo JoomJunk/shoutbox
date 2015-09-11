@@ -16,6 +16,8 @@ $ -> Language fix or change
 
 WIP
 ^ Moved swear words to repeatable form fields
+^ Updated ReCaptcha to v2
+$ Some language strings changed for ReCaptcha v2
 - Removed support for Joomla 3.3
 
 Version 5.0.2
