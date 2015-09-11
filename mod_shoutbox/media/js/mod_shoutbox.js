@@ -251,7 +251,9 @@ jQuery(document).ready(function($) {
 		// Valid or not refresh recaptcha
 		if (securityType == 1)
 		{
-			grecaptcha.reset();
+			var JJ_RecaptchaReset = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.reset();
+			
+			JJ_RecaptchaReset;
 		}
 
 		// Valid or not refresh maths values and empty answer

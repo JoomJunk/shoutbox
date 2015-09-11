@@ -740,6 +740,7 @@ class ModShoutboxHelper
 		$user             = JFactory::getUser();
 		$displayName      = $this->params->get('loginname', 'user');
 		$securityType     = $this->params->get('securitytype', 0);
+		$securityHide     = $this->params->get('security-hide', 0);
 		$swearCounter     = $this->params->get('swearingcounter');
 		$swearNumber      = $this->params->get('swearingnumber');
 
@@ -748,82 +749,96 @@ class ModShoutboxHelper
 		{
 			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-			if ($securityType == 1)
+			if ($securitytype == 1)
 			{
-				// Recaptcha fields aren't in the JJ post space so we have to grab these separately
-				$input = JFactory::getApplication()->input;
-				$challengeField = $input->get('g-recaptcha-response', '', 'string');
-				
-				// Require Recaptcha Library
-				spl_autoload_register(function ($class)
+				if ($securityHide == 0 || ($user->guest && $securityHide == 1))
 				{
-					// Project-specific namespace prefix
-					$prefix = 'ReCaptcha\\';
-	
-					// Base directory for the namespace prefix
-					$base_dir = JPATH_ROOT . '/media/mod_shoutbox/recaptcha/';
-	
-					// Does the class use the namespace prefix?
-					$len = strlen($prefix);
-
-					if (strncmp($prefix, $class, $len) !== 0)
+					// Recaptcha fields aren't in the JJ post space so we have to grab these separately
+					$input = JFactory::getApplication()->input;
+					$challengeField = $input->get('g-recaptcha-response', '', 'string');
+					
+					// Require Recaptcha Library
+					spl_autoload_register(function ($class)
 					{
-						// No, move to the next registered autoloader
-						return;
-					}
-	
-					// Get the relative class name
-					$relative_class = substr($class, $len);
-	
-					/**
-					 * replace the namespace prefix with the base directory, replace namespace
-					 * separators with directory separators in the relative class name, append
-					 * with .php
-					 */
-					$file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-	
-					// if the file exists, require it
-					if (file_exists($file))
+						// Project-specific namespace prefix
+						$prefix = 'ReCaptcha\\';
+		
+						// Base directory for the namespace prefix
+						$base_dir = JPATH_ROOT . '/media/mod_shoutbox/recaptcha/';
+		
+						// Does the class use the namespace prefix?
+						$len = strlen($prefix);
+
+						if (strncmp($prefix, $class, $len) !== 0)
+						{
+							// No, move to the next registered autoloader
+							return;
+						}
+		
+						// Get the relative class name
+						$relative_class = substr($class, $len);
+		
+						/**
+						 * replace the namespace prefix with the base directory, replace namespace
+						 * separators with directory separators in the relative class name, append
+						 * with .php
+						 */
+						$file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+		
+						// if the file exists, require it
+						if (file_exists($file))
+						{
+							require $file;
+						}
+					});
+
+					$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
+
+					$resp = $recaptcha->verify($challengeField, $_SERVER['REMOTE_ADDR']);			
+
+					if ($resp->isSuccess())
 					{
-						require $file;
+						return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 					}
-				});
 
-				$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
+					// Invalid submission of post. Throw an error.
+					$error = '';
 
-				$resp = $recaptcha->verify($challengeField, $_SERVER['REMOTE_ADDR']);			
+					foreach ($resp->getErrorCodes() as $code)
+					{
+						$error .= $code;
+					}
 
-				if ($resp->isSuccess())
+					throw new RuntimeException($error);
+				}
+				else 
 				{
 					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 				}
-
-				// Invalid submission of post. Throw an error.
-				$error = '';
-
-				foreach ($resp->getErrorCodes() as $code)
-				{
-					$error .= $code;
-				}
-
-				throw new RuntimeException($error);
 			}
 			elseif ($securityType == 2)
 			{
-				// Our maths security question is on
-				if (isset($post['sum1']) && isset($post['sum2']))
+				if ($securityHide == 0 || ($user->guest && $securityHide == 1))
 				{
-					$que_result = $post['sum1'] + $post['sum2'];
-
-					if (isset($post['human']))
+					// Our maths security question is on
+					if (isset($post['sum1']) && isset($post['sum2']))
 					{
-						if ($post['human'] != $que_result)
-						{
-							throw new RuntimeException(JText::_('SHOUT_ANSWER_INCORRECT'));
-						}
+						$que_result = $post['sum1'] + $post['sum2'];
 
-						return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
+						if (isset($post['human']))
+						{
+							if ($post['human'] != $que_result)
+							{
+								throw new RuntimeException(JText::_('SHOUT_ANSWER_INCORRECT'));
+							}
+
+							return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
+						}
 					}
+				}
+				else
+				{
+					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 				}
 			}
 			else

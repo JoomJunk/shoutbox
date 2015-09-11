@@ -153,36 +153,44 @@ elseif (array_intersect($permissions, $access))
 		<?php
 		// Shows recapture or math question depending on the parameters
 		if ($securitytype == 1)
-		{
-			if ($siteKey == '' || $secretKey == '')
+		{	
+			if ($securityHide == 0 || ($user->guest && $securityHide == 1))
 			{
-				echo JText::_('SHOUT_RECAPTCHA_KEY_ERROR');
-			}
-			else
-			{
-				if (!isset($resp))
+				if ($siteKey == '' || $secretKey == '')
 				{
-					$resp = null;
+					echo JText::_('SHOUT_RECAPTCHA_KEY_ERROR');
 				}
-
-				if (!isset($error))
+				else
 				{
-					$error = null;
-				}
+					if (!isset($resp))
+					{
+						$resp = null;
+					}
 
-				echo '<div class="g-recaptcha" data-sitekey="' . $siteKey . '" data-theme="' . $recaptchaTheme . '"></div>';
+					if (!isset($error))
+					{
+						$error = null;
+					}
+
+					echo '<div class="g-recaptcha" data-sitekey="' . $siteKey . '" data-theme="' . $recaptchaTheme . '"></div>';
+				}
 			}
 		}
 		elseif ($securitytype == 2)
 		{
+			if ($securityHide == 0 || ($user->guest && $securityHide == 1))
+			{
+			?>
+				<?php $que_number1 = $helper->randomnumber(1); ?>
+				<?php $que_number2 = $helper->randomnumber(1); ?>
+				<label class="jj_label" for="math_output"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
+				<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
+				<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
+				<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
+			<?php 
+			}
+		}
 		?>
-			<?php $que_number1 = $helper->randomnumber(1); ?>
-			<?php $que_number2 = $helper->randomnumber(1); ?>
-			<label class="jj_label" for="math_output"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
-			<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
-			<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
-			<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
-		<?php } ?>
 		
 		<?php if ($entersubmit == 0) : ?>
 			<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> />

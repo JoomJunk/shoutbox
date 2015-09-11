@@ -202,6 +202,10 @@
 					<option value="light">SHOUT_RECAPTCHA_THEME_LIGHT</option>
 					<option value="dark">SHOUT_RECAPTCHA_THEME_DARK</option>
 				</field>
+				<field name="security-hide" class="btn-group" type="radio" default="0" showon="securitytype:1,2" label="SHOUT_SECURITY_HIDE" description="SHOUT_SECURITY_HIDE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 				
 				<field type="sep" label="" />
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
