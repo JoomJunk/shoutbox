@@ -184,7 +184,7 @@ jQuery(document).ready(function($) {
 	/**
 	 * Submit a shout
 	 */
-	JJShoutbox.submitPost = function(name, title, securityType, security, Itemid, instance)
+	JJShoutbox.submitPost = function(name, title, securityType, security, Itemid, instance, ReCaptchaResponse)
 	{
 		// Assemble some commonly used vars
 		var textarea = instance.find('#jj_message'),
@@ -202,8 +202,7 @@ jQuery(document).ready(function($) {
 
 		if (securityType == 1)
 		{
-			request['recaptcha_challenge_field'] = instance.find('input#recaptcha_challenge_field').val();
-			request['recaptcha_response_field']  = instance.find('input#recaptcha_response_field').val();
+			request['g-recaptcha-response'] = ReCaptchaResponse;
 		}
 
 		if (securityType == 2)
