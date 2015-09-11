@@ -27,6 +27,7 @@ $date            = $params->get('date');
 $securitytype    = $params->get('securitytype', 0);
 $siteKey         = $params->get('recaptcha-public');
 $secretKey       = $params->get('recaptcha-private');
+$recaptchaTheme  = $params->get('recaptcha-theme', 'light');
 $mass_delete     = $params->get('mass_delete', 0);
 $permissions     = $params->get('guestpost');
 $deletecolor     = $params->get('deletecolor', '#FF0000');

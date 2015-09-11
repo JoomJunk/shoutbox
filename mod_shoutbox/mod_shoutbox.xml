@@ -197,7 +197,11 @@
 					<option value="2">SHOUT_MATHS_QUESTION</option>
 				</field>			
 				<field name="recaptcha-public" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
-				<field name="recaptcha-private" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />		
+				<field name="recaptcha-private" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />	
+				<field name="recaptcha-theme" type="list" showon="securitytype:1" label="SHOUT_RECAPTCHA_THEME_LABEL">
+					<option value="light">SHOUT_RECAPTCHA_THEME_LIGHT</option>
+					<option value="dark">SHOUT_RECAPTCHA_THEME_DARK</option>
+				</field>
 				
 				<field type="sep" label="" />
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />

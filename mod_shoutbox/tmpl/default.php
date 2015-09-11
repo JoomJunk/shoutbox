@@ -170,7 +170,7 @@ elseif (array_intersect($permissions, $access))
 					$error = null;
 				}
 
-				echo '<div class="g-recaptcha" data-sitekey="' . $siteKey . '"></div>';
+				echo '<div class="g-recaptcha" data-sitekey="' . $siteKey . '" data-theme="' . $recaptchaTheme . '"></div>';
 			}
 		}
 		elseif ($securitytype == 2)
