@@ -101,6 +101,14 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update300();
 				}
+				
+				/**
+				 * In 6.0.0 we updated to ReCaptcha v2 which doesn't accept old keys
+				 */
+				if (version_compare($oldRelease, '5.0.2', '<='))
+				{
+					$this->update600();
+				}
 			}
 		}
 
@@ -520,5 +528,17 @@ class Mod_ShoutboxInstallerScript
 			unset($param);
 			unset($newParams);
 		}
+	}
+		
+	/**
+	 * Function to alert the user that they must update their ReCaptcha keys for V2
+	 *
+	 * @return  void
+	 *
+	 * @since  6.0.0
+	 */
+	protected function update600()
+	{
+		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_600_UPDATE_NOTIFICATION'), 'warning');
 	}
 }
