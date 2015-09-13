@@ -539,6 +539,12 @@ class Mod_ShoutboxInstallerScript
 	 */
 	protected function update600()
 	{
+		// Import dependencies
+		JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
+		
+		// Delete swearwords file
+		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php');
+		
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_600_UPDATE_NOTIFICATION'), 'warning');
 	}
 }
