@@ -749,7 +749,7 @@ class ModShoutboxHelper
 		{
 			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
-			if ($securitytype == 1)
+			if ($securityType == 1)
 			{
 				if ($securityHide == 0 || ($user->guest && $securityHide == 1))
 				{
