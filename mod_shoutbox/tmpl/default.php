@@ -234,7 +234,7 @@ else
 		var Itemid   	= <?php echo $Itemid ? $Itemid : 'null'; ?>;
 		var instance 	= $('#<?php echo $uniqueIdentifier; ?>');		
 		var entersubmit = '<?php echo $entersubmit; ?>';
-		var count		= instance.find('#jjshoutboxoutput > div:not(.jj-shout-new)').length + <?php echo $number; ?>;
+		var count       = instance.find('#jjshoutboxoutput > div:not(.jj-shout-new)').length + <?php echo $number; ?>;
 		
 		if (entersubmit == 0)
 		{
