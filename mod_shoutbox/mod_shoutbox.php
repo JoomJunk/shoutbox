@@ -25,8 +25,10 @@ $profile         = $params->get('profile');
 $avatar          = $params->get('avatar', 'none');
 $date            = $params->get('date');
 $securitytype    = $params->get('securitytype', 0);
-$publicKey       = $params->get('recaptcha-public');
-$privateKey      = $params->get('recaptcha-private');
+$siteKey         = $params->get('recaptcha-public');
+$secretKey       = $params->get('recaptcha-private');
+$recaptchaTheme  = $params->get('recaptcha-theme', 'light');
+$securityHide    = $params->get('security-hide', 0);
 $mass_delete     = $params->get('mass_delete', 0);
 $permissions     = $params->get('guestpost');
 $deletecolor     = $params->get('deletecolor', '#FF0000');
@@ -78,6 +80,13 @@ switch ($framework)
 }
 
 JHtml::_('jquery.framework');
+if ($securitytype == 1)
+{
+	if ($securityHide == 0 || ($user->guest && $securityHide == 1))
+	{
+		JHtml::_('script', 'https://www.google.com/recaptcha/api.js');
+	}
+}
 JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
 
 $dataerror = JText::_('SHOUT_DATABASEERRORSHOUT');

@@ -184,7 +184,7 @@ jQuery(document).ready(function($) {
 	/**
 	 * Submit a shout
 	 */
-	JJShoutbox.submitPost = function(name, title, securityType, security, Itemid, instance)
+	JJShoutbox.submitPost = function(name, title, securityType, security, Itemid, instance, ReCaptchaResponse)
 	{
 		// Assemble some commonly used vars
 		var textarea = instance.find('#jj_message'),
@@ -202,8 +202,7 @@ jQuery(document).ready(function($) {
 
 		if (securityType == 1)
 		{
-			request['recaptcha_challenge_field'] = instance.find('input#recaptcha_challenge_field').val();
-			request['recaptcha_response_field']  = instance.find('input#recaptcha_response_field').val();
+			request['g-recaptcha-response'] = ReCaptchaResponse;
 		}
 
 		if (securityType == 2)
@@ -239,6 +238,10 @@ jQuery(document).ready(function($) {
 					// Refresh the output
 					JJShoutbox.getPosts(title, false, Itemid, instance)
 				}
+				else
+				{
+					JJShoutbox.showError(response.message, instance);
+				}
 			},
 			error: function(ts){
 				console.log(ts);
@@ -248,7 +251,9 @@ jQuery(document).ready(function($) {
 		// Valid or not refresh recaptcha
 		if (securityType == 1)
 		{
-			Recaptcha.reload();
+			var JJ_RecaptchaReset = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.reset();
+			
+			JJ_RecaptchaReset;
 		}
 
 		// Valid or not refresh maths values and empty answer
@@ -311,6 +316,10 @@ jQuery(document).ready(function($) {
 					{
 						instance.find('.jjshoutbox-audio').get(0).play();
 					}
+				}
+				else
+				{
+					JJShoutbox.showError(response.message, instance);
 				}
 			},
 			error: function(ts){

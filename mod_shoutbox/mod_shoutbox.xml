@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>5.0.1</version> 
+	<version>5.0.2</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -45,10 +45,10 @@
 	<files>
 		<filename module="mod_shoutbox">mod_shoutbox.php</filename>
 		<filename>index.html</filename>
-		<filename>swearWords.php</filename>
 		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 		<folder>sql</folder>
+		<folder>fields</folder>
 		<folder>libraries</folder>
 		<folder>layouts</folder>
 	</files>
@@ -144,7 +144,27 @@
 			</fieldset>
 			
 			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
-			
+				<field type="sep" label="SHOUT_SWEAR_WORDS" />
+				<field name="list_swearwords"
+					type="Repeatable"
+					icon="list"
+					description="SHOUT_SWEAR_WORDS"
+					label="SHOUT_SWEAR_WORDS"
+					default='{"word":["coon","cunt","dick","fuck","f u c k","f.uck","f.u.c.k","knobend","nigger","nigga","prick","pussy","shit","s.hit","s.h.i.t","twat"]}'>
+					<fieldset hidden="true" name="list_swearwords_modal" repeat="true">
+						<field name="word"
+							label="SHOUT_SWEAR_WORDS_WORD"
+							size="30"
+							type="text" />
+					</fieldset>
+				</field>
+				<field name="swearingcounter" class="btn-group" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
+				
+				<field type="sep" label="SHOUT_DELETING" />
 				<field name="deleteown" class="btn-group" type="radio" default="0" label="SHOUT_DELETEOWN" description="SHOUT_DELETEOWNDESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -154,7 +174,7 @@
 					<option value="1">JYES</option>
 				</field>
 
-				<field name="sep1" type="sep" label="SHOUT_CHARACTERLIMIT" />
+				<field type="sep" label="SHOUT_CHARACTERLIMIT" />
 				<field name="enablelimit" class="btn-group" type="radio" default="1" label="SHOUT_CHARACTERLIMIT" description="SHOUT_CHARACTERLIMITDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
@@ -163,23 +183,31 @@
 				<field name="alertlength" type="text" showon="enablelimit:1" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
 				<field name="warnlength" type="text" showon="enablelimit:1" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
 
-				<field name="sep2" type="sep" label="SHOUT_NAME_REQUIRED" />
+				<field type="sep" label="SHOUT_NAME_REQUIRED" />
 				<field name="namerequired" type="list" default="0" label="SHOUT_NAME_REQUIRED" description="SHOUT_NAME_REQUIRED_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
 				<field name="genericname" type="text" showon="namerequired:0" default="Anonymous" label="SHOUT_GENERIC_NAME" description="SHOUT_GENERIC_NAME_DESC" />
 			
-				<field name="sep3" type="sep" label="SHOUT_SECURITY_TYPE" />
+				<field type="sep" label="SHOUT_SECURITY_TYPE" />
 				<field name="securitytype" type="list" default="0" label="SHOUT_SECURITY_TYPE" description="SHOUT_SECURITY_TYPE_DESC">
 					<option value="0">SHOUT_NONE</option>
 					<option value="1">SHOUT_RECAPTCHA</option>
 					<option value="2">SHOUT_MATHS_QUESTION</option>
 				</field>			
 				<field name="recaptcha-public" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
-				<field name="recaptcha-private" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />		
+				<field name="recaptcha-private" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />	
+				<field name="recaptcha-theme" type="list" showon="securitytype:1" label="SHOUT_RECAPTCHA_THEME_LABEL">
+					<option value="light">SHOUT_RECAPTCHA_THEME_LIGHT</option>
+					<option value="dark">SHOUT_RECAPTCHA_THEME_DARK</option>
+				</field>
+				<field name="security-hide" class="btn-group" type="radio" default="0" showon="securitytype:1,2" label="SHOUT_SECURITY_HIDE" description="SHOUT_SECURITY_HIDE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 				
-				<field name="sep4" type="sep" label="" />
+				<field type="sep" label="" />
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 			</fieldset>
 

@@ -14,6 +14,19 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
++ Added option to hide security question for registered users
+^ Moved swear words to repeatable form fields
+^ Updated ReCaptcha to v2
+$ Some language strings changed for ReCaptcha v2
+- Removed support for Joomla 3.3
+
+Version 5.0.2
++ Show error messages from the response
+^ Categorised advanced parameters for ease of view
+^ Other minor code changes
+- Removed pre-defined language strings
+
 Version 5.0.1
 # Fixed delete own post when Kunena Profile links enabled
 
