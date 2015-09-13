@@ -61,7 +61,7 @@ JText::script('SHOUT_NAME_EMPTY');
 		<?php endforeach; ?>
 	<?php endif; ?>
 	
-	<a href="#" class="jj-load-more btn btn-primary">Load more</a>
+	<a href="#" class="jj-load-more btn btn-primary"><?php echo JText::_('SHOUT_LOAD_MORE'); ?></a>
 </div>
 <div class="jj-shout-error"></div>
 
