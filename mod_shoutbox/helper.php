@@ -107,7 +107,7 @@ class ModShoutboxHelper
 	{
 		$app = JFactory::getApplication();
 		$post  = $app->input->post->get('jjshout', array(), 'array');
-		
+
 		// Retrieve required parameter
 		if (!isset($post['title']))
 		{
