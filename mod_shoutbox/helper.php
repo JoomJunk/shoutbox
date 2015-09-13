@@ -498,8 +498,8 @@ class ModShoutboxHelper
 	 */
 	public function swearfilter($post, $replace)
 	{
-		$list_swearwords 	= $this->params->get('list_swearwords');
-		$json 				= json_decode($list_swearwords, true);
+		$list_swearwords = $this->params->get('list_swearwords');
+		$json            = json_decode($list_swearwords, true);
 
 		$swearwords = array_values($json['word']);
 
