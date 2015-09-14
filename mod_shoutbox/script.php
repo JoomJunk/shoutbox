@@ -531,7 +531,7 @@ class Mod_ShoutboxInstallerScript
 	}
 		
 	/**
-	 * Function to alert the user that they must update their ReCaptcha keys for V2
+	 * Function to set the swearwords parameter as a json object and delete the swearswords.php file
 	 *
 	 * @return  void
 	 *
@@ -544,6 +544,48 @@ class Mod_ShoutboxInstallerScript
 		
 		// Delete swearwords file
 		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php');
+		
+		
+		$modules = $this->getInstances(true);
+		
+		foreach ($modules as $module)
+		{
+			// Convert string to integer
+			$module = (int) $module;
+			
+			//  Create a json object with an array of words
+			$json = json_encode(array(
+				'word' => array(
+					'coon',
+					'cunt',
+					'dick',
+					'fuck',
+					'f u c k',
+					'f.uck',
+					'f.u.c.k',
+					'knobend',
+					'nigger',
+					'nigga',
+					'prick',
+					'pussy',
+					'shit',
+					's.hit',
+					's.h.i.t',
+					'twat'
+				)
+			));
+			
+			// Create array of params to change
+			$swearwords = array();
+			$swearwords['list_swearwords'] = $json;
+
+			// Set the param values
+			$this->setParams($swearwords, 'edit', $module);
+
+			// Unset the array for the next loop
+			unset($swearwords);
+		}
+		
 		
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_600_UPDATE_NOTIFICATION'), 'warning');
 	}
