@@ -297,7 +297,7 @@ jQuery(document).ready(function($) {
 					}
 
 					// Refresh the output
-					JJShoutbox.getPosts(title, false, Itemid, instance)
+					JJShoutbox.getPosts(title, false, false, Itemid, instance, false)
 				}
 				else
 				{
