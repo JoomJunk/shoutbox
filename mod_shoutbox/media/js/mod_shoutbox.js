@@ -276,7 +276,7 @@ jQuery(document).ready(function($) {
 	 * Get the latest shouts
 	 * Play a sound notification if new shouts are shown
 	 */
-	JJShoutbox.getPosts = function(title, sound, Itemid, instance)
+	JJShoutbox.getPosts = function(title, sound, Itemid, instance, count)
 	{
 		// Get the ID of the last shout
 		var lastID = JJShoutbox.getLastID(instance);
@@ -284,6 +284,7 @@ jQuery(document).ready(function($) {
 		// Assemble variables to submit
 		var request = {
 			'jjshout[title]' : title,
+			'jjshout[count]' : count,
 		};
 
 		// If there is an active menu item then we need to add it to the request.
@@ -304,6 +305,8 @@ jQuery(document).ready(function($) {
 
 					// Grab the html output and append it to the shoutbox message
 					instance.find('.jj-shout-new').after(response.data.html);
+					
+					instance.find('#jjshoutboxoutput').append('<a href="#" class="jj-load-more btn btn-primary">Load more</a>');
 					
 					// Get the ID of the last shout after the output has been updated
 					var newLastID = JJShoutbox.getLastID(instance);

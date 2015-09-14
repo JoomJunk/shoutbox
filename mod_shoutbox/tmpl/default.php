@@ -60,6 +60,8 @@ JText::script('SHOUT_NAME_EMPTY');
 			<?php echo $helper->renderPost($shout); ?>
 		<?php endforeach; ?>
 	<?php endif; ?>
+	
+	<a href="#" class="jj-load-more btn btn-primary"><?php echo JText::_('SHOUT_LOAD_MORE'); ?></a>
 </div>
 <div class="jj-shout-error"></div>
 
@@ -232,6 +234,7 @@ else
 		var Itemid   	= <?php echo $Itemid ? $Itemid : 'null'; ?>;
 		var instance 	= $('#<?php echo $uniqueIdentifier; ?>');		
 		var entersubmit = '<?php echo $entersubmit; ?>';
+		var count       = instance.find('#jjshoutboxoutput > div:not(.jj-shout-new)').length + <?php echo $number; ?>;
 		
 		if (entersubmit == 0)
 		{
@@ -290,12 +293,25 @@ else
 
 				JJShoutbox.submitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance, JJ_Recaptcha);
 			}
-		}		
+		}
+		
+		
+		$('body').on('click', '.jj-load-more', function(e){
+			
+			e.preventDefault();
+			
+			var Itemid = '<?php echo $Itemid; ?>';
+			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance, count);
+			
+			count = instance.find('#jjshoutboxoutput > div:not(.jj-shout-new)').length + <?php echo $number; ?>;
+		
+		});
+
 
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){
 			var Itemid = '<?php echo $Itemid; ?>';
-			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
+			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance, count);
 		}, <?php echo $refresh; ?>);
 	});	
 	<?php endif; ?>

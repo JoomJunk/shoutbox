@@ -116,8 +116,15 @@ class ModShoutboxHelper
 
 		$helper       = new ModShoutboxHelper($post['title']);
 		$helper->ajax = true;
-
-		$shouts = $helper->getShouts($helper->getParams()->get('maximum'), JText::_('SHOUT_DATABASEERRORSHOUT'));
+		
+		$numberToGet = $helper->getParams()->get('maximum');
+		
+		if (isset($post['count']))
+		{
+			$numberToGet = $post['count'];
+		}
+		
+		$shouts = $helper->getShouts($numberToGet, JText::_('SHOUT_DATABASEERRORSHOUT'));
 
 		$htmlOutput = '';
 
