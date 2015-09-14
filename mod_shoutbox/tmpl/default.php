@@ -42,6 +42,7 @@ $popover = JText::_('SHOUT_URL_EXAMPLE');
 JHtml::_('behavior.core');
 JText::script('SHOUT_MESSAGE_EMPTY');
 JText::script('SHOUT_NAME_EMPTY');
+JText::script('SHOUT_NEW_SHOUT_ALERT');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
@@ -227,6 +228,11 @@ else
 </div>
 <script type="text/javascript">
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
+	
+	<?php if ($notifications == 1) : ?>
+		JJShoutbox.performNotificationCheck();
+	<?php endif; ?>
+	
 	jQuery(document).ready(function($) {
 
 		var Itemid   	= <?php echo $Itemid ? $Itemid : 'null'; ?>;
@@ -295,7 +301,8 @@ else
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){
 			var Itemid = '<?php echo $Itemid; ?>';
-			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', Itemid, instance);
+			var insertName = '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>';
+			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', '<?php echo $notifications; ?>', Itemid, instance, insertName);
 		}, <?php echo $refresh; ?>);
 	});	
 	<?php endif; ?>

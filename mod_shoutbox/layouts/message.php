@@ -43,7 +43,7 @@ else
 ?>
 
 <div>
-	<div data-shout-id="<?php echo $post->id; ?>" class="shout-header" <?php echo $title; ?>>
+	<div data-shout-id="<?php echo $post->id; ?>" data-shout-name="<?php echo $postName; ?>" class="shout-header" <?php echo $title; ?>>
 		<span class="avatar"><?php echo $avatar; ?></span> <?php echo $post->name; ?> - <?php echo $post->when; ?>
 		<?php if ($user->authorise('core.delete') || ($postName == $userName && $params->get('deleteown') == 1)) : ?>
 			<form method="post" name="delete">

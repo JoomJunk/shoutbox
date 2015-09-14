@@ -8,6 +8,56 @@ var JJShoutbox = JJShoutbox || {};
 
 
 /**
+ * Ask access for HTML5 Notifications
+ */
+JJShoutbox.performNotificationCheck = function()
+{
+	// Let's check if the browser supports notifications
+	if (!('Notification' in window)) 
+	{
+		// Browser does not support Notifications. Abort
+		return;
+	}
+
+	Notification.requestPermission(function(permission) {
+	});
+}
+
+
+/**
+ * Create the HTML5 Notification
+ */
+JJShoutbox.createNotification = function(title, options)
+{
+	options = {
+		icon: 'media/mod_shoutbox/images/notification.png'
+	};
+	
+	// Let's check if the browser supports notifications
+	if (!('Notification' in window)) 
+	{
+		// Browser does not support Notifications. Abort
+		return;
+	}
+
+	if (Notification.permission === 'granted')
+	{
+		var notification = new Notification(title, options);
+	}
+	else if (Notification.permission !== 'denied') 
+	{
+		Notification.requestPermission(function(permission) {
+			// If the user accepts, let's create a notification
+			if (permission === 'granted') 
+			{
+				var notification = new Notification(title, options);
+			}
+		});
+	}
+}
+
+
+/**
  * Adds a smiley to the textarea
  */
 JJShoutbox.addSmiley = function(smiley, id) 
@@ -123,6 +173,17 @@ JJShoutbox.getLastID = function(instance)
 	var lastId = instance.find('.shout-header:first-child').data('shout-id');
 
 	return lastId;
+}
+
+
+/**
+ * Returns the author of the last shout
+ */
+JJShoutbox.getLastAuthor = function(instance)
+{
+	var lastauthor = instance.find('.shout-header:first-child').data('shout-name');
+
+	return lastauthor;
 }
 
 
@@ -276,10 +337,11 @@ jQuery(document).ready(function($) {
 	 * Get the latest shouts
 	 * Play a sound notification if new shouts are shown
 	 */
-	JJShoutbox.getPosts = function(title, sound, Itemid, instance)
+	JJShoutbox.getPosts = function(title, sound, notifications, Itemid, instance, loggedInUser)
 	{
 		// Get the ID of the last shout
-		var lastID = JJShoutbox.getLastID(instance);
+		var lastID 		= JJShoutbox.getLastID(instance);
+		var lastName 	= JJShoutbox.getLastAuthor(instance);
 		
 		// Assemble variables to submit
 		var request = {
@@ -308,10 +370,19 @@ jQuery(document).ready(function($) {
 					// Get the ID of the last shout after the output has been updated
 					var newLastID = JJShoutbox.getLastID(instance);
 					
-					// Play notification sound if enabled
-					if (sound == 1 && newLastID > lastID) 
+					// Post ID and name checks
+					if (newLastID > lastID && (loggedInUser == lastName)) 
 					{
-						instance.find('.jjshoutbox-audio').get(0).play();
+						// Show HTML5 Notification if enabled
+						if (notifications == 1) 
+						{
+							JJShoutbox.createNotification(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
+						}
+						// Play notification sound if enabled
+						if (sound == 1) 
+						{
+							instance.find('.jjshoutbox-audio').get(0).play();
+						}
 					}
 				}
 				else

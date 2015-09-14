@@ -105,10 +105,6 @@
 					<option value="2">SHOUT_DONT_SHOW</option>
 				</field>		
 				<field name="refresh" type="text" default="10" label="SHOUT_AUTO_REFRESH" description="SHOUT_AUTO_REFRESH_DESC" />
-				<field name="sound" type="radio" class="btn-group" default="0" label="SHOUT_SOUNDLABEL" description="SHOUT_SOUNDDESC">
-					<option value="0">JOFF</option>
-					<option value="1">JON</option>
-				</field>
 				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
 					<option value="0">SHOUT_SMILIES_ON</option>
 					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
@@ -205,6 +201,16 @@
 				<field name="security-hide" class="btn-group" type="radio" default="0" showon="securitytype:1,2" label="SHOUT_SECURITY_HIDE" description="SHOUT_SECURITY_HIDE_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
+				</field>
+				
+				<field type="sep" label="SHOUT_NOTIFICATIONS" />
+				<field name="sound" type="radio" class="btn-group" default="0" label="SHOUT_SOUNDLABEL" description="SHOUT_SOUNDDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+				<field name="notifications" type="radio" class="btn-group" default="0" label="SHOUT_HTML5_NOTIFICATION_LABEL" description="SHOUT_HTML5_NOTIFICATION_DESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
 				</field>
 				
 				<field type="sep" label="" />
