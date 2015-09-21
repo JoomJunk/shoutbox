@@ -137,6 +137,7 @@ elseif (array_intersect($permissions, $access))
 					<button type="button" class="<?php echo $button; ?> btn-small jj-bold" data-bbcode-type="b"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
 					<button type="button" class="<?php echo $button; ?> btn-small jj-italic" data-bbcode-type="i"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
 					<button type="button" class="<?php echo $button; ?> btn-small jj-underline" data-bbcode-type="u"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-image" data-bbcode-type="img"><?php echo JText::_('SHOUT_BBCODE_IMG'); ?></button>
 					<button type="button" class="<?php echo $button; ?> btn-small jj-link hasPopover" data-bbcode-type="url" data-placement="top" data-content="<?php echo $popover; ?>"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
 				</div>
 			</div>
@@ -224,6 +225,19 @@ else
 <?php
 }
 ?>
+
+<?php if ($bbcode == 1) : ?>
+	<div id="jj-image-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="JJ Image Modal" aria-hidden="true">
+		<div class="modal-header">
+			<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+			<h3 class="image-name"></h3>
+		</div>
+		<div class="modal-body">
+			<img src="" alt="" />
+		</div>
+	</div>
+<?php endif; ?>
+
 </div>
 </div>
 <script type="text/javascript">

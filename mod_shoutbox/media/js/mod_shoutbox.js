@@ -210,6 +210,30 @@ JJShoutbox.showError = function(msg, instance)
 jQuery(document).ready(function($) {
 	
 	/**
+	 * Populate modal with image
+	 */
+	$('#jjshoutboxoutput').on('click', '.jj-image-modal', function(e) {
+
+		e.preventDefault();
+
+		var modal 	= $('#jj-image-modal');
+		
+		// Get the image src and name
+		var image 	= $(this).data('jj-image');
+		var alt 	= $(this).data('jj-image-alt');
+
+		// Populate the image src/alt and header text
+		modal.find('img').attr('src', image);
+		modal.find('img').attr('alt', alt);
+		modal.find('.image-name').text(alt);
+		
+		// Show the modal
+		modal.modal('show');
+
+	});
+	
+	
+	/**
 	 * Compile the BBCode ready to insert
 	 */
 	$('#jjshoutboxform .btn-toolbar button').on('click', function() {
@@ -223,6 +247,10 @@ jQuery(document).ready(function($) {
 		if (bbcode == 'url')
 		{
 			start = '[url=' + param + ']';
+		}
+		if (bbcode == 'img')
+		{
+			start = '[img=' + param + ']';
 		}
 		
 		JJShoutbox.insertBBCode(start, end, element);

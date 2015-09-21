@@ -427,6 +427,7 @@ class ModShoutboxHelper
 			'/\[b\](.*?)\[\/b\]/is',
 			'/\[i\](.*?)\[\/i\]/is',
 			'/\[u\](.*?)\[\/u\]/is',
+			'/\[img=(?:http(s?):\/\/)?([^\]]+)\]\s*(.*?)\s*\[\/img\]/is',
 			'/\[url=(?:http(s?):\/\/)?([^\]]+)\]\s*(.*?)\s*\[\/url\]/is'
 		);
 
@@ -434,9 +435,10 @@ class ModShoutboxHelper
 			'<span class="jj-bold">$1</span>',
 			'<span class="jj-italic">$1</span>',
 			'<span class="jj-underline">$1</span>',
+			'<a href="#" data-jj-image="http$1://$2" data-jj-image-alt="$3" class="jj-image-modal">$3</a>',
 			'<a href="http$1://$2" target="_blank">$3</a>'
 		);
-
+		
 		$message = preg_replace($search, $replace, $message);
 
 		return $message;
