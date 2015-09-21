@@ -112,7 +112,7 @@
 					<option value="3">SHOUT_SMILIES_ON_SLIDE_SHOW</option>
 					<option value="4">SHOUT_SMILIES_DISABLE</option>
 				</field>
-				<field name="bbcode" type="radio" class="btn-group" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+				<field name="bbcode" type="radio" class="btn-group" default="1" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
