@@ -575,7 +575,7 @@ class Mod_ShoutboxInstallerScript
 		}
 			
 		// Delete swearwords file
-		JFile::delete(JPATH_ROOT . $swearwords_file);
+		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php');
 			
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_600_UPDATE_NOTIFICATION'), 'warning');
 	}
