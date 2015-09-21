@@ -542,8 +542,12 @@ class Mod_ShoutboxInstallerScript
 		// Import dependencies
 		JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
 		
-		// Delete swearwords file
-		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php');
+		
+		// Get the swearwords from the file
+		$file = file_get_contents(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php', NULL, NULL, 249);
+		$explode = explode("\n", $file);	// Explode the contents of the file
+		$words = array_filter($explode);	// Remove empty values from array
+		unset($words[0]);					// Unset the first array index which contains a space
 		
 		
 		$modules = $this->getInstances(true);
@@ -554,26 +558,10 @@ class Mod_ShoutboxInstallerScript
 			$module = (int) $module;
 			
 			//  Create a json object with an array of words
-			$json = json_encode(array(
-				'word' => array(
-					'coon',
-					'cunt',
-					'dick',
-					'fuck',
-					'f u c k',
-					'f.uck',
-					'f.u.c.k',
-					'knobend',
-					'nigger',
-					'nigga',
-					'prick',
-					'pussy',
-					'shit',
-					's.hit',
-					's.h.i.t',
-					'twat'
-				)
-			));
+			$json = json_encode(array('word' => array_values($words)));
+			
+			// Remove line breaks in the json string
+			$json = preg_replace('/\\\r/m', '', $json);
 			
 			// Create array of params to change
 			$swearwords = array();
@@ -585,8 +573,10 @@ class Mod_ShoutboxInstallerScript
 			// Unset the array for the next loop
 			unset($swearwords);
 		}
-		
-		
+			
+		// Delete swearwords file
+		JFile::delete(JPATH_ROOT . $swearwords_file);
+			
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_600_UPDATE_NOTIFICATION'), 'warning');
 	}
 }
