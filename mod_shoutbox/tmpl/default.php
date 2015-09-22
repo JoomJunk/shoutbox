@@ -35,9 +35,6 @@ if ($avatar != 'none')
 $doc->addStyleDeclaration($style);
 $uniqueIdentifier = 'jjshoutbox' . $uniqueId;
 
-JHtml::_('bootstrap.popover');
-$popover = JText::_('SHOUT_URL_EXAMPLE');
-
 // Load core.js for the javascript translating
 JHtml::_('behavior.core');
 JText::script('SHOUT_MESSAGE_EMPTY');
@@ -132,13 +129,19 @@ elseif (array_intersect($permissions, $access))
 		<?php endif; ?>
 		
 		<?php if ($bbcode == 1) : ?>
+			<div id="bbcode-form" class="bbcode-form well">
+				<input type="text" id="bbcode-url" placeholder="<?php echo JText::_('SHOUT_BBCODE_URL'); ?>" />
+				<input type="text" id="bbcode-text" placeholder="<?php echo JText::_('SHOUT_BBCODE_TEXT'); ?>" />
+				<input type="hidden" id="jj-bbcode-type" data-bbcode-input-type="" />
+				<button id="bbcode-insert" type="button" class="<?php echo $button; ?> btn-small"><?php echo JText::_('SHOUT_BBCODE_INSERT'); ?></button>
+			</div>
 			<div class="btn-toolbar">
 				<div class="<?php echo $button_group; ?>">
 					<button type="button" class="<?php echo $button; ?> btn-small jj-bold" data-bbcode-type="b"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
 					<button type="button" class="<?php echo $button; ?> btn-small jj-italic" data-bbcode-type="i"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
 					<button type="button" class="<?php echo $button; ?> btn-small jj-underline" data-bbcode-type="u"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
-					<button type="button" class="<?php echo $button; ?> btn-small jj-image" data-bbcode-type="img"><?php echo JText::_('SHOUT_BBCODE_IMG'); ?></button>
-					<button type="button" class="<?php echo $button; ?> btn-small jj-link hasPopover" data-bbcode-type="url" data-placement="top" data-content="<?php echo $popover; ?>"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-image jj-trigger-insert" data-bbcode-type="img"><?php echo JText::_('SHOUT_BBCODE_IMG'); ?></button>
+					<button type="button" class="<?php echo $button; ?> btn-small jj-link jj-trigger-insert" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
 				</div>
 			</div>
 		<?php endif; ?>

@@ -18,6 +18,7 @@ WIP
 + Added option to hide security question for registered users
 + Added HTML5 notifications
 + Added IMG tag to BBCode
++ Added insert section for BBCode image and URL
 ^ Moved swear words to repeatable form fields
 ^ Updated ReCaptcha to v2
 $ Some language strings changed for ReCaptcha v2

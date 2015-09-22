@@ -210,6 +210,44 @@ JJShoutbox.showError = function(msg, instance)
 jQuery(document).ready(function($) {
 	
 	/**
+	 * Compile the BBCode ready to insert
+	 * Display insert box for images and links
+	 */
+	$('#jjshoutboxform .btn-toolbar button').on('click', function() {
+		
+		var bbcode 	= $(this).data('bbcode-type');
+		var start 	= '[' + bbcode + ']';
+		var end 	= '[/' + bbcode + ']';
+		
+		if (bbcode == 'url' || bbcode == 'img')
+		{
+			$('#jj-bbcode-type').data('bbcode-input-type', bbcode);
+			$('#bbcode-form').slideDown();
+		}
+		else
+		{
+			JJShoutbox.insertBBCode(start, end, $('#jj_message').get(0));
+		}
+
+	});
+	
+	
+	/**
+	 * Insert the BBCode and close the form
+	 */
+	$('#jjshoutboxform #bbcode-insert').on('click', function() {
+			
+		var bbcode = $('#jj-bbcode-type').data('bbcode-input-type');		
+		var start  = '[' + bbcode + '=' + $('#bbcode-form #bbcode-url').val() + ']' + $('#bbcode-form #bbcode-text').val();
+		var end    = '[/' + bbcode + ']';
+		
+		JJShoutbox.insertBBCode(start, end, $('#jj_message').get(0));	
+		
+		$('#bbcode-form').slideUp();
+	});
+	
+	
+	/**
 	 * Populate modal with image
 	 */
 	$('#jjshoutboxoutput').on('click', '.jj-image-modal', function(e) {
@@ -231,34 +269,7 @@ jQuery(document).ready(function($) {
 		modal.modal('show');
 
 	});
-	
-	
-	/**
-	 * Compile the BBCode ready to insert
-	 */
-	$('#jjshoutboxform .btn-toolbar button').on('click', function() {
-		
-		var bbcode 	= $(this).data('bbcode-type');
-		var start 	= '[' + bbcode + ']';
-		var end 	= '[/' + bbcode + ']';
-		var element = $('#jj_message').get(0);
-		var param 	= '';
 
-		if (bbcode == 'url')
-		{
-			start = '[url=' + param + ']';
-		}
-		if (bbcode == 'img')
-		{
-			start = '[img=' + param + ']';
-		}
-		
-		JJShoutbox.insertBBCode(start, end, element);
-		
-		return false;
-	  
-    });
-	
 	
 	/**
 	 * slideToggle the smiley box on click
