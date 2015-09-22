@@ -17,7 +17,6 @@ $helper   = new ModShoutboxHelper($title);
 $params   = $helper->getParams();
 
 $displayName     = $params->get('loginname', 'user');
-$smile           = $params->get('smile');
 $swearcounter    = $params->get('swearingcounter', 1);
 $swearnumber     = $params->get('swearingnumber');
 $number          = $params->get('maximum');
@@ -61,22 +60,51 @@ $Itemid = is_null($activeMenuItem) ? null : $activeMenuItem->id;
 switch ($framework)
 {
 	case 'uikit':
-		$form          = 'uk-form';
-		$button_group  = 'uk-button-group';
-		$button        = 'uk-button';
+		$form          = ' uk-form';
+		$button_group  = ' uk-button-group';
+		$button        = ' uk-button';
+		$button_small  = ' uk-button-small';
 		$button_danger = ' uk-button-danger';
+		$input_txtarea = null;
+		$form_row      = ' uk-margin-small-top';
+		$clearfix      = ' uk-clearfix';
+		$modal         = ' uk-modal';
 		break;
+		
 	case 'bootstrap':
 		$form          = null;
-		$button_group  = 'btn-group';
-		$button        = 'btn';
+		$button_group  = ' btn-group';
+		$button        = ' btn';
+		$button_small  = ' btn-small';
 		$button_danger = ' btn-danger';
+		$input_txtarea = null;
+		$form_row      = ' form-group';
+		$clearfix      = ' clearfix';
+		$modal         = ' modal hide fade';
 		break;
+		
+	case 'bootstrap3':
+		$form          = null;
+		$button_group  = ' btn-group';
+		$button        = ' btn btn-default';
+		$button_small  = ' btn-sm';
+		$button_danger = ' btn-danger';
+		$input_txtarea = ' form-control';
+		$form_row      = ' form-group';
+		$clearfix      = ' clearfix';
+		$modal         = ' modal fade';
+		break;
+		
 	default:
 		$form          = null;
 		$button_group  = null;
 		$button        = null;
+		$button_small  = null;
 		$button_danger = null;
+		$input_txtarea = null;
+		$form_row      = null;
+		$clearfix      = ' clearfix';
+		$modal         = ' modal hide fade';
 		break;
 }
 

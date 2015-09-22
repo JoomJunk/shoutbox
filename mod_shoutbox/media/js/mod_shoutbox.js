@@ -194,8 +194,21 @@ JJShoutbox.getLastAuthor = function(instance)
  */
 JJShoutbox.showError = function(msg, instance)
 {
-	var errorBox 	= instance.find('.jj-shout-error');
-	var errorMsg 	= '<div class="alert alert-error">' + msg + '</div>';
+	if (JJ_Framework_type == 'uikit')
+	{
+		var alertClass = 'uk-alert uk-alert-danger';
+	}
+	else if (JJ_Framework_type == 'bootstrap3')
+	{
+		var alertClass = 'alert alert-danger';
+	}
+	else
+	{
+		var alertClass = 'alert alert-error';
+	}
+	
+	var errorBox = instance.find('.jj-shout-error');
+	var errorMsg = '<div class="' + alertClass + '">' + msg + '</div>';
 
 	errorBox.html(errorMsg)
 			.slideDown().delay(5000).slideUp(400, function() {
@@ -209,11 +222,12 @@ JJShoutbox.showError = function(msg, instance)
 
 jQuery(document).ready(function($) {
 	
+
 	/**
 	 * Compile the BBCode ready to insert
 	 * Display insert box for images and links
 	 */
-	$('#jjshoutboxform .btn-toolbar button').on('click', function() {
+	$('#jjshoutboxform .bbcode-button').on('click', function() {
 		
 		var bbcode 	= $(this).data('bbcode-type');
 		var start 	= '[' + bbcode + ']';
@@ -245,7 +259,7 @@ jQuery(document).ready(function($) {
 		
 		$('#bbcode-form').slideUp();
 	});
-	
+
 	
 	/**
 	 * Populate modal with image
@@ -253,8 +267,15 @@ jQuery(document).ready(function($) {
 	$('#jjshoutboxoutput').on('click', '.jj-image-modal', function(e) {
 
 		e.preventDefault();
-
-		var modal 	= $('#jj-image-modal');
+		
+		if (JJ_Framework_type == 'uikit')
+		{
+			var modal = UIkit.modal('#jj-image-modal');
+		}
+		else
+		{
+			var modal = $('#jj-image-modal');
+		}
 		
 		// Get the image src and name
 		var image 	= $(this).data('jj-image');
@@ -266,7 +287,14 @@ jQuery(document).ready(function($) {
 		modal.find('.image-name').text(alt);
 		
 		// Show the modal
-		modal.modal('show');
+		if (JJ_Framework_type == 'uikit')
+		{
+			modal.show();
+		}
+		else
+		{
+			modal.modal('show');
+		}
 
 	});
 

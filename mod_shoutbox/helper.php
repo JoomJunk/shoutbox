@@ -865,7 +865,6 @@ class ModShoutboxHelper
 		$user = JFactory::getUser();
 
 		// Grab the bbcode and smiley params
-		$smile  = $this->params->get('smile');
 		$bbcode = $this->params->get('bbcode', 1);
 
 		// Get the date format
@@ -896,7 +895,7 @@ class ModShoutboxHelper
 		$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
 
 		// Perform Smiley and BBCode filtering if required
-		if ($smile != 4 || $bbcode == 1)
+		if ($bbcode == 1)
 		{
 			$shout->msg = $this->bbcodeFilter($shout->msg);
 			$shout->name = $this->bbcodeFilter($profile_link);

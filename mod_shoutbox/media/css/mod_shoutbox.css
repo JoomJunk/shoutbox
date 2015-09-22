@@ -19,6 +19,7 @@
 #jjshoutboxform textarea {
     width: 100%;
     margin: 0;
+	min-height: 100px;
 }
 #jjshoutboxform input {
     margin-top: 5px;
@@ -37,6 +38,7 @@
     overflow: auto;
     margin-top: 5px;
     word-wrap: break-word;
+	margin-bottom: 10px;
 }
 #jjshoutboxoutput input[type=submit] {
     cursor: pointer;
@@ -79,6 +81,10 @@
 	color: #FF0000; 
 	font-weight: bold; 
 }
+#jjshoutboxform input#math_output {
+	width: 70px;
+	margin-top: 0;
+}
 .jjshoutbox .jj_error { 
 	color:red; 
 	font-weight:bold; 
@@ -106,8 +112,8 @@
     cursor: pointer;
 }
 #jj_smiley_button {
-    margin: 5px 0 0 0;
-    float:right;
+    margin: 0;
+    float: right;
 }
 #jj_btn {
     display: block;
@@ -125,6 +131,7 @@
 .jj_smiley {
     padding: 0 2px 0 2px;
     border: none;
+	cursor: pointer;
 }
 #jj_smiley_box img:hover {
     background:none !important;
@@ -166,12 +173,15 @@ BBCode
 	display: none;
 	margin-top: 10px;
 }
+#bbcode-insert {
+	margin-top: 5px;
+}
 .jj-bold {
-	font-weight: bold;
+	font-weight: bold !important;
 }
 .jj-italic {
-	font-style: italic;
+	font-style: italic !important;
 }
 .jj-underline {
-	text-decoration: underline;
+	text-decoration: underline !important;
 }

@@ -97,68 +97,89 @@ JText::script('SHOUT_NEW_SHOUT_ALERT');
 		{
 		?>
 			<form method="post" name="shout" class="<?php echo $form; ?>">
-			
-				<?php
-					// Displays the Name of the user if logged in unless stated in the parameters to be a input box
-					if ($displayName == 'real' && !$user->guest)
-					{
-						echo '<p>' . JText::_('SHOUT_NAME') . ": " . $user->name . '</p>';
-					}
-					elseif ($displayName == 'user' && !$user->guest)
-					{
-						echo '<p>' . JText::_('SHOUT_NAME') . ": " . $user->username . '</p>';
-					}
-					elseif ($user->guest || ($displayName == 'choose' && !$user->guest))
-					{
-						echo '<input name="jjshout[name]" type="text" maxlength="25" required="required" id="shoutbox-name" placeholder="' . JText::_('SHOUT_NAME') . '" />';
-					}
+				
+				<div class="<?php echo $form_row; ?>">
+					<?php
+						// Displays the Name of the user if logged in unless stated in the parameters to be a input box
+						if ($displayName == 'real' && !$user->guest)
+						{
+							echo '<p>' . JText::_('SHOUT_NAME') . ": " . $user->name . '</p>';
+						}
+						elseif ($displayName == 'user' && !$user->guest)
+						{
+							echo '<p>' . JText::_('SHOUT_NAME') . ": " . $user->username . '</p>';
+						}
+						elseif ($user->guest || ($displayName == 'choose' && !$user->guest))
+						{
+							echo '<input name="jjshout[name]" type="text" maxlength="25" required="required" id="shoutbox-name" class="' . $input_txtarea . '" placeholder="' . JText::_('SHOUT_NAME') . '" />';
+						}
 
-					// Adds in session token to prevent re-posts and a security token to prevent CRSF attacks
-					$_SESSION['token'] = uniqid("token", true);
-					echo JHtml::_('form.token');
-				?>
+						// Adds in session token to prevent re-posts and a security token to prevent CRSF attacks
+						$_SESSION['token'] = uniqid("token", true);
+						echo JHtml::_('form.token');
+					?>
+				</div>
 				
 				<input name="jjshout[token]" type="hidden" value="<?php echo $_SESSION['token'];?>" />
-
-				<?php if ($enablelimit == 1) : ?>
-					<span id="charsLeft"></span>
-					<textarea 
-						id="jj_message"  
-						cols="20" 
-						rows="5" 
-						name="jjshout[message]" 
-						onKeyDown="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
-						onKeyUp="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
-					></textarea>
-				<?php else: ?>
-					<textarea id="jj_message" cols="20" rows="5" name="jjshout[message]"></textarea>
-				<?php endif; ?>
+				
+				<div class="<?php echo $form_row; ?>">
+					<?php if ($enablelimit == 1) : ?>
+						<span id="charsLeft"></span>
+						<textarea 
+							id="jj_message"
+							class="<?php echo $input_txtarea; ?>"
+							cols="20"
+							rows="5"
+							name="jjshout[message]"
+							onKeyDown="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
+							onKeyUp="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
+						></textarea>
+					<?php else: ?>
+						<textarea id="jj_message" class="<?php echo $input_txtarea; ?>" cols="20" rows="5" name="jjshout[message]"></textarea>
+					<?php endif; ?>
+				</div>
 				
 				<?php if ($bbcode == 1) : ?>
 					<div id="bbcode-form" class="bbcode-form well">
-						<input type="text" id="bbcode-url" placeholder="<?php echo JText::_('SHOUT_BBCODE_URL'); ?>" />
-						<input type="text" id="bbcode-text" placeholder="<?php echo JText::_('SHOUT_BBCODE_TEXT'); ?>" />
+						<input type="text" id="bbcode-url" class="<?php echo $input_txtarea; ?>" placeholder="<?php echo JText::_('SHOUT_BBCODE_URL'); ?>" />
+						<input type="text" id="bbcode-text" class="<?php echo $input_txtarea; ?>" placeholder="<?php echo JText::_('SHOUT_BBCODE_TEXT'); ?>" />
 						<input type="hidden" id="jj-bbcode-type" data-bbcode-input-type="" />
-						<button id="bbcode-insert" type="button" class="<?php echo $button; ?> btn-small"><?php echo JText::_('SHOUT_BBCODE_INSERT'); ?></button>
+						<button id="bbcode-insert" type="button" class="<?php echo $button . $button_small; ?>"><?php echo JText::_('SHOUT_BBCODE_INSERT'); ?></button>
 					</div>
 					<div class="btn-toolbar">
 						<div class="<?php echo $button_group; ?>">
-							<button type="button" class="<?php echo $button; ?> btn-small jj-bold" data-bbcode-type="b"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
-							<button type="button" class="<?php echo $button; ?> btn-small jj-italic" data-bbcode-type="i"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
-							<button type="button" class="<?php echo $button; ?> btn-small jj-underline" data-bbcode-type="u"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
-							<button type="button" class="<?php echo $button; ?> btn-small jj-image jj-trigger-insert" data-bbcode-type="img"><?php echo JText::_('SHOUT_BBCODE_IMG'); ?></button>
-							<button type="button" class="<?php echo $button; ?> btn-small jj-link jj-trigger-insert" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
-						</div>
-					</div>
-				<?php endif; ?>
+							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-bold" data-bbcode-type="b"><?php echo JText::_('SHOUT_BBCODE_BOLD'); ?></button>
+							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-italic" data-bbcode-type="i"><?php echo JText::_('SHOUT_BBCODE_ITALIC'); ?></button>
+							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-underline" data-bbcode-type="u"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
+							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-image jj-trigger-insert" data-bbcode-type="img"><?php echo JText::_('SHOUT_BBCODE_IMG'); ?></button>
+							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-link jj-trigger-insert" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
+							
+							
+							<?php if ($framework == 'uikit') : ?>						
+								<div class="uk-button-dropdown" data-uk-dropdown>
+									<button class="uk-button uk-button-small">
+										<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_e_smile.gif" alt="&#9786;" />
+									</button>
+									<div class="uk-dropdown">
+										<?php echo $helper->smileyshow(); ?>
+									</div>
+								</div>
+							<?php else: ?>
+								<button type="button" class="<?php echo $button . $button_small; ?> dropdown-toggle" data-toggle="dropdown">
+									<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_e_smile.gif" alt="&#9786;" />
+								</button>
+								<div class="dropdown-menu">
+									<?php echo $helper->smileyshow(); ?>
+								</div>
+							<?php endif; ?>
+						
 
-				<?php if ($smile == 1 || $smile == 2  || $smile == 3) : ?>
-					<?php if ($smile == 2 || $smile == 3) : ?>
-						<div id="jj_smiley_button">
-							<a href="#" id="jj_btn" class="<?php echo $button; ?> btn-mini <?php echo ($smile == 2 ? 'rotated' : ''); ?>" >&#9650;</a>
+							
 						</div>
-					<?php endif; ?>
-					<div id="jj_smiley_box" style="<?php echo ($smile == 2 ? 'display:none;' : 'display:block;'); ?>"><?php echo $helper->smileyshow(); ?></div>
+						<div class="dropdown-menu">
+								<?php echo $helper->smileyshow(); ?>
+							</div>
+					</div>
 				<?php endif; ?>
 
 				<?php
@@ -194,10 +215,12 @@ JText::script('SHOUT_NEW_SHOUT_ALERT');
 					?>
 						<?php $que_number1 = $helper->randomnumber(1); ?>
 						<?php $que_number2 = $helper->randomnumber(1); ?>
-						<label class="jj_label" for="math_output"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
-						<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
-						<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
-						<input class="jj_input" id="math_output" type="text" name="jjshout[human]" />
+						<div class="form-inline <?php echo $form_row; ?>">				
+							<label for="math_output"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
+							<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
+							<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
+							<input class="<?php echo $input_txtarea; ?>" id="math_output" type="text" name="jjshout[human]" />
+						</div>
 					<?php 
 					}
 				}
@@ -232,20 +255,37 @@ JText::script('SHOUT_NEW_SHOUT_ALERT');
 		?>
 
 		<?php if ($bbcode == 1) : ?>
-			<div id="jj-image-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="JJ Image Modal" aria-hidden="true">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-					<h3 class="image-name"></h3>
-				</div>
-				<div class="modal-body">
-					<img src="" alt="" />
-				</div>
+			<div id="jj-image-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ Image Modal" aria-hidden="true">
+				<?php if ($framework == 'uikit') : ?>
+					<div class="uk-modal-dialog">
+						<a class="uk-modal-close uk-close"></a>
+						<div class="uk-modal-header">
+							<h3 class="image-name"></h3>
+						</div>
+						<img src="" alt="" />
+					</div>
+				<?php else: ?>
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+								<h3 class="image-name"></h3>
+							</div>
+							<div class="modal-body">
+								<img src="" alt="" />
+							</div>
+						</div>
+					</div>
+				<?php endif; ?>
 			</div>
 		<?php endif; ?>
 		
 	</div>
 </div>
 <script type="text/javascript">
+	
+	var JJ_Framework_type = '<?php echo $framework; ?>';
+	
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	
 	<?php if ($notifications == 1) : ?>
