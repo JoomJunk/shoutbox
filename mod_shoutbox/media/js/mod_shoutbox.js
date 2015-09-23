@@ -298,16 +298,6 @@ jQuery(document).ready(function($) {
 
 	});
 
-	
-	/**
-	 * slideToggle the smiley box on click
-	 */
-	$('#jj_btn').on('click', function(e) {
-		e.preventDefault();
-		$(this).toggleClass('rotated');
-		$('#jj_smiley_box').stop(true, false).slideToggle();
-	});
-		
 		
 	/**
 	 * Submit a shout

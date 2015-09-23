@@ -86,8 +86,8 @@
 	margin-top: 0;
 }
 .jjshoutbox .jj_error { 
-	color:red; 
-	font-weight:bold; 
+	color: red; 
+	font-weight: bold; 
 }
 .jjshoutbox .jj-shout-error {
 	display: none;
@@ -105,36 +105,13 @@
 	width: 70px; 
 	display: inline-block;
 }
-#jj_smiley_box {
-    margin: 10px 0 10px 0;
-}
-#jj_smiley_box img {
-    cursor: pointer;
-}
-#jj_smiley_button {
-    margin: 0;
-    float: right;
-}
-#jj_btn {
-    display: block;
-	cursor: pointer;
-	padding: 2px 5px !important;
-	-webkit-transform: rotate(0deg);
-	-moz-transform: rotate(0deg);
-	transform: rotate(0deg);
-}
-#jj_btn.rotated {
-	-webkit-transform: rotate(180deg);
-	-moz-transform: rotate(180deg);
-	transform: rotate(180deg);
-}
 .jj_smiley {
-    padding: 0 2px 0 2px;
+    padding: 3px;
     border: none;
 	cursor: pointer;
 }
-#jj_smiley_box img:hover {
-    background:none !important;
+.jj_smiley:hover {
+    background: none !important;
 	border: 0;
 	outline: 0;
 }
@@ -146,17 +123,8 @@
 }
 
 /**
-Non-bootstrap styling for BB Code
+Non-bootstrap styling for BBCode
 **/
-.jjshoutbox #jj_smiley_box {
-    margin: 5px 0 10px;
-	white-space: normal;
-}
-.jjshoutbox #jj_smiley_box img {
-    cursor: pointer;
-	padding: 2px;
-    border:none;
-}
 .jjshoutbox .btn-toolbar {
 	margin-top: 10px;
 }
