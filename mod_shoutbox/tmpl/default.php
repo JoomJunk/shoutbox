@@ -32,6 +32,17 @@ if ($avatar != 'none')
 	}';
 }
 
+// Prevent the image overlapping on Bootstrap 2 modal
+if ($framework == 'bootstrap')
+{
+	$style .= '
+	#jjshoutboxform .modal-body > img {
+		float: left;
+		padding-bottom: 1%;
+	}';
+}
+
+
 $doc->addStyleDeclaration($style);
 $uniqueIdentifier = 'jjshoutbox' . $uniqueId;
 
@@ -265,14 +276,14 @@ JText::script('SHOUT_NEW_SHOUT_ALERT');
 						<img src="" alt="" />
 					</div>
 				<?php else: ?>
-					<div class="modal-dialog" role="document">
+					<div class="modal-dialog modal-lg" role="document">
 						<div class="modal-content">
 							<div class="modal-header">
 								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 								<h3 class="image-name"></h3>
 							</div>
 							<div class="modal-body">
-								<img src="" alt="" />
+								<img class="<?php echo $modal_img; ?>" src="" alt="" />
 							</div>
 						</div>
 					</div>

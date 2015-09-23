@@ -69,6 +69,7 @@ switch ($framework)
 		$form_row      = ' uk-margin-small-top';
 		$clearfix      = ' uk-clearfix';
 		$modal         = ' uk-modal';
+		$modal_img     = null;
 		break;
 		
 	case 'bootstrap':
@@ -81,6 +82,7 @@ switch ($framework)
 		$form_row      = ' form-group';
 		$clearfix      = ' clearfix';
 		$modal         = ' modal hide fade';
+		$modal_img     = null;
 		break;
 		
 	case 'bootstrap3':
@@ -93,6 +95,7 @@ switch ($framework)
 		$form_row      = ' form-group';
 		$clearfix      = ' clearfix';
 		$modal         = ' modal fade';
+		$modal_img     = ' img-responsive';
 		break;
 		
 	default:
@@ -105,6 +108,7 @@ switch ($framework)
 		$form_row      = null;
 		$clearfix      = ' clearfix';
 		$modal         = ' modal hide fade';
+		$modal_img     = null;
 		break;
 }
 
