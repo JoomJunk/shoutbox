@@ -297,7 +297,26 @@ jQuery(document).ready(function($) {
 		}
 
 	});
+	
+	
+	/**
+	 * Populate modal with image
+	 */
+	$('#jjshoutboxoutput').on('click', '#jj-history-trigger', function(e) {
 
+		e.preventDefault();
+		
+		if (JJ_Framework_type == 'uikit')
+		{
+			UIkit.modal('#jj-history-modal').show();
+		}
+		else
+		{
+			$('#jj-history-modal').modal('show');
+		}
+
+	});
+	
 		
 	/**
 	 * Submit a shout
@@ -420,9 +439,11 @@ jQuery(document).ready(function($) {
 				if (response.success)
 				{
 					instance.find('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
-
+					
+					var historyButton = '<div class="center-block"><a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini">' + Joomla.JText._('SHOUT_HISTORY_BUTTON') + '</a></div>';
+					
 					// Grab the html output and append it to the shoutbox message
-					instance.find('.jj-shout-new').after(response.data.html);
+					instance.find('.jj-shout-new').after(response.data.html + historyButton);
 					
 					// Get the ID of the last shout after the output has been updated
 					var newLastID = JJShoutbox.getLastID(instance);
@@ -441,6 +462,48 @@ jQuery(document).ready(function($) {
 							instance.find('.jjshoutbox-audio').get(0).play();
 						}
 					}
+				}
+				else
+				{
+					JJShoutbox.showError(response.message, instance);
+				}
+			},
+			error: function(ts){
+				console.log(ts);
+			}
+		});
+
+		return false;
+	}
+	
+	
+	/**
+	 * Get the the shouts history based on the offset and count
+	 */
+	JJShoutbox.getPostsHistory = function(title, Itemid, instance, offset)
+	{
+		// Assemble variables to submit
+		var request = {
+			'jjshout[title]' : title,
+			'jjshout[offset]' : offset,
+		};
+
+		// If there is an active menu item then we need to add it to the request.
+		if (Itemid !== null)
+		{
+			request['Itemid'] = Itemid;
+		}
+
+		// AJAX request
+		$.ajax({
+			type: 'POST',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&format=json',
+			data: request,
+			success: function(response){
+				if (response.success)
+				{
+					// Grab the html output and append it to the shoutbox message
+					instance.find('#jj-load-more').parent().before(response.data.html);
 				}
 				else
 				{

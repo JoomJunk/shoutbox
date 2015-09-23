@@ -105,10 +105,15 @@
 	width: 70px; 
 	display: inline-block;
 }
+#jjshoutboxform .dropdown-menu {
+	padding: 5px !important;
+}
 .jj_smiley {
-    padding: 3px;
     border: none;
 	cursor: pointer;
+	display: block;
+    float: left;
+    margin: 0 3px 5px 0;
 }
 .jj_smiley:hover {
     background: none !important;
@@ -120,6 +125,61 @@
 }
 .jjshoutbox-audio {
     display: none;
+}
+
+
+/**
+Shoutbox history
+**/
+#jj-shout-history.modal-body {
+	max-height: 400px;
+	overflow-y: scroll;
+}
+#jj-shout-history p {
+	margin: 5px 0 0;
+}
+#jj-shout-history > div {
+	background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    margin-bottom: 20px;
+    min-height: 20px;
+	padding: 5px 9px;
+}
+.center-block {
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+#jj-shout-history > div.center-block {
+	background: none;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	padding: 0;
+	margin: 0 0 10px 0;
+}
+#jj-shout-history form {
+	float: right;
+}
+#jj-shout-history#jj-shout-history form input[type="submit"] {
+	background: none;
+	border: 0 none;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: top;
+}
+#jj-shout-history .shout-header {
+	font-weight: bold;
 }
 
 /**

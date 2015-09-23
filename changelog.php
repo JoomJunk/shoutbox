@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 WIP
 + Added option to hide security question for registered users
++ Added shoutbox history/archive
 + Added HTML5 notifications
 + Added IMG tag to BBCode
 + Added insert section for BBCode image and URL

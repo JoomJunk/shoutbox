@@ -116,8 +116,15 @@ class ModShoutboxHelper
 
 		$helper       = new ModShoutboxHelper($post['title']);
 		$helper->ajax = true;
+		
+		$offset = $helper->getParams()->get('maximum');
+		
+		if (isset($post['offset']))
+		{
+			$offset = $post['offset'];
+		}
 
-		$shouts = $helper->getShouts($helper->getParams()->get('maximum'), JText::_('SHOUT_DATABASEERRORSHOUT'));
+		$shouts = $helper->getShouts($offset, $helper->getParams()->get('maximum'), JText::_('SHOUT_DATABASEERRORSHOUT'));
 
 		$htmlOutput = '';
 
@@ -172,6 +179,7 @@ class ModShoutboxHelper
 	/*
 	 * Wrapper function for getting the shouts in PHP
 	 *
+	 * @param   int     $offset   The row to start getting the shouts from
 	 * @param   int     $number   The number of posts to retrieve from the database.
 	 * @param   string  $message  The error message to return if the database retrieval fails.
 	 *
@@ -179,11 +187,11 @@ class ModShoutboxHelper
 	 *
 	 * @since 2.0
 	 */
-	public function getShouts($number, $message)
+	public function getShouts($offset, $number, $message)
 	{
 		try
 		{
-			$shouts = $this->getShoutData($number);
+			$shouts = $this->getShoutData($offset, $number);
 		}
 		catch (Exception $e)
 		{
@@ -197,20 +205,21 @@ class ModShoutboxHelper
 	 * Retrieves the shouts from the database and returns them. Will return an error
 	 * message if the database retrieval fails.
 	 *
+	 * @param   int     $offset   The row to start getting the shouts from
 	 * @param   int     $number   The number of posts to retrieve from the database.
 	 *
 	 * @return  array  The shoutbox posts.
 	 *
 	 * @since 1.0
 	 */
-	private function getShoutData($number)
+	private function getShoutData($offset, $number)
 	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__shoutbox'))
 			->order($db->quoteName('id') . ' DESC')
-			->setLimit($number, 0);
+			->setLimit($number, $offset);
 			
 		$db->setQuery($query);
 
