@@ -165,7 +165,8 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 						<input type="text" id="bbcode-url" class="<?php echo $input_txtarea; ?>" placeholder="<?php echo JText::_('SHOUT_BBCODE_URL'); ?>" />
 						<input type="text" id="bbcode-text" class="<?php echo $input_txtarea; ?>" placeholder="<?php echo JText::_('SHOUT_BBCODE_TEXT'); ?>" />
 						<input type="hidden" id="jj-bbcode-type" data-bbcode-input-type="" />
-						<button id="bbcode-insert" type="button" class="<?php echo $button . $button_small; ?>"><?php echo JText::_('SHOUT_BBCODE_INSERT'); ?></button>
+						<button id="bbcode-cancel" type="button" class="<?php echo $button . $button_small . $button_danger; ?>"><?php echo JText::_('SHOUT_BBCODE_CANCEL'); ?></button>
+						<button id="bbcode-insert" type="button" class="<?php echo $button . $button_small . $button_prim; ?>"><?php echo JText::_('SHOUT_BBCODE_INSERT'); ?></button>
 					</div>
 					<div class="btn-toolbar">
 						<div class="<?php echo $button_group; ?>">
@@ -174,8 +175,6 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-underline" data-bbcode-type="u"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
 							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-image jj-trigger-insert" data-bbcode-type="img"><?php echo JText::_('SHOUT_BBCODE_IMG'); ?></button>
 							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-link jj-trigger-insert" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
-							
-							
 							<?php if ($framework == 'uikit') : ?>						
 								<div class="uk-button-dropdown" data-uk-dropdown>
 									<button class="uk-button uk-button-small">
@@ -193,13 +192,10 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 									<?php echo $helper->smileyshow(); ?>
 								</div>
 							<?php endif; ?>
-						
-
-							
 						</div>
 						<div class="dropdown-menu">
-								<?php echo $helper->smileyshow(); ?>
-							</div>
+							<?php echo $helper->smileyshow(); ?>
+						</div>
 					</div>
 				<?php endif; ?>
 

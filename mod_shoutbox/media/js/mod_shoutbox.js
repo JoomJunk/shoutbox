@@ -269,6 +269,15 @@ jQuery(document).ready(function($) {
 		
 		$('#bbcode-form').slideUp();
 	});
+	
+	/**
+	 * Close the form
+	 */
+	$('#jjshoutboxform #bbcode-cancel').on('click', function() {
+			
+		$('#bbcode-form').slideUp();
+		
+	});
 
 	
 	/**

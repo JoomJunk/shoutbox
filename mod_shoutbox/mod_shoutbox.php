@@ -65,6 +65,7 @@ switch ($framework)
 		$button        = ' uk-button';
 		$button_small  = ' uk-button-small';
 		$button_danger = ' uk-button-danger';
+		$button_prim   = ' uk-button-primary';
 		$input_txtarea = null;
 		$form_row      = ' uk-margin-small-top';
 		$clearfix      = ' uk-clearfix';
@@ -78,6 +79,7 @@ switch ($framework)
 		$button        = ' btn';
 		$button_small  = ' btn-small';
 		$button_danger = ' btn-danger';
+		$button_prim   = ' btn-primary';
 		$input_txtarea = null;
 		$form_row      = ' form-group';
 		$clearfix      = ' clearfix';
@@ -91,6 +93,7 @@ switch ($framework)
 		$button        = ' btn btn-default';
 		$button_small  = ' btn-sm';
 		$button_danger = ' btn-danger';
+		$button_prim   = ' btn-primary';
 		$input_txtarea = ' form-control';
 		$form_row      = ' form-group';
 		$clearfix      = ' clearfix';
@@ -104,6 +107,7 @@ switch ($framework)
 		$button        = null;
 		$button_small  = null;
 		$button_danger = null;
+		$button_prim   = null;
 		$input_txtarea = null;
 		$form_row      = null;
 		$clearfix      = ' clearfix';

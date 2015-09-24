@@ -204,7 +204,8 @@ BBCode
 .bbcode-form p {
 	font-weight: bold;
 }
-#bbcode-insert {
+#bbcode-insert,
+#bbcode-cancel {
 	margin-top: 5px;
 }
 .jj-bold {
