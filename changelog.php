@@ -21,10 +21,12 @@ WIP
 + Added IMG tag to BBCode
 + Added insert section for BBCode image and URL
 + Added Bootstrap 3 integration
++ Added ability to add own smilies
 ^ Made smilies part of the BBCode
 ^ Moved swear words to repeatable form fields
 ^ Updated ReCaptcha to v2
 ^ Design improvements
+^ General code imporvements
 $ Some language strings changed for ReCaptcha v2
 - Removed support for Joomla 3.3
 ! Recaptcha keys MUST be updated to v2
