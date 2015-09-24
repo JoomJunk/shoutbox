@@ -30,24 +30,6 @@ class ModShoutboxHelper
 	private $params = null;
 
 	/**
-	 * @var		array  The available smilies and their paths
-	 * @since   1.2.0
-	 */
-	public $smileys = array(
-		':)' => 'media/mod_shoutbox/images/icon_e_smile.gif',
-		':(' => 'media/mod_shoutbox/images/icon_e_sad.gif',
-		':D' => 'media/mod_shoutbox/images/icon_e_biggrin.gif',
-		'xD' => 'media/mod_shoutbox/images/icon_e_biggrin.gif',
-		':p' => 'media/mod_shoutbox/images/icon_razz.gif',
-		':P' => 'media/mod_shoutbox/images/icon_razz.gif',
-		';)' => 'media/mod_shoutbox/images/icon_e_wink.gif',
-		':S' => 'media/mod_shoutbox/images/icon_e_confused.gif',
-		':@' => 'media/mod_shoutbox/images/icon_mad.gif',
-		':O' => 'media/mod_shoutbox/images/icon_e_surprised.gif',
-		'lol' => 'media/mod_shoutbox/images/icon_lol.gif',
-	);
-
-	/**
 	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
 	 *
 	 * @return   array  The details of the post created.
@@ -413,6 +395,26 @@ class ModShoutboxHelper
 		return( join($replace, $parts) );
 	}
 	
+	
+	/**
+	 * Get the smilies json object, decode it, then combine into 1 array
+	 *
+	 * @return  array  The json decoded combined array
+	 *
+	 * @since   6.0.0
+	 */
+	public function getSmilies()
+	{
+		$list_smilies = $this->params->get('list_smilies');
+		$smilies      = json_decode($list_smilies, true);
+		
+		$smilies_values = array_values($smilies['image']);
+		$code_values    = array_values($smilies['code']);
+
+		return array_combine($code_values, $smilies_values);
+	}
+	
+	
 	/**
 	 * Replaces all the bbcode in the message.
 	 *
@@ -424,11 +426,13 @@ class ModShoutboxHelper
 	 */
 	public function bbcodeFilter($message)
 	{
+		$smilies = $this->getSmilies();
+		
 		// Replace the smileys
-		foreach ($this->smileys as $smile => $url)
+		foreach ($smilies as $code => $image)
 		{
-			$replace = '<img src="' . JUri::root() . $url . '" alt="' . $smile . '">';
-			$message = str_replace($smile, $replace, $message);
+			$replace = '<img src="' . JUri::root() . 'images/mod_shoutbox/' . $image . '" alt="' . $code . '">';
+			$message = str_replace($code, $replace, $message);
 		}
 
 		// Parse the Bold, Italic, strikes and links
@@ -464,11 +468,13 @@ class ModShoutboxHelper
 	 */
 	public function smileyShow($id = 'jj_message')
 	{
+		$getSmilies = $this->getSmilies();
+		
 		$smilies = '';
 
-		foreach ($this->smileys as $smile => $url)
+		foreach ($getSmilies as $smile => $url)
 		{
-			$smilies .= '<img class="jj_smiley" src="' . $url . '" alt="' . $smile . '" onClick="JJShoutbox.addSmiley(\'' . $smile . '\', \'' . $id . '\')" />';
+			$smilies .= '<img class="jj_smiley" src="images/mod_shoutbox/' . $url . '" alt="' . $smile . '" onClick="JJShoutbox.addSmiley(\'' . $smile . '\', \'' . $id . '\')" />';
 		}
 
 		return $smilies;
@@ -514,7 +520,7 @@ class ModShoutboxHelper
 
 		$swearwords = array_values($json['word']);
 
-		foreach ($swearwords as $key => $word )
+		foreach ($swearwords as $key => $word)
 		{
 			$post = $this->stri_replace($word, $replace, $post);
 		}

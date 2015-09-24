@@ -126,6 +126,8 @@ class Mod_ShoutboxInstallerScript
 	 */
 	public function install($parent)
 	{
+		$this->manageSmilies();
+		
 		echo '<p>' . JText::_('MOD_SHOUTBOX_INSTALL') . '</p>';
 	}
 
@@ -141,6 +143,20 @@ class Mod_ShoutboxInstallerScript
 	public function update($parent)
 	{
 		echo '<p>' . JText::sprintf('MOD_SHOUTBOX_UPDATE', $this->release) . '</p>';
+	}
+	
+	/**
+	 * Function called on uninstall of module
+	 *
+	 * @param   JInstallerAdapterModule  $parent  The class calling this method
+	 *
+	 * @return  void
+	 *
+	 * @since 6.0.0
+	 */
+	public function uninstall($parent)
+	{
+		JFolder::delete(JPATH_ROOT . '/images/mod_shoutbox');
 	}
 
 	/**
@@ -303,6 +319,47 @@ class Mod_ShoutboxInstallerScript
 
 		return $array;
 	}
+	
+	/**
+	 * Function to create the smilies directory and populate it
+	 *
+	 * @return  void
+	 *
+	 * @since  6.0.0
+	 */
+	protected function manageSmilies()
+	{
+		// Import dependencies
+		JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
+		JLoader::register('JFolder', JPATH_LIBRARIES . '/joomla/filesystem/folder.php');
+		
+		if (!JFolder::exists(JPATH_SITE . '/images/'. $this->extension))
+		{
+			if (JFolder::create(JPATH_SITE . '/images/'. $this->extension)
+				&& JFile::move(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_biggrin.gif', JPATH_SITE . '/images/' . $this->extension . '/icon_e_biggrin.gif')
+				&& JFile::move(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_confused.gif', JPATH_SITE . '/images/' . $this->extension . '/icon_e_confused.gif')
+				&& JFile::move(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_sad.gif', JPATH_SITE . '/images/' . $this->extension . '/icon_e_sad.gif')
+				&& JFile::move(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_smile.gif', JPATH_SITE . '/images/' . $this->extension . '/icon_e_smile.gif')
+				&& JFile::move(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_surprised.gif', JPATH_SITE . '/images/' . $this->extension . '/icon_e_surprised.gif')
+				&& JFile::move(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_wink.gif', JPATH_SITE . '/images/' . $this->extension . '/icon_e_wink.gif')
+				&& JFile::move(JPATH_SITE . '/media/' . $this->extension . '/images/icon_lol.gif', JPATH_SITE . '/images/' . $this->extension . '/icon_lol.gif')
+				&& JFile::move(JPATH_SITE . '/media/' . $this->extension . '/images/icon_mad.gif', JPATH_SITE . '/images/' . $this->extension . '/icon_mad.gif')
+				&& JFile::move(JPATH_SITE . '/media/' . $this->extension . '/images/icon_razz.gif', JPATH_SITE . '/images/' . $this->extension . '/icon_razz.gif'))
+			{
+				// We can now delete the images
+				JFile::delete(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_biggrin.gif');
+				JFile::delete(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_confused.gif');
+				JFile::delete(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_sad.gif');
+				JFile::delete(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_smile.gif');
+				JFile::delete(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_surprised.gif');
+				JFile::delete(JPATH_SITE . '/media/' . $this->extension . '/images/icon_e_wink.gif');
+				JFile::delete(JPATH_SITE . '/media/' . $this->extension . '/images/icon_lol.gif');
+				JFile::delete(JPATH_SITE . '/media/' . $this->extension . '/images/icon_mad.gif');
+				JFile::delete(JPATH_SITE . '/media/' . $this->extension . '/images/icon_razz.gif');
+			}
+		}
+	}
+		
 
 	/**
 	 * Function to update the db schema for the Shoutbox Version 1.1.4 Updates
@@ -541,7 +598,9 @@ class Mod_ShoutboxInstallerScript
 	{
 		// Import dependencies
 		JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
-		
+				
+		// Move the smilies
+		$this->manageSmilies();		
 		
 		// Get the swearwords from the file
 		$file = file_get_contents(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php', NULL, NULL, 249);
@@ -558,17 +617,47 @@ class Mod_ShoutboxInstallerScript
 			$module = (int) $module;
 			
 			//  Create a json object with an array of words
-			$json = json_encode(array('word' => array_values($words)));
+			$json_words = json_encode(array('word' => array_values($words)));
 			
 			// Remove line breaks in the json string
-			$json = preg_replace('/\\\r/m', '', $json);
+			$json_words = preg_replace('/\\\r/m', '', $json_words);
+			
+			$json_smilies = json_encode(array(
+				'image' => array(
+					'icon_e_biggrin.gif',
+					'icon_e_biggrin.gif',
+					'icon_e_confused',
+					'icon_e_sad.gif',
+					'icon_e_smile.gif',
+					'icon_e_surprised.gif',
+					'icon_e_wink.gif',
+					'icon_lol.gif',
+					'icon_mad.gif',
+					'icon_razz.gif',
+					'icon_razz.gif'
+				),
+				'code' => array(
+					':D',
+					'xD',
+					':S',
+					':(',
+					':)',
+					':O',
+					';)',
+					'lol',
+					':@',
+					':P',
+					':p'
+				)
+			));
 			
 			// Create array of params to change
-			$swearwords = array();
-			$swearwords['list_swearwords'] = $json;
+			$newParams = array();
+			$newParams['list_swearwords'] = $json_words;
+			$newParams['list_smilies']    = $json_smilies;
 
 			// Set the param values
-			$this->setParams($swearwords, 'edit', $module);
+			$this->setParams($newParams, 'edit', $module);
 
 			// Unset the array for the next loop
 			unset($swearwords);

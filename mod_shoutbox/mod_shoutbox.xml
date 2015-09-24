@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>5.0.2</version> 
+	<version>6.0.0</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 	
 	<install>
@@ -105,19 +105,10 @@
 					<option value="2">SHOUT_DONT_SHOW</option>
 				</field>		
 				<field name="refresh" type="text" default="10" label="SHOUT_AUTO_REFRESH" description="SHOUT_AUTO_REFRESH_DESC" />
-				<field name="bbcode" type="radio" class="btn-group" default="1" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
-					<option value="0">JOFF</option>
-					<option value="1">JON</option>
-				</field>
 				<field name="entersubmit" type="radio" class="btn-group" default="0" label="SHOUT_ENTERTOSUBMIT" description="SHOUT_ENTERTOSUBMITDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
-				<field name="swearingcounter" class="btn-group" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
-					<option value="0">JOFF</option>
-					<option value="1">JON</option>
-				</field>
-				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
 			</fieldset>
 
 			<fieldset name="styling" label="SHOUT_STYLING">
@@ -133,7 +124,29 @@
 				</field>
 			</fieldset>
 			
-			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
+			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">			
+				<field type="sep" label="SHOUT_BBCODELABEL" />
+				<field name="bbcode" type="radio" class="btn-group" default="1" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+				<field name="upload" type="media" label="SHOUT_SMILE_UPLOAD_LABEL" directory="mod_shoutbox" />
+				<field name="list_smilies"
+					type="Repeatable"
+					icon="list"
+					label="SHOUT_SMILE_LABEL"
+					default='{"image":["icon_e_biggrin.gif","icon_e_biggrin.gif","icon_e_confused.gif","icon_e_sad.gif","icon_e_smile.gif","icon_e_surprised.gif","icon_e_wink.gif","icon_lol.gif","icon_mad.gif","icon_razz.gif","icon_razz.gif"],"code":[":D","xD",":S",":(",":)",":O",";)","lol",":@",":P",":p"]}'>
+					<fieldset hidden="true" name="list_swearwords_modal" repeat="true">
+						<field name="image"
+							label="SHOUT_SMILE_IMAGE"
+							size="30"
+							type="text" />
+						<field name="code"
+							label="SHOUT_SMILE_CODE"
+							size="10"
+							type="text" />
+					</fieldset>
+				</field>
 				<field type="sep" label="SHOUT_SWEAR_WORDS" />
 				<field name="list_swearwords"
 					type="Repeatable"

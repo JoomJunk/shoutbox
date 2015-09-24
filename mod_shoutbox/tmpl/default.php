@@ -176,7 +176,7 @@ JText::script('SHOUT_HISTORY_BUTTON');
 							<?php if ($framework == 'uikit') : ?>						
 								<div class="uk-button-dropdown" data-uk-dropdown>
 									<button class="uk-button uk-button-small">
-										<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_e_smile.gif" alt="&#9786;" />
+										<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
 									</button>
 									<div class="uk-dropdown">
 										<?php echo $helper->smileyshow(); ?>
@@ -184,7 +184,7 @@ JText::script('SHOUT_HISTORY_BUTTON');
 								</div>
 							<?php else: ?>
 								<button type="button" class="<?php echo $button . $button_small; ?> dropdown-toggle" data-toggle="dropdown">
-									<img src="<?php echo JUri::root(); ?>media/mod_shoutbox/images/icon_e_smile.gif" alt="&#9786;" />
+									<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
 								</button>
 								<div class="dropdown-menu">
 									<?php echo $helper->smileyshow(); ?>
