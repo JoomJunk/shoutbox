@@ -53,6 +53,8 @@ JText::script('SHOUT_MESSAGE_EMPTY');
 JText::script('SHOUT_NAME_EMPTY');
 JText::script('SHOUT_NEW_SHOUT_ALERT');
 JText::script('SHOUT_HISTORY_BUTTON');
+JText::script('SHOUT_BBCODE_INSERT_IMG');
+JText::script('SHOUT_BBCODE_INSERT_URL');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
@@ -159,6 +161,7 @@ JText::script('SHOUT_HISTORY_BUTTON');
 				
 				<?php if ($bbcode == 1) : ?>
 					<div id="bbcode-form" class="bbcode-form well">
+						<p></p>
 						<input type="text" id="bbcode-url" class="<?php echo $input_txtarea; ?>" placeholder="<?php echo JText::_('SHOUT_BBCODE_URL'); ?>" />
 						<input type="text" id="bbcode-text" class="<?php echo $input_txtarea; ?>" placeholder="<?php echo JText::_('SHOUT_BBCODE_TEXT'); ?>" />
 						<input type="hidden" id="jj-bbcode-type" data-bbcode-input-type="" />

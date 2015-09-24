@@ -201,6 +201,9 @@ BBCode
 	display: none;
 	margin-top: 10px;
 }
+.bbcode-form p {
+	font-weight: bold;
+}
 #bbcode-insert {
 	margin-top: 5px;
 }

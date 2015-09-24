@@ -236,6 +236,16 @@ jQuery(document).ready(function($) {
 		if (bbcode == 'url' || bbcode == 'img')
 		{
 			$('#jj-bbcode-type').data('bbcode-input-type', bbcode);
+			
+			if (bbcode == 'url')
+			{
+				$('#bbcode-form p').text(Joomla.JText._('SHOUT_BBCODE_INSERT_URL'));
+			}
+			else
+			{
+				$('#bbcode-form p').text(Joomla.JText._('SHOUT_BBCODE_INSERT_IMG'));
+			}
+			
 			$('#bbcode-form').slideDown();
 		}
 		else
