@@ -99,7 +99,7 @@ class ModShoutboxHelper
 		$helper       = new ModShoutboxHelper($post['title']);
 		$helper->ajax = true;
 		
-		$offset = $helper->getParams()->get('maximum');
+		$offset = 0;
 		
 		if (isset($post['offset']))
 		{
