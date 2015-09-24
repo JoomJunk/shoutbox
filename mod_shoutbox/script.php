@@ -156,7 +156,10 @@ class Mod_ShoutboxInstallerScript
 	 */
 	public function uninstall($parent)
 	{
-		JFolder::delete(JPATH_ROOT . '/images/mod_shoutbox');
+		if (JFolder::exists(JPATH_SITE . '/images/'. $this->extension))
+		{
+			JFolder::delete(JPATH_ROOT . '/images/'. $this->extension);
+		}
 	}
 
 	/**
@@ -664,7 +667,10 @@ class Mod_ShoutboxInstallerScript
 		}
 			
 		// Delete swearwords file
-		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php');
+		if (JFile::exists(JPATH_ROOT . '/modules/' . $this->extension . '/swearWords.php'))
+		{
+			JFile::delete(JPATH_ROOT . '/modules/' . $this->extension . '/swearWords.php');
+		}
 			
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_600_UPDATE_NOTIFICATION'), 'warning');
 	}
