@@ -23,10 +23,10 @@ $style = '#jjshoutboxoutput {
 if ($avatar != 'none')
 {
 	$style .= '
-	#jjshoutboxoutput .shout-header {
+	.jjshoutbox .shout-header {
 		height: auto;
 	}
-	#jjshoutboxoutput .avatar img {
+	.jjshoutbox .avatar img {
 		margin-right: 5px;
 		height: 30px;
 		width: 30px;
