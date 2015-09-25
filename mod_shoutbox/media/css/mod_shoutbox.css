@@ -27,6 +27,12 @@
     width: 100%;
     min-height: 30px;
 }
+#jjshoutboxform .mass_delete {
+	margin-top: 20px;
+}
+#jjshoutboxform .mass_delete input {
+	margin-top: 0;
+}
 #jjshoutboxform p {
     margin: 4px 0;
 }

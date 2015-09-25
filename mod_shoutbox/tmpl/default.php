@@ -42,6 +42,13 @@ if ($framework == 'bootstrap')
 		padding-bottom: 1%;
 	}';
 }
+if ($framework == 'bootstrap' || $framework == 'uikit')
+{
+	$style .= '
+	#jjshoutboxform .mass_delete input {
+		max-width: 80px;
+	}';
+}
 
 
 $doc->addStyleDeclaration($style);
@@ -256,10 +263,14 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 				<form method="post" name="deleteall">
 					<input type="hidden" name="jjshout[max]" value="<?php echo $actualnumber; ?>" />
 					<?php echo JHtml::_('form.token'); ?>
-					<div class="input-append">
-						<input class="span2" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1" style="width:50px;">
-						<input class="<?php echo $button . $button_danger; ?>" type="submit" name="jjshout[deleteall]" value="<?php echo JText::_('SHOUT_MASS_DELETE') ?>"style="color: #FFF;" />
-					</div>	
+					
+					<div class="mass_delete input-append input-group">
+						<input class="form-control" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1">
+						<span class="input-group-btn">
+							<button class="<?php echo $button . $button_danger; ?>" type="submit"><?php echo JText::_('SHOUT_MASS_DELETE') ?></button>
+						</span>
+					</div>
+
 				</form>
 			<?php
 			}
