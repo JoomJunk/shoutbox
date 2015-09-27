@@ -521,8 +521,16 @@ jQuery(document).ready(function($) {
 			success: function(response){
 				if (response.success)
 				{
-					// Grab the html output and append it to the shoutbox message
-					instance.find('#jj-load-more').parent().before(response.data.html);
+					if (response.data.html == '')
+					{
+						// Hide the "load more" button if not more data is available
+						instance.find('#jj-load-more').hide();
+					}
+					else
+					{
+						// Grab the html output and append it to the shoutbox message
+						instance.find('#jj-load-more').parent().before(response.data.html);
+					}
 				}
 				else
 				{
