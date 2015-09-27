@@ -192,9 +192,9 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 									<button class="uk-button uk-button-small">
 										<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
 									</button>
-									<div class="uk-dropdown">
+									<ul class="uk-dropdown">
 										<?php echo $helper->smileyshow(); ?>
-									</div>
+									</ul>
 								</div>
 							<?php else: ?>
 								<button type="button" class="<?php echo $button . $button_small; ?> dropdown-toggle" data-toggle="dropdown">
@@ -205,9 +205,6 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 								</ul>
 							<?php endif; ?>
 						</div>
-						<ul class="dropdown-menu">
-							<?php echo $helper->smileyshow(); ?>
-						</ul>
 					</div>
 				<?php endif; ?>
 

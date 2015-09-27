@@ -114,10 +114,12 @@
 #jjshoutboxform .dropdown-menu {
 	padding: 5px !important;
 }
-#jjshoutboxform .dropdown-menu li {
+#jjshoutboxform .dropdown-menu li,
+#jjshoutboxform .uk-dropdown li {
 	float: left;
 	padding: 0 2px;
 	min-height: 26px;
+	list-style: none;
 }
 .jj_smiley {
     border: none;
