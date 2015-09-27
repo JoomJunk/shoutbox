@@ -66,11 +66,6 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
 	
-	<?php
-		var_dump($count);
-	
-	?>
-	
 	<div id="jjshoutboxoutput">
 		<div class="jj-shout-new"></div>
 		<?php 
