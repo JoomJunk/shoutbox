@@ -27,6 +27,7 @@ WIP
 ^ Updated ReCaptcha to v2
 ^ Design improvements
 ^ General code imporvements
+# Fixed Mass Delete max value
 $ Some language strings changed for ReCaptcha v2
 - Removed support for Joomla 3.3
 ! Recaptcha keys MUST be updated to v2
