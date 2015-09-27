@@ -277,7 +277,27 @@ class ModShoutboxHelper
 
 		return $title;
 	}
+	
+	/**
+	 * Count the number of shouts in the database.
+	 *
+	 * @return  int  The number of rows.
+	 *
+	 * @since   6.0.0
+	 */
+	public function countShouts()
+	{
+		$db = JFactory::getDbo();
+		
+		$query = $db->getQuery(true);
+		$query->select('COUNT(id)')
+			->from($db->quoteName('#__shoutbox'));
 
+		$db->setQuery($query);
+		
+		return $db->loadResult();
+	}
+		
 	/**
 	 * Filters the posts before calling the add function.
 	 *

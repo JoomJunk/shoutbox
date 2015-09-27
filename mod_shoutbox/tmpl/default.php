@@ -66,6 +66,11 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
 	
+	<?php
+		var_dump($count);
+	
+	?>
+	
 	<div id="jjshoutboxoutput">
 		<div class="jj-shout-new"></div>
 		<?php 
@@ -261,11 +266,11 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 			{ 
 			?>
 				<form method="post" name="deleteall">
-					<input type="hidden" name="jjshout[max]" value="<?php echo $actualnumber; ?>" />
+					<input type="hidden" name="jjshout[max]" value="<?php echo $count; ?>" />
 					<?php echo JHtml::_('form.token'); ?>
 					
 					<div class="mass_delete input-append input-group">
-						<input class="form-control" type="number" name="jjshout[valueall]" min="1" max="<?php echo $actualnumber; ?>" step="1" value="1">
+						<input class="form-control" type="number" name="jjshout[valueall]" min="1" max="<?php echo $count; ?>" step="1" value="1">
 						<span class="input-group-btn">
 							<button class="<?php echo $button . $button_danger; ?>" type="submit"><?php echo JText::_('SHOUT_MASS_DELETE') ?></button>
 						</span>

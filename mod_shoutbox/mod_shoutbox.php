@@ -15,6 +15,7 @@ $title    = $module->title;
 $uniqueId = $module->id;
 $helper   = new ModShoutboxHelper($title);
 $params   = $helper->getParams();
+$count    = $helper->countShouts();
 
 $displayName     = $params->get('loginname', 'user');
 $swearcounter    = $params->get('swearingcounter', 1);
