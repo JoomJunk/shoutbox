@@ -200,14 +200,14 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 								<button type="button" class="<?php echo $button . $button_small; ?> dropdown-toggle" data-toggle="dropdown">
 									<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
 								</button>
-								<div class="dropdown-menu">
+								<ul class="dropdown-menu inline list-inline list-style">
 									<?php echo $helper->smileyshow(); ?>
-								</div>
+								</ul>
 							<?php endif; ?>
 						</div>
-						<div class="dropdown-menu">
+						<ul class="dropdown-menu">
 							<?php echo $helper->smileyshow(); ?>
-						</div>
+						</ul>
 					</div>
 				<?php endif; ?>
 

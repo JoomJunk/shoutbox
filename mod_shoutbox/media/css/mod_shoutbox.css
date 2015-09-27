@@ -114,6 +114,11 @@
 #jjshoutboxform .dropdown-menu {
 	padding: 5px !important;
 }
+#jjshoutboxform .dropdown-menu li {
+	float: left;
+	padding: 0 2px;
+	min-height: 26px;
+}
 .jj_smiley {
     border: none;
 	cursor: pointer;

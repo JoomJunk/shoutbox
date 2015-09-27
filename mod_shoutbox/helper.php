@@ -494,7 +494,7 @@ class ModShoutboxHelper
 
 		foreach ($getSmilies as $smile => $url)
 		{
-			$smilies .= '<img class="jj_smiley" src="images/mod_shoutbox/' . $url . '" alt="' . $smile . '" onClick="JJShoutbox.addSmiley(\'' . $smile . '\', \'' . $id . '\')" />';
+			$smilies .= '<li><img class="jj_smiley" src="images/mod_shoutbox/' . $url . '" alt="' . $smile . '" onClick="JJShoutbox.addSmiley(\'' . $smile . '\', \'' . $id . '\')" /></li>';
 		}
 
 		return $smilies;
