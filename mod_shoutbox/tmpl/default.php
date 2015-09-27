@@ -379,7 +379,10 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 
 <script type="text/javascript">
 	
-	JJShoutbox.drawMathsQuestion(<?php echo $que_number1; ?>, <?php echo $que_number2; ?>);
+	<?php if ($securitytype == 2) {
+			if ($securityHide == 0 || ($user->guest && $securityHide == 1)) { ?>
+				JJShoutbox.drawMathsQuestion(<?php echo $que_number1; ?>, <?php echo $que_number2; ?>);
+	<?php } } ?>
 	
 	var JJ_Framework_type = '<?php echo $framework; ?>';
 	
