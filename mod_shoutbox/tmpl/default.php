@@ -237,7 +237,7 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 						<?php $que_number1 = $helper->randomnumber(1); ?>
 						<?php $que_number2 = $helper->randomnumber(1); ?>
 						<div class="form-inline <?php echo $form_row; ?>">				
-							<label for="math_output"><?php echo $que_number1; ?> + <?php echo $que_number2; ?> = ?</label>
+							<canvas id="mathscanvas" width="80" height="30">Your browser does not support the HTML5 canvas tag.</canvas>
 							<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
 							<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
 							<input class="<?php echo $input_txtarea; ?>" id="math_output" type="text" name="jjshout[human]" />
@@ -374,11 +374,12 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 		<?php endif; ?>
 	</div>
 	
-	
 </div>
 
 
 <script type="text/javascript">
+	
+	JJShoutbox.drawMathsQuestion(<?php echo $que_number1; ?>, <?php echo $que_number2; ?>);
 	
 	var JJ_Framework_type = '<?php echo $framework; ?>';
 	

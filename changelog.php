@@ -25,6 +25,7 @@ WIP
 ^ Made smilies part of the BBCode
 ^ Moved swear words to repeatable form fields
 ^ Updated ReCaptcha to v2
+^ Maths question improvements to prevent spam
 ^ Design improvements
 ^ General code imporvements
 # Fixed Mass Delete max value

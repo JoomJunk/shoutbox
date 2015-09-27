@@ -166,6 +166,19 @@ JJShoutbox.getRandomArbitrary = function(min, max)
 
 
 /**
+ * Draw the maths question using a canvas
+ */
+JJShoutbox.drawMathsQuestion = function(number1, number2) 
+{	
+	var c = document.getElementById('mathscanvas');
+	var ctx = c.getContext('2d');
+	
+	ctx.font = '14px Arial';
+	ctx.fillText(number1 + ' + ' + number2 + ' = ', 10, 20);
+}
+
+
+/**
  * Returns the last ID of the shoutbox output
  */
 JJShoutbox.getLastID = function(instance)
@@ -523,7 +536,6 @@ jQuery(document).ready(function($) {
 				{
 					if (response.data.html == '')
 					{
-						// Hide the "load more" button if not more data is available
 						instance.find('#jj-load-more').hide();
 					}
 					else

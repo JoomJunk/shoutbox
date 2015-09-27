@@ -91,6 +91,9 @@
 	width: 70px;
 	margin-top: 0;
 }
+#jjshoutboxform #mathscanvas {
+	float: left;
+}
 .jjshoutbox .jj_error { 
 	color: red; 
 	font-weight: bold; 
