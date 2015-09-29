@@ -671,7 +671,8 @@ class Mod_ShoutboxInstallerScript
 			$this->setParams($newParams, 'edit', $module);
 
 			// Unset the array for the next loop
-			unset($swearwords);
+			unset($params);
+			unset($newParams);
 		}
 			
 		// Delete swearwords file
