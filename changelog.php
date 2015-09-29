@@ -14,6 +14,26 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 6.0.0
++ Added option to hide security question for registered users
++ Added shoutbox history/archive
++ Added HTML5 notifications
++ Added IMG tag to BBCode
++ Added insert section for BBCode image and URL
++ Added Bootstrap 3 integration
++ Added ability to add own smilies
+^ Made smilies part of the BBCode
+^ Moved swear words to repeatable form fields
+^ Updated ReCaptcha to v2
+^ Maths question improvements to prevent spam
+^ Design improvements
+^ General code imporvements
+# Fixed Mass Delete max value
+# Fixed Kunena profile links
+$ Some language strings changed for ReCaptcha v2
+- Removed support for Joomla 3.3
+! Recaptcha keys MUST be updated to v2
+
 Version 5.0.2
 + Show error messages from the response
 ^ Categorised advanced parameters for ease of view

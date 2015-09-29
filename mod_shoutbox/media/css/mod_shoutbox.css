@@ -19,12 +19,19 @@
 #jjshoutboxform textarea {
     width: 100%;
     margin: 0;
+	min-height: 100px;
 }
 #jjshoutboxform input {
     margin-top: 5px;
     color: #000;
     width: 100%;
     min-height: 30px;
+}
+#jjshoutboxform .mass_delete {
+	margin-top: 20px;
+}
+#jjshoutboxform .mass_delete input {
+	margin-top: 0;
 }
 #jjshoutboxform p {
     margin: 4px 0;
@@ -37,6 +44,7 @@
     overflow: auto;
     margin-top: 5px;
     word-wrap: break-word;
+	margin-bottom: 10px;
 }
 #jjshoutboxoutput input[type=submit] {
     cursor: pointer;
@@ -79,9 +87,16 @@
 	color: #FF0000; 
 	font-weight: bold; 
 }
+#jjshoutboxform input#math_output {
+	width: 70px;
+	margin-top: 0;
+}
+#jjshoutboxform #mathscanvas {
+	float: left;
+}
 .jjshoutbox .jj_error { 
-	color:red; 
-	font-weight:bold; 
+	color: red; 
+	font-weight: bold; 
 }
 .jjshoutbox .jj-shout-error {
 	display: none;
@@ -99,35 +114,25 @@
 	width: 70px; 
 	display: inline-block;
 }
-#jj_smiley_box {
-    margin: 10px 0 10px 0;
+#jjshoutboxform .dropdown-menu {
+	padding: 5px !important;
 }
-#jj_smiley_box img {
-    cursor: pointer;
-}
-#jj_smiley_button {
-    margin: 5px 0 0 0;
-    float:right;
-}
-#jj_btn {
-    display: block;
-	cursor: pointer;
-	padding: 2px 5px !important;
-	-webkit-transform: rotate(0deg);
-	-moz-transform: rotate(0deg);
-	transform: rotate(0deg);
-}
-#jj_btn.rotated {
-	-webkit-transform: rotate(180deg);
-	-moz-transform: rotate(180deg);
-	transform: rotate(180deg);
+#jjshoutboxform .dropdown-menu li,
+#jjshoutboxform .uk-dropdown li {
+	float: left;
+	padding: 0 2px;
+	min-height: 26px;
+	list-style: none;
 }
 .jj_smiley {
-    padding: 0 2px 0 2px;
     border: none;
+	cursor: pointer;
+	display: block;
+    float: left;
+    margin: 0 3px 5px 0;
 }
-#jj_smiley_box img:hover {
-    background:none !important;
+.jj_smiley:hover {
+    background: none !important;
 	border: 0;
 	outline: 0;
 }
@@ -138,18 +143,64 @@
     display: none;
 }
 
+
 /**
-Non-bootstrap styling for BB Code
+Shoutbox history
 **/
-.jjshoutbox #jj_smiley_box {
-    margin: 5px 0 10px;
-	white-space: normal;
+#jj-shout-history.modal-body {
+	max-height: 400px;
+	overflow-y: scroll;
 }
-.jjshoutbox #jj_smiley_box img {
+#jj-shout-history p {
+	margin: 5px 0 0;
+}
+#jj-shout-history > div {
+	background-color: #f5f5f5;
+    border: 1px solid #e3e3e3;
+    border-radius: 4px;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05) inset;
+    margin-bottom: 20px;
+    min-height: 20px;
+	padding: 5px 9px;
+}
+.center-block {
+	display: block;
+	text-align: center;
+	margin-left: auto;
+	margin-right: auto;
+}
+#jj-shout-history > div.center-block {
+	background: none;
+	border: 0;
+	border-radius: 0;
+	box-shadow: none;
+	padding: 0;
+	margin: 0 0 10px 0;
+}
+#jj-shout-history form {
+	float: right;
+}
+#jj-shout-history#jj-shout-history form input[type="submit"] {
+	background: none;
+	border: 0 none;
     cursor: pointer;
-	padding: 2px;
-    border:none;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: bold;
+    height: 20px;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    text-decoration: none;
+    vertical-align: top;
 }
+#jj-shout-history .shout-header {
+	font-weight: bold;
+}
+
+/**
+Non-bootstrap styling for BBCode
+**/
 .jjshoutbox .btn-toolbar {
 	margin-top: 10px;
 }
@@ -160,14 +211,25 @@ Non-bootstrap styling for BB Code
 }
 
 /**
-Bold, italics and underline for the BB Code
+BBCode
 **/
-.jj-bold {
+.bbcode-form {
+	display: none;
+	margin-top: 10px;
+}
+.bbcode-form p {
 	font-weight: bold;
 }
+#bbcode-insert,
+#bbcode-cancel {
+	margin-top: 5px;
+}
+.jj-bold {
+	font-weight: bold !important;
+}
 .jj-italic {
-	font-style: italic;
+	font-style: italic !important;
 }
 .jj-underline {
-	text-decoration: underline;
+	text-decoration: underline !important;
 }

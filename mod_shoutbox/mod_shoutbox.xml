@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="3.0" client="site" method="upgrade">
+<extension type="module" version="3.4" client="site" method="upgrade">
 	<name>JJ Shoutbox</name> 
 	<author>JoomJunk</author> 
 	<creationDate>05-Mar-2012</creationDate> 
@@ -7,30 +7,30 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>5.0.2</version> 
+	<version>6.0.0</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
-	
+
 	<install>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/mysql/install.mysql.utf8.sql</file>
 			<file driver="postgresql" charset="utf8">sql/postgresql/install.postgresql.utf8.sql</file>
 		</sql>
 	</install>
-              
+
 	<uninstall>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/mysql/uninstall.mysql.utf8.sql</file>
 			<file driver="postgresql" charset="utf8">sql/postgresql/uninstall.postgresql.utf8.sql</file>
 		</sql>
 	</uninstall>
-	
+
 	<update> 
 		<schemas>
 			<schemapath type="mysql">sql/mysql/updates</schemapath> 
 			<schemapath type="postgresql">sql/postgresql/updates</schemapath> 
 		</schemas> 
 	</update>
-	
+
 	<scriptfile>script.php</scriptfile>
 
 	<media folder="media" destination="mod_shoutbox">
@@ -45,7 +45,6 @@
 	<files>
 		<filename module="mod_shoutbox">mod_shoutbox.php</filename>
 		<filename>index.html</filename>
-		<filename>swearWords.php</filename>
 		<filename>helper.php</filename>
 		<folder>tmpl</folder>
 		<folder>sql</folder>
@@ -53,7 +52,7 @@
 		<folder>libraries</folder>
 		<folder>layouts</folder>
 	</files>
- 
+
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.ini</language>
 		<language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.sys.ini</language>
@@ -68,11 +67,11 @@
 		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.ini</language>
 		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.sys.ini</language>
 	</languages>
-	
+
 	<updateservers>
 		<server type="extension" name="JJ Shoutbox" priority="1">http://www.joomjunk.co.uk/updates/shoutbox_update.xml</server>
 	</updateservers>
- 
+
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
@@ -106,30 +105,10 @@
 					<option value="2">SHOUT_DONT_SHOW</option>
 				</field>		
 				<field name="refresh" type="text" default="10" label="SHOUT_AUTO_REFRESH" description="SHOUT_AUTO_REFRESH_DESC" />
-				<field name="sound" type="radio" class="btn-group" default="0" label="SHOUT_SOUNDLABEL" description="SHOUT_SOUNDDESC">
-					<option value="0">JOFF</option>
-					<option value="1">JON</option>
-				</field>
-				<field name="smile" type="list" default="1" label="SHOUT_SMILELABEL" description="SHOUT_SMILEDESC">
-					<option value="0">SHOUT_SMILIES_ON</option>
-					<option value="1">SHOUT_SMILIES_ON_FIXED</option>
-					<option value="2">SHOUT_SMILIES_ON_SLIDE_HIDE</option>
-					<option value="3">SHOUT_SMILIES_ON_SLIDE_SHOW</option>
-					<option value="4">SHOUT_SMILIES_DISABLE</option>
-				</field>
-				<field name="bbcode" type="radio" class="btn-group" default="0" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
-					<option value="0">JOFF</option>
-					<option value="1">JON</option>
-				</field>
 				<field name="entersubmit" type="radio" class="btn-group" default="0" label="SHOUT_ENTERTOSUBMIT" description="SHOUT_ENTERTOSUBMITDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
-				<field name="swearingcounter" class="btn-group" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
-					<option value="0">JOFF</option>
-					<option value="1">JON</option>
-				</field>
-				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
 			</fieldset>
 
 			<fieldset name="styling" label="SHOUT_STYLING">
@@ -139,13 +118,56 @@
 				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />			
 				<field name="framework" type="list" default="bootstrap" label="SHOUT_FRAMEWORK" description="SHOUT_FRAMEWORK_DESC">
 					<option value="none">SHOUT_NONE</option>
-					<option value="bootstrap">SHOUT_BOOTSTRAP</option>
+					<option value="bootstrap">SHOUT_BOOTSTRAP2</option>
+					<option value="bootstrap3">SHOUT_BOOTSTRAP3</option>
 					<option value="uikit">SHOUT_UIKIT</option>
 				</field>
 			</fieldset>
-			
-			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
-			
+
+			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">			
+				<field type="sep" label="SHOUT_BBCODELABEL" />
+				<field name="bbcode" type="radio" class="btn-group" default="1" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+				<field name="upload" type="media" label="SHOUT_SMILE_UPLOAD_LABEL" directory="mod_shoutbox" />
+				<field name="list_smilies"
+					type="Repeatable"
+					icon="list"
+					label="SHOUT_SMILE_LABEL"
+					default='{"image":["icon_e_biggrin.gif","icon_e_biggrin.gif","icon_e_confused.gif","icon_e_sad.gif","icon_e_smile.gif","icon_e_surprised.gif","icon_e_wink.gif","icon_lol.gif","icon_mad.gif","icon_razz.gif","icon_razz.gif"],"code":[":D","xD",":S",":(",":)",":O",";)","lol",":@",":P",":p"]}'>
+					<fieldset hidden="true" name="list_swearwords_modal" repeat="true">
+						<field name="image"
+							label="SHOUT_SMILE_IMAGE"
+							size="30"
+							type="text" />
+						<field name="code"
+							label="SHOUT_SMILE_CODE"
+							size="10"
+							type="text" />
+					</fieldset>
+				</field>
+				<field type="sep" label="SHOUT_SWEAR_WORDS" />
+				<field name="list_swearwords"
+					type="Repeatable"
+					icon="list"
+					description="SHOUT_SWEAR_WORDS"
+					label="SHOUT_SWEAR_WORDS"
+					default='{"word":["coon","cunt","dick","fuck","f u c k","f.uck","f.u.c.k","knobend","nigger","nigga","prick","pussy","shit","s.hit","s.h.i.t","twat"]}'>
+					<fieldset hidden="true" name="list_swearwords_modal" repeat="true">
+						<field name="word"
+							label="SHOUT_SWEAR_WORDS_WORD"
+							size="30"
+							type="text" />
+					</fieldset>
+				</field>
+				<field name="swearingcounter" class="btn-group" type="radio" default="0" label="SHOUT_SWEARLABEL" description="SHOUT_SWEARDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
+				
+				<field type="sep" label="SHOUT_DELETING" />
 				<field name="deleteown" class="btn-group" type="radio" default="0" label="SHOUT_DELETEOWN" description="SHOUT_DELETEOWNDESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
@@ -155,7 +177,7 @@
 					<option value="1">JYES</option>
 				</field>
 
-				<field name="sep1" type="sep" label="SHOUT_CHARACTERLIMIT" />
+				<field type="sep" label="SHOUT_CHARACTERLIMIT" />
 				<field name="enablelimit" class="btn-group" type="radio" default="1" label="SHOUT_CHARACTERLIMIT" description="SHOUT_CHARACTERLIMITDESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
@@ -164,23 +186,41 @@
 				<field name="alertlength" type="text" showon="enablelimit:1" default="50" label="SHOUT_ALERTLABEL" description="SHOUT_ALERTDESC" />
 				<field name="warnlength" type="text" showon="enablelimit:1" default="10" label="SHOUT_WARNLABEL" description="SHOUT_WARNDESC" />
 
-				<field name="sep2" type="sep" label="SHOUT_NAME_REQUIRED" />
+				<field type="sep" label="SHOUT_NAME_REQUIRED" />
 				<field name="namerequired" type="list" default="0" label="SHOUT_NAME_REQUIRED" description="SHOUT_NAME_REQUIRED_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
 				<field name="genericname" type="text" showon="namerequired:0" default="Anonymous" label="SHOUT_GENERIC_NAME" description="SHOUT_GENERIC_NAME_DESC" />
 			
-				<field name="sep3" type="sep" label="SHOUT_SECURITY_TYPE" />
+				<field type="sep" label="SHOUT_SECURITY_TYPE" />
 				<field name="securitytype" type="list" default="0" label="SHOUT_SECURITY_TYPE" description="SHOUT_SECURITY_TYPE_DESC">
 					<option value="0">SHOUT_NONE</option>
 					<option value="1">SHOUT_RECAPTCHA</option>
 					<option value="2">SHOUT_MATHS_QUESTION</option>
 				</field>			
 				<field name="recaptcha-public" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
-				<field name="recaptcha-private" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />		
+				<field name="recaptcha-private" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />	
+				<field name="recaptcha-theme" type="list" showon="securitytype:1" label="SHOUT_RECAPTCHA_THEME_LABEL">
+					<option value="light">SHOUT_RECAPTCHA_THEME_LIGHT</option>
+					<option value="dark">SHOUT_RECAPTCHA_THEME_DARK</option>
+				</field>
+				<field name="security-hide" class="btn-group" type="radio" default="0" showon="securitytype:1,2" label="SHOUT_SECURITY_HIDE" description="SHOUT_SECURITY_HIDE_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 				
-				<field name="sep4" type="sep" label="" />
+				<field type="sep" label="SHOUT_NOTIFICATIONS" />
+				<field name="sound" type="radio" class="btn-group" default="0" label="SHOUT_SOUNDLABEL" description="SHOUT_SOUNDDESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+				<field name="notifications" type="radio" class="btn-group" default="0" label="SHOUT_HTML5_NOTIFICATION_LABEL" description="SHOUT_HTML5_NOTIFICATION_DESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
+				
+				<field type="sep" label="" />
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 			</fieldset>
 

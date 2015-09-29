@@ -15,9 +15,9 @@ $title    = $module->title;
 $uniqueId = $module->id;
 $helper   = new ModShoutboxHelper($title);
 $params   = $helper->getParams();
+$count    = $helper->countShouts();
 
 $displayName     = $params->get('loginname', 'user');
-$smile           = $params->get('smile');
 $swearcounter    = $params->get('swearingcounter', 1);
 $swearnumber     = $params->get('swearingnumber');
 $number          = $params->get('maximum');
@@ -25,8 +25,10 @@ $profile         = $params->get('profile');
 $avatar          = $params->get('avatar', 'none');
 $date            = $params->get('date');
 $securitytype    = $params->get('securitytype', 0);
-$publicKey       = $params->get('recaptcha-public');
-$privateKey      = $params->get('recaptcha-private');
+$siteKey         = $params->get('recaptcha-public');
+$secretKey       = $params->get('recaptcha-private');
+$recaptchaTheme  = $params->get('recaptcha-theme', 'light');
+$securityHide    = $params->get('security-hide', 0);
 $mass_delete     = $params->get('mass_delete', 0);
 $permissions     = $params->get('guestpost');
 $deletecolor     = $params->get('deletecolor', '#FF0000');
@@ -36,6 +38,7 @@ $headercolor     = $params->get('headercolor', '#D0D0D0');
 $bbcode          = $params->get('bbcode', 1);
 $entersubmit     = $params->get('entersubmit', 0);
 $sound           = $params->get('sound', 1);
+$notifications   = $params->get('notifications', 0);
 $framework       = $params->get('framework', 'bootstrap');
 $genericName     = $params->get('genericname', 'Anonymous');
 $nameRequired    = $params->get('namerequired', 0);
@@ -58,26 +61,70 @@ $Itemid = is_null($activeMenuItem) ? null : $activeMenuItem->id;
 switch ($framework)
 {
 	case 'uikit':
-		$form          = 'uk-form';
-		$button_group  = 'uk-button-group';
-		$button        = 'uk-button';
+		$form          = ' uk-form';
+		$button_group  = ' uk-button-group';
+		$button        = ' uk-button';
+		$button_small  = ' uk-button-small';
 		$button_danger = ' uk-button-danger';
+		$button_prim   = ' uk-button-primary';
+		$input_txtarea = null;
+		$form_row      = ' uk-margin-small-top';
+		$clearfix      = ' uk-clearfix';
+		$modal         = ' uk-modal';
+		$modal_img     = null;
 		break;
+		
 	case 'bootstrap':
 		$form          = null;
-		$button_group  = 'btn-group';
-		$button        = 'btn';
+		$button_group  = ' btn-group';
+		$button        = ' btn';
+		$button_small  = ' btn-small';
 		$button_danger = ' btn-danger';
+		$button_prim   = ' btn-primary';
+		$input_txtarea = null;
+		$form_row      = ' form-group';
+		$clearfix      = ' clearfix';
+		$modal         = ' modal hide fade';
+		$modal_img     = null;
 		break;
+		
+	case 'bootstrap3':
+		$form          = null;
+		$button_group  = ' btn-group';
+		$button        = ' btn btn-default';
+		$button_small  = ' btn-sm';
+		$button_danger = ' btn-danger';
+		$button_prim   = ' btn-primary';
+		$input_txtarea = ' form-control';
+		$form_row      = ' form-group';
+		$clearfix      = ' clearfix';
+		$modal         = ' modal fade';
+		$modal_img     = ' img-responsive';
+		break;
+		
 	default:
 		$form          = null;
 		$button_group  = null;
 		$button        = null;
+		$button_small  = null;
 		$button_danger = null;
+		$button_prim   = null;
+		$input_txtarea = null;
+		$form_row      = null;
+		$clearfix      = ' clearfix';
+		$modal         = ' modal hide fade';
+		$modal_img     = null;
 		break;
 }
 
 JHtml::_('jquery.framework');
+if ($securitytype == 1)
+{
+	if ($securityHide == 0 || ($user->guest && $securityHide == 1))
+	{
+		JHtml::_('script', 'https://www.google.com/recaptcha/api.js');
+	}
+}
 JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
 
 $dataerror = JText::_('SHOUT_DATABASEERRORSHOUT');

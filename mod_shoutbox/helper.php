@@ -30,24 +30,6 @@ class ModShoutboxHelper
 	private $params = null;
 
 	/**
-	 * @var		array  The available smilies and their paths
-	 * @since   1.2.0
-	 */
-	public $smileys = array(
-		':)' => 'media/mod_shoutbox/images/icon_e_smile.gif',
-		':(' => 'media/mod_shoutbox/images/icon_e_sad.gif',
-		':D' => 'media/mod_shoutbox/images/icon_e_biggrin.gif',
-		'xD' => 'media/mod_shoutbox/images/icon_e_biggrin.gif',
-		':p' => 'media/mod_shoutbox/images/icon_razz.gif',
-		':P' => 'media/mod_shoutbox/images/icon_razz.gif',
-		';)' => 'media/mod_shoutbox/images/icon_e_wink.gif',
-		':S' => 'media/mod_shoutbox/images/icon_e_confused.gif',
-		':@' => 'media/mod_shoutbox/images/icon_mad.gif',
-		':O' => 'media/mod_shoutbox/images/icon_e_surprised.gif',
-		'lol' => 'media/mod_shoutbox/images/icon_lol.gif',
-	);
-
-	/**
 	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
 	 *
 	 * @return   array  The details of the post created.
@@ -116,8 +98,15 @@ class ModShoutboxHelper
 
 		$helper       = new ModShoutboxHelper($post['title']);
 		$helper->ajax = true;
+		
+		$offset = 0;
+		
+		if (isset($post['offset']))
+		{
+			$offset = $post['offset'];
+		}
 
-		$shouts = $helper->getShouts($helper->getParams()->get('maximum'), JText::_('SHOUT_DATABASEERRORSHOUT'));
+		$shouts = $helper->getShouts($offset, $helper->getParams()->get('maximum'), JText::_('SHOUT_DATABASEERRORSHOUT'));
 
 		$htmlOutput = '';
 
@@ -172,6 +161,7 @@ class ModShoutboxHelper
 	/*
 	 * Wrapper function for getting the shouts in PHP
 	 *
+	 * @param   int     $offset   The row to start getting the shouts from
 	 * @param   int     $number   The number of posts to retrieve from the database.
 	 * @param   string  $message  The error message to return if the database retrieval fails.
 	 *
@@ -179,11 +169,11 @@ class ModShoutboxHelper
 	 *
 	 * @since 2.0
 	 */
-	public function getShouts($number, $message)
+	public function getShouts($offset, $number, $message)
 	{
 		try
 		{
-			$shouts = $this->getShoutData($number);
+			$shouts = $this->getShoutData($offset, $number);
 		}
 		catch (Exception $e)
 		{
@@ -197,20 +187,21 @@ class ModShoutboxHelper
 	 * Retrieves the shouts from the database and returns them. Will return an error
 	 * message if the database retrieval fails.
 	 *
+	 * @param   int     $offset   The row to start getting the shouts from
 	 * @param   int     $number   The number of posts to retrieve from the database.
 	 *
 	 * @return  array  The shoutbox posts.
 	 *
 	 * @since 1.0
 	 */
-	private function getShoutData($number)
+	private function getShoutData($offset, $number)
 	{
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__shoutbox'))
 			->order($db->quoteName('id') . ' DESC')
-			->setLimit($number, 0);
+			->setLimit($number, $offset);
 			
 		$db->setQuery($query);
 
@@ -286,7 +277,27 @@ class ModShoutboxHelper
 
 		return $title;
 	}
+	
+	/**
+	 * Count the number of shouts in the database.
+	 *
+	 * @return  int  The number of rows.
+	 *
+	 * @since   6.0.0
+	 */
+	public function countShouts()
+	{
+		$db = JFactory::getDbo();
+		
+		$query = $db->getQuery(true);
+		$query->select('COUNT(id)')
+			->from($db->quoteName('#__shoutbox'));
 
+		$db->setQuery($query);
+		
+		return $db->loadResult();
+	}
+		
 	/**
 	 * Filters the posts before calling the add function.
 	 *
@@ -404,6 +415,26 @@ class ModShoutboxHelper
 		return( join($replace, $parts) );
 	}
 	
+	
+	/**
+	 * Get the smilies json object, decode it, then combine into 1 array
+	 *
+	 * @return  array  The json decoded combined array
+	 *
+	 * @since   6.0.0
+	 */
+	public function getSmilies()
+	{
+		$list_smilies = $this->params->get('list_smilies');
+		$smilies      = json_decode($list_smilies, true);
+		
+		$smilies_values = array_values($smilies['image']);
+		$code_values    = array_values($smilies['code']);
+
+		return array_combine($code_values, $smilies_values);
+	}
+	
+	
 	/**
 	 * Replaces all the bbcode in the message.
 	 *
@@ -415,11 +446,13 @@ class ModShoutboxHelper
 	 */
 	public function bbcodeFilter($message)
 	{
+		$smilies = $this->getSmilies();
+		
 		// Replace the smileys
-		foreach ($this->smileys as $smile => $url)
+		foreach ($smilies as $code => $image)
 		{
-			$replace = '<img src="' . JUri::root() . $url . '" alt="' . $smile . '">';
-			$message = str_replace($smile, $replace, $message);
+			$replace = '<img src="' . JUri::root() . 'images/mod_shoutbox/' . $image . '" alt="' . $code . '">';
+			$message = str_replace($code, $replace, $message);
 		}
 
 		// Parse the Bold, Italic, strikes and links
@@ -427,6 +460,7 @@ class ModShoutboxHelper
 			'/\[b\](.*?)\[\/b\]/is',
 			'/\[i\](.*?)\[\/i\]/is',
 			'/\[u\](.*?)\[\/u\]/is',
+			'/\[img=(?:http(s?):\/\/)?([^\]]+)\]\s*(.*?)\s*\[\/img\]/is',
 			'/\[url=(?:http(s?):\/\/)?([^\]]+)\]\s*(.*?)\s*\[\/url\]/is'
 		);
 
@@ -434,9 +468,10 @@ class ModShoutboxHelper
 			'<span class="jj-bold">$1</span>',
 			'<span class="jj-italic">$1</span>',
 			'<span class="jj-underline">$1</span>',
+			'<a href="#" data-jj-image="http$1://$2" data-jj-image-alt="$3" class="jj-image-modal">$3</a>',
 			'<a href="http$1://$2" target="_blank">$3</a>'
 		);
-
+		
 		$message = preg_replace($search, $replace, $message);
 
 		return $message;
@@ -453,18 +488,43 @@ class ModShoutboxHelper
 	 */
 	public function smileyShow($id = 'jj_message')
 	{
+		$getSmilies = $this->getSmilies();
+		
 		$smilies = '';
 
-		foreach ($this->smileys as $smile => $url)
+		foreach ($getSmilies as $smile => $url)
 		{
-			$smilies .= '<img class="jj_smiley" src="' . $url . '" alt="' . $smile . '" onClick="JJShoutbox.addSmiley(\'' . $smile . '\', \'' . $id . '\')" />';
+			$smilies .= '<li><img class="jj_smiley" src="images/mod_shoutbox/' . $url . '" alt="' . $smile . '" onClick="JJShoutbox.addSmiley(\'' . $smile . '\', \'' . $id . '\')" /></li>';
 		}
 
 		return $smilies;
 	}
 
 	/**
-	 * Retrieves swear words from a file and then filters them.
+	 * Groups an array by key
+	 *
+	 * @param   array  $array  The json decoded array
+	 *
+	 * @return  array  $array  The array group by key
+	 *
+	 * @since   6.0
+	 */
+	public function group_by_key($array) 
+	{
+		$result = array();
+
+		foreach ($array as $sub) 
+		{
+			foreach ($sub as $k => $v) 
+			{
+				$result[$k][] = $v;
+			}
+		}
+		return $result;
+	}	
+
+	/**
+	 * Retrieves swear words from the parameters and then filters them.
 	 *
 	 * @param   string  $post     The post to be searched.
 	 * @param   string  $replace  The thing to be replace the swear words in the string.
@@ -475,27 +535,12 @@ class ModShoutboxHelper
 	 */
 	public function swearfilter($post, $replace)
 	{
-		$myfile = 'modules/mod_shoutbox/swearWords.php';
+		$list_swearwords = $this->params->get('list_swearwords');
+		$json            = json_decode($list_swearwords, true);
 
-		if (!JFile::exists($myfile))
-		{
-			JLog::add(JText::_('SHOUT_SWEAR_FILE_NOT_FOUND'), JLog::WARNING, 'mod_shoutbox');
+		$swearwords = array_values($json['word']);
 
-			return $post;
-		}
-
-		$words = file($myfile, FILE_IGNORE_NEW_LINES);
-		$i = 0;
-
-		while ($i < 10)
-		{
-			unset($words[$i]);
-			$i++;
-		}
-
-		$swearwords = array_values($words);
-
-		foreach ($swearwords as $key => $word )
+		foreach ($swearwords as $key => $word)
 		{
 			$post = $this->stri_replace($word, $replace, $post);
 		}
@@ -527,8 +572,19 @@ class ModShoutboxHelper
 			}
 			elseif ($profile == 2)
 			{
+				$klink = KunenaFactory::getUser((int) $user_id)->getLink();
+				
+				$dom = new DOMDocument;
+				$dom->loadHTML($klink);
+				
+				foreach ($dom->getElementsByTagName('a') as $node) 
+				{
+					$href = $node->getAttribute('href');
+				}
+				extract($href);
+				
 				// Kunena Profile Link
-				$profile_link = '<a href="' . JRoute::_('index.php?option=com_kunena&view=user&userid=' . $user_id . '&Itemid=') . '">' . $name . '</a>';
+				$profile_link = '<a href="' . $href . '">' . $name . '</a>';
 			}
 			elseif ($profile == 3)
 			{
@@ -732,6 +788,7 @@ class ModShoutboxHelper
 		$user             = JFactory::getUser();
 		$displayName      = $this->params->get('loginname', 'user');
 		$securityType     = $this->params->get('securitytype', 0);
+		$securityHide     = $this->params->get('security-hide', 0);
 		$swearCounter     = $this->params->get('swearingcounter');
 		$swearNumber      = $this->params->get('swearingnumber');
 
@@ -742,45 +799,94 @@ class ModShoutboxHelper
 
 			if ($securityType == 1)
 			{
-				// Recaptcha fields aren't in the JJ post space so we have to grab these separately
-				$input = JFactory::getApplication()->input;
-				$challengeField = $input->get('recaptcha_challenge_field', '', 'string');
-				$responseField = $input->get('recaptcha_response_field', '', 'string');
+				if ($securityHide == 0 || ($user->guest && $securityHide == 1))
+				{
+					// Recaptcha fields aren't in the JJ post space so we have to grab these separately
+					$input = JFactory::getApplication()->input;
+					$challengeField = $input->get('g-recaptcha-response', '', 'string');
+					
+					// Require Recaptcha Library
+					spl_autoload_register(function ($class)
+					{
+						// Project-specific namespace prefix
+						$prefix = 'ReCaptcha\\';
+		
+						// Base directory for the namespace prefix
+						$base_dir = JPATH_ROOT . '/media/mod_shoutbox/recaptcha/';
+		
+						// Does the class use the namespace prefix?
+						$len = strlen($prefix);
 
-				// Require Recaptcha Library
-				require_once JPATH_ROOT . '/media/mod_shoutbox/recaptcha/recaptchalib.php';
+						if (strncmp($prefix, $class, $len) !== 0)
+						{
+							// No, move to the next registered autoloader
+							return;
+						}
+		
+						// Get the relative class name
+						$relative_class = substr($class, $len);
+		
+						/**
+						 * replace the namespace prefix with the base directory, replace namespace
+						 * separators with directory separators in the relative class name, append
+						 * with .php
+						 */
+						$file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+		
+						// if the file exists, require it
+						if (file_exists($file))
+						{
+							require $file;
+						}
+					});
 
-				$resp = recaptcha_check_answer(
-					$this->params->get('recaptcha-private'),
-					$_SERVER["REMOTE_ADDR"],
-					$challengeField,
-					$responseField
-				);
+					$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
 
-				if ($resp->is_valid)
+					$resp = $recaptcha->verify($challengeField, $_SERVER['REMOTE_ADDR']);			
+
+					if ($resp->isSuccess())
+					{
+						return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
+					}
+
+					// Invalid submission of post. Throw an error.
+					$error = '';
+
+					foreach ($resp->getErrorCodes() as $code)
+					{
+						$error .= $code;
+					}
+
+					throw new RuntimeException($error);
+				}
+				else 
 				{
 					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 				}
-
-				// Invalid submission of post. Throw an error.
-				throw new RuntimeException($resp->error);
 			}
 			elseif ($securityType == 2)
 			{
-				// Our maths security question is on
-				if (isset($post['sum1']) && isset($post['sum2']))
+				if ($securityHide == 0 || ($user->guest && $securityHide == 1))
 				{
-					$que_result = $post['sum1'] + $post['sum2'];
-
-					if (isset($post['human']))
+					// Our maths security question is on
+					if (isset($post['sum1']) && isset($post['sum2']))
 					{
-						if ($post['human'] != $que_result)
-						{
-							throw new RuntimeException(JText::_('SHOUT_ANSWER_INCORRECT'));
-						}
+						$que_result = $post['sum1'] + $post['sum2'];
 
-						return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
+						if (isset($post['human']))
+						{
+							if ($post['human'] != $que_result)
+							{
+								throw new RuntimeException(JText::_('SHOUT_ANSWER_INCORRECT'));
+							}
+
+							return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
+						}
 					}
+				}
+				else
+				{
+					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 				}
 			}
 			else
@@ -805,7 +911,6 @@ class ModShoutboxHelper
 		$user = JFactory::getUser();
 
 		// Grab the bbcode and smiley params
-		$smile  = $this->params->get('smile');
 		$bbcode = $this->params->get('bbcode', 1);
 
 		// Get the date format
@@ -836,7 +941,7 @@ class ModShoutboxHelper
 		$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
 
 		// Perform Smiley and BBCode filtering if required
-		if ($smile != 4 || $bbcode == 1)
+		if ($bbcode == 1)
 		{
 			$shout->msg = $this->bbcodeFilter($shout->msg);
 			$shout->name = $this->bbcodeFilter($profile_link);
