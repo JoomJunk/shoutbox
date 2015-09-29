@@ -655,6 +655,7 @@ class Mod_ShoutboxInstallerScript
 			));
 
 			// We merged the smiley and bbCode param. So if smileys were previously enabled then we need to enable the bbCode param.
+			$newParams = array();
 			$param = $this->getParam('smile', $module);
 			
 			if ($param != 4)
@@ -663,7 +664,6 @@ class Mod_ShoutboxInstallerScript
 			}
 			
 			// Create array of params to change
-			$newParams = array();
 			$newParams['list_swearwords'] = $json_words;
 			$newParams['list_smilies']    = $json_smilies;
 
