@@ -9,28 +9,28 @@
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
 	<version>6.0.0</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
-	
+
 	<install>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/mysql/install.mysql.utf8.sql</file>
 			<file driver="postgresql" charset="utf8">sql/postgresql/install.postgresql.utf8.sql</file>
 		</sql>
 	</install>
-              
+
 	<uninstall>
 		<sql>
 			<file driver="mysql" charset="utf8">sql/mysql/uninstall.mysql.utf8.sql</file>
 			<file driver="postgresql" charset="utf8">sql/postgresql/uninstall.postgresql.utf8.sql</file>
 		</sql>
 	</uninstall>
-	
+
 	<update> 
 		<schemas>
 			<schemapath type="mysql">sql/mysql/updates</schemapath> 
 			<schemapath type="postgresql">sql/postgresql/updates</schemapath> 
 		</schemas> 
 	</update>
-	
+
 	<scriptfile>script.php</scriptfile>
 
 	<media folder="media" destination="mod_shoutbox">
@@ -52,7 +52,7 @@
 		<folder>libraries</folder>
 		<folder>layouts</folder>
 	</files>
- 
+
 	<languages>
 		<language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.ini</language>
 		<language tag="en-GB">language/en-GB/en-GB.mod_shoutbox.sys.ini</language>
@@ -67,11 +67,11 @@
 		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.ini</language>
 		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.sys.ini</language>
 	</languages>
-	
+
 	<updateservers>
 		<server type="extension" name="JJ Shoutbox" priority="1">http://www.joomjunk.co.uk/updates/shoutbox_update.xml</server>
 	</updateservers>
- 
+
 	<config>
 		<fields name="params">
 			<fieldset name="basic">
@@ -123,7 +123,7 @@
 					<option value="uikit">SHOUT_UIKIT</option>
 				</field>
 			</fieldset>
-			
+
 			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">			
 				<field type="sep" label="SHOUT_BBCODELABEL" />
 				<field name="bbcode" type="radio" class="btn-group" default="1" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
