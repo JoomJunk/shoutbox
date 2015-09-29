@@ -572,8 +572,19 @@ class ModShoutboxHelper
 			}
 			elseif ($profile == 2)
 			{
+				$klink = KunenaFactory::getUser((int) $user_id)->getLink();
+				
+				$dom = new DOMDocument;
+				$dom->loadHTML($klink);
+				
+				foreach ($dom->getElementsByTagName('a') as $node) 
+				{
+					$href = $node->getAttribute('href');
+				}
+				extract($href);
+				
 				// Kunena Profile Link
-				$profile_link = '<a href="' . JRoute::_('index.php?option=com_kunena&view=user&userid=' . $user_id . '&Itemid=') . '">' . $name . '</a>';
+				$profile_link = '<a href="' . $href . '">' . $name . '</a>';
 			}
 			elseif ($profile == 3)
 			{
