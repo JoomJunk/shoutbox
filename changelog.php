@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-WIP
+Version 6.0.0
 + Added option to hide security question for registered users
 + Added shoutbox history/archive
 + Added HTML5 notifications
@@ -29,6 +29,7 @@ WIP
 ^ Design improvements
 ^ General code imporvements
 # Fixed Mass Delete max value
+# Fixed Kunena profile links
 $ Some language strings changed for ReCaptcha v2
 - Removed support for Joomla 3.3
 ! Recaptcha keys MUST be updated to v2
