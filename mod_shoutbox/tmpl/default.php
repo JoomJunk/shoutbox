@@ -191,7 +191,7 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 										<?php echo $helper->smileyshow(); ?>
 									</ul>
 								</div>
-							<?php else if ($framework == 'bootstrap') : ?>
+							<?php elseif ($framework == 'bootstrap') : ?>
 								<button type="button" class="<?php echo $button . $button_small; ?> dropdown-toggle" data-toggle="dropdown">
 									<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
 								</button>
