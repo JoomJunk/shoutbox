@@ -192,7 +192,7 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 									</ul>
 								</div>
 							<?php else: ?>
-								<button type="button" class="<?php echo $button . $button_small; ?> dropdown-toggle" data-toggle="dropdown">
+								<button type="button" class="<?php echo $button . $button_small; ?> dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
 									<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
 								</button>
 								<ul class="dropdown-menu inline list-inline list-style">
