@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 6.0.1
+# Fixes to smiley dropdown for Bootstrap 3
+
 Version 6.0.0
 + Added option to hide security question for registered users
 + Added shoutbox history/archive
