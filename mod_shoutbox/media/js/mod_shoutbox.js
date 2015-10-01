@@ -353,7 +353,7 @@ jQuery(document).ready(function($) {
 	/**
 	 * Submit a shout
 	 */
-	JJShoutbox.submitPost = function(name, title, securityType, security, Itemid, instance, ReCaptchaResponse)
+	JJShoutbox.submitPost = function(name, title, securityType, security, Itemid, instance, ReCaptchaResponse, history)
 	{
 		// Assemble some commonly used vars
 		var textarea = instance.find('#jj_message'),
@@ -405,7 +405,7 @@ jQuery(document).ready(function($) {
 					}
 
 					// Refresh the output
-					JJShoutbox.getPosts(title, false, false, Itemid, instance, false)
+					JJShoutbox.getPosts(title, false, false, Itemid, instance, false, history)
 				}
 				else
 				{
@@ -445,7 +445,7 @@ jQuery(document).ready(function($) {
 	 * Get the latest shouts
 	 * Play a sound notification if new shouts are shown
 	 */
-	JJShoutbox.getPosts = function(title, sound, notifications, Itemid, instance, loggedInUser)
+	JJShoutbox.getPosts = function(title, sound, notifications, Itemid, instance, loggedInUser, history)
 	{
 		// Get the ID of the last shout
 		var lastID 		= JJShoutbox.getLastID(instance);
@@ -472,7 +472,12 @@ jQuery(document).ready(function($) {
 				{
 					instance.find('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
 					
-					var historyButton = '<div class="center-block"><a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini">' + Joomla.JText._('SHOUT_HISTORY_BUTTON') + '</a></div>';
+					var historyButton = '';
+					
+					if (history == 1)
+					{
+						historyButton = '<div class="center-block"><a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini">' + Joomla.JText._('SHOUT_HISTORY_BUTTON') + '</a></div>';
+					}
 					
 					// Grab the html output and append it to the shoutbox message
 					instance.find('.jj-shout-new').after(response.data.html + historyButton);
