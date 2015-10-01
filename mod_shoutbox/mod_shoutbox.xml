@@ -109,6 +109,10 @@
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
 				</field>
+				<field name="history" type="radio" class="btn-group" default="1" label="SHOUT_HISTORY" description="SHOUT_HISTORY_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
+				</field>
 			</fieldset>
 
 			<fieldset name="styling" label="SHOUT_STYLING">

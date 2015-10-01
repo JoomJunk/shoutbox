@@ -85,12 +85,17 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 				{
 					echo $helper->renderPost($shout);
 				}
+			}
+			
+			if ($history == 1)
+			{
+			?>
+				<div id="jj-history-container" class="center-block">
+					<a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini"><?php echo JText::_('SHOUT_HISTORY_BUTTON'); ?></a>
+				</div>	 
+			<?php 
 			} 
-		 ?>
-		 
-		 <div id="jj-history-container" class="center-block">
-			<a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini"><?php echo JText::_('SHOUT_HISTORY_BUTTON'); ?></a>
-		 </div>
+		?>
 	</div>
 	<div class="jj-shout-error"></div>
 
@@ -313,46 +318,15 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 		<?php endif; ?>	
 	</div>
 	
-	<div id="jj-history-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ History Modal" aria-hidden="true">	
-		<?php if ($framework == 'uikit') : ?>
-			<div class="uk-modal-dialog">
-				<a class="uk-modal-close uk-close"></a>
-				<div class="uk-modal-header">
-					<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
-				</div>
-				<div id="jj-shout-history" class="uk-overflow-container">
-					<?php 
-						// Retrieves the shouts from the database
-						$shouts = $helper->getShouts(0, $number, $dataerror);
-						
-						// Counts the number of shouts retrieved from the database
-						$actualnumber = count($shouts);
-						
-						if ($actualnumber == 0) 
-						{
-							echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
-						} 
-						else 
-						{
-							foreach ($shouts as $shout) 
-							{
-								echo $helper->renderPost($shout);
-							}
-						} 
-					 ?>
-					 <div class="center-block">
-						<a href="#" id="jj-load-more" class="uk-button uk-button-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
-					 </div>
-				</div>
-			</div>
-		<?php else: ?>
-			<div class="modal-dialog modal-lg" role="document">
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+	<?php if ($history == 1 ) : ?>
+		<div id="jj-history-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ History Modal" aria-hidden="true">	
+			<?php if ($framework == 'uikit') : ?>
+				<div class="uk-modal-dialog">
+					<a class="uk-modal-close uk-close"></a>
+					<div class="uk-modal-header">
 						<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
 					</div>
-					<div id="jj-shout-history" class="modal-body">
+					<div id="jj-shout-history" class="uk-overflow-container">
 						<?php 
 							// Retrieves the shouts from the database
 							$shouts = $helper->getShouts(0, $number, $dataerror);
@@ -373,13 +347,46 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 							} 
 						 ?>
 						 <div class="center-block">
-							<a href="#" id="jj-load-more" class="btn btn-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
+							<a href="#" id="jj-load-more" class="uk-button uk-button-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
 						 </div>
 					</div>
 				</div>
-			</div>
-		<?php endif; ?>
-	</div>
+			<?php else: ?>
+				<div class="modal-dialog modal-lg" role="document">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
+						</div>
+						<div id="jj-shout-history" class="modal-body">
+							<?php 
+								// Retrieves the shouts from the database
+								$shouts = $helper->getShouts(0, $number, $dataerror);
+								
+								// Counts the number of shouts retrieved from the database
+								$actualnumber = count($shouts);
+								
+								if ($actualnumber == 0) 
+								{
+									echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
+								} 
+								else 
+								{
+									foreach ($shouts as $shout) 
+									{
+										echo $helper->renderPost($shout);
+									}
+								} 
+							 ?>
+							 <div class="center-block">
+								<a href="#" id="jj-load-more" class="btn btn-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
+							 </div>
+						</div>
+					</div>
+				</div>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
 	
 </div>
 
@@ -392,6 +399,7 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 	<?php } } ?>
 	
 	var JJ_Framework_type = '<?php echo $framework; ?>';
+	var JJ_History        = '<?php echo $history; ?>';
 	
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	
@@ -462,27 +470,28 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 			{
 				var JJ_Recaptcha = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.getResponse();
 
-				JJShoutbox.submitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance, JJ_Recaptcha);
+				JJShoutbox.submitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance, JJ_Recaptcha, JJ_History);
 			}
 		}
 
-		
-		$('#jj-load-more').on('click', function(e){
-			
-			e.preventDefault();
+		if (JJ_History == 1)
+		{
+			$('#jj-load-more').on('click', function(e){
+				
+				e.preventDefault();
 
-			var Itemid = '<?php echo $Itemid; ?>';
-			JJShoutbox.getPostsHistory('<?php echo $title; ?>', Itemid, instance, offset);
+				var Itemid = '<?php echo $Itemid; ?>';
+				JJShoutbox.getPostsHistory('<?php echo $title; ?>', Itemid, instance, offset);
 
-			offset = offset + <?php echo $number; ?>;
-		});
-		
+				offset = offset + <?php echo $number; ?>;
+			});
+		}
 
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){
 			var Itemid = '<?php echo $Itemid; ?>';
 			var insertName = '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>';
-			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', '<?php echo $notifications; ?>', Itemid, instance, insertName);
+			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', '<?php echo $notifications; ?>', Itemid, instance, insertName, JJ_History);
 		}, <?php echo $refresh; ?>);
 	});	
 	<?php endif; ?>

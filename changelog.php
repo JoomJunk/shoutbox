@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
++ Added option to hide history
+
 Version 6.0.1
 # Fixes to smiley dropdown for Bootstrap 3
 
