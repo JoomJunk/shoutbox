@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-WIP
+Version 6.0.2
 + Added option to hide history
 
 Version 6.0.1
