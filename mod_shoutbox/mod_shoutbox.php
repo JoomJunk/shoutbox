@@ -130,8 +130,8 @@ JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
 
 $dataerror = JText::_('SHOUT_DATABASEERRORSHOUT');
 
-// Import JLog class
-jimport('joomla.log.log');
+// Load JLog class
+JLoader::register('JLog', JPATH_LIBRARIES . '/joomla/log/log.php');
 
 // Log mod_shoutbox errors to specific file.
 JLog::addLogger(
