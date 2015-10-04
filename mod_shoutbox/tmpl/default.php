@@ -189,7 +189,7 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-link jj-trigger-insert" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
 							<?php if ($framework == 'uikit') : ?>						
 								<div class="uk-button-dropdown" data-uk-dropdown>
-									<button class="uk-button uk-button-small">
+									<button class="uk-button uk-button-small" type="button">
 										<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
 									</button>
 									<ul class="uk-dropdown">
