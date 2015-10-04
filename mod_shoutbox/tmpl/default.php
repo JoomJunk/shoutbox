@@ -33,9 +33,17 @@ if ($avatar != 'none')
 	}';
 }
 
+// Import Bootstrap framework and stylesheet for fallback styling
+if ($framework == 'none')
+{
+	JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox_bs.css', array(), true);
+	JHtml::_('bootstrap.framework');
+	JHtml::_('behavior.modal');
+}
+
 // Prevent the image overlapping on Bootstrap 2 modal
 if ($framework == 'bootstrap')
-{
+{	
 	$style .= '
 	#jjshoutboxform .modal-body > img {
 		float: left;
@@ -64,7 +72,7 @@ JText::script('SHOUT_BBCODE_INSERT_IMG');
 JText::script('SHOUT_BBCODE_INSERT_URL');
 ?>
 
-<div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
+<div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox <?php echo $jj_class; ?>">
 	
 	<div id="jjshoutboxoutput">
 		<div class="jj-shout-new"></div>
