@@ -192,7 +192,7 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 									<button class="uk-button uk-button-small" type="button">
 										<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
 									</button>
-									<ul class="uk-dropdown">
+									<ul class="uk-dropdown uk-dropdown-flip">
 										<?php echo $helper->smileyshow(); ?>
 									</ul>
 								</div>
