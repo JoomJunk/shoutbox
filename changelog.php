@@ -15,6 +15,7 @@ $ -> Language fix or change
 ! -> Note
 
 WIP
++ Allow inline images
 # Fixed smiley dropdown position for UIKit
 # Fixed dropdown and modal when no framework used
 
