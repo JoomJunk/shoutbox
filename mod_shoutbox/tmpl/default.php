@@ -33,9 +33,17 @@ if ($avatar != 'none')
 	}';
 }
 
+// Import Bootstrap framework and stylesheet for fallback styling
+if ($framework == 'none')
+{
+	JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox_bs.css', array(), true);
+	JHtml::_('bootstrap.framework');
+	JHtml::_('behavior.modal');
+}
+
 // Prevent the image overlapping on Bootstrap 2 modal
 if ($framework == 'bootstrap')
-{
+{	
 	$style .= '
 	#jjshoutboxform .modal-body > img {
 		float: left;
@@ -64,7 +72,7 @@ JText::script('SHOUT_BBCODE_INSERT_IMG');
 JText::script('SHOUT_BBCODE_INSERT_URL');
 ?>
 
-<div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox">
+<div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox <?php echo $jj_class; ?>">
 	
 	<div id="jjshoutboxoutput">
 		<div class="jj-shout-new"></div>
@@ -189,10 +197,10 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-link jj-trigger-insert" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
 							<?php if ($framework == 'uikit') : ?>						
 								<div class="uk-button-dropdown" data-uk-dropdown>
-									<button class="uk-button uk-button-small">
+									<button class="uk-button uk-button-small" type="button">
 										<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
 									</button>
-									<ul class="uk-dropdown">
+									<ul class="uk-dropdown uk-dropdown-flip">
 										<?php echo $helper->smileyshow(); ?>
 									</ul>
 								</div>

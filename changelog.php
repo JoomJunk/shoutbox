@@ -14,6 +14,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 6.0.3
++ Allow inline images
+# Fixed smiley dropdown position for UIKit
+# Fixed dropdown and modal when no framework used
+
 Version 6.0.2
 + Added option to hide history
 

@@ -379,10 +379,17 @@ class ModShoutboxHelper
 
 		$ip = $_SERVER['REMOTE_ADDR'];
 
-		// Sanity check on the contents of the user fields
-		$filter 	= JFilterInput::getInstance();
-		$name 		= $filter->clean($name, 'string');
-		$message 	= $filter->clean($message, 'string');
+		// The name field will have all html stripped
+		$nameFilter = JFilterInput::getInstance();
+
+		// We allow image and header tags in the message.
+		$acceptedtags    = array('img','h1','h2','h3', 'h4', 'h5', 'h6');
+		$acceptedAttribs = array('src','href','rel','title','class','id','itemprop','itemtype','itemscope');
+		$messageFilter   = JFilterInput::getInstance($acceptedtags,$acceptedAttribs);
+
+		// Do the filtering
+		$name 		= $nameFilter->clean($name, 'string');
+		$message 	= $messageFilter->clean($message, 'string');
 
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{

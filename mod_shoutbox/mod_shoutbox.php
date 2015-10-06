@@ -73,6 +73,7 @@ switch ($framework)
 		$clearfix      = ' uk-clearfix';
 		$modal         = ' uk-modal';
 		$modal_img     = null;
+		$jj_class      = null;
 		break;
 		
 	case 'bootstrap':
@@ -87,6 +88,7 @@ switch ($framework)
 		$clearfix      = ' clearfix';
 		$modal         = ' modal hide fade';
 		$modal_img     = null;
+		$jj_class      = null;
 		break;
 		
 	case 'bootstrap3':
@@ -101,20 +103,22 @@ switch ($framework)
 		$clearfix      = ' clearfix';
 		$modal         = ' modal fade';
 		$modal_img     = ' img-responsive';
+		$jj_class      = null;
 		break;
 		
 	default:
 		$form          = null;
-		$button_group  = null;
-		$button        = null;
-		$button_small  = null;
-		$button_danger = null;
-		$button_prim   = null;
+		$button_group  = ' btn-group';
+		$button        = ' btn';
+		$button_small  = ' btn-small';
+		$button_danger = ' btn-danger';
+		$button_prim   = ' btn-primary';
 		$input_txtarea = null;
-		$form_row      = null;
+		$form_row      = ' form-group';
 		$clearfix      = ' clearfix';
 		$modal         = ' modal hide fade';
 		$modal_img     = null;
+		$jj_class      = 'jj_fallback';
 		break;
 }
 
@@ -130,8 +134,8 @@ JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
 
 $dataerror = JText::_('SHOUT_DATABASEERRORSHOUT');
 
-// Import JLog class
-jimport('joomla.log.log');
+// Load JLog class
+JLoader::register('JLog', JPATH_LIBRARIES . '/joomla/log/log.php');
 
 // Log mod_shoutbox errors to specific file.
 JLog::addLogger(
