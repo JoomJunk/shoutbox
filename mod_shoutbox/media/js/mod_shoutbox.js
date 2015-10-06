@@ -172,7 +172,8 @@ JJShoutbox.drawMathsQuestion = function(number1, number2)
 {	
 	var c = document.getElementById('mathscanvas');
 	var ctx = c.getContext('2d');
-	
+
+        ctx.clearRect(0, 0, c.width, c.height);
 	ctx.font = '14px Arial';
 	ctx.fillText(number1 + ' + ' + number2 + ' = ', 10, 20);
 }
@@ -435,6 +436,7 @@ jQuery(document).ready(function($) {
 			instance.find('input[name="jjshout[sum2]"]').val(val2);
 			instance.find('label[for="math_output"]').text(val1 + ' + ' + val2);
 			instance.find('input[name="jjshout[human]"]').val('');
+			JJShoutbox.drawMathsQuestion(val1, val2);
 		}
 
 		return false;
