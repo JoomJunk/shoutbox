@@ -73,7 +73,7 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox <?php echo $jj_class; ?>">
-	
+
 	<div id="jjshoutboxoutput">
 		<div class="jj-shout-new"></div>
 		<?php 
@@ -494,6 +494,20 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 				offset = offset + <?php echo $number; ?>;
 			});
 		}
+		
+		
+		
+		$('#jjshoutboxoutput').on('click', '.jj-shout-edit', function(e) {
+
+			e.preventDefault();
+			
+			var shoutId = $(this).data('shout-edit-id');
+			
+			JJShoutbox.checkTimestamp('<?php echo $title; ?>', Itemid, instance, shoutId);
+			
+		});
+		
+		
 
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){

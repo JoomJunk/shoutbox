@@ -173,7 +173,7 @@ JJShoutbox.drawMathsQuestion = function(number1, number2)
 	var c = document.getElementById('mathscanvas');
 	var ctx = c.getContext('2d');
 
-        ctx.clearRect(0, 0, c.width, c.height);
+	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.font = '14px Arial';
 	ctx.fillText(number1 + ' + ' + number2 + ' = ', 10, 20);
 }
@@ -333,7 +333,7 @@ jQuery(document).ready(function($) {
 	
 	
 	/**
-	 * Populate modal with image
+	 * Open the history modal
 	 */
 	$('#jjshoutboxoutput').on('click', '#jj-history-trigger', function(e) {
 
@@ -349,6 +349,76 @@ jQuery(document).ready(function($) {
 		}
 
 	});
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	
+	/**
+	 * Check the current timestamp and the timestamp stored in the database for that shout
+	 */
+	JJShoutbox.checkTimestamp = function(title, Itemid, instance, id)
+	{
+		// Assemble variables to submit
+		var request = {
+			'jjshout[title]' : title,
+			'jjshout[id]' : id
+		};
+
+		// If there is an active menu item then we need to add it to the request.
+		if (Itemid !== null)
+		{
+			request['Itemid'] = Itemid;
+		}
+
+		// AJAX request
+		$.ajax({
+			type: 'POST',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=checkTimestamp&format=raw',
+			data: request,
+			success: function(response){
+
+				if (response == '')
+				{
+					console.log('Too late to edit');
+				}
+				else
+				{
+					var json = $.parseJSON(response);
+					
+					$('#jj_message').val(json[0].msg);
+				}
+				
+				
+			},
+			error: function(ts){
+				console.log(ts);
+			}
+		});
+
+		return false;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 		
 	/**

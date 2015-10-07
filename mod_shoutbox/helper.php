@@ -1109,4 +1109,97 @@ class ModShoutboxHelper
 
 		return $shouts;
 	}
+	
+	
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public static function checkTimestampAjax()
+	{
+		$app = JFactory::getApplication();
+		$post  = $app->input->post->get('jjshout', array(), 'array');
+
+		// Retrieve required parameter
+		if (!isset($post['title']))
+		{
+			throw new RuntimeException("Couldn't assemble the necessary parameters for the module");
+		}
+
+		$helper       = new ModShoutboxHelper($post['title']);
+		$helper->ajax = true;
+		
+		$id = 0;
+		
+		if (isset($post['id']))
+		{
+			$id = $post['id'];
+		}
+		
+		// Shout data
+		$shoutData = $helper->getTimestampData($id);
+		
+		// Shout Unix timestamp
+		$shoutTimestamp = JFactory::getDate($shoutData[0]->when)->toUnix();
+		
+		// Current Unix timestamp
+		$currentTimestamp = JFactory::getDate('now')->toUnix();
+		
+		// Get difference in time and round to 1 decimal place
+		$minutes = round(($currentTimestamp - $shoutTimestamp) / 60, 1);
+
+		$result = null;
+		
+		if ($minutes < 5)
+		{
+			$htmlOutput = array();
+			
+			foreach ($shoutData as $shout)
+			{
+				$htmlOutput[] = array(
+					'id'      => $shout->id,
+					'name'    => $shout->name,
+					'when'    => $shout->when,
+					'ip'      => $shout->ip,
+					'msg'     => $shout->msg,
+					'user_id' => $shout->user_id,
+				);
+			}
+			
+			$result = json_encode($htmlOutput);
+		}
+
+		return $result;
+	}
+
+
+	private function getTimestampData($id)
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__shoutbox'))
+			->where($db->quoteName('id') . ' = ' . (int)$id);
+	
+		$db->setQuery($query);
+
+		$result = $db->loadObjectList();
+
+		// If we have an error then we'll create an exception
+		if ($db->getErrorNum())
+		{
+			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
+		}
+
+		return $result;
+	}
+	
+	
 }
