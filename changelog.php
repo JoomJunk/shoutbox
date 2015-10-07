@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
+# Fixed maths question not refreshing after submitted post
+
 Version 6.0.3
 + Allow inline images
 # Fixed smiley dropdown position for UIKit
