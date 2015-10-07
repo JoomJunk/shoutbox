@@ -22,11 +22,11 @@ $user = JFactory::getUser();
 
 $userName = '';
 
-if ($params->get('loginname') == 'user')
+if ($params->get('loginname', 'user') == 'user')
 {
 	$userName = $user->username;
 }
-else if ($params->get('loginname') == 'real')
+else if ($params->get('loginname', 'user') == 'real')
 {
 	$userName = $user->name;
 }
@@ -47,9 +47,11 @@ else
 		<span class="avatar"><?php echo $avatar; ?></span> <?php echo $post->name; ?> - <?php echo $post->when; ?>
 		
 		<div style="float:right;position:relative;right:10px;">
-			<?php if ($postName == $userName) : ?>
+		
+			<?php if (($params->get('editown', 1) == 1) && $postName == $userName) : ?>
 				<a href="#" data-shout-edit-id="<?php echo $post->id; ?>" class="jj-shout-edit">&#9998;</a>
 			<?php endif; ?>
+			
 			<?php if ($user->authorise('core.delete') || ($postName == $userName && $params->get('deleteown') == 1)) : ?>
 				<form method="post" name="delete">
 					<input name="jjshout[delete]" type="submit" value="x" />
@@ -58,6 +60,7 @@ else
 					<?php echo JHtml::_('form.token'); ?>
 				</form>
 			<?php endif; ?>
+			
 		</div>
 		
 	</div>

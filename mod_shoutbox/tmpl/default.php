@@ -70,6 +70,7 @@ JText::script('SHOUT_NEW_SHOUT_ALERT');
 JText::script('SHOUT_HISTORY_BUTTON');
 JText::script('SHOUT_BBCODE_INSERT_IMG');
 JText::script('SHOUT_BBCODE_INSERT_URL');
+JText::script('SHOUT_EDITOWN_TOO_LATE');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox <?php echo $jj_class; ?>">
@@ -408,6 +409,7 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 	
 	var JJ_Framework_type = '<?php echo $framework; ?>';
 	var JJ_History        = '<?php echo $history; ?>';
+	var JJ_Edit_own       = '<?php echo $editown; ?>';
 	
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	
@@ -496,16 +498,18 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 		}
 		
 		
-		
-		$('#jjshoutboxoutput').on('click', '.jj-shout-edit', function(e) {
+		if (JJ_Edit_own == 1)
+		{
+			$('#jjshoutboxoutput').on('click', '.jj-shout-edit', function(e) {
 
-			e.preventDefault();
-			
-			var shoutId = $(this).data('shout-edit-id');
-			
-			JJShoutbox.checkTimestamp('<?php echo $title; ?>', Itemid, instance, shoutId);
-			
-		});
+				e.preventDefault();
+				
+				var shoutId = $(this).data('shout-edit-id');
+				
+				JJShoutbox.checkTimestamp('<?php echo $title; ?>', Itemid, instance, shoutId);
+				
+			});
+		}
 		
 		
 

@@ -390,6 +390,7 @@ jQuery(document).ready(function($) {
 				if (response == '')
 				{
 					console.log('Too late to edit');
+					JJShoutbox.showError(Joomla.JText._('SHOUT_EDITOWN_TOO_LATE'), instance);
 				}
 				else
 				{

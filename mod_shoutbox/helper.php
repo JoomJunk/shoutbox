@@ -1157,7 +1157,7 @@ class ModShoutboxHelper
 
 		$result = null;
 		
-		if ($minutes < 5)
+		if ($minutes < (int) $helper->getParams()->get('editown-time'))
 		{
 			$htmlOutput = array();
 			
