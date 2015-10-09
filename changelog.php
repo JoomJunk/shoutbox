@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 6.0.4
+# Fixed maths question not refreshing after submitted post
+# Fixed Dutch language not installing
+
 Version 6.0.3
 + Allow inline images
 # Fixed smiley dropdown position for UIKit
