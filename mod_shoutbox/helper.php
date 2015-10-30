@@ -53,13 +53,13 @@ class ModShoutboxHelper
 
 		// Make sure someone pressed shout and the post message isn't empty
 		if (isset($post['shout']))
-		{
+		{		
 			if (empty($post['message']))
 			{
 				throw new RuntimeException('The message body is empty');				
 			}
 
-			$id = $helper->submitPost($post);
+			$id    = $helper->submitPost($post);
 			$shout = $helper->getAShout($id);
 
 			$htmlOutput = $helper->renderPost($shout);
@@ -393,7 +393,7 @@ class ModShoutboxHelper
 
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
-			return $this->addShout($name, $message, $ip);
+			return $this->addShout($shout['type'], $shout['id'], $name, $message, $ip);
 		}
 	}
 
@@ -632,39 +632,63 @@ class ModShoutboxHelper
 	/**
 	 * Adds a shout to the database.
 	 *
+	 * @param   string  $type     The type of submission (insert or update)
+	 * @param   string  $id       The id of the post (update only)
 	 * @param   string  $name     The post to be searched.
 	 * @param   string  $message  The name of the user from the database.
 	 * @param   string  $ip       The ip of the user.
 	 *
-	 * @return  integer  The id of the inserted row
+	 * @return  integer  The id of the inserted row or true if an update
 	 *
 	 * @since   1.0
 	 */
-	public function addShout($name, $message, $ip)
+	public function addShout($type, $id, $name, $message, $ip)
 	{
 		$db = JFactory::getDbo();
-		$config = JFactory::getConfig();
-		$columns = array('name', 'when', 'ip', 'msg', 'user_id');
-		$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now')->toSql(true)), 
-			$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
-		$query = $db->getQuery(true);
-
-		$query->insert($db->quoteName('#__shoutbox'))
-			->columns($db->quoteName($columns))
-			->values(implode(',', $values));
-
-		$db->setQuery($query);
-
-		try
+		
+		if ($type == 'insert')
 		{
-			$db->execute();
+			// Insert a new shout into the database
+			$query = $db->getQuery(true);
+			$columns = array('name', 'when', 'ip', 'msg', 'user_id');
+			
+			$values = array(
+				$db->quote($name), 
+				$db->quote(JFactory::getDate('now')->toSql(true)), 
+				$db->quote($ip), 
+				$db->quote($message), 
+				$db->quote(JFactory::getUser()->id)
+			);
+
+			$query->insert($db->quoteName('#__shoutbox'))
+				  ->columns($db->quoteName($columns))
+				  ->values(implode(',', $values));
+
+			$db->setQuery($query);
+
+			try
+			{
+				$db->execute();
+			}
+			catch (Exception $e)
+			{
+				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+			}
+
+			return $db->insertid();
 		}
-		catch (Exception $e)
+		else if ($type == 'update' && $id != '')
 		{
-			JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+			// Update an existing shout in the database
+			$object = new stdClass();
+			$object->id  = $id;
+			$object->msg = $message;
+
+			JFactory::getDbo()->updateObject('#__shoutbox', $object, 'id');
+			
+			return true;
 		}
 
-		return $db->insertid();
 	}
 
 	/**
@@ -1157,7 +1181,7 @@ class ModShoutboxHelper
 
 		$result = null;
 		
-		if ($minutes < (int) $helper->getParams()->get('editown-time'))
+		if ($minutes < (int) $helper->getParams()->get('editown-time', 5))
 		{
 			$htmlOutput = array();
 			
@@ -1186,7 +1210,7 @@ class ModShoutboxHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__shoutbox'))
-			->where($db->quoteName('id') . ' = ' . (int)$id);
+			->where($db->quoteName('id') . ' = ' . (int) $id);
 	
 		$db->setQuery($query);
 

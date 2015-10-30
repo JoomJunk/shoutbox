@@ -49,7 +49,7 @@ $messageLength   = $params->get('messagelength', '200');
 $refresh         = $params->get('refresh', 10) * 1000;
 $deleteown       = $params->get('deleteown', 0);
 $editown         = $params->get('editown', 1);
-$editown         = $params->get('editown-time', 5);
+$editowntime     = $params->get('editown-time', 5);
 $history         = $params->get('history', 1);
 $remainingLength = JText::_('SHOUT_REMAINING');
 

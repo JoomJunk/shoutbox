@@ -71,6 +71,8 @@ JText::script('SHOUT_HISTORY_BUTTON');
 JText::script('SHOUT_BBCODE_INSERT_IMG');
 JText::script('SHOUT_BBCODE_INSERT_URL');
 JText::script('SHOUT_EDITOWN_TOO_LATE');
+JText::script('SHOUT_SUBMITTEXT');
+JText::script('SHOUT_UPDATE');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox <?php echo $jj_class; ?>">
@@ -268,8 +270,10 @@ JText::script('SHOUT_EDITOWN_TOO_LATE');
 				}
 				?>
 				
+				<a id="edit-cancel" href="<?php echo JUri::current(); ?>" class="edit-cancel <?php echo $button . $button_danger; ?>"><?php echo JText::_('SHOUT_BBCODE_CANCEL'); ?></a>
+				
 				<?php if ($entersubmit == 0) : ?>
-					<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> />
+					<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> data-submit-type="insert" data-shout-id="2" />
 				<?php endif; ?>
 				
 			</form>
@@ -427,9 +431,9 @@ JText::script('SHOUT_EDITOWN_TOO_LATE');
 		
 		if (entersubmit == 0)
 		{
-			instance.find('#shoutbox-submit').on('click', function(e){
+			instance.on('click', '#shoutbox-submit', function(e){
 				e.preventDefault();
-				JJShoutbox.doShoutboxSubmission();
+				JJShoutbox.doShoutboxSubmission(instance.find('#shoutbox-submit').data('submit-type'), instance.find('#shoutbox-submit').attr('data-shout-id'));
 			});
 		}
 		else
@@ -437,13 +441,13 @@ JText::script('SHOUT_EDITOWN_TOO_LATE');
 			instance.find('#jj_message').keypress(function(e) {
 				if (e.which == 13) 
 				{
-					e.preventDefault();					
-					JJShoutbox.doShoutboxSubmission();
+					e.preventDefault();
+					JJShoutbox.doShoutboxSubmission(instance.find('#shoutbox-submit').data('submit-type'), instance.find('#shoutbox-submit').attr('data-shout-id'));
 				}
 			});
 		}
 		
-		JJShoutbox.doShoutboxSubmission = function() 
+		JJShoutbox.doShoutboxSubmission = function(type, shoutId) 
 		{
 			var shoutboxName 	= instance.find('#shoutbox-name').val();
 			var shoutboxMsg		= instance.find('#jj_message').val();
@@ -480,7 +484,7 @@ JText::script('SHOUT_EDITOWN_TOO_LATE');
 			{
 				var JJ_Recaptcha = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.getResponse();
 
-				JJShoutbox.submitPost(name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance, JJ_Recaptcha, JJ_History);
+				JJShoutbox.submitPost(shoutId, type, name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance, JJ_Recaptcha, JJ_History);
 			}
 		}
 
@@ -504,7 +508,7 @@ JText::script('SHOUT_EDITOWN_TOO_LATE');
 
 				e.preventDefault();
 				
-				var shoutId = $(this).data('shout-edit-id');
+				var shoutId = $(this).attr('data-shout-edit-id');
 				
 				JJShoutbox.checkTimestamp('<?php echo $title; ?>', Itemid, instance, shoutId);
 				
