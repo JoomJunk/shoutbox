@@ -387,9 +387,10 @@ jQuery(document).ready(function($) {
 					
 					$('#edit-cancel').css('display', 'block');
 					
-					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_UPDATE'))
-										 .attr('data-submit-type', 'update')
-										 .attr('data-shout-id', json[0].id);
+					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_UPDATE'));
+										 
+					$('#shout-submit-type').attr('data-submit-type', 'update')
+										   .attr('data-shout-id', json[0].id);
 				}			
 				
 			},
@@ -458,9 +459,10 @@ jQuery(document).ready(function($) {
 						instance.find('#shoutbox-name').val('');
 					}
 					
-					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_SUBMITTEXT'))
-										 .attr('data-submit-type', 'insert')
-										 .attr('data-shout-id', '');
+					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_SUBMITTEXT'));
+					
+					$('#shout-submit-type').attr('data-submit-type', 'insert')
+										   .attr('data-shout-id', '');
 					
 					$('#edit-cancel').css('display', 'none');
 

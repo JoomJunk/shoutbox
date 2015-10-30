@@ -272,8 +272,10 @@ JText::script('SHOUT_UPDATE');
 				
 				<a id="edit-cancel" href="<?php echo JUri::current(); ?>" class="edit-cancel <?php echo $button . $button_danger; ?>"><?php echo JText::_('SHOUT_BBCODE_CANCEL'); ?></a>
 				
+				<input id="shout-submit-type" type="hidden" data-shout-id="0" data-submit-type="insert" />
+				
 				<?php if ($entersubmit == 0) : ?>
-					<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> data-submit-type="insert" data-shout-id="2" />
+					<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> />
 				<?php endif; ?>
 				
 			</form>
@@ -433,16 +435,16 @@ JText::script('SHOUT_UPDATE');
 		{
 			instance.on('click', '#shoutbox-submit', function(e){
 				e.preventDefault();
-				JJShoutbox.doShoutboxSubmission(instance.find('#shoutbox-submit').attr('data-submit-type'), instance.find('#shoutbox-submit').attr('data-shout-id'));
+				JJShoutbox.doShoutboxSubmission(instance.find('#shout-submit-type').attr('data-submit-type'), instance.find('#shout-submit-type').attr('data-shout-id'));
 			});
 		}
 		else
 		{
-			instance.find('#jj_message').keypress(function(e) {
+			instance.on('keydown', '#jj_message', function(e) {
 				if (e.which == 13) 
 				{
 					e.preventDefault();
-					JJShoutbox.doShoutboxSubmission(instance.find('#shoutbox-submit').attr('data-submit-type'), instance.find('#shoutbox-submit').attr('data-shout-id'));
+					JJShoutbox.doShoutboxSubmission(instance.find('#shout-submit-type').attr('data-submit-type'), instance.find('#shout-submit-type').attr('data-shout-id'));
 				}
 			});
 		}
