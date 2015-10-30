@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+###WIP
+- Added ability for user to edit their shout
+
 Version 6.0.4
 # Fixed maths question not refreshing after submitted post
 # Fixed Dutch language not installing

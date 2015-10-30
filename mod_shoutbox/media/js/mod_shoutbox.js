@@ -420,7 +420,7 @@ jQuery(document).ready(function($) {
 			'jjshout[shout]'   : 'Shout!',
 			'jjshout[title]'   : title,
 		};
-
+		
 		request[security] = 1;
 
 		if (securityType == 1)

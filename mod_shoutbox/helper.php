@@ -239,7 +239,7 @@ class ModShoutboxHelper
 		$query = $db->getQuery(true);
 		$query->select('*')
 			->from($db->quoteName('#__shoutbox'))
-			->where($db->quoteName('id') . ' = ' . $id);
+			->where($db->quoteName('id') . ' = ' . (int)$id);
 		$db->setQuery($query);
 
 		$row = $db->loadObject();
@@ -686,7 +686,7 @@ class ModShoutboxHelper
 
 			JFactory::getDbo()->updateObject('#__shoutbox', $object, 'id');
 			
-			return true;
+			return (int)$id;
 		}
 
 	}

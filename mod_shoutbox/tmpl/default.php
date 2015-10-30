@@ -433,7 +433,7 @@ JText::script('SHOUT_UPDATE');
 		{
 			instance.on('click', '#shoutbox-submit', function(e){
 				e.preventDefault();
-				JJShoutbox.doShoutboxSubmission(instance.find('#shoutbox-submit').data('submit-type'), instance.find('#shoutbox-submit').attr('data-shout-id'));
+				JJShoutbox.doShoutboxSubmission(instance.find('#shoutbox-submit').attr('data-submit-type'), instance.find('#shoutbox-submit').attr('data-shout-id'));
 			});
 		}
 		else
@@ -442,7 +442,7 @@ JText::script('SHOUT_UPDATE');
 				if (e.which == 13) 
 				{
 					e.preventDefault();
-					JJShoutbox.doShoutboxSubmission(instance.find('#shoutbox-submit').data('submit-type'), instance.find('#shoutbox-submit').attr('data-shout-id'));
+					JJShoutbox.doShoutboxSubmission(instance.find('#shoutbox-submit').attr('data-submit-type'), instance.find('#shoutbox-submit').attr('data-shout-id'));
 				}
 			});
 		}
