@@ -22,11 +22,11 @@ $user = JFactory::getUser();
 
 $userName = '';
 
-if ($params->get('loginname') == 'user')
+if ($params->get('loginname', 'user') == 'user')
 {
 	$userName = $user->username;
 }
-else if ($params->get('loginname') == 'real')
+else if ($params->get('loginname', 'user') == 'real')
 {
 	$userName = $user->name;
 }
@@ -40,19 +40,45 @@ else
 {
 	$postName = $post->name;
 }
+
+if ($params->get('framework', 'bootstrap') == 'uikit')
+{
+	$iconEdit = 'uk-icon-pencil-square-o';
+	$iconRemove = 'uk-icon-times';
+}
+else if ($params->get('framework', 'bootstrap') == 'bootstrap3')
+{
+	$iconEdit = 'glyphicon glyphicon-pencil';
+	$iconRemove = 'glyphicon glyphicon-remove';
+}
+else
+{
+	$iconEdit = 'icon-pencil';
+	$iconRemove = 'icon-remove';
+}
 ?>
 
 <div>
 	<div data-shout-id="<?php echo $post->id; ?>" data-shout-name="<?php echo $postName; ?>" class="shout-header" <?php echo $title; ?>>
 		<span class="avatar"><?php echo $avatar; ?></span> <?php echo $post->name; ?> - <?php echo $post->when; ?>
-		<?php if ($user->authorise('core.delete') || ($postName == $userName && $params->get('deleteown') == 1)) : ?>
-			<form method="post" name="delete">
-				<input name="jjshout[delete]" type="submit" value="x" />
-				<input name="jjshout[idvalue]" type="hidden" value="<?php echo $post->id; ?>" />
-				<input name="jjshout[namevalue]" type="hidden" value="<?php echo $postName; ?>" />
-				<?php echo JHtml::_('form.token'); ?>
-			</form>
-		<?php endif; ?>
+		
+		<div class="shout-actions">
+		
+			<?php if (($params->get('editown', 1) == 1) && $postName == $userName) : ?>
+				<a href="#" data-shout-edit-id="<?php echo $post->id; ?>" class="jj-shout-edit <?php echo $iconEdit;?>"></a>
+			<?php endif; ?>
+			
+			<?php if ($user->authorise('core.delete') || ($postName == $userName && $params->get('deleteown') == 1)) : ?>
+				<form method="post" name="delete">			
+					<button type="submit" name="jjshout[delete]" class="shout-remove <?php echo $iconRemove;?>"></button>			
+					<input name="jjshout[idvalue]" type="hidden" value="<?php echo $post->id; ?>" />
+					<input name="jjshout[namevalue]" type="hidden" value="<?php echo $postName; ?>" />
+					<?php echo JHtml::_('form.token'); ?>
+				</form>
+			<?php endif; ?>
+			
+		</div>
+		
 	</div>
 	<p><?php echo $post->msg; ?></p>
 </div>

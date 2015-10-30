@@ -171,15 +171,16 @@
 				</field>
 				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
 				
-				<field type="sep" label="SHOUT_DELETING" />
+				<field type="sep" label="SHOUT_USER_OPTIONS" />
 				<field name="deleteown" class="btn-group" type="radio" default="0" label="SHOUT_DELETEOWN" description="SHOUT_DELETEOWNDESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
+				<field name="editown" class="btn-group" type="radio" default="1" label="SHOUT_EDITOWN" description="SHOUT_EDITOWN_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
+				<field name="editown-time" type="text" showon="editown:1" default="5" label="SHOUT_EDITOWN_TIMELIMIT" description="SHOUT_EDITOWN_TIMELIMIT_DESC" />
 
 				<field type="sep" label="SHOUT_CHARACTERLIMIT" />
 				<field name="enablelimit" class="btn-group" type="radio" default="1" label="SHOUT_CHARACTERLIMIT" description="SHOUT_CHARACTERLIMITDESC">
@@ -222,6 +223,12 @@
 				<field name="notifications" type="radio" class="btn-group" default="0" label="SHOUT_HTML5_NOTIFICATION_LABEL" description="SHOUT_HTML5_NOTIFICATION_DESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
+				</field>
+				
+				<field type="sep" label="SHOUT_ADMIN_OPTIONS" />
+				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 				
 				<field type="sep" label="" />

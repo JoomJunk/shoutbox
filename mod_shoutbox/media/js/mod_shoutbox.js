@@ -173,7 +173,7 @@ JJShoutbox.drawMathsQuestion = function(number1, number2)
 	var c = document.getElementById('mathscanvas');
 	var ctx = c.getContext('2d');
 
-        ctx.clearRect(0, 0, c.width, c.height);
+	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.font = '14px Arial';
 	ctx.fillText(number1 + ' + ' + number2 + ' = ', 10, 20);
 }
@@ -333,7 +333,7 @@ jQuery(document).ready(function($) {
 	
 	
 	/**
-	 * Populate modal with image
+	 * Open the history modal
 	 */
 	$('#jjshoutboxoutput').on('click', '#jj-history-trigger', function(e) {
 
@@ -349,23 +349,76 @@ jQuery(document).ready(function($) {
 		}
 
 	});
+
 	
+	/**
+	 * Check the current timestamp and the timestamp stored in the database for that shout
+	 */
+	JJShoutbox.checkTimestamp = function(title, Itemid, instance, id)
+	{
+		// Assemble variables to submit
+		var request = {
+			'jjshout[title]' : title,
+			'jjshout[id]' : id
+		};
+
+		// If there is an active menu item then we need to add it to the request.
+		if (Itemid !== null)
+		{
+			request['Itemid'] = Itemid;
+		}
+
+		// AJAX request
+		$.ajax({
+			type: 'POST',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=checkTimestamp&format=raw',
+			data: request,
+			success: function(response){
+
+				if (response == '')
+				{
+					JJShoutbox.showError(Joomla.JText._('SHOUT_EDITOWN_TOO_LATE'), instance);
+				}
+				else
+				{
+					var json = $.parseJSON(response);
+					
+					$('#jj_message').val(json[0].msg);
+					
+					$('#edit-cancel').css('display', 'block');
+					
+					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_UPDATE'))
+										 .attr('data-submit-type', 'update')
+										 .attr('data-shout-id', json[0].id);
+				}			
+				
+			},
+			error: function(ts){
+				JJShoutbox.showError(ts, instance);
+			}
+		});
+
+		return false;
+	}
+
 		
 	/**
 	 * Submit a shout
 	 */
-	JJShoutbox.submitPost = function(name, title, securityType, security, Itemid, instance, ReCaptchaResponse, history)
+	JJShoutbox.submitPost = function(id, type, name, title, securityType, security, Itemid, instance, ReCaptchaResponse, history)
 	{
 		// Assemble some commonly used vars
 		var textarea = instance.find('#jj_message'),
 		message = textarea.val();
 
-		// Assemble variables to submit
+		// Assemble variables to submit	
 		var request = {
-			'jjshout[name]' : name,
+			'jjshout[id]'      : id,
+			'jjshout[type]'    : type,
+			'jjshout[name]'    : name,
 			'jjshout[message]' : message.replace(/\n/g, "<br />"),
-			'jjshout[shout]' : 'Shout!',
-			'jjshout[title]' : title,
+			'jjshout[shout]'   : 'Shout!',
+			'jjshout[title]'   : title,
 		};
 
 		request[security] = 1;
@@ -377,8 +430,8 @@ jQuery(document).ready(function($) {
 
 		if (securityType == 2)
 		{
-			request['jjshout[sum1]'] = instance.find('input[name="jjshout[sum1]"]').val();
-			request['jjshout[sum2]'] = instance.find('input[name="jjshout[sum2]"]').val();
+			request['jjshout[sum1]']  = instance.find('input[name="jjshout[sum1]"]').val();
+			request['jjshout[sum2]']  = instance.find('input[name="jjshout[sum2]"]').val();
 			request['jjshout[human]'] = instance.find('input[name="jjshout[human]"]').val();
 		}
 
@@ -404,6 +457,12 @@ jQuery(document).ready(function($) {
 					{
 						instance.find('#shoutbox-name').val('');
 					}
+					
+					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_SUBMITTEXT'))
+										 .attr('data-submit-type', 'insert')
+										 .attr('data-shout-id', '');
+					
+					$('#edit-cancel').css('display', 'none');
 
 					// Refresh the output
 					JJShoutbox.getPosts(title, false, false, Itemid, instance, false, history)
@@ -414,7 +473,7 @@ jQuery(document).ready(function($) {
 				}
 			},
 			error: function(ts){
-				console.log(ts);
+				JJShoutbox.showError(ts, instance);
 			}
 		});
 
@@ -430,7 +489,7 @@ jQuery(document).ready(function($) {
 		if (securityType == 2)
 		{
 			var val1, val2;
-			val1 = JJShoutbox.getRandomArbitrary(0,9);
+			var1 = JJShoutbox.getRandomArbitrary(0,9);
 			val2 = JJShoutbox.getRandomArbitrary(0,9);
 			instance.find('input[name="jjshout[sum1]"]').val(val1);
 			instance.find('input[name="jjshout[sum2]"]').val(val2);
@@ -508,7 +567,7 @@ jQuery(document).ready(function($) {
 				}
 			},
 			error: function(ts){
-				console.log(ts);
+				JJShoutbox.showError(ts, instance);
 			}
 		});
 
@@ -557,7 +616,7 @@ jQuery(document).ready(function($) {
 				}
 			},
 			error: function(ts){
-				console.log(ts);
+				JJShoutbox.showError(ts, instance);
 			}
 		});
 

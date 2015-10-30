@@ -53,13 +53,13 @@ class ModShoutboxHelper
 
 		// Make sure someone pressed shout and the post message isn't empty
 		if (isset($post['shout']))
-		{
+		{		
 			if (empty($post['message']))
 			{
 				throw new RuntimeException('The message body is empty');				
 			}
 
-			$id = $helper->submitPost($post);
+			$id    = $helper->submitPost($post);
 			$shout = $helper->getAShout($id);
 
 			$htmlOutput = $helper->renderPost($shout);
@@ -393,7 +393,7 @@ class ModShoutboxHelper
 
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
-			return $this->addShout($name, $message, $ip);
+			return $this->addShout($shout['type'], $shout['id'], $name, $message, $ip);
 		}
 	}
 
@@ -632,39 +632,63 @@ class ModShoutboxHelper
 	/**
 	 * Adds a shout to the database.
 	 *
+	 * @param   string  $type     The type of submission (insert or update)
+	 * @param   string  $id       The id of the post (update only)
 	 * @param   string  $name     The post to be searched.
 	 * @param   string  $message  The name of the user from the database.
 	 * @param   string  $ip       The ip of the user.
 	 *
-	 * @return  integer  The id of the inserted row
+	 * @return  integer  The id of the inserted row or true if an update
 	 *
 	 * @since   1.0
 	 */
-	public function addShout($name, $message, $ip)
+	public function addShout($type, $id, $name, $message, $ip)
 	{
 		$db = JFactory::getDbo();
-		$config = JFactory::getConfig();
-		$columns = array('name', 'when', 'ip', 'msg', 'user_id');
-		$values = array($db->Quote($name), $db->Quote(JFactory::getDate('now')->toSql(true)), 
-			$db->quote($ip), $db->quote($message), $db->quote(JFactory::getUser()->id));
-		$query = $db->getQuery(true);
-
-		$query->insert($db->quoteName('#__shoutbox'))
-			->columns($db->quoteName($columns))
-			->values(implode(',', $values));
-
-		$db->setQuery($query);
-
-		try
+		
+		if ($type == 'insert')
 		{
-			$db->execute();
+			// Insert a new shout into the database
+			$query = $db->getQuery(true);
+			$columns = array('name', 'when', 'ip', 'msg', 'user_id');
+			
+			$values = array(
+				$db->quote($name), 
+				$db->quote(JFactory::getDate('now')->toSql(true)), 
+				$db->quote($ip), 
+				$db->quote($message), 
+				$db->quote(JFactory::getUser()->id)
+			);
+
+			$query->insert($db->quoteName('#__shoutbox'))
+				  ->columns($db->quoteName($columns))
+				  ->values(implode(',', $values));
+
+			$db->setQuery($query);
+
+			try
+			{
+				$db->execute();
+			}
+			catch (Exception $e)
+			{
+				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+			}
+
+			return $db->insertid();
 		}
-		catch (Exception $e)
+		else if ($type == 'update' && $id != '')
 		{
-			JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
+			// Update an existing shout in the database
+			$object = new stdClass();
+			$object->id  = $id;
+			$object->msg = $message;
+
+			JFactory::getDbo()->updateObject('#__shoutbox', $object, 'id');
+			
+			return true;
 		}
 
-		return $db->insertid();
 	}
 
 	/**
@@ -1109,4 +1133,99 @@ class ModShoutboxHelper
 
 		return $shouts;
 	}
+	
+	/*
+	 * Check the timestamp of the shout is still within limits
+	 * 
+	 * @return  string  The rendered post contents
+	 *
+	 * @since   7.0.0
+	 */	
+	public static function checkTimestampAjax()
+	{
+		$app = JFactory::getApplication();
+		$post  = $app->input->post->get('jjshout', array(), 'array');
+
+		// Retrieve required parameter
+		if (!isset($post['title']))
+		{
+			throw new RuntimeException("Couldn't assemble the necessary parameters for the module");
+		}
+
+		$helper       = new ModShoutboxHelper($post['title']);
+		$helper->ajax = true;
+		
+		$id = 0;
+		
+		if (isset($post['id']))
+		{
+			$id = $post['id'];
+		}
+		
+		// Shout data
+		$shoutData = $helper->getTimestampData($id);
+		
+		// Shout Unix timestamp
+		$shoutTimestamp = JFactory::getDate($shoutData[0]->when)->toUnix();
+		
+		// Current Unix timestamp
+		$currentTimestamp = JFactory::getDate('now')->toUnix();
+		
+		// Get difference in time and round to 1 decimal place
+		$minutes = round(($currentTimestamp - $shoutTimestamp) / 60, 1);
+
+		$result = null;
+		
+		if ($minutes < (int) $helper->getParams()->get('editown-time', 5))
+		{
+			$htmlOutput = array();
+			
+			foreach ($shoutData as $shout)
+			{
+				$htmlOutput[] = array(
+					'id'      => $shout->id,
+					'name'    => $shout->name,
+					'when'    => $shout->when,
+					'ip'      => $shout->ip,
+					'msg'     => $shout->msg,
+					'user_id' => $shout->user_id,
+				);
+			}
+			
+			$result = json_encode($htmlOutput);
+		}
+
+		return $result;
+	}
+	
+	/*
+	 * Pull the shout data based on the ID
+	 * 
+	 * @param   int     $id  The ID of the shout
+	 *
+	 * @return  string	The rendered post contents
+	 *
+	 * @since   7.0.0
+	 */	
+	private function getTimestampData($id)
+	{
+		$db = JFactory::getDbo();
+		$query = $db->getQuery(true);
+		$query->select('*')
+			->from($db->quoteName('#__shoutbox'))
+			->where($db->quoteName('id') . ' = ' . (int) $id);
+	
+		$db->setQuery($query);
+
+		$result = $db->loadObjectList();
+
+		// If we have an error then we'll create an exception
+		if ($db->getErrorNum())
+		{
+			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
+		}
+
+		return $result;
+	}
+	
 }
