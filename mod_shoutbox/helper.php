@@ -1134,18 +1134,13 @@ class ModShoutboxHelper
 		return $shouts;
 	}
 	
-	
-	
-
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	/*
+	 * Check the timestamp of the shout is still within limits
+	 * 
+	 * @return  string  The rendered post contents
+	 *
+	 * @since   7.0.0
+	 */	
 	public static function checkTimestampAjax()
 	{
 		$app = JFactory::getApplication();
@@ -1202,8 +1197,16 @@ class ModShoutboxHelper
 
 		return $result;
 	}
-
-
+	
+	/*
+	 * Pull the shout data based on the ID
+	 * 
+	 * @param   int     $id  The ID of the shout
+	 *
+	 * @return  string	The rendered post contents
+	 *
+	 * @since   7.0.0
+	 */	
 	private function getTimestampData($id)
 	{
 		$db = JFactory::getDbo();
@@ -1224,6 +1227,5 @@ class ModShoutboxHelper
 
 		return $result;
 	}
-	
 	
 }
