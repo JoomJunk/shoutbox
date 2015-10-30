@@ -489,7 +489,7 @@ jQuery(document).ready(function($) {
 		if (securityType == 2)
 		{
 			var val1, val2;
-			var1 = JJShoutbox.getRandomArbitrary(0,9);
+			val1 = JJShoutbox.getRandomArbitrary(0,9);
 			val2 = JJShoutbox.getRandomArbitrary(0,9);
 			instance.find('input[name="jjshout[sum1]"]').val(val1);
 			instance.find('input[name="jjshout[sum2]"]').val(val2);
