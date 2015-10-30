@@ -53,7 +53,7 @@ class ModShoutboxHelper
 
 		// Make sure someone pressed shout and the post message isn't empty
 		if (isset($post['shout']))
-		{		
+		{
 			if (empty($post['message']))
 			{
 				throw new RuntimeException('The message body is empty');				
