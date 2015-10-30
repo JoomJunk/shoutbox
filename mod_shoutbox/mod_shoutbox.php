@@ -35,6 +35,7 @@ $deletecolor     = $params->get('deletecolor', '#FF0000');
 $bordercolour    = $params->get('bordercolor', '#FF3C16');
 $borderwidth     = $params->get('borderwidth', '1');
 $headercolor     = $params->get('headercolor', '#D0D0D0');
+$outputheight    = $params->get('outputheight', 200);
 $bbcode          = $params->get('bbcode', 1);
 $entersubmit     = $params->get('entersubmit', 0);
 $sound           = $params->get('sound', 1);

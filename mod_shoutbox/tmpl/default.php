@@ -9,6 +9,7 @@ defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '#jjshoutboxoutput {
+			height: ' . $outputheight . 'px;
 			border-color: ' . $bordercolour . ';
 			border-width: ' . $borderwidth . 'px;
 		}

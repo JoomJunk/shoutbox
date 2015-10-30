@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 ###WIP
 - Added ability for user to edit their shout
+- Added option to set the output box height
 
 Version 6.0.4
 # Fixed maths question not refreshing after submitted post
