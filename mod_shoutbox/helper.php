@@ -588,7 +588,6 @@ class ModShoutboxHelper
 				{
 					$href = $node->getAttribute('href');
 				}
-				extract($href);
 				
 				// Kunena Profile Link
 				$profile_link = '<a href="' . $href . '">' . $name . '</a>';
