@@ -17,6 +17,7 @@ $ -> Language fix or change
 ###WIP
 - Added ability for user to edit their shout
 - Added option to set the output box height
+- Added Russian language files
 - Fixed error coming from extract() function
 
 Version 6.0.4
