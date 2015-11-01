@@ -120,7 +120,9 @@
 			<fieldset name="styling" label="SHOUT_STYLING">
 				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
 				<field name="editcolor" type="color" default="#444444" label="SHOUT_EDIT_COLOUR" description="SHOUT_EDIT_COLOUR_DESC" />
-				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
+				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />				
+				<field name="headertextcolor" type="color" default="#000000" label="SHOUT_HEADER_TEXT_COLOUR" description="SHOUT_HEADER_TEXT_COLOUR_DESC" />
+				<field name="textcolor" type="color" default="#000000" label="SHOUT_TEXT_COLOUR" description="SHOUT_TEXT_COLOUR_DESC" />
 				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
 				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
 				<field name="outputheight" type="text" default="200" label="SHOUT_OUTPUT_HEIGHT" description="SHOUT_OUTPUT_HEIGHT_DESC" />

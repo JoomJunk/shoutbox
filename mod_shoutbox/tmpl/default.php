@@ -21,6 +21,12 @@ $style = '#jjshoutboxoutput {
 		}
 		#jjshoutboxoutput .jj-shout-edit {
 			color:' . $editcolor . ';
+		}
+		#jjshoutboxoutput .shout-header {
+			color:' . $headertextcolor . ';
+		}
+		#jjshoutboxoutput div p {
+			color:' . $textcolor . ';
 		}';
 
 if ($avatar != 'none')

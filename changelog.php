@@ -18,6 +18,8 @@ $ -> Language fix or change
 - Added ability for user to edit their shout
 - Added option to set the output box height
 - Added Russian language files
+- Added option for header text colour
+- Added option for shout post text colour
 - Fixed error coming from extract() function
 
 Version 6.0.4
