@@ -16,8 +16,7 @@ $style = '#jjshoutboxoutput {
 		#jjshoutboxoutput .shout-header {
 			background: ' . $headercolor . ';
 		}
-		#jjshoutboxoutput input[type=submit],
-		#jj-shout-history form input[type="submit"] {
+		#jjshoutboxoutput .shout-remove {
 			color:' . $deletecolor . ';
 		}';
 
