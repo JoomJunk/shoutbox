@@ -683,4 +683,16 @@ class Mod_ShoutboxInstallerScript
 			
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_600_UPDATE_NOTIFICATION'), 'warning');
 	}
+	
+	/**
+	 * Function to notify the user to clear their Joomla cache
+	 *
+	 * @return  void
+	 *
+	 * @since  7.0.0
+	 */
+	protected function update600()
+	{
+		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_700_UPDATE_NOTIFICATION'), 'warning');
+	}
 }
