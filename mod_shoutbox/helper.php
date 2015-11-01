@@ -736,7 +736,7 @@ class ModShoutboxHelper
 		$query->select('*')
 			  ->from($db->quoteName('#__shoutbox'))
 			  ->order($db->quoteName('id') . ' ' . $dir)
-			  ->setLimit($delete, 0);
+			  ->setLimit($delete);
 			  
 		$db->setQuery($query);
 

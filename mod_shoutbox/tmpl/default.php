@@ -291,19 +291,20 @@ JText::script('SHOUT_UPDATE');
 			if ($user->authorise('core.delete') && $mass_delete == 1)
 			{
 			?>
-				<form method="post" name="deleteall">
+				<form method="post">
 					<input type="hidden" name="jjshout[max]" value="<?php echo $count; ?>" />
-					<?php echo JHtml::_('form.token'); ?>
 					
 					<div class="mass_delete">
 						<?php $latest = '<select name="jjshout[order]">'; ?>
 						<?php $latest .= '<option value="DESC" selected="selected">' . JText::_('SHOUT_NEWEST_POSTS') . '</option>'; ?>
 						<?php $latest .= '<option value="ASC">' . JText::_('SHOUT_OLDEST_POSTS') . '</option>'; ?>
 						<?php $latest .= '</select>'; ?>
-						<?php $input = '<input class="form-control" type="number" name="jjshout[valueall]" min="1" max="<?php echo $count; ?>" step="1" value="1">'; ?>
+						<?php $input = '<input class="form-control" type="number" name="jjshout[valueall]" min="1" max="' . $count . '" step="1" value="1">'; ?>
 						<?php echo JText::sprintf('SHOUT_DELETE_THE_LATEST_X_POSTS', $latest, $input); ?>
-						<button class="<?php echo $button . $button_danger; ?>" type="submit"><?php echo JText::_('SHOUT_MASS_DELETE') ?></button>
+						<button class="<?php echo $button . $button_danger; ?>" name="jjshout[deleteall]" type="submit"><?php echo JText::_('SHOUT_MASS_DELETE') ?></button>
 					</div>
+					
+					<?php echo JHtml::_('form.token'); ?>
 
 				</form>
 			<?php

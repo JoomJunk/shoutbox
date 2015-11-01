@@ -172,12 +172,12 @@ if (isset($_POST))
 			$helper->deletepost($deletepostnumber);
 		}
 	}
-
-	if ($mass_delete == 1 && (isset($post['deleteall'])))
+	
+	if ($mass_delete == 1 && isset($post['deleteall']))
 	{
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 		$delete = $post['valueall'];
-		$dir = $post['order'];
+		$dir    = $post['order'];
 
 		if (isset($delete))
 		{
@@ -207,6 +207,7 @@ if (isset($_POST))
 			}
 		}
 	}
+
 }
 
 require JModuleHelper::getLayoutPath('mod_shoutbox');
