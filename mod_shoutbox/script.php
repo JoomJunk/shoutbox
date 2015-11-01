@@ -109,6 +109,14 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update600();
 				}
+				
+				/**
+				 * In 7.0.0 show a notification
+				 */
+				if (version_compare($oldRelease, '6.0.4', '<='))
+				{
+					$this->update700();
+				}
 			}
 		}
 
@@ -691,7 +699,7 @@ class Mod_ShoutboxInstallerScript
 	 *
 	 * @since  7.0.0
 	 */
-	protected function update600()
+	protected function update700()
 	{
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_700_UPDATE_NOTIFICATION'), 'warning');
 	}
