@@ -81,6 +81,7 @@
     margin: 0;
     padding: 3px 0 0;
     vertical-align: top;
+	cursor: pointer;
 }
 .shout-actions .jj-shout-edit.uk-icon-pencil-square-o {
 	font-size: 13px;
