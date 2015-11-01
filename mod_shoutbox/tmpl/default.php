@@ -16,10 +16,10 @@ $style = '#jjshoutboxoutput {
 		#jjshoutboxoutput .shout-header {
 			background: ' . $headercolor . ';
 		}
-		#jjshoutboxoutput .shout-remove {
+		.shout-actions .shout-remove {
 			color:' . $deletecolor . ';
 		}
-		#jjshoutboxoutput .jj-shout-edit {
+		.shout-actions .jj-shout-edit {
 			color:' . $editcolor . ';
 		}
 		#jjshoutboxoutput .shout-header {
