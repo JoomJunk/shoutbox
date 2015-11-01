@@ -18,6 +18,9 @@ $style = '#jjshoutboxoutput {
 		}
 		#jjshoutboxoutput .shout-remove {
 			color:' . $deletecolor . ';
+		}
+		#jjshoutboxoutput .jj-shout-edit {
+			color:' . $editcolor . ';
 		}';
 
 if ($avatar != 'none')

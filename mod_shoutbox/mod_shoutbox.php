@@ -32,6 +32,7 @@ $securityHide    = $params->get('security-hide', 0);
 $mass_delete     = $params->get('mass_delete', 0);
 $permissions     = $params->get('guestpost');
 $deletecolor     = $params->get('deletecolor', '#FF0000');
+$editcolor       = $params->get('editcolor', '#444444');
 $bordercolour    = $params->get('bordercolor', '#FF3C16');
 $borderwidth     = $params->get('borderwidth', '1');
 $headercolor     = $params->get('headercolor', '#D0D0D0');
