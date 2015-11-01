@@ -177,6 +177,7 @@ if (isset($_POST))
 	{
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 		$delete = $post['valueall'];
+		$dir = $post['order'];
 
 		if (isset($delete))
 		{
@@ -190,7 +191,7 @@ if (isset($_POST))
 					}
 					if ($user->authorise('core.delete'))
 					{
-						$helper->deleteall($delete);
+						$helper->deleteall($delete, $dir);
 					}
 				}
 				else

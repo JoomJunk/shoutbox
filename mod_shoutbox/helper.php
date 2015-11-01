@@ -714,19 +714,28 @@ class ModShoutboxHelper
 	/**
 	 * Removes multiple shouts from the database.
 	 *
-	 * @param   int  $delete  The id of the post to be deleted.
+	 * @param   int     $delete  The id of the post to be deleted.
+	 * @param   string  $dir     A string containing either ASC or DESC
 	 *
 	 * @return  void
 	 *
 	 * @since   1.2.0
 	 */
-	public function deleteall($delete)
+	public function deleteall($delete, $dir = 'DESC')
 	{
+		$dir = strtoupper($dir);
+
+		// Ensure the direction is valid. Fallback to the most recent post (for b/c)
+		if (!in_array($dir, array('DESC', 'ASC')))
+		{
+			$dir = 'DESC';
+		}
+
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')
 			  ->from($db->quoteName('#__shoutbox'))
-			  ->order($db->quoteName('id') . ' DESC')
+			  ->order($db->quoteName('id') . ' ' . $dir)
 			  ->setLimit($delete, 0);
 			  
 		$db->setQuery($query);
