@@ -21,6 +21,7 @@ $ -> Language fix or change
 - Added option for header text colour
 - Added option for shout post text colour
 - Fixed error coming from extract() function
+- CSS improvements
 
 Version 6.0.4
 # Fixed maths question not refreshing after submitted post

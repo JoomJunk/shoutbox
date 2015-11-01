@@ -8,7 +8,7 @@
 	margin: auto; 
 	width: 100%; 
 }
-#jjshoutboxform { 
+.jjshoutboxform { 
 	margin: 0 auto; 
 }
 .jjshoutbox > div,
@@ -16,27 +16,27 @@
 .jjshoutbox input {
     box-sizing: border-box;
 }
-#jjshoutboxform textarea {
+.jjshoutboxform textarea {
     width: 100%;
     margin: 0;
 	min-height: 100px;
 }
-#jjshoutboxform input {
+.jjshoutboxform input {
     margin-top: 5px;
     color: #000;
     width: 100%;
     min-height: 30px;
 }
-#jjshoutboxform .mass_delete {
+.jjshoutboxform .mass_delete {
 	margin-top: 20px;
 }
-#jjshoutboxform .mass_delete input {
+.jjshoutboxform .mass_delete input {
 	margin-top: 0;
 }
-#jjshoutboxform p {
+.jjshoutboxform p {
     margin: 4px 0;
 }
-#jjshoutboxoutput {
+.jjshoutboxoutput {
     width: 100%;
     border-style: solid;
     background: #FFFFFF;
@@ -45,7 +45,7 @@
     word-wrap: break-word;
 	margin-bottom: 10px;
 }
-#jjshoutboxoutput input[type=submit] {
+.jjshoutboxoutput input[type=submit] {
     cursor: pointer;
     text-align: center;
     font-family: inherit;
@@ -59,7 +59,7 @@
     height: 15px;
 	vertical-align: top;
 }
-#jjshoutboxoutput .shout-actions {
+.jjshoutboxoutput .shout-actions {
 	position: absolute;
 	top: 0;
 	right: 5px;
@@ -88,7 +88,7 @@
 .shout-actions .shout-remove.uk-icon-times {
 	font-size: 14px;
 }
-#jjshoutboxoutput .shout-header {
+.jjshoutboxoutput .shout-header {
     font-family: inherit;
     font-size: 12px;
 	font-weight: bold;
@@ -99,11 +99,11 @@
     line-height: 20px;
 	position: relative;
 }
-#jjshoutboxoutput div form {
+.jjshoutboxoutput div form {
     display: inline-block;
     margin: 0;
 }
-#jjshoutboxoutput div p {
+.jjshoutboxoutput div p {
     font-size: 11px;
     font-family: inherit;
     text-align: left;
@@ -114,11 +114,11 @@
 	color: #FF0000; 
 	font-weight: bold; 
 }
-#jjshoutboxform input#math_output {
+.jjshoutboxform input#math_output {
 	width: 70px;
 	margin-top: 0;
 }
-#jjshoutboxform #mathscanvas {
+.jjshoutboxform #mathscanvas {
 	float: left;
 }
 .jjshoutbox .jj_error { 
@@ -141,11 +141,11 @@
 	width: 70px; 
 	display: inline-block;
 }
-#jjshoutboxform .dropdown-menu {
+.jjshoutboxform .dropdown-menu {
 	padding: 5px !important;
 }
-#jjshoutboxform .dropdown-menu li,
-#jjshoutboxform .uk-dropdown li {
+.jjshoutboxform .dropdown-menu li,
+.jjshoutboxform .uk-dropdown li {
 	float: left;
 	padding: 0 2px;
 	min-height: 26px;
@@ -163,7 +163,7 @@
 	border: 0;
 	outline: 0;
 }
-#jjshoutboxform[type='number'] {
+.jjshoutboxform[type='number'] {
 	padding: 4px 0px;
 }
 .jjshoutbox-audio {
@@ -181,17 +181,17 @@
 /**
 Shoutbox history
 **/
-#jj-shout-history.modal-body {
+.jj-shout-history.modal-body {
 	max-height: 400px;
 	overflow-y: scroll;
 }
-#jj-shout-history .jj-shout-edit {
+.jj-shout-history .jj-shout-edit {
 	display: none;
 }
-#jj-shout-history p {
+.jj-shout-history p {
 	margin: 5px 0 0;
 }
-#jj-shout-history > div {
+.jj-shout-history > div {
 	background-color: #f5f5f5;
     border: 1px solid #e3e3e3;
     border-radius: 4px;
@@ -206,7 +206,7 @@ Shoutbox history
 	margin-left: auto;
 	margin-right: auto;
 }
-#jj-shout-history > div.center-block {
+.jj-shout-history > div.center-block {
 	background: none;
 	border: 0;
 	border-radius: 0;
@@ -214,10 +214,10 @@ Shoutbox history
 	padding: 0;
 	margin: 0 0 10px 0;
 }
-#jj-shout-history form {
+.jj-shout-history form {
 	float: right;
 }
-#jj-shout-history#jj-shout-history form input[type="submit"] {
+.jj-shout-history form input[type="submit"] {
 	background: none;
 	border: 0 none;
     cursor: pointer;
@@ -233,6 +233,8 @@ Shoutbox history
 }
 #jj-shout-history .shout-header {
 	font-weight: bold;
+	color: 000;
+	background: none;
 }
 
 /**

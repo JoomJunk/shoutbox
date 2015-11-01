@@ -8,25 +8,23 @@
 defined('_JEXEC') or die('Restricted access');
 
 JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
-$style = '#jjshoutboxoutput {
+$style = '.jjshoutboxoutput {
 			height: ' . $outputheight . 'px;
 			border-color: ' . $bordercolour . ';
 			border-width: ' . $borderwidth . 'px;
 		}
-		#jjshoutboxoutput .shout-header {
+		.jjshoutboxoutput div p {
+			color:' . $textcolor . ';
+		}
+		.jjshoutbox .shout-header {
 			background: ' . $headercolor . ';
+			color:' . $headertextcolor . ';
 		}
 		.shout-actions .shout-remove {
 			color:' . $deletecolor . ';
 		}
 		.shout-actions .jj-shout-edit {
 			color:' . $editcolor . ';
-		}
-		#jjshoutboxoutput .shout-header {
-			color:' . $headertextcolor . ';
-		}
-		#jjshoutboxoutput div p {
-			color:' . $textcolor . ';
 		}';
 
 if ($avatar != 'none')
@@ -54,7 +52,7 @@ if ($framework == 'none')
 if ($framework == 'bootstrap')
 {	
 	$style .= '
-	#jjshoutboxform .modal-body > img {
+	.jjshoutbox .modal-body > img {
 		float: left;
 		padding-bottom: 1%;
 	}';
@@ -62,7 +60,7 @@ if ($framework == 'bootstrap')
 if ($framework == 'bootstrap' || $framework == 'uikit')
 {
 	$style .= '
-	#jjshoutboxform .mass_delete input {
+	.jjshoutbox .mass_delete input {
 		max-width: 80px;
 	}';
 }
@@ -86,7 +84,7 @@ JText::script('SHOUT_UPDATE');
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox <?php echo $jj_class; ?>">
 
-	<div id="jjshoutboxoutput">
+	<div id="jjshoutboxoutput" class="jjshoutboxoutput">
 		<div class="jj-shout-new"></div>
 		<?php 
 			// Retrieves the shouts from the database
@@ -126,7 +124,7 @@ JText::script('SHOUT_UPDATE');
 		</audio>
 	<?php endif; ?>
 
-	<div id="jjshoutboxform">
+	<div id="jjshoutboxform" class="jjshoutboxform">
 		<?php
 		// Retrieve the list of user groups the user has access to
 		$access = $user->getAuthorisedGroups();
@@ -350,7 +348,7 @@ JText::script('SHOUT_UPDATE');
 					<div class="uk-modal-header">
 						<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
 					</div>
-					<div id="jj-shout-history" class="uk-overflow-container">
+					<div id="jj-shout-history" class="jj-shout-history uk-overflow-container">
 						<?php 
 							// Retrieves the shouts from the database
 							$shouts = $helper->getShouts(0, $number, $dataerror);
@@ -382,7 +380,7 @@ JText::script('SHOUT_UPDATE');
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
 							<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
 						</div>
-						<div id="jj-shout-history" class="modal-body">
+						<div id="jj-shout-history" class="jj-shout-history modal-body">
 							<?php 
 								// Retrieves the shouts from the database
 								$shouts = $helper->getShouts(0, $number, $dataerror);
