@@ -172,7 +172,7 @@ if (isset($_POST))
 			$helper->deletepost($deletepostnumber);
 		}
 	}
-	
+
 	if ($mass_delete == 1 && isset($post['deleteall']))
 	{
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
