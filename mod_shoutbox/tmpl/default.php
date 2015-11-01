@@ -277,7 +277,7 @@ JText::script('SHOUT_UPDATE');
 				}
 				?>
 				
-				<a id="edit-cancel" href="<?php echo JUri::current(); ?>" class="edit-cancel <?php echo $button . $button_danger; ?>"><?php echo JText::_('SHOUT_BBCODE_CANCEL'); ?></a>
+				<a id="edit-cancel" href="#" class="edit-cancel <?php echo $button . $button_danger; ?>"><?php echo JText::_('SHOUT_BBCODE_CANCEL'); ?></a>
 				
 				<input id="shout-submit-type" type="hidden" data-shout-id="0" data-submit-type="insert" />
 				

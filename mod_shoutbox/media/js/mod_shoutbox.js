@@ -349,6 +349,25 @@ jQuery(document).ready(function($) {
 		}
 
 	});
+	
+	
+	/**
+	 * Return shoutbox to "insert" mode if cancel button is clicked
+	 */
+	$('#jjshoutboxform').on('click', '#edit-cancel', function(e) {
+		
+		e.preventDefault();
+		
+		$self   = $(this);
+		$self.css('display', 'none');
+				
+		$parent = $(this).parents('#jjshoutboxform');
+		$parent.find('#jj_message').val('');		
+		$parent.find('#shoutbox-submit').val(Joomla.JText._('SHOUT_SUBMITTEXT'));							 
+		$parent.find('#shout-submit-type').attr('data-submit-type', 'insert')
+										  .attr('data-shout-id', '');
+
+	});
 
 	
 	/**
