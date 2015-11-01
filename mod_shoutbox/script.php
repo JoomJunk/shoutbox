@@ -629,7 +629,7 @@ class Mod_ShoutboxInstallerScript
 				'image' => array(
 					'icon_e_biggrin.gif',
 					'icon_e_biggrin.gif',
-					'icon_e_confused',
+					'icon_e_confused.gif',
 					'icon_e_sad.gif',
 					'icon_e_smile.gif',
 					'icon_e_surprised.gif',
