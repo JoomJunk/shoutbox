@@ -80,6 +80,7 @@ switch ($framework)
 		$modal         = ' uk-modal';
 		$modal_img     = null;
 		$jj_class      = null;
+		$input_small   = 'uk-form-width-small';
 		break;
 		
 	case 'bootstrap':
@@ -95,6 +96,7 @@ switch ($framework)
 		$modal         = ' modal hide fade';
 		$modal_img     = null;
 		$jj_class      = null;
+		$input_small   = 'input-small';
 		break;
 		
 	case 'bootstrap3':
@@ -110,6 +112,7 @@ switch ($framework)
 		$modal         = ' modal fade';
 		$modal_img     = ' img-responsive';
 		$jj_class      = null;
+		$input_small   = 'input-sm';
 		break;
 		
 	default:
@@ -125,6 +128,7 @@ switch ($framework)
 		$modal         = ' modal hide fade';
 		$modal_img     = null;
 		$jj_class      = 'jj_fallback';
+		$input_small   = 'input-small';
 		break;
 }
 

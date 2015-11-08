@@ -295,7 +295,7 @@ JText::script('SHOUT_UPDATE');
 					<input type="hidden" name="jjshout[max]" value="<?php echo $count; ?>" />
 					
 					<div class="mass_delete">
-						<?php $latest = '<select name="jjshout[order]">'; ?>
+						<?php $latest = '<select name="jjshout[order]" class="' . $input_small . '">'; ?>
 						<?php $latest .= '<option value="DESC" selected="selected">' . JText::_('SHOUT_NEWEST_POSTS') . '</option>'; ?>
 						<?php $latest .= '<option value="ASC">' . JText::_('SHOUT_OLDEST_POSTS') . '</option>'; ?>
 						<?php $latest .= '</select>'; ?>
