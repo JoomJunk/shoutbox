@@ -1032,7 +1032,7 @@ class ModShoutboxHelper
 		{
 			$atts 	= array();		
 			
-			$url = 'http://www.gravatar.com/avatar/';
+			$url = 'https://www.gravatar.com/avatar/';
 			$url .= md5(strtolower(trim($email)));
 			$url .= "?s=30&d=mm&r=g";
 			$url = '<img src="' . $url . '"';
