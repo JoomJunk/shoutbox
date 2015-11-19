@@ -161,7 +161,7 @@ JText::script('SHOUT_UPDATE');
 						}
 						elseif ($user->guest || ($displayName == 'choose' && !$user->guest))
 						{
-							echo '<input name="jjshout[name]" type="text" maxlength="25" required="required" id="shoutbox-name" class="' . $input_txtarea . '" placeholder="' . JText::_('SHOUT_NAME') . '" />';
+							echo '<input name="jjshout[name]" type="text" maxlength="25" required="required" id="shoutbox-name" class="' . $input_txtarea . ' fullwidth" placeholder="' . JText::_('SHOUT_NAME') . '" />';
 						}
 
 						// Adds in session token to prevent re-posts and a security token to prevent CRSF attacks
@@ -270,7 +270,7 @@ JText::script('SHOUT_UPDATE');
 							<canvas id="mathscanvas" width="80" height="30">Your browser does not support the HTML5 canvas tag.</canvas>
 							<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
 							<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
-							<input class="<?php echo $input_txtarea; ?>" id="math_output" type="text" name="jjshout[human]" />
+							<input class="<?php echo $input_txtarea; ?> fullwidth" id="math_output" type="text" name="jjshout[human]" />
 						</div>
 					<?php 
 					}
@@ -282,7 +282,7 @@ JText::script('SHOUT_UPDATE');
 				<input id="shout-submit-type" type="hidden" data-shout-id="0" data-submit-type="insert" />
 				
 				<?php if ($entersubmit == 0) : ?>
-					<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?>" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> />
+					<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?> fullwidth" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> />
 				<?php endif; ?>
 				
 			</form>
@@ -291,15 +291,18 @@ JText::script('SHOUT_UPDATE');
 			if ($user->authorise('core.delete') && $mass_delete == 1)
 			{
 			?>
-				<form method="post">
+				<form method="post" <?php echo 'class="' . $form . '"'; ?>>
 					<input type="hidden" name="jjshout[max]" value="<?php echo $count; ?>" />
 					
 					<div class="mass_delete">
-						<?php $latest = '<select name="jjshout[order]" class="' . $input_small . '">'; ?>
+						<?php $style   = ($framework == 'bootstrap3') ? 'style="display:inline-block"' : ''; ?>
+						<?php $latest  = '<select name="jjshout[order]" class="' . $input_small . '" ' . $style . '>'; ?>
 						<?php $latest .= '<option value="DESC" selected="selected">' . JText::_('SHOUT_NEWEST_POSTS') . '</option>'; ?>
 						<?php $latest .= '<option value="ASC">' . JText::_('SHOUT_OLDEST_POSTS') . '</option>'; ?>
 						<?php $latest .= '</select>'; ?>
-						<?php $input = '<input class="form-control" type="number" name="jjshout[valueall]" min="1" max="' . $count . '" step="1" value="1">'; ?>
+						<?php // In bootstrap 2 the box-sizing in the CSS file interferes with the input number field ?>
+						<?php $style   = ($framework == 'bootstrap') ? 'style="box-sizing:inherit"' : $style; ?>
+						<?php $input   = '<input class="' . $input_small . '" type="number" name="jjshout[valueall]" min="1" max="' . $count . '" step="1" value="1" ' . $style . '>'; ?>
 						<?php echo JText::sprintf('SHOUT_DELETE_THE_LATEST_X_POSTS', $latest, $input); ?>
 						<button class="<?php echo $button . $button_danger; ?>" name="jjshout[deleteall]" type="submit"><?php echo JText::_('SHOUT_MASS_DELETE') ?></button>
 					</div>
