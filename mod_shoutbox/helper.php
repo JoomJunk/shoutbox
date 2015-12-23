@@ -391,6 +391,21 @@ class ModShoutboxHelper
 		$name 		= $nameFilter->clean($name, 'string');
 		$message 	= $messageFilter->clean($message, 'string');
 
+		// Start the email cloaking process
+		$searchEmail = '([\w\.\-\+]+\@(?:[a-z0-9\.\-]+\.)+(?:[a-zA-Z0-9\-]{2,10}))';
+		
+		// Search for plain text email@example.org
+		$pattern = '~' . $searchEmail . '([^a-z0-9]|$)~i';
+
+		while (preg_match($pattern, $message, $regs, PREG_OFFSET_CAPTURE))
+		{
+			$mail = $regs[1][0];
+			$replacement = JHtml::_('email.cloak', $mail);
+
+			// Replace the found address with the js cloaked email
+			$message = substr_replace($message, $replacement, $regs[1][1], strlen($mail));
+		}
+		
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
 			return $this->addShout($shout['type'], $shout['id'], $name, $message, $ip);

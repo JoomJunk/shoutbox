@@ -21,6 +21,7 @@ $ -> Language fix or change
 - Added option for header text colour
 - Added option for shout post text colour
 - Added option for textarea height
+- Added automatic email cloak
 - Fixed error coming from extract() function
 - CSS improvements
 
