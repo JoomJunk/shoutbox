@@ -39,6 +39,7 @@ $headercolor     = $params->get('headercolor', '#D0D0D0');
 $headertextcolor = $params->get('headertextcolor', '#000000');
 $textcolor       = $params->get('textcolor', '#000000');
 $outputheight    = $params->get('outputheight', 200);
+$textareaheight  = $params->get('textareaheight', 120);
 $bbcode          = $params->get('bbcode', 1);
 $entersubmit     = $params->get('entersubmit', 0);
 $sound           = $params->get('sound', 1);

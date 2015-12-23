@@ -13,6 +13,9 @@ $style = '.jjshoutboxoutput {
 			border-color: ' . $bordercolour . ';
 			border-width: ' . $borderwidth . 'px;
 		}
+		.jjshoutboxform textarea {
+			height:' . $textareaheight . 'px;
+		}
 		.jjshoutboxoutput div p {
 			color:' . $textcolor . ';
 		}
@@ -178,14 +181,12 @@ JText::script('SHOUT_UPDATE');
 						<textarea 
 							id="jj_message"
 							class="<?php echo $input_txtarea; ?>"
-							cols="20"
-							rows="5"
 							name="jjshout[message]"
 							onKeyDown="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');" 
 							onKeyUp="JJShoutbox.textCounter('jj_message','messagecount',<?php echo $messageLength; ?>, <?php echo $alertLength; ?>, <?php echo $warnLength; ?>, '<?php echo $remainingLength; ?>');"
 						></textarea>
 					<?php else: ?>
-						<textarea id="jj_message" class="<?php echo $input_txtarea; ?>" cols="20" rows="5" name="jjshout[message]"></textarea>
+						<textarea id="jj_message" class="<?php echo $input_txtarea; ?>" name="jjshout[message]"></textarea>
 					<?php endif; ?>
 				</div>
 				

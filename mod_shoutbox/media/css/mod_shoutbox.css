@@ -19,7 +19,7 @@
 .jjshoutboxform textarea {
     width: 100%;
     margin: 0;
-	min-height: 100px;
+	resize: vertical;
 }
 .jjshoutboxform .fullwidth {
     margin-top: 5px;

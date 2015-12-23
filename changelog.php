@@ -20,6 +20,7 @@ $ -> Language fix or change
 - Added Russian language files
 - Added option for header text colour
 - Added option for shout post text colour
+- Added option for textarea height
 - Fixed error coming from extract() function
 - CSS improvements
 

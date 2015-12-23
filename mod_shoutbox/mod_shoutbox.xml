@@ -126,6 +126,7 @@
 				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
 				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
 				<field name="outputheight" type="text" default="200" label="SHOUT_OUTPUT_HEIGHT" description="SHOUT_OUTPUT_HEIGHT_DESC" />
+				<field name="textareaheight" type="text" default="120" label="SHOUT_TEXTAREA_HEIGHT" description="SHOUT_TEXTAREA_HEIGHT_DESC" />
 				<field name="framework" type="list" default="bootstrap" label="SHOUT_FRAMEWORK" description="SHOUT_FRAMEWORK_DESC">
 					<option value="none">SHOUT_NONE</option>
 					<option value="bootstrap">SHOUT_BOOTSTRAP2</option>
