@@ -22,6 +22,7 @@ $ -> Language fix or change
 - Added option for shout post text colour
 - Added option for textarea height
 - Added automatic email cloak
+- Added French language file (thanks Dominique)
 - Fixed error coming from extract() function
 - CSS improvements
 
