@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    JJ_Shoutbox
- * @copyright  Copyright (C) 2011 - 2015 JoomJunk. All rights reserved.
+ * @copyright  Copyright (C) 2011 - 2016 JoomJunk. All rights reserved.
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
  */
 // No direct access to this file
@@ -108,6 +108,14 @@ class Mod_ShoutboxInstallerScript
 				if (version_compare($oldRelease, '5.0.2', '<='))
 				{
 					$this->update600();
+				}
+				
+				/**
+				 * In 7.0.0 show a notification
+				 */
+				if (version_compare($oldRelease, '6.0.4', '<='))
+				{
+					$this->update700();
 				}
 			}
 		}
@@ -629,7 +637,7 @@ class Mod_ShoutboxInstallerScript
 				'image' => array(
 					'icon_e_biggrin.gif',
 					'icon_e_biggrin.gif',
-					'icon_e_confused',
+					'icon_e_confused.gif',
 					'icon_e_sad.gif',
 					'icon_e_smile.gif',
 					'icon_e_surprised.gif',
@@ -682,5 +690,17 @@ class Mod_ShoutboxInstallerScript
 		}
 			
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_600_UPDATE_NOTIFICATION'), 'warning');
+	}
+	
+	/**
+	 * Function to notify the user to clear their Joomla cache
+	 *
+	 * @return  void
+	 *
+	 * @since  7.0.0
+	 */
+	protected function update700()
+	{
+		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_700_UPDATE_NOTIFICATION'), 'warning');
 	}
 }

@@ -1,7 +1,7 @@
 <?php 
 /**
 * @package    JJ_Shoutbox
-* @copyright  Copyright (C) 2011 - 2015 JoomJunk. All rights reserved.
+* @copyright  Copyright (C) 2011 - 2016 JoomJunk. All rights reserved.
 * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
@@ -32,9 +32,14 @@ $securityHide    = $params->get('security-hide', 0);
 $mass_delete     = $params->get('mass_delete', 0);
 $permissions     = $params->get('guestpost');
 $deletecolor     = $params->get('deletecolor', '#FF0000');
+$editcolor       = $params->get('editcolor', '#444444');
 $bordercolour    = $params->get('bordercolor', '#FF3C16');
 $borderwidth     = $params->get('borderwidth', '1');
 $headercolor     = $params->get('headercolor', '#D0D0D0');
+$headertextcolor = $params->get('headertextcolor', '#000000');
+$textcolor       = $params->get('textcolor', '#000000');
+$outputheight    = $params->get('outputheight', 200);
+$textareaheight  = $params->get('textareaheight', 120);
 $bbcode          = $params->get('bbcode', 1);
 $entersubmit     = $params->get('entersubmit', 0);
 $sound           = $params->get('sound', 1);
@@ -48,6 +53,8 @@ $enablelimit     = $params->get('enablelimit', 1);
 $messageLength   = $params->get('messagelength', '200');
 $refresh         = $params->get('refresh', 10) * 1000;
 $deleteown       = $params->get('deleteown', 0);
+$editown         = $params->get('editown', 1);
+$editowntime     = $params->get('editown-time', 5);
 $history         = $params->get('history', 1);
 $remainingLength = JText::_('SHOUT_REMAINING');
 
@@ -74,6 +81,7 @@ switch ($framework)
 		$modal         = ' uk-modal';
 		$modal_img     = null;
 		$jj_class      = null;
+		$input_small   = 'uk-form-width-small';
 		break;
 		
 	case 'bootstrap':
@@ -89,6 +97,7 @@ switch ($framework)
 		$modal         = ' modal hide fade';
 		$modal_img     = null;
 		$jj_class      = null;
+		$input_small   = 'input-small';
 		break;
 		
 	case 'bootstrap3':
@@ -104,6 +113,7 @@ switch ($framework)
 		$modal         = ' modal fade';
 		$modal_img     = ' img-responsive';
 		$jj_class      = null;
+		$input_small   = 'input-sm';
 		break;
 		
 	default:
@@ -119,6 +129,7 @@ switch ($framework)
 		$modal         = ' modal hide fade';
 		$modal_img     = null;
 		$jj_class      = 'jj_fallback';
+		$input_small   = 'input-small';
 		break;
 }
 
@@ -167,10 +178,11 @@ if (isset($_POST))
 		}
 	}
 
-	if ($mass_delete == 1 && (isset($post['deleteall'])))
+	if ($mass_delete == 1 && isset($post['deleteall']))
 	{
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
 		$delete = $post['valueall'];
+		$dir    = $post['order'];
 
 		if (isset($delete))
 		{
@@ -184,7 +196,7 @@ if (isset($_POST))
 					}
 					if ($user->authorise('core.delete'))
 					{
-						$helper->deleteall($delete);
+						$helper->deleteall($delete, $dir);
 					}
 				}
 				else
@@ -200,6 +212,7 @@ if (isset($_POST))
 			}
 		}
 	}
+
 }
 
 require JModuleHelper::getLayoutPath('mod_shoutbox');

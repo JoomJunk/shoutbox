@@ -3,11 +3,11 @@
 	<name>JJ Shoutbox</name> 
 	<author>JoomJunk</author> 
 	<creationDate>05-Mar-2012</creationDate> 
-	<copyright>Copyright (C) 2011 - 2015 JoomJunk</copyright> 
+	<copyright>Copyright (C) 2011 - 2016 JoomJunk</copyright> 
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>6.0.4</version> 
+	<version>7.0.0</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 
 	<install>
@@ -66,6 +66,10 @@
 		<language tag="nb-NO">language/nb-NO/nb-NO.mod_shoutbox.sys.ini</language>
 		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.ini</language>
 		<language tag="de-DE">language/de-DE/de-DE.mod_shoutbox.sys.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.mod_shoutbox.ini</language>
+		<language tag="ru-RU">language/ru-RU/ru-RU.mod_shoutbox.sys.ini</language>
+		<language tag="fr-FR">language/fr-FR/fr-FR.mod_shoutbox.ini</language>
+		<language tag="fr-FR">language/fr-FR/fr-FR.mod_shoutbox.sys.ini</language>
 	</languages>
 
 	<updateservers>
@@ -117,9 +121,14 @@
 
 			<fieldset name="styling" label="SHOUT_STYLING">
 				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
-				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
+				<field name="editcolor" type="color" default="#444444" label="SHOUT_EDIT_COLOUR" description="SHOUT_EDIT_COLOUR_DESC" />
+				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />				
+				<field name="headertextcolor" type="color" default="#000000" label="SHOUT_HEADER_TEXT_COLOUR" description="SHOUT_HEADER_TEXT_COLOUR_DESC" />
+				<field name="textcolor" type="color" default="#000000" label="SHOUT_TEXT_COLOUR" description="SHOUT_TEXT_COLOUR_DESC" />
 				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
-				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />			
+				<field name="borderwidth" type="text" default="1" label="SHOUT_BORDERWIDTHLABEL" description="SHOUT_BORDERWIDTHDESC" />
+				<field name="outputheight" type="text" default="200" label="SHOUT_OUTPUT_HEIGHT" description="SHOUT_OUTPUT_HEIGHT_DESC" />
+				<field name="textareaheight" type="text" default="120" label="SHOUT_TEXTAREA_HEIGHT" description="SHOUT_TEXTAREA_HEIGHT_DESC" />
 				<field name="framework" type="list" default="bootstrap" label="SHOUT_FRAMEWORK" description="SHOUT_FRAMEWORK_DESC">
 					<option value="none">SHOUT_NONE</option>
 					<option value="bootstrap">SHOUT_BOOTSTRAP2</option>
@@ -128,7 +137,7 @@
 				</field>
 			</fieldset>
 
-			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">			
+			<fieldset name="advanced" addfieldpath="/modules/mod_shoutbox/fields">
 				<field type="sep" label="SHOUT_BBCODELABEL" />
 				<field name="bbcode" type="radio" class="btn-group" default="1" label="SHOUT_BBCODELABEL" description="SHOUT_BBCODEDESC">
 					<option value="0">JOFF</option>
@@ -171,15 +180,16 @@
 				</field>
 				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
 				
-				<field type="sep" label="SHOUT_DELETING" />
+				<field type="sep" label="SHOUT_USER_OPTIONS" />
 				<field name="deleteown" class="btn-group" type="radio" default="0" label="SHOUT_DELETEOWN" description="SHOUT_DELETEOWNDESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
+				<field name="editown" class="btn-group" type="radio" default="1" label="SHOUT_EDITOWN" description="SHOUT_EDITOWN_DESC">
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
+				<field name="editown-time" type="text" showon="editown:1" default="5" label="SHOUT_EDITOWN_TIMELIMIT" description="SHOUT_EDITOWN_TIMELIMIT_DESC" />
 
 				<field type="sep" label="SHOUT_CHARACTERLIMIT" />
 				<field name="enablelimit" class="btn-group" type="radio" default="1" label="SHOUT_CHARACTERLIMIT" description="SHOUT_CHARACTERLIMITDESC">
@@ -222,6 +232,12 @@
 				<field name="notifications" type="radio" class="btn-group" default="0" label="SHOUT_HTML5_NOTIFICATION_LABEL" description="SHOUT_HTML5_NOTIFICATION_DESC">
 					<option value="0">JOFF</option>
 					<option value="1">JON</option>
+				</field>
+				
+				<field type="sep" label="SHOUT_ADMIN_OPTIONS" />
+				<field name="mass_delete" class="btn-group" type="radio" default="0" label="SHOUT_MASS_DELETE_OPTION" description="SHOUT_MASS_DELETE_OPTION_DESC">
+					<option value="0">JNO</option>
+					<option value="1">JYES</option>
 				</field>
 				
 				<field type="sep" label="" />
