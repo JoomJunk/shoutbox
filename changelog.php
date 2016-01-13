@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-###WIP
+Version 7.0.0
 - Added ability for user to edit their shout
 - Added option to set the output box height
 - Added Russian language files
