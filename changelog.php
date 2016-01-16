@@ -15,7 +15,7 @@ $ -> Language fix or change
 ! -> Note
 
 ###Wip
-
+# Fixed images sometimes not being inline
 
 Version 7.0.0
 + Added ability for user to edit their shout

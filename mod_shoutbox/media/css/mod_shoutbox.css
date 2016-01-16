@@ -8,6 +8,9 @@
 	margin: auto; 
 	width: 100%; 
 }
+.jjshoutbox img { 
+	display: inline;
+}
 .jjshoutboxform { 
 	margin: 0 auto; 
 }
