@@ -464,7 +464,7 @@ jQuery(document).ready(function($) {
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax2&module=shoutbox&method=submit&format=json',
+			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&format=json',
 			data: request,
 			success: function(response){
 				if (response.success)
