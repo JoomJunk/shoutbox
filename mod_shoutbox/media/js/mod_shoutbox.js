@@ -413,8 +413,8 @@ jQuery(document).ready(function($) {
 				}			
 				
 			},
-			error: function(ts){
-				JJShoutbox.showError(ts, instance);
+			error: function(){
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
 			}
 		});
 
@@ -464,7 +464,7 @@ jQuery(document).ready(function($) {
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&format=json',
+			url: 'index.php?option=com_ajax2&module=shoutbox&method=submit&format=json',
 			data: request,
 			success: function(response){
 				if (response.success)
@@ -493,8 +493,8 @@ jQuery(document).ready(function($) {
 					JJShoutbox.showError(response.message, instance);
 				}
 			},
-			error: function(ts){
-				JJShoutbox.showError(ts, instance);
+			error: function(){
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
 			}
 		});
 
@@ -587,8 +587,8 @@ jQuery(document).ready(function($) {
 					JJShoutbox.showError(response.message, instance);
 				}
 			},
-			error: function(ts){
-				JJShoutbox.showError(ts, instance);
+			error: function(){
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
 			}
 		});
 
@@ -636,8 +636,8 @@ jQuery(document).ready(function($) {
 					JJShoutbox.showError(response.message, instance);
 				}
 			},
-			error: function(ts){
-				JJShoutbox.showError(ts, instance);
+			error: function(){
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
 			}
 		});
 

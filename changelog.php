@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 ###Wip
 # Fixed images sometimes not being inline
+# Fixed object [Object] error
 
 Version 7.0.0
 + Added ability for user to edit their shout
