@@ -14,17 +14,25 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+###Wip
+
+Version 7.0.1
+# Fixed images sometimes not being inline
+# Fixed object [Object] error
+# Fixed ReCaptcha being executed if called from 3rd party sources
+# Fixed cancel button always showing for Bootstrap 2
+
 Version 7.0.0
-- Added ability for user to edit their shout
-- Added option to set the output box height
-- Added Russian language files
-- Added option for header text colour
-- Added option for shout post text colour
-- Added option for textarea height
-- Added automatic email cloak
-- Added French language file (thanks Dominique)
-- Fixed error coming from extract() function
-- CSS improvements
++ Added ability for user to edit their shout
++ Added option to set the output box height
++ Added Russian language files
++ Added option for header text colour
++ Added option for shout post text colour
++ Added option for textarea height
++ Added automatic email cloak
++ Added French language file (thanks Dominique)
+# Fixed error coming from extract() function
+^ CSS improvements
 
 Version 6.0.4
 # Fixed maths question not refreshing after submitted post

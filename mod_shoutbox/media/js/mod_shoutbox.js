@@ -413,8 +413,8 @@ jQuery(document).ready(function($) {
 				}			
 				
 			},
-			error: function(ts){
-				JJShoutbox.showError(ts, instance);
+			error: function(){
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
 			}
 		});
 
@@ -493,8 +493,8 @@ jQuery(document).ready(function($) {
 					JJShoutbox.showError(response.message, instance);
 				}
 			},
-			error: function(ts){
-				JJShoutbox.showError(ts, instance);
+			error: function(){
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
 			}
 		});
 
@@ -587,8 +587,8 @@ jQuery(document).ready(function($) {
 					JJShoutbox.showError(response.message, instance);
 				}
 			},
-			error: function(ts){
-				JJShoutbox.showError(ts, instance);
+			error: function(){
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
 			}
 		});
 
@@ -636,8 +636,8 @@ jQuery(document).ready(function($) {
 					JJShoutbox.showError(response.message, instance);
 				}
 			},
-			error: function(ts){
-				JJShoutbox.showError(ts, instance);
+			error: function(){
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
 			}
 		});
 

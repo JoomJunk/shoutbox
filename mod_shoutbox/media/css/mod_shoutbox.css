@@ -8,6 +8,9 @@
 	margin: auto; 
 	width: 100%; 
 }
+.jjshoutbox img { 
+	display: inline;
+}
 .jjshoutboxform { 
 	margin: 0 auto; 
 }
@@ -171,6 +174,7 @@
     display: none;
 }
 .edit-cancel,
+.edit-cancel.btn,
 .uk-button.edit-cancel {
     display: none;
 	width: 100%;

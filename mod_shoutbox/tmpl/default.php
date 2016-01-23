@@ -83,6 +83,7 @@ JText::script('SHOUT_BBCODE_INSERT_URL');
 JText::script('SHOUT_EDITOWN_TOO_LATE');
 JText::script('SHOUT_SUBMITTEXT');
 JText::script('SHOUT_UPDATE');
+JText::script('SHOUT_AJAX_ERROR');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox <?php echo $jj_class; ?>">
@@ -499,7 +500,10 @@ JText::script('SHOUT_UPDATE');
 			}			
 			else
 			{
-				var JJ_Recaptcha = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.getResponse();
+				var JJ_Recaptcha = '';
+				<?php if ($securitytype == 1) : ?>
+				JJ_Recaptcha = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.getResponse();
+				<?php endif; ?>
 
 				JJShoutbox.submitPost(shoutId, type, name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance, JJ_Recaptcha, JJ_History);
 			}
