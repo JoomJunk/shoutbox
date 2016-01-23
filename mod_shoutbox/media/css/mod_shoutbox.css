@@ -60,6 +60,7 @@
     margin: 0;
     border: 0;
     height: 15px;
+    line-height: 15px;
 	vertical-align: top;
 }
 .jjshoutboxoutput .shout-actions {
