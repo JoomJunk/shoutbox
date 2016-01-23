@@ -15,6 +15,8 @@ $ -> Language fix or change
 ! -> Note
 
 ###Wip
+
+Version 7.0.1
 # Fixed images sometimes not being inline
 # Fixed object [Object] error
 # Fixed ReCaptcha being executed if called from 3rd party sources
