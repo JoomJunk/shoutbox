@@ -377,7 +377,13 @@ class ModShoutboxHelper
 		}
 		$message = JString::substr($message, 0, $length);
 
-		$ip = $_SERVER['REMOTE_ADDR'];
+		$ip = JFactory::getInput()->server->get('REMOTE_ADDR');
+
+		// If we don't have a valid IP address just store null in the database
+		if (filter_var($ip, FILTER_VALIDATE_IP) === false)
+		{
+			$ip = null;
+		}
 
 		// The name field will have all html stripped
 		$nameFilter = JFilterInput::getInstance();
@@ -896,7 +902,7 @@ class ModShoutboxHelper
 
 					$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
 
-					$resp = $recaptcha->verify($challengeField, $_SERVER['REMOTE_ADDR']);			
+					$resp = $recaptcha->verify($challengeField, JFactory::getInput()->server->get('REMOTE_ADDR'));
 
 					if ($resp->isSuccess())
 					{
