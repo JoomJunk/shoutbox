@@ -694,14 +694,7 @@ class ModShoutboxHelper
 
 			$db->setQuery($query);
 
-			try
-			{
-				$db->execute();
-			}
-			catch (Exception $e)
-			{
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
-			}
+			$db->execute();
 
 			return $db->insertid();
 		}
