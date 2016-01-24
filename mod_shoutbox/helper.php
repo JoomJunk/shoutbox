@@ -278,7 +278,7 @@ class ModShoutboxHelper
 	{
 		$title = null;
 
-		if ($user->authorise('core.delete'))
+		if ($user->authorise('core.admin'))
 		{
 			$title = ' title="' . $ip . '"';
 		}
