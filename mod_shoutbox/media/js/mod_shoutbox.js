@@ -175,6 +175,7 @@ JJShoutbox.drawMathsQuestion = function(number1, number2)
 
 	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.font = '14px Arial';
+	ctx.fillStyle = 'grey';
 	ctx.fillText(number1 + ' + ' + number2 + ' = ', 10, 20);
 }
 
