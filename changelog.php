@@ -17,6 +17,7 @@ $ -> Language fix or change
 ###Wip
 ^ PHP Exception improvements
 ^ Improved sanity check for showing IP address
+# Fixed drawMathsQuestion executing when it shouldn't
 
 Version 7.0.1
 # Fixed images sometimes not being inline

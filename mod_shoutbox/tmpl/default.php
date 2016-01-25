@@ -505,7 +505,7 @@ JText::script('SHOUT_AJAX_ERROR');
 				JJ_Recaptcha = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.getResponse();
 				<?php endif; ?>
 
-				JJShoutbox.submitPost(shoutId, type, name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance, JJ_Recaptcha, JJ_History);
+				JJShoutbox.submitPost(shoutId, type, name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance, JJ_Recaptcha, <?php echo $securityHide; ?>, JJ_History);
 			}
 		}
 

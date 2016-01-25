@@ -507,7 +507,7 @@ jQuery(document).ready(function($) {
 		}
 
 		// Valid or not refresh maths values and empty answer
-		if (securityType == 2)
+		if (securityType == 2 && securityHide != 1)
 		{
 			var val1, val2;
 			val1 = JJShoutbox.getRandomArbitrary(0,9);
