@@ -15,6 +15,8 @@ $ -> Language fix or change
 ! -> Note
 
 ###Wip
+^ PHP Exception improvements
+^ Improved sanity check for showing IP address
 
 Version 7.0.1
 # Fixed images sometimes not being inline
