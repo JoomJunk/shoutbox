@@ -52,29 +52,29 @@ class ModShoutboxHelper
 		$helper->ajax = true;
 
 		// Make sure someone pressed shout and the post message isn't empty
-		if (isset($post['shout']))
+		if (!isset($post['shout']))
 		{
-			if (empty($post['message']))
-			{
-				throw new RuntimeException('The message body is empty');				
-			}
-
-			$id    = $helper->submitPost($post);
-			$shout = $helper->getAShout($id);
-
-			$htmlOutput = $helper->renderPost($shout);
-
-			// Return the HTML represetation, the id and the message contents
-			$result = array(
-				'html'    => $htmlOutput,
-				'id'      => $id,
-				'message' => $shout->msg
-			);
-
-			return $result;
+			throw new RuntimeException('There was an error processing the form.');				
 		}
-		
-		throw new RuntimeException('There was an error processing the form. Please try again!');
+
+		if (empty($post['message']))
+		{
+			throw new InvalidArgumentException('The message body is empty');				
+		}
+
+		$id    = $helper->submitPost($post);
+		$shout = $helper->getAShout($id);
+
+		$htmlOutput = $helper->renderPost($shout);
+
+		// Return the HTML represetation, the id and the message contents
+		$result = array(
+			'html'    => $htmlOutput,
+			'id'      => $id,
+			'message' => $shout->msg
+		);
+
+		return $result;
 	}
 
 	/**
@@ -93,7 +93,7 @@ class ModShoutboxHelper
 		// Retrieve required parameter
 		if (!isset($post['title']))
 		{
-			throw new RuntimeException("Couldn't assemble the necessary parameters for the module");
+			throw new InvalidArgumentException("Couldn't assemble the necessary parameters for the module");
 		}
 
 		$helper       = new ModShoutboxHelper($post['title']);
@@ -121,8 +121,6 @@ class ModShoutboxHelper
 		);
 
 		return $result;
-		
-		throw new RuntimeException('There was an error processing the form. Please try again!');
 	}
 
 	/**
@@ -177,7 +175,17 @@ class ModShoutboxHelper
 		}
 		catch (Exception $e)
 		{
-			$shouts = $this->createErrorMsg($message, $e);
+			// Output error to shoutbox.
+			$shouts    = array();
+			$shouts[0] = new stdClass;
+			$shouts[0]->name = 'Administrator';
+			$shouts[0]->when = JFactory::getDate()->format('Y-m-d H:i:s');
+			$shouts[0]->msg = $message;
+			$shouts[0]->ip = 'System';
+			$shouts[0]->user_id = 0;
+
+			// Add error to log.
+			JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e->getMessage()), JLog::CRITICAL, 'mod_shoutbox');
 		}
 
 		return $shouts;
@@ -270,7 +278,7 @@ class ModShoutboxHelper
 	{
 		$title = null;
 
-		if ($user->authorise('core.delete'))
+		if ($user->authorise('core.admin'))
 		{
 			$title = ' title="' . $ip . '"';
 		}
@@ -377,7 +385,13 @@ class ModShoutboxHelper
 		}
 		$message = JString::substr($message, 0, $length);
 
-		$ip = $_SERVER['REMOTE_ADDR'];
+		$ip = JFactory::getApplication()->input->server->get('REMOTE_ADDR');
+
+		// If we don't have a valid IP address just store null in the database
+		if (filter_var($ip, FILTER_VALIDATE_IP) === false)
+		{
+			$ip = null;
+		}
 
 		// The name field will have all html stripped
 		$nameFilter = JFilterInput::getInstance();
@@ -595,13 +609,17 @@ class ModShoutboxHelper
 			elseif ($profile == 2)
 			{
 				$klink = KunenaFactory::getUser((int) $user_id)->getLink();
+				$href  = '#';
 				
-				$dom = new DOMDocument;
-				$dom->loadHTML($klink);
-				
-				foreach ($dom->getElementsByTagName('a') as $node) 
+				if (!JFactory::getUser()->guest)
 				{
-					$href = $node->getAttribute('href');
+					$dom = new DOMDocument;
+					$dom->loadHTML($klink);
+				
+					foreach ($dom->getElementsByTagName('a') as $node) 
+					{
+						$href = $node->getAttribute('href');
+					}
 				}
 				
 				// Kunena Profile Link
@@ -680,14 +698,7 @@ class ModShoutboxHelper
 
 			$db->setQuery($query);
 
-			try
-			{
-				$db->execute();
-			}
-			catch (Exception $e)
-			{
-				JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e), JLog::CRITICAL, 'mod_shoutbox');
-			}
+			$db->execute();
 
 			return $db->insertid();
 		}
@@ -896,7 +907,7 @@ class ModShoutboxHelper
 
 					$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
 
-					$resp = $recaptcha->verify($challengeField, $_SERVER['REMOTE_ADDR']);			
+					$resp = $recaptcha->verify($challengeField, JFactory::getInput()->server->get('REMOTE_ADDR'));
 
 					if ($resp->isSuccess())
 					{
@@ -1129,32 +1140,6 @@ class ModShoutboxHelper
 		}
 		
 		return $url;
-	}
-
-	/*
-	 * Creates the error message to display to the user
-	 * 
-	 * @param   string     $message  The translated string to show to the user
-	 * @param   Exception  $e        The database exception when trying to retrieve the posts
-	 * 
-	 * @return  array  An array
-	 *
-	 * @since   2.0
-	 */
-	private function createErrorMsg($message, $e)
-	{
-		// Output error to shoutbox.
-		$shouts[0] = new stdClass;
-		$shouts[0]->name = 'Administrator';
-		$shouts[0]->when = JFactory::getDate()->format('Y-m-d H:i:s');
-		$shouts[0]->msg = $message;
-		$shouts[0]->ip = 'System';
-		$shouts[0]->user_id = 0;
-
-		// Add error to log.
-		JLog::add(JText::sprintf('SHOUT_DATABASE_ERROR', $e->getMessage()), JLog::CRITICAL, 'mod_shoutbox');
-
-		return $shouts;
 	}
 	
 	/*

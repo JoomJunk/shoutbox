@@ -56,6 +56,13 @@
 .jj_fallback .btn-group + .btn-group {
 	margin-left: 5px;
 }
+.jj_fallback .edit-cancel.btn {
+    display: none;
+	width: 100%;
+	margin-top: 5px;
+    min-height: 30px;
+	box-sizing: border-box;
+}
  
 
 /** Modal **/

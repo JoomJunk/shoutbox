@@ -16,6 +16,15 @@ $ -> Language fix or change
 
 ###Wip
 
+
+Version 7.0.2
+# Fixed drawMathsQuestion executing when it shouldn't
+# Fixed PHP fatal error for Kunena profile links when logged out
+# Fixed cancel buttons showing for Non-Bootstrap
+^ PHP Exception improvements
+^ Improved sanity check for showing IP address
+^ Other minor improvements anf fixes
+
 Version 7.0.1
 # Fixed images sometimes not being inline
 # Fixed object [Object] error

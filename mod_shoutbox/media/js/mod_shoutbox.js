@@ -175,6 +175,7 @@ JJShoutbox.drawMathsQuestion = function(number1, number2)
 
 	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.font = '14px Arial';
+	ctx.fillStyle = 'grey';
 	ctx.fillText(number1 + ' + ' + number2 + ' = ', 10, 20);
 }
 
@@ -507,7 +508,7 @@ jQuery(document).ready(function($) {
 		}
 
 		// Valid or not refresh maths values and empty answer
-		if (securityType == 2)
+		if (securityType == 2 && securityHide != 1)
 		{
 			var val1, val2;
 			val1 = JJShoutbox.getRandomArbitrary(0,9);
