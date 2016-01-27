@@ -609,13 +609,17 @@ class ModShoutboxHelper
 			elseif ($profile == 2)
 			{
 				$klink = KunenaFactory::getUser((int) $user_id)->getLink();
+				$href  = '#';
 				
-				$dom = new DOMDocument;
-				$dom->loadHTML($klink);
-				
-				foreach ($dom->getElementsByTagName('a') as $node) 
+				if (!JFactory::getUser()->guest)
 				{
-					$href = $node->getAttribute('href');
+					$dom = new DOMDocument;
+					$dom->loadHTML($klink);
+				
+					foreach ($dom->getElementsByTagName('a') as $node) 
+					{
+						$href = $node->getAttribute('href');
+					}
 				}
 				
 				// Kunena Profile Link
