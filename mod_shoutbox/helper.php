@@ -385,7 +385,7 @@ class ModShoutboxHelper
 		}
 		$message = JString::substr($message, 0, $length);
 
-		$ip = JFactory::getInput()->server->get('REMOTE_ADDR');
+		$ip = JFactory::getApplication()->input->server->get('REMOTE_ADDR');
 
 		// If we don't have a valid IP address just store null in the database
 		if (filter_var($ip, FILTER_VALIDATE_IP) === false)
