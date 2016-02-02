@@ -429,9 +429,9 @@ JText::script('SHOUT_AJAX_ERROR');
 				JJShoutbox.drawMathsQuestion(<?php echo $que_number1; ?>, <?php echo $que_number2; ?>);
 	<?php } } ?>
 	
-	var JJ_Framework_type = '<?php echo $framework; ?>';
-	var JJ_History        = '<?php echo $history; ?>';
-	var JJ_Edit_own       = '<?php echo $editown; ?>';
+	var JJ_frameworkType = '<?php echo $framework; ?>';
+	var JJ_history       = '<?php echo $history; ?>';
+	var JJ_editOwn       = '<?php echo $editown; ?>';
 	
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 	
@@ -441,108 +441,118 @@ JText::script('SHOUT_AJAX_ERROR');
 	
 	jQuery(document).ready(function($) {
 		
-		var count		= <?php echo $number; ?>;
-		var offset		= <?php echo $number; ?>;
-		var Itemid   	= <?php echo $Itemid ? $Itemid : 'null'; ?>;
-		var instance 	= $('#<?php echo $uniqueIdentifier; ?>');		
-		var entersubmit = '<?php echo $entersubmit; ?>';
+		var JJ_offset      = <?php echo $number; ?>;
+		var JJ_itemId      = <?php echo $Itemid ? $Itemid : 'null'; ?>;
+		var JJ_instance    = $('#<?php echo $uniqueIdentifier; ?>');		
+		var JJ_entersubmit = '<?php echo $entersubmit; ?>';
 		
-		if (entersubmit == 0)
+		if (JJ_entersubmit == 0)
 		{
-			instance.on('click', '#shoutbox-submit', function(e){
+			JJ_instance.on('click', '#shoutbox-submit', function(e){
 				e.preventDefault();
-				JJShoutbox.doShoutboxSubmission(instance.find('#shout-submit-type').attr('data-submit-type'), instance.find('#shout-submit-type').attr('data-shout-id'));
+				JJShoutbox.doShoutboxSubmission(JJ_instance.find('#shout-submit-type').attr('data-submit-type'), JJ_instance.find('#shout-submit-type').attr('data-shout-id'));
 			});
 		}
 		else
 		{
-			instance.on('keydown', '#jj_message', function(e) {
+			JJ_instance.on('keydown', '#jj_message', function(e) {
 				if (e.which == 13) 
 				{
 					e.preventDefault();
-					JJShoutbox.doShoutboxSubmission(instance.find('#shout-submit-type').attr('data-submit-type'), instance.find('#shout-submit-type').attr('data-shout-id'));
+					JJShoutbox.doShoutboxSubmission(JJ_instance.find('#shout-submit-type').attr('data-submit-type'), JJ_instance.find('#shout-submit-type').attr('data-shout-id'));
 				}
 			});
 		}
 		
-		JJShoutbox.doShoutboxSubmission = function(type, shoutId) 
+		JJShoutbox.doShoutboxSubmission = function(JJ_type, JJ_shoutId) 
 		{
-			var shoutboxName 	= instance.find('#shoutbox-name').val();
-			var shoutboxMsg		= instance.find('#jj_message').val();
+			var JJ_shoutboxName = JJ_instance.find('#shoutbox-name').val();
+			var JJ_shoutboxMsg	= JJ_instance.find('#jj_message').val();
 			
-			<?php if ($displayName == 'user' && !$user->guest) { ?>
-				var name = '<?php echo $user->username;?>';
-			<?php } elseif($displayName == 'real' && !$user->guest) { ?>
-				var name = '<?php echo $user->name;?>';
-			<?php } else { ?>
-			if (shoutboxName == '')
+			<?php if ($displayName == 'user' && !$user->guest) : ?>
+				var JJ_name = '<?php echo $user->username;?>';
+			<?php elseif ($displayName == 'real' && !$user->guest) : ?>
+				var JJ_name = '<?php echo $user->name;?>';
+			<?php else : ?>
+			if (JJ_shoutboxName == '')
 			{			
-				<?php if ($nameRequired == 0 && $user->guest) { ?>
-					var name = '<?php echo $genericName;?>';
-				<?php } else { ?>		
-					var name = 'JJ_None';
-				<?php } ?>
+				<?php if ($nameRequired == 0 && $user->guest) : ?>
+					var JJ_name = '<?php echo $genericName;?>';
+				<?php else : ?>		
+					var JJ_name = 'JJ_None';
+				<?php endif; ?>
 			}
 			else
 			{			
-				var name = shoutboxName;
+				var JJ_name = JJ_shoutboxName;
 			}
-			<?php } ?>
+			<?php endif; ?>
 
 			// Run error reporting
-			if (shoutboxMsg == '')
+			if (JJ_shoutboxMsg == '')
 			{
-				JJShoutbox.showError(Joomla.JText._('SHOUT_MESSAGE_EMPTY'), instance);
+				JJShoutbox.showError(Joomla.JText._('SHOUT_MESSAGE_EMPTY'), JJ_instance);
 			}
 			else if (name == 'JJ_None')
 			{
-				JJShoutbox.showError(Joomla.JText._('SHOUT_NAME_EMPTY'), instance);
+				JJShoutbox.showError(Joomla.JText._('SHOUT_NAME_EMPTY'), JJ_instance);
 			}			
 			else
 			{
-				var JJ_Recaptcha = '';
+				var JJ_recaptcha = '';
 				<?php if ($securitytype == 1) : ?>
-				JJ_Recaptcha = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.getResponse();
+				JJ_recaptcha = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.getResponse();
 				<?php endif; ?>
+				
+				var JJ_ShoutPostParams = {
+					shoutId     : JJ_shoutId,
+					itemId      : JJ_itemId,
+					type        : JJ_type,
+					name        : JJ_name,
+					title       : '<?php echo $title; ?>',
+					secrityType : '<?php echo $securitytype; ?>',
+					secrityHide : '<?php echo $securityHide; ?>',
+					token       : '<?php echo JSession::getFormToken(); ?>',
+					recaptcha   : JJ_recaptcha,
+					instance    : JJ_instance,
+					history     : JJ_history
+				};	
 
-				JJShoutbox.submitPost(shoutId, type, name, '<?php echo $title; ?>', <?php echo $securitytype; ?>, '<?php echo JSession::getFormToken(); ?>', Itemid, instance, JJ_Recaptcha, <?php echo $securityHide; ?>, JJ_History);
+				JJShoutbox.submitPost(JJ_ShoutPostParams);
 			}
 		}
 
-		if (JJ_History == 1)
+		if (JJ_history == 1)
 		{
 			$('#jj-load-more').on('click', function(e){
 				
 				e.preventDefault();
 
-				var Itemid = '<?php echo $Itemid; ?>';
-				JJShoutbox.getPostsHistory('<?php echo $title; ?>', Itemid, instance, offset);
+				var JJ_itemId = '<?php echo $Itemid; ?>';
+				JJShoutbox.getPostsHistory('<?php echo $title; ?>', JJ_itemId, JJ_instance, JJ_offset);
 
-				offset = offset + <?php echo $number; ?>;
+				JJ_offset = JJ_offset + <?php echo $number; ?>;
 			});
 		}
-		
-		
-		if (JJ_Edit_own == 1)
+
+		if (JJ_editOwn == 1)
 		{
 			$('#jjshoutboxoutput').on('click', '.jj-shout-edit', function(e) {
 
 				e.preventDefault();
 				
-				var shoutId = $(this).attr('data-shout-edit-id');
+				var JJ_shoutId = $(this).attr('data-shout-edit-id');
 				
-				JJShoutbox.checkTimestamp('<?php echo $title; ?>', Itemid, instance, shoutId);
+				JJShoutbox.checkTimestamp('<?php echo $title; ?>', JJ_itemId, JJ_instance, JJ_shoutId);
 				
 			});
 		}
-		
-		
 
 		// Refresh the shoutbox posts every X seconds
 		setInterval(function(){
-			var Itemid = '<?php echo $Itemid; ?>';
-			var insertName = '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>';
-			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', '<?php echo $notifications; ?>', Itemid, instance, insertName, JJ_History);
+			var JJ_itemId = '<?php echo $Itemid; ?>';
+			var JJ_insertName = '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>';
+			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', '<?php echo $notifications; ?>', JJ_itemId, JJ_instance, JJ_insertName, JJ_history);
 		}, <?php echo $refresh; ?>);
 	});	
 	<?php endif; ?>

@@ -209,11 +209,11 @@ JJShoutbox.getLastAuthor = function(instance)
  */
 JJShoutbox.showError = function(msg, instance)
 {
-	if (JJ_Framework_type == 'uikit')
+	if (JJ_frameworkType == 'uikit')
 	{
 		var alertClass = 'uk-alert uk-alert-danger';
 	}
-	else if (JJ_Framework_type == 'bootstrap3')
+	else if (JJ_frameworkType == 'bootstrap3')
 	{
 		var alertClass = 'alert alert-danger';
 	}
@@ -302,7 +302,7 @@ jQuery(document).ready(function($) {
 
 		e.preventDefault();
 		
-		if (JJ_Framework_type == 'uikit')
+		if (JJ_frameworkType == 'uikit')
 		{
 			var modal = UIkit.modal('#jj-image-modal');
 		}
@@ -321,7 +321,7 @@ jQuery(document).ready(function($) {
 		modal.find('.image-name').text(alt);
 		
 		// Show the modal
-		if (JJ_Framework_type == 'uikit')
+		if (JJ_frameworkType == 'uikit')
 		{
 			modal.show();
 		}
@@ -340,7 +340,7 @@ jQuery(document).ready(function($) {
 
 		e.preventDefault();
 		
-		if (JJ_Framework_type == 'uikit')
+		if (JJ_frameworkType == 'uikit')
 		{
 			UIkit.modal('#jj-history-modal').show();
 		}
@@ -426,40 +426,40 @@ jQuery(document).ready(function($) {
 	/**
 	 * Submit a shout
 	 */
-	JJShoutbox.submitPost = function(id, type, name, title, securityType, security, Itemid, instance, ReCaptchaResponse, history)
+	JJShoutbox.submitPost = function(params)
 	{
 		// Assemble some commonly used vars
-		var textarea = instance.find('#jj_message'),
+		var textarea = params.instance.find('#jj_message'),
 		message = textarea.val();
 
 		// Assemble variables to submit	
 		var request = {
-			'jjshout[id]'      : id,
-			'jjshout[type]'    : type,
-			'jjshout[name]'    : name,
+			'jjshout[id]'      : params.shoutId,
+			'jjshout[type]'    : params.type,
+			'jjshout[name]'    : params.name,
 			'jjshout[message]' : message.replace(/\n/g, "<br />"),
 			'jjshout[shout]'   : 'Shout!',
-			'jjshout[title]'   : title,
+			'jjshout[title]'   : params.title,
 		};
 		
-		request[security] = 1;
+		request[params.token] = 1;
 
-		if (securityType == 1)
+		if (params.securityType == 1)
 		{
-			request['g-recaptcha-response'] = ReCaptchaResponse;
+			request['g-recaptcha-response'] = params.recaptcha;
 		}
 
-		if (securityType == 2)
+		if (params.securityType == 2)
 		{
-			request['jjshout[sum1]']  = instance.find('input[name="jjshout[sum1]"]').val();
-			request['jjshout[sum2]']  = instance.find('input[name="jjshout[sum2]"]').val();
-			request['jjshout[human]'] = instance.find('input[name="jjshout[human]"]').val();
+			request['jjshout[sum1]']  = params.instance.find('input[name="jjshout[sum1]"]').val();
+			request['jjshout[sum2]']  = params.instance.find('input[name="jjshout[sum2]"]').val();
+			request['jjshout[human]'] = params.instance.find('input[name="jjshout[human]"]').val();
 		}
 
 		// If there is an active menu item then we need to add it to the request.
-		if (Itemid !== null)
+		if (params.itemId !== null)
 		{
-			request['Itemid'] = Itemid;
+			request['Itemid'] = params.itemId;
 		}
 
 		// AJAX request
@@ -474,9 +474,9 @@ jQuery(document).ready(function($) {
 					textarea.val('');
 
 					// Empty the name value if there is one
-					if (instance.find('#shoutbox-name').val())
+					if (params.instance.find('#shoutbox-name').val())
 					{
-						instance.find('#shoutbox-name').val('');
+						params.instance.find('#shoutbox-name').val('');
 					}
 					
 					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_SUBMITTEXT'));
@@ -487,20 +487,20 @@ jQuery(document).ready(function($) {
 					$('#edit-cancel').css('display', 'none');
 
 					// Refresh the output
-					JJShoutbox.getPosts(title, false, false, Itemid, instance, false, history)
+					JJShoutbox.getPosts(params.title, false, false, params.itemId, params.instance, false, params.history)
 				}
 				else
 				{
-					JJShoutbox.showError(response.message, instance);
+					JJShoutbox.showError(response.message, params.instance);
 				}
 			},
 			error: function(){
-				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), params.instance);
 			}
 		});
 
 		// Valid or not refresh recaptcha
-		if (securityType == 1)
+		if (params.securityType == 1)
 		{
 			var JJ_RecaptchaReset = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.reset();
 			
@@ -508,7 +508,7 @@ jQuery(document).ready(function($) {
 		}
 
 		// Valid or not refresh maths values and empty answer
-		if (securityType == 2 && securityHide != 1)
+		if (params.securityType == 2 && params.securityHide != 1)
 		{
 			var val1, val2;
 			val1 = JJShoutbox.getRandomArbitrary(0,9);
