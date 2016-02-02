@@ -15,7 +15,7 @@ $ -> Language fix or change
 ! -> Note
 
 ###Wip
-$ Updated French language files (thanks Max)
+$ Updated French language files (thanks MATsxm)
 
 
 Version 7.0.2
