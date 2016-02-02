@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 ###Wip
 $ Updated French language files (thanks MATsxm)
+$ Updated Polish language files (thanks asmax)
 
 
 Version 7.0.2
