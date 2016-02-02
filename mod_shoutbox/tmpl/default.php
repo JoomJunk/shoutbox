@@ -169,12 +169,12 @@ JText::script('SHOUT_AJAX_ERROR');
 						}
 
 						// Adds in session token to prevent re-posts and a security token to prevent CRSF attacks
-						$_SESSION['token'] = uniqid("token", true);
+						$app->setUserState('token', uniqid("token", true));
 						echo JHtml::_('form.token');
 					?>
 				</div>
 				
-				<input name="jjshout[token]" type="hidden" value="<?php echo $_SESSION['token'];?>" />
+				<input name="jjshout[token]" type="hidden" value="<?php echo $app->getUserState('token'); ?>" />
 				
 				<div class="<?php echo $form_row; ?>">
 					<?php if ($enablelimit == 1) : ?>

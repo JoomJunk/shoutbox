@@ -851,6 +851,8 @@ class ModShoutboxHelper
 	{
 		// Get the user instance
 		$user             = JFactory::getUser();
+		$app              = JFactory::getApplication();
+		$token            = $app->getUserState('token');
 		$displayName      = $this->params->get('loginname', 'user');
 		$securityType     = $this->params->get('securitytype', 0);
 		$securityHide     = $this->params->get('security-hide', 0);
@@ -858,7 +860,7 @@ class ModShoutboxHelper
 		$swearNumber      = $this->params->get('swearingnumber');
 
 		// If we submitted by PHP check for a session token
-		if ($this->ajax || $_SESSION['token'] == $post['token'])
+		if ($this->ajax || $token == $post['token'])
 		{
 			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
 
