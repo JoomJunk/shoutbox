@@ -18,6 +18,7 @@ $ -> Language fix or change
 $ Updated French language files (thanks MATsxm)
 $ Updated Polish language files (thanks asmax)
 ^ Javascript improvements
+^ Shoutbox only refreshes for logged in users
 
 
 Version 7.0.2
