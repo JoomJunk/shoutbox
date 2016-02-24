@@ -15,9 +15,10 @@ $ -> Language fix or change
 ! -> Note
 
 ###Wip
++ Added "Elapsed time" option
+# Fixed timestamp changing on shout edit
 $ Updated French language files (thanks MATsxm)
 $ Updated Polish language files (thanks asmax)
-# Fixed timestamp changing on shout edit
 ^ Shoutbox only refreshes for logged in users
 ^ Javascript improvements
 ^ CSS improvements

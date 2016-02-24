@@ -189,6 +189,7 @@ Shoutbox history
 **/
 .jj-shout-history.modal-body {
 	max-height: 400px;
+	overflow-y: auto;
 }
 .jj-shout-history .jj-shout-edit {
 	display: none;

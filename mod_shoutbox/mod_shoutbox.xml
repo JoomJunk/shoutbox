@@ -106,6 +106,7 @@
 					<option value="1">SHOUT_DATE_SPACE</option>
 					<option value="4">SHOUT_DATE_SPACE_OPTION_TWO</option>
 					<option value="5">SHOUT_DATE_REVERSED</option>
+					<option value="6">SHOUT_DATE_ELAPSED</option>
 					<option value="2">SHOUT_DONT_SHOW</option>
 				</field>		
 				<field name="refresh" type="text" default="10" label="SHOUT_AUTO_REFRESH" description="SHOUT_AUTO_REFRESH_DESC" />

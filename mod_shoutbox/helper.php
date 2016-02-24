@@ -224,7 +224,8 @@ class ModShoutboxHelper
 		// Ensure the date formatting
 		foreach ($rows as $row)
 		{
-			$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
+			//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
+			$row->when = JFactory::getDate($row->when);
 		}
 
 		return $rows;
@@ -260,7 +261,8 @@ class ModShoutboxHelper
 		}
 
 		// Format the when correctly
-		$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
+		//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
+		$row->when = JFactory::getDate($row->when);
 
 		return $row;
 	}
@@ -960,6 +962,57 @@ class ModShoutboxHelper
 			}
 		}
 	}
+	
+	/**
+	 * Converts the date to an elapsed time, e.g "1 day ago"
+	 *
+	 * @param     string   $datetime  The date to be converted
+	 * @param     boolean  $full      Show the full elapsed time
+	 *
+	 * @return    string   The elapsed time
+	 *
+	 * @since     8.0.0
+	 *
+	 * @adapted from       http://stackoverflow.com/a/18602474/1362108
+	 */
+	public function timeElapsed($datetime, $full = false)
+	{
+		$now  = JFactory::getDate();
+		$ago  = JFactory::getDate($datetime);
+		$diff = $now->diff($ago);
+
+		$diff->w = floor($diff->d / 7);
+		$diff->d -= $diff->w * 7;
+
+		$string = array(
+			'y' => 'year',
+			'm' => 'month',
+			'w' => 'week',
+			'd' => 'day',
+			'h' => 'hour',
+			'i' => 'minute',
+			's' => 'second',
+		);
+
+		foreach ($string as $k => &$v) 
+		{
+			if ($diff->$k)
+			{
+				$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+			}
+			else
+			{
+				unset($string[$k]);
+			}
+		}
+
+		if (!$full)
+		{
+			$string = array_slice($string, 0, 1);
+		}
+
+		return $string ? implode(', ', $string) . ' ago' : 'just now';
+	}
 
 	/**
 	 * Renders the message contents with the special variables
@@ -982,46 +1035,62 @@ class ModShoutboxHelper
 		switch ($this->params->get('date'))
 		{
 			case 0:
-				$show_date = "d/m/Y - ";
+				$show_date = 'd/m/Y - ';
+				$show_time = 'H:i';
 				break;
 			case 1:
-				$show_date = "D m Y - ";
+				$show_date = 'D m Y - ';
+				$show_time = 'H:i';
 				break;
 			case 3:
-				$show_date = "m/d/Y - ";
+				$show_date = 'm/d/Y - ';
+				$show_time = 'H:i';
 				break;
 			case 4:
-				$show_date = "D j M - ";
+				$show_date = 'D j M - ';
+				$show_time = 'H:i';
 				break;
 			case 5:
-				$show_date = "D j M - ";
+				$show_date = 'D j M - ';
+				$show_time = 'H:i';
+				break;
+			case 6:
+				$show_date = 'Y-m-d ';
+				$show_time = 'H:i:s';
 				break;
 			default:
-				$show_date = "";
+				$show_date = '';
+				$show_time = 'H:i';
 				break;
 		}
 
-		$shout->when = JHtml::date($shout->when, $show_date . 'H:i', true);
+		$shout->when = JHtml::date($shout->when, $show_date . $show_time, true);
+
+		// Convert to "time elapsed" format 
+		if ($this->params->get('date') == 6)
+		{
+			$shout->when = $this->timeElapsed($shout->when);
+		}
 
 		$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
 
 		// Perform Smiley and BBCode filtering if required
 		if ($bbcode == 1)
 		{
-			$shout->msg = $this->bbcodeFilter($shout->msg);
+			$shout->msg  = $this->bbcodeFilter($shout->msg);
 			$shout->name = $this->bbcodeFilter($profile_link);
 		}
 		else
 		{
-			$shout->msg = nl2br($shout->msg);
+			$shout->msg  = nl2br($shout->msg);
 			$shout->name = $profile_link;
 		}
 
 		// Assemble the data together
 		$data = array(
-			'post' => $shout,
-			'user' => $user,
-			'title' => $this->shouttitle($user, $shout->ip),
+			'post'   => $shout,
+			'user'   => $user,
+			'title'  => $this->shouttitle($user, $shout->ip),
 			'avatar' => $this->getAvatar($this->params->get('avatar', 'none'), $shout->user_id),
 			'params' => $this->params,
 		);
@@ -1032,8 +1101,8 @@ class ModShoutboxHelper
 			'client' => 0
 		);
 		$registry = new JRegistry($options);
-		$layout = new JJShoutboxLayoutFile($layout, null, $registry);
-		$output = $layout->render($data);
+		$layout   = new JJShoutboxLayoutFile($layout, null, $registry);
+		$output   = $layout->render($data);
 
 		return $output;
 	}
@@ -1056,7 +1125,7 @@ class ModShoutboxHelper
 
 		if ($type == 'gravatar')
 		{
-			$atts 	= array();		
+			$atts 	= array();
 
 			$url = 'https://www.gravatar.com/avatar/';
 			$url .= md5(strtolower(trim($email)));
