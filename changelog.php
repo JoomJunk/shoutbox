@@ -17,9 +17,11 @@ $ -> Language fix or change
 ###Wip
 $ Updated French language files (thanks MATsxm)
 $ Updated Polish language files (thanks asmax)
-^ Javascript improvements
-^ Shoutbox only refreshes for logged in users
 # Fixed timestamp changing on shout edit
+^ Shoutbox only refreshes for logged in users
+^ Javascript improvements
+^ CSS improvements
+^ Other general code imporvements
 
 
 Version 7.0.2
