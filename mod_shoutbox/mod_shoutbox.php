@@ -83,7 +83,7 @@ switch ($framework)
 		$jj_class      = null;
 		$input_small   = 'uk-form-width-small';
 		break;
-		
+
 	case 'bootstrap':
 		$form          = null;
 		$button_group  = ' btn-group';
@@ -99,7 +99,7 @@ switch ($framework)
 		$jj_class      = null;
 		$input_small   = 'input-small';
 		break;
-		
+
 	case 'bootstrap3':
 		$form          = null;
 		$button_group  = ' btn-group';
@@ -115,7 +115,7 @@ switch ($framework)
 		$jj_class      = null;
 		$input_small   = 'input-sm';
 		break;
-		
+
 	default:
 		$form          = null;
 		$button_group  = ' btn-group';
