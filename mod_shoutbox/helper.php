@@ -1193,7 +1193,7 @@ class ModShoutboxHelper
 				$htmlOutput[] = array(
 					'id'      => $shout->id,
 					'name'    => $shout->name,
-					'when'    => $shout->when,
+					'when'    => JFactory::getDate($shout->when)->toUnix(),
 					'ip'      => $shout->ip,
 					'msg'     => $shout->msg,
 					'user_id' => $shout->user_id,

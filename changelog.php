@@ -19,6 +19,7 @@ $ Updated French language files (thanks MATsxm)
 $ Updated Polish language files (thanks asmax)
 ^ Javascript improvements
 ^ Shoutbox only refreshes for logged in users
+# Fixed timestamp changing on shout edit
 
 
 Version 7.0.2
