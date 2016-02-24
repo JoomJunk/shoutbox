@@ -370,8 +370,8 @@ JText::script('SHOUT_AJAX_ERROR');
 				{
 					foreach ($shouts as $shout) 
 					{
-						//$modalContent .= $modalContent;   // DOES NOT WORK
-						$modalContent .= '<p>test</p>';     // WORKS
+						$modalContent .= $helper->renderPost($shout); // DOES NOT WORK
+						//$modalContent .= '<p>test</p>';             // WORKS
 					}
 				}
 				
