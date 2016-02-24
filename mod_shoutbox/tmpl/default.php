@@ -320,105 +320,97 @@ JText::script('SHOUT_AJAX_ERROR');
 			// Shows no members allowed to post text
 			echo '<p id="noguest">' . JText::_('SHOUT_NONMEMBER') . '</p>';
 		}
-		?>
 
-		<?php if ($bbcode == 1) : ?>
-			<div id="jj-image-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ Image Modal" aria-hidden="true">
-				<?php if ($framework == 'uikit') : ?>
-					<div class="uk-modal-dialog">
-						<a class="uk-modal-close uk-close"></a>
-						<div class="uk-modal-header">
-							<h3 class="image-name"></h3>
-						</div>
-						<img src="" alt="" />
-					</div>
-				<?php else: ?>
-					<div class="modal-dialog modal-lg" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h3 class="image-name"></h3>
-							</div>
-							<div class="modal-body">
-								<img class="<?php echo $modal_img; ?>" src="" alt="" />
-							</div>
-						</div>
-					</div>
-				<?php endif; ?>
-			</div>
-		<?php endif; ?>	
-	</div>
-	
-	<?php if ($history == 1 ) : ?>
-		<div id="jj-history-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ History Modal" aria-hidden="true">	
-			<?php if ($framework == 'uikit') : ?>
-				<div class="uk-modal-dialog">
-					<a class="uk-modal-close uk-close"></a>
-					<div class="uk-modal-header">
-						<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
-					</div>
-					<div id="jj-shout-history" class="jj-shout-history uk-overflow-container">
-						<?php 
-							// Retrieves the shouts from the database
-							$shouts = $helper->getShouts(0, $number, $dataerror);
-							
-							// Counts the number of shouts retrieved from the database
-							$actualnumber = count($shouts);
-							
-							if ($actualnumber == 0) 
-							{
-								echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
-							} 
-							else 
-							{
-								foreach ($shouts as $shout) 
-								{
-									echo $helper->renderPost($shout);
-								}
-							} 
-						 ?>
-						 <div class="center-block">
-							<a href="#" id="jj-load-more" class="uk-button uk-button-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
-						 </div>
-					</div>
-				</div>
-			<?php else: ?>
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
-						</div>
-						<div id="jj-shout-history" class="jj-shout-history modal-body">
-							<?php 
-								// Retrieves the shouts from the database
-								$shouts = $helper->getShouts(0, $number, $dataerror);
-								
-								// Counts the number of shouts retrieved from the database
-								$actualnumber = count($shouts);
-								
-								if ($actualnumber == 0) 
-								{
-									echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
-								} 
-								else 
-								{
-									foreach ($shouts as $shout) 
-									{
-										echo $helper->renderPost($shout);
-									}
-								} 
-							 ?>
-							 <div class="center-block">
-								<a href="#" id="jj-load-more" class="btn btn-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
-							 </div>
-						</div>
-					</div>
-				</div>
-			<?php endif; ?>
-		</div>
-	<?php endif; ?>
-	
+
+		// Modal HTML
+		$modalHtml    = '';
+		$modalContent = '';
+		
+		if ($bbcode == 1) :
+			$modalHtml .= '<div id="jj-image-modal" class="' . $modal . '" tabindex="-1" role="dialog" aria-labelledby="JJ Image Modal" aria-hidden="true">';
+				if ($framework == 'uikit') :
+					$modalHtml .= '<div class="uk-modal-dialog">';
+					$modalHtml .= '<a class="uk-modal-close uk-close"></a>';
+					$modalHtml .= '<div class="uk-modal-header">';
+					$modalHtml .= '<h3 class="image-name"></h3>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '<img src="" alt="" />';
+					$modalHtml .= '</div>';
+				else:
+					$modalHtml .= '<div class="modal-dialog modal-lg" role="document">';
+					$modalHtml .= '<div class="modal-content">';
+					$modalHtml .= '<div class="modal-header">';
+					$modalHtml .= '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+					$modalHtml .= '<h3 class="image-name"></h3>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '<div class="modal-body">';
+					$modalHtml .= '<img class="' . $modal_img . '" src="" alt="" />';
+					$modalHtml .= '</div>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '</div>';
+				endif;
+			$modalHtml .= '</div>';
+		endif;
+
+
+		if ($history == 1) :
+			$modalHtml .= '<div id="jj-history-modal" class="' . $modal . '" tabindex="-1" role="dialog" aria-labelledby="JJ History Modal" aria-hidden="true">';
+				
+				// Retrieves the shouts from the database
+				$shouts = $helper->getShouts(0, $number, $dataerror);
+
+				// Counts the number of shouts retrieved from the database
+				$actualnumber = count($shouts);
+				
+				if ($actualnumber == 0) 
+				{
+					$modalContent .= '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
+				}
+				else
+				{
+					foreach ($shouts as $shout) 
+					{
+						//$modalContent .= $modalContent;   // DOES NOT WORK
+						$modalContent .= '<p>test</p>';     // WORKS
+					}
+				}
+				
+				if ($framework == 'uikit') :
+					$modalHtml .= '<div class="uk-modal-dialog">';
+					$modalHtml .= '<a class="uk-modal-close uk-close"></a>';
+					$modalHtml .= '<div class="uk-modal-header">';
+					$modalHtml .= '<h3>' . JText::_('SHOUT_HISTORY') . '</h3>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '<div id="jj-shout-history" class="jj-shout-history uk-overflow-container">';
+
+					$modalHtml .= $modalContent;
+										
+					$modalHtml .= '<div class="center-block">';
+					$modalHtml .= '<a href="#" id="jj-load-more" class="uk-button uk-button-primary">' . JText::_('SHOUT_HISTORY_LOAD_MORE') . '</a>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '</div>';
+				else:
+					$modalHtml .= '<div class="modal-dialog modal-lg" role="document">';
+					$modalHtml .= '<div class="modal-content">';
+					$modalHtml .= '<div class="modal-header">';
+					$modalHtml .= '<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+					$modalHtml .= '<h3>' . JText::_('SHOUT_HISTORY') . '</h3>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '<div id="jj-shout-history" class="jj-shout-history modal-body">';
+					
+					$modalHtml .= $modalContent;
+					
+					$modalHtml .= '<div class="center-block">';
+					$modalHtml .= '<a href="#" id="jj-load-more" class="btn btn-primary">' . JText::_('SHOUT_HISTORY_LOAD_MORE') . '</a>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '</div>';
+					$modalHtml .= '</div>';
+				endif;
+			$modalHtml .= '</div>';
+		endif;
+		?>
 </div>
 
 
@@ -445,6 +437,8 @@ JText::script('SHOUT_AJAX_ERROR');
 		var JJ_itemId      = <?php echo $Itemid ? $Itemid : 'null'; ?>;
 		var JJ_instance    = $('#<?php echo $uniqueIdentifier; ?>');		
 		var JJ_entersubmit = '<?php echo $entersubmit; ?>';
+		
+		$('body').append('<?php echo $modalHtml; ?>');
 		
 		if (JJ_entersubmit == 0)
 		{
