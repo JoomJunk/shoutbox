@@ -224,6 +224,7 @@ class ModShoutboxHelper
 		// Ensure the date formatting
 		foreach ($rows as $row)
 		{
+			//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
 			$row->when = JFactory::getDate($row->when);
 		}
 
@@ -260,6 +261,7 @@ class ModShoutboxHelper
 		}
 
 		// Format the when correctly
+		//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
 		$row->when = JFactory::getDate($row->when);
 
 		return $row;
@@ -684,10 +686,10 @@ class ModShoutboxHelper
 			$columns = array('name', 'when', 'ip', 'msg', 'user_id');
 
 			$values = array(
-				$db->quote($name), 
-				$db->quote(JFactory::getDate('now')->toSql(true)), 
-				$db->quote($ip), 
-				$db->quote($message), 
+				$db->quote($name),
+				$db->quote(JFactory::getDate('now')->toSql(true)),
+				$db->quote($ip),
+				$db->quote($message),
 				$db->quote(JFactory::getUser()->id)
 			);
 
@@ -705,8 +707,9 @@ class ModShoutboxHelper
 		{
 			// Update an existing shout in the database
 			$object = new stdClass();
-			$object->id  = $id;
-			$object->msg = $message;
+			$object->id   = $id;
+			$object->msg  = $message;
+			$object->when = JFactory::getDate('now')->toSql(true);
 
 			JFactory::getDbo()->updateObject('#__shoutbox', $object, 'id');
 
@@ -1239,7 +1242,7 @@ class ModShoutboxHelper
 
 		// Shout data
 		$shoutData = $helper->getTimestampData($id);
-
+		
 		// Shout Unix timestamp
 		$shoutTimestamp = JFactory::getDate($shoutData[0]->when)->toUnix();
 
