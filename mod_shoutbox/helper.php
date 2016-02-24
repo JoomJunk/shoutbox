@@ -224,7 +224,6 @@ class ModShoutboxHelper
 		// Ensure the date formatting
 		foreach ($rows as $row)
 		{
-			//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
 			$row->when = JFactory::getDate($row->when);
 		}
 
@@ -261,7 +260,6 @@ class ModShoutboxHelper
 		}
 
 		// Format the when correctly
-		//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
 		$row->when = JFactory::getDate($row->when);
 
 		return $row;
