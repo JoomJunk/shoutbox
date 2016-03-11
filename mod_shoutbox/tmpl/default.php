@@ -7,6 +7,7 @@
 
 defined('_JEXEC') or die('Restricted access');
 
+JHtml::_('stylesheet', 'jui/icomoon.css', array(), true);
 JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '.jjshoutboxoutput {
 			height: ' . $outputheight . 'px;
@@ -90,13 +91,13 @@ JText::script('SHOUT_AJAX_ERROR');
 
 	<div id="jjshoutboxoutput" class="jjshoutboxoutput">
 		<div class="jj-shout-new"></div>
-		<?php 
+		<?php
 			// Retrieves the shouts from the database
 			$shouts = $helper->getShouts(0, $number, $dataerror);
-			
+
 			// Counts the number of shouts retrieved from the database
 			$actualnumber = count($shouts);
-			
+
 			if ($actualnumber == 0) 
 			{
 				echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
@@ -108,7 +109,7 @@ JText::script('SHOUT_AJAX_ERROR');
 					echo $helper->renderPost($shout);
 				}
 			}
-			
+
 			if ($history == 1)
 			{
 			?>
@@ -173,9 +174,9 @@ JText::script('SHOUT_AJAX_ERROR');
 						echo JHtml::_('form.token');
 					?>
 				</div>
-				
+
 				<input name="jjshout[token]" type="hidden" value="<?php echo $_SESSION['token'];?>" />
-				
+
 				<div class="<?php echo $form_row; ?>">
 					<?php if ($enablelimit == 1) : ?>
 						<span id="charsLeft"></span>
@@ -190,7 +191,7 @@ JText::script('SHOUT_AJAX_ERROR');
 						<textarea id="jj_message" class="<?php echo $input_txtarea; ?>" name="jjshout[message]"></textarea>
 					<?php endif; ?>
 				</div>
-				
+
 				<?php if ($bbcode == 1) : ?>
 					<div id="bbcode-form" class="bbcode-form well">
 						<p></p>
@@ -278,15 +279,15 @@ JText::script('SHOUT_AJAX_ERROR');
 					}
 				}
 				?>
-				
+
 				<a id="edit-cancel" href="#" class="edit-cancel <?php echo $button . $button_danger; ?>"><?php echo JText::_('SHOUT_BBCODE_CANCEL'); ?></a>
-				
+
 				<input id="shout-submit-type" type="hidden" data-shout-id="0" data-submit-type="insert" />
-				
+
 				<?php if ($entersubmit == 0) : ?>
 					<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?> fullwidth" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> />
 				<?php endif; ?>
-				
+
 			</form>
 			<?php
 			// Shows mass delete button if enabled
@@ -295,7 +296,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			?>
 				<form method="post" <?php echo 'class="' . $form . '"'; ?>>
 					<input type="hidden" name="jjshout[max]" value="<?php echo $count; ?>" />
-					
+
 					<div class="mass_delete">
 						<?php $style   = ($framework == 'bootstrap3') ? 'style="display:inline-block"' : ''; ?>
 						<?php $latest  = '<select name="jjshout[order]" class="' . $input_small . '" ' . $style . '>'; ?>
@@ -308,7 +309,7 @@ JText::script('SHOUT_AJAX_ERROR');
 						<?php echo JText::sprintf('SHOUT_DELETE_THE_LATEST_X_POSTS', $latest, $input); ?>
 						<button class="<?php echo $button . $button_danger; ?>" name="jjshout[deleteall]" type="submit"><?php echo JText::_('SHOUT_MASS_DELETE') ?></button>
 					</div>
-					
+
 					<?php echo JHtml::_('form.token'); ?>
 
 				</form>
@@ -348,7 +349,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			</div>
 		<?php endif; ?>	
 	</div>
-	
+
 	<?php if ($history == 1 ) : ?>
 		<div id="jj-history-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ History Modal" aria-hidden="true">	
 			<?php if ($framework == 'uikit') : ?>
@@ -361,15 +362,15 @@ JText::script('SHOUT_AJAX_ERROR');
 						<?php 
 							// Retrieves the shouts from the database
 							$shouts = $helper->getShouts(0, $number, $dataerror);
-							
+
 							// Counts the number of shouts retrieved from the database
 							$actualnumber = count($shouts);
-							
-							if ($actualnumber == 0) 
+
+							if ($actualnumber == 0)
 							{
 								echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
 							} 
-							else 
+							else
 							{
 								foreach ($shouts as $shout) 
 								{
@@ -390,24 +391,24 @@ JText::script('SHOUT_AJAX_ERROR');
 							<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
 						</div>
 						<div id="jj-shout-history" class="jj-shout-history modal-body">
-							<?php 
+							<?php
 								// Retrieves the shouts from the database
 								$shouts = $helper->getShouts(0, $number, $dataerror);
-								
+
 								// Counts the number of shouts retrieved from the database
 								$actualnumber = count($shouts);
-								
+
 								if ($actualnumber == 0) 
 								{
 									echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
-								} 
-								else 
+								}
+								else
 								{
 									foreach ($shouts as $shout) 
 									{
 										echo $helper->renderPost($shout);
 									}
-								} 
+								}
 							 ?>
 							 <div class="center-block">
 								<a href="#" id="jj-load-more" class="btn btn-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
@@ -418,34 +419,32 @@ JText::script('SHOUT_AJAX_ERROR');
 			<?php endif; ?>
 		</div>
 	<?php endif; ?>
-	
 </div>
 
-
 <script type="text/javascript">
-	
+
 	<?php if ($securitytype == 2) {
 			if ($securityHide == 0 || ($user->guest && $securityHide == 1)) { ?>
 				JJShoutbox.drawMathsQuestion(<?php echo $que_number1; ?>, <?php echo $que_number2; ?>);
 	<?php } } ?>
-	
+
 	var JJ_frameworkType = '<?php echo $framework; ?>';
 	var JJ_history       = '<?php echo $history; ?>';
 	var JJ_editOwn       = '<?php echo $editown; ?>';
-	
+
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
-	
+
 	<?php if ($notifications == 1) : ?>
 		JJShoutbox.performNotificationCheck();
 	<?php endif; ?>
-	
+
 	jQuery(document).ready(function($) {
-		
+
 		var JJ_offset      = <?php echo $number; ?>;
 		var JJ_itemId      = <?php echo $Itemid ? $Itemid : 'null'; ?>;
 		var JJ_instance    = $('#<?php echo $uniqueIdentifier; ?>');		
 		var JJ_entersubmit = '<?php echo $entersubmit; ?>';
-		
+
 		if (JJ_entersubmit == 0)
 		{
 			JJ_instance.on('click', '#shoutbox-submit', function(e){
@@ -463,19 +462,19 @@ JText::script('SHOUT_AJAX_ERROR');
 				}
 			});
 		}
-		
+
 		JJShoutbox.doShoutboxSubmission = function(JJ_type, JJ_shoutId) 
 		{
 			var JJ_shoutboxName = JJ_instance.find('#shoutbox-name').val();
 			var JJ_shoutboxMsg	= JJ_instance.find('#jj_message').val();
-			
+
 			<?php if ($displayName == 'user' && !$user->guest) : ?>
 				var JJ_name = '<?php echo $user->username;?>';
 			<?php elseif ($displayName == 'real' && !$user->guest) : ?>
 				var JJ_name = '<?php echo $user->name;?>';
 			<?php else : ?>
 			if (JJ_shoutboxName == '')
-			{			
+			{
 				<?php if ($nameRequired == 0 && $user->guest) : ?>
 					var JJ_name = '<?php echo $genericName;?>';
 				<?php else : ?>		
@@ -483,7 +482,7 @@ JText::script('SHOUT_AJAX_ERROR');
 				<?php endif; ?>
 			}
 			else
-			{			
+			{
 				var JJ_name = JJ_shoutboxName;
 			}
 			<?php endif; ?>
@@ -496,14 +495,14 @@ JText::script('SHOUT_AJAX_ERROR');
 			else if (name == 'JJ_None')
 			{
 				JJShoutbox.showError(Joomla.JText._('SHOUT_NAME_EMPTY'), JJ_instance);
-			}			
+			}
 			else
 			{
 				var JJ_recaptcha = '';
 				<?php if ($securitytype == 1) : ?>
 				JJ_recaptcha = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.getResponse();
 				<?php endif; ?>
-				
+
 				var JJ_ShoutPostParams = {
 					shoutId     : JJ_shoutId,
 					itemId      : JJ_itemId,
@@ -516,7 +515,7 @@ JText::script('SHOUT_AJAX_ERROR');
 					recaptcha   : JJ_recaptcha,
 					instance    : JJ_instance,
 					history     : JJ_history
-				};	
+				};
 
 				JJShoutbox.submitPost(JJ_ShoutPostParams);
 			}
@@ -525,7 +524,7 @@ JText::script('SHOUT_AJAX_ERROR');
 		if (JJ_history == 1)
 		{
 			$('#jj-load-more').on('click', function(e){
-				
+
 				e.preventDefault();
 
 				var JJ_itemId = '<?php echo $Itemid; ?>';
@@ -540,11 +539,11 @@ JText::script('SHOUT_AJAX_ERROR');
 			$('#jjshoutboxoutput').on('click', '.jj-shout-edit', function(e) {
 
 				e.preventDefault();
-				
+
 				var JJ_shoutId = $(this).attr('data-shout-edit-id');
-				
+
 				JJShoutbox.checkTimestamp('<?php echo $title; ?>', JJ_itemId, JJ_instance, JJ_shoutId);
-				
+
 			});
 		}
 
