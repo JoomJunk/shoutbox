@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-###Wip
+Version 7.0.3
 $ Updated French language files (thanks MATsxm)
 $ Updated Polish language files (thanks asmax)
 ^ Javascript improvements
