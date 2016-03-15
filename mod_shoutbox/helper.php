@@ -30,6 +30,19 @@ class ModShoutboxHelper
 	private $params = null;
 
 	/**
+	 * Fetches the parameters of the shoutbox independently of the view
+	 * so it can be used for the AJAX
+	 *
+	 * @param   string  $id  The id of the module
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function __construct($id)
+	{
+		$this->params = $this->getParams($id);
+	}
+
+	/**
 	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
 	 *
 	 * @return   array  The details of the post created.
@@ -39,8 +52,8 @@ class ModShoutboxHelper
 	 */
 	public static function submitAjax()
 	{
-		$app = JFactory::getApplication();
-		$post  = $app->input->post->get('jjshout', array(), 'array');
+		$app  = JFactory::getApplication();
+		$post = $app->input->post->get('jjshout', array(), 'array');
 
 		// Retrieve relevant parameters
 		if (!isset($post['title']))
@@ -87,8 +100,8 @@ class ModShoutboxHelper
 	 */
 	public static function getPostsAjax()
 	{
-		$app = JFactory::getApplication();
-		$post  = $app->input->post->get('jjshout', array(), 'array');
+		$app  = JFactory::getApplication();
+		$post = $app->input->post->get('jjshout', array(), 'array');
 
 		// Retrieve required parameter
 		if (!isset($post['title']))
@@ -98,9 +111,9 @@ class ModShoutboxHelper
 
 		$helper       = new ModShoutboxHelper($post['title']);
 		$helper->ajax = true;
-		
+
 		$offset = 0;
-		
+
 		if (isset($post['offset']))
 		{
 			$offset = $post['offset'];
@@ -117,23 +130,10 @@ class ModShoutboxHelper
 
 		// Return the HTML representation, the id and the message contents
 		$result = array(
-			'html'    => $htmlOutput,
+			'html' => $htmlOutput,
 		);
 
 		return $result;
-	}
-
-	/**
-	 * Fetches the parameters of the shoutbox independently of the view
-	 * so it can be used for the AJAX
-	 *
-	 * @param   string  $id  The id of the module
-	 *
-	 * @since   __DEPLOY_VERSION__
-	 */
-	public function __construct($id)
-	{
-		$this->params = $this->getParams($id);
 	}
 
 	/**
@@ -210,7 +210,7 @@ class ModShoutboxHelper
 			->from($db->quoteName('#__shoutbox'))
 			->order($db->quoteName('id') . ' DESC')
 			->setLimit($number, $offset);
-			
+
 		$db->setQuery($query);
 
 		$rows = $db->loadObjectList();
@@ -224,7 +224,8 @@ class ModShoutboxHelper
 		// Ensure the date formatting
 		foreach ($rows as $row)
 		{
-			$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
+			//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
+			$row->when = JFactory::getDate($row->when);
 		}
 
 		return $rows;
@@ -248,6 +249,7 @@ class ModShoutboxHelper
 		$query->select('*')
 			->from($db->quoteName('#__shoutbox'))
 			->where($db->quoteName('id') . ' = ' . (int)$id);
+
 		$db->setQuery($query);
 
 		$row = $db->loadObject();
@@ -259,7 +261,8 @@ class ModShoutboxHelper
 		}
 
 		// Format the when correctly
-		$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
+		//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
+		$row->when = JFactory::getDate($row->when);
 
 		return $row;
 	}
@@ -285,7 +288,7 @@ class ModShoutboxHelper
 
 		return $title;
 	}
-	
+
 	/**
 	 * Count the number of shouts in the database.
 	 *
@@ -296,7 +299,7 @@ class ModShoutboxHelper
 	public function countShouts()
 	{
 		$db = JFactory::getDbo();
-		
+
 		$query = $db->getQuery(true);
 		$query->select('COUNT(id)')
 			->from($db->quoteName('#__shoutbox'));
@@ -305,7 +308,7 @@ class ModShoutboxHelper
 		
 		return $db->loadResult();
 	}
-		
+
 	/**
 	 * Filters the posts before calling the add function.
 	 *
@@ -407,7 +410,7 @@ class ModShoutboxHelper
 
 		// Start the email cloaking process
 		$searchEmail = '([\w\.\-\+]+\@(?:[a-z0-9\.\-]+\.)+(?:[a-zA-Z0-9\-]{2,10}))';
-		
+
 		// Search for plain text email@example.org
 		$pattern = '~' . $searchEmail . '([^a-z0-9]|$)~i';
 
@@ -450,8 +453,7 @@ class ModShoutboxHelper
 
 		return( join($replace, $parts) );
 	}
-	
-	
+
 	/**
 	 * Get the smilies json object, decode it, then combine into 1 array
 	 *
@@ -463,14 +465,13 @@ class ModShoutboxHelper
 	{
 		$list_smilies = $this->params->get('list_smilies');
 		$smilies      = json_decode($list_smilies, true);
-		
+
 		$smilies_values = array_values($smilies['image']);
 		$code_values    = array_values($smilies['code']);
 
 		return array_combine($code_values, $smilies_values);
 	}
-	
-	
+
 	/**
 	 * Replaces all the bbcode in the message.
 	 *
@@ -483,7 +484,7 @@ class ModShoutboxHelper
 	public function bbcodeFilter($message)
 	{
 		$smilies = $this->getSmilies();
-		
+
 		// Replace the smileys
 		foreach ($smilies as $code => $image)
 		{
@@ -525,7 +526,7 @@ class ModShoutboxHelper
 	public function smileyShow($id = 'jj_message')
 	{
 		$getSmilies = $this->getSmilies();
-		
+
 		$smilies = '';
 
 		foreach ($getSmilies as $smile => $url)
@@ -557,7 +558,7 @@ class ModShoutboxHelper
 			}
 		}
 		return $result;
-	}	
+	}
 
 	/**
 	 * Retrieves swear words from the parameters and then filters them.
@@ -610,18 +611,18 @@ class ModShoutboxHelper
 			{
 				$klink = KunenaFactory::getUser((int) $user_id)->getLink();
 				$href  = '#';
-				
+
 				if (!JFactory::getUser()->guest)
 				{
 					$dom = new DOMDocument;
 					$dom->loadHTML($klink);
-				
+
 					foreach ($dom->getElementsByTagName('a') as $node) 
 					{
 						$href = $node->getAttribute('href');
 					}
 				}
-				
+
 				// Kunena Profile Link
 				$profile_link = '<a href="' . $href . '">' . $name . '</a>';
 			}
@@ -677,18 +678,18 @@ class ModShoutboxHelper
 	public function addShout($type, $id, $name, $message, $ip)
 	{
 		$db = JFactory::getDbo();
-		
+
 		if ($type == 'insert')
 		{
 			// Insert a new shout into the database
 			$query = $db->getQuery(true);
 			$columns = array('name', 'when', 'ip', 'msg', 'user_id');
-			
+
 			$values = array(
-				$db->quote($name), 
-				$db->quote(JFactory::getDate('now')->toSql(true)), 
-				$db->quote($ip), 
-				$db->quote($message), 
+				$db->quote($name),
+				$db->quote(JFactory::getDate('now')->toSql(true)),
+				$db->quote($ip),
+				$db->quote($message),
 				$db->quote(JFactory::getUser()->id)
 			);
 
@@ -706,11 +707,12 @@ class ModShoutboxHelper
 		{
 			// Update an existing shout in the database
 			$object = new stdClass();
-			$object->id  = $id;
-			$object->msg = $message;
+			$object->id   = $id;
+			$object->msg  = $message;
+			$object->when = JFactory::getDate('now')->toSql(true);
 
 			JFactory::getDbo()->updateObject('#__shoutbox', $object, 'id');
-			
+
 			return (int)$id;
 		}
 
@@ -732,6 +734,7 @@ class ModShoutboxHelper
 		$query->delete()
 			  ->from($db->quoteName('#__shoutbox'))
 			  ->where($db->quoteName('id') . ' = ' . (int) $id);
+
 		$db->setQuery($query);
 
 		$db->execute();
@@ -763,7 +766,7 @@ class ModShoutboxHelper
 			  ->from($db->quoteName('#__shoutbox'))
 			  ->order($db->quoteName('id') . ' ' . $dir)
 			  ->setLimit($delete);
-			  
+
 		$db->setQuery($query);
 
 		$rows = $db->loadObjectList();
@@ -850,12 +853,12 @@ class ModShoutboxHelper
 	private function submitPost($post)
 	{
 		// Get the user instance
-		$user             = JFactory::getUser();
-		$displayName      = $this->params->get('loginname', 'user');
-		$securityType     = $this->params->get('securitytype', 0);
-		$securityHide     = $this->params->get('security-hide', 0);
-		$swearCounter     = $this->params->get('swearingcounter');
-		$swearNumber      = $this->params->get('swearingnumber');
+		$user         = JFactory::getUser();
+		$displayName  = $this->params->get('loginname', 'user');
+		$securityType = $this->params->get('securitytype', 0);
+		$securityHide = $this->params->get('security-hide', 0);
+		$swearCounter = $this->params->get('swearingcounter');
+		$swearNumber  = $this->params->get('swearingnumber');
 
 		// If we submitted by PHP check for a session token
 		if ($this->ajax || $_SESSION['token'] == $post['token'])
@@ -869,16 +872,16 @@ class ModShoutboxHelper
 					// Recaptcha fields aren't in the JJ post space so we have to grab these separately
 					$input = JFactory::getApplication()->input;
 					$challengeField = $input->get('g-recaptcha-response', '', 'string');
-					
+
 					// Require Recaptcha Library
 					spl_autoload_register(function ($class)
 					{
 						// Project-specific namespace prefix
 						$prefix = 'ReCaptcha\\';
-		
+
 						// Base directory for the namespace prefix
 						$base_dir = JPATH_ROOT . '/media/mod_shoutbox/recaptcha/';
-		
+
 						// Does the class use the namespace prefix?
 						$len = strlen($prefix);
 
@@ -887,17 +890,17 @@ class ModShoutboxHelper
 							// No, move to the next registered autoloader
 							return;
 						}
-		
+
 						// Get the relative class name
 						$relative_class = substr($class, $len);
-		
+
 						/**
 						 * replace the namespace prefix with the base directory, replace namespace
 						 * separators with directory separators in the relative class name, append
 						 * with .php
 						 */
 						$file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-		
+
 						// if the file exists, require it
 						if (file_exists($file))
 						{
@@ -960,6 +963,57 @@ class ModShoutboxHelper
 			}
 		}
 	}
+	
+	/**
+	 * Converts the date to an elapsed time, e.g "1 day ago"
+	 *
+	 * @param     string   $datetime  The date to be converted
+	 * @param     boolean  $full      Show the full elapsed time
+	 *
+	 * @return    string   The elapsed time
+	 *
+	 * @since     8.0.0
+	 *
+	 * @adapted from       http://stackoverflow.com/a/18602474/1362108
+	 */
+	public function timeElapsed($datetime, $full = false)
+	{
+		$now  = JFactory::getDate();
+		$ago  = JFactory::getDate($datetime);
+		$diff = $now->diff($ago);
+
+		$diff->w = floor($diff->d / 7);
+		$diff->d -= $diff->w * 7;
+
+		$string = array(
+			'y' => 'year',
+			'm' => 'month',
+			'w' => 'week',
+			'd' => 'day',
+			'h' => 'hour',
+			'i' => 'minute',
+			's' => 'second',
+		);
+
+		foreach ($string as $k => &$v) 
+		{
+			if ($diff->$k)
+			{
+				$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+			}
+			else
+			{
+				unset($string[$k]);
+			}
+		}
+
+		if (!$full)
+		{
+			$string = array_slice($string, 0, 1);
+		}
+
+		return $string ? implode(', ', $string) . ' ago' : 'just now';
+	}
 
 	/**
 	 * Renders the message contents with the special variables
@@ -982,46 +1036,62 @@ class ModShoutboxHelper
 		switch ($this->params->get('date'))
 		{
 			case 0:
-				$show_date = "d/m/Y - ";
+				$show_date = 'd/m/Y - ';
+				$show_time = 'H:i';
 				break;
 			case 1:
-				$show_date = "D m Y - ";
+				$show_date = 'D m Y - ';
+				$show_time = 'H:i';
 				break;
 			case 3:
-				$show_date = "m/d/Y - ";
+				$show_date = 'm/d/Y - ';
+				$show_time = 'H:i';
 				break;
 			case 4:
-				$show_date = "D j M - ";
+				$show_date = 'D j M - ';
+				$show_time = 'H:i';
 				break;
 			case 5:
-				$show_date = "D j M - ";
+				$show_date = 'D j M - ';
+				$show_time = 'H:i';
+				break;
+			case 6:
+				$show_date = 'Y-m-d ';
+				$show_time = 'H:i:s';
 				break;
 			default:
-				$show_date = "";
+				$show_date = '';
+				$show_time = 'H:i';
 				break;
 		}
 
-		$shout->when = JHtml::date($shout->when, $show_date . 'H:i', true);
+		$shout->when = JHtml::date($shout->when, $show_date . $show_time, true);
+
+		// Convert to "time elapsed" format 
+		if ($this->params->get('date') == 6)
+		{
+			$shout->when = $this->timeElapsed($shout->when);
+		}
 
 		$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
 
 		// Perform Smiley and BBCode filtering if required
 		if ($bbcode == 1)
 		{
-			$shout->msg = $this->bbcodeFilter($shout->msg);
+			$shout->msg  = $this->bbcodeFilter($shout->msg);
 			$shout->name = $this->bbcodeFilter($profile_link);
 		}
 		else
 		{
-			$shout->msg = nl2br($shout->msg);
+			$shout->msg  = nl2br($shout->msg);
 			$shout->name = $profile_link;
 		}
 
 		// Assemble the data together
 		$data = array(
-			'post' => $shout,
-			'user' => $user,
-			'title' => $this->shouttitle($user, $shout->ip),
+			'post'   => $shout,
+			'user'   => $user,
+			'title'  => $this->shouttitle($user, $shout->ip),
 			'avatar' => $this->getAvatar($this->params->get('avatar', 'none'), $shout->user_id),
 			'params' => $this->params,
 		);
@@ -1032,8 +1102,8 @@ class ModShoutboxHelper
 			'client' => 0
 		);
 		$registry = new JRegistry($options);
-		$layout = new JJShoutboxLayoutFile($layout, null, $registry);
-		$output = $layout->render($data);
+		$layout   = new JJShoutboxLayoutFile($layout, null, $registry);
+		$output   = $layout->render($data);
 
 		return $output;
 	}
@@ -1049,15 +1119,15 @@ class ModShoutboxHelper
 	 * @since   3.0.1
 	 */
 	public function getAvatar($type, $id) 
-	{		
+	{
 		$user 	= JFactory::getUser($id);
 		$email 	= $user->email;
 		$url    = '';
-		
+
 		if ($type == 'gravatar')
 		{
-			$atts 	= array();		
-			
+			$atts 	= array();
+
 			$url = 'https://www.gravatar.com/avatar/';
 			$url .= md5(strtolower(trim($email)));
 			$url .= "?s=30&d=mm&r=g";
@@ -1071,10 +1141,10 @@ class ModShoutboxHelper
 		elseif ($type == 'kunena')
 		{
 			if (class_exists('KunenaFactory')) 
-			{			
-				$profile 	= KunenaFactory::getUser($user->id);				
-				$avatar 	= $profile->getAvatarImage('kavatar','profile');
-				
+			{
+				$profile = KunenaFactory::getUser($user->id);
+				$avatar  = $profile->getAvatarImage('kavatar','profile');
+
 				$url = $profile->getAvatarImage('kavatar','profile');
 			}
 		}
@@ -1098,16 +1168,16 @@ class ModShoutboxHelper
 			}
 		}
 		elseif ($type == 'cb')
-		{	
+		{
 			// Use a database query as the CB framework is horrible
 			$db = JFactory::getDbo();
- 
+
 			$query = $db->getQuery(true);
-			 
+
 			$query->select($db->quoteName('avatar'))
-				  ->from($db->quoteName('#__comprofiler'))
-				  ->where($db->quoteName('user_id') . ' = '. $db->quote($user->id));
-			 
+				->from($db->quoteName('#__comprofiler'))
+				->where($db->quoteName('user_id') . ' = ' . $db->quote($user->id));
+
 			$db->setQuery($query);
 
 			try
@@ -1123,22 +1193,22 @@ class ModShoutboxHelper
 			if ($result)
 			{
 				$avatar = JUri::root() . 'images/comprofiler/';
-				
+
 				if (strrpos($result, 'gallery', -strlen($result)) === false)
 				{
 					$avatar .= 'tn';
 				}
-				
-				$avatar .= $result;               
+
+				$avatar .= $result;
 			}
 			else
 			{
 				$avatar = JUri::root() . 'components/com_comprofiler/plugin/templates/default/images/avatar/tnnophoto_n.png';
 			}
-			
+
 			$url = '<img src="' . $avatar . '" height="30" width="30">';
 		}
-		
+
 		return $url;
 	}
 	
@@ -1162,50 +1232,50 @@ class ModShoutboxHelper
 
 		$helper       = new ModShoutboxHelper($post['title']);
 		$helper->ajax = true;
-		
+
 		$id = 0;
-		
+
 		if (isset($post['id']))
 		{
 			$id = $post['id'];
 		}
-		
+
 		// Shout data
 		$shoutData = $helper->getTimestampData($id);
 		
 		// Shout Unix timestamp
 		$shoutTimestamp = JFactory::getDate($shoutData[0]->when)->toUnix();
-		
+
 		// Current Unix timestamp
 		$currentTimestamp = JFactory::getDate('now')->toUnix();
-		
+
 		// Get difference in time and round to 1 decimal place
 		$minutes = round(($currentTimestamp - $shoutTimestamp) / 60, 1);
 
 		$result = null;
-		
+
 		if ($minutes < (int) $helper->getParams()->get('editown-time', 5))
 		{
 			$htmlOutput = array();
-			
+
 			foreach ($shoutData as $shout)
 			{
 				$htmlOutput[] = array(
 					'id'      => $shout->id,
 					'name'    => $shout->name,
-					'when'    => $shout->when,
+					'when'    => JFactory::getDate($shout->when)->toUnix(),
 					'ip'      => $shout->ip,
 					'msg'     => $shout->msg,
 					'user_id' => $shout->user_id,
 				);
 			}
-			
+
 			$result = json_encode($htmlOutput);
 		}
 
 		return $result;
 	}
-	
+
 	/*
 	 * Pull the shout data based on the ID
 	 * 
@@ -1222,7 +1292,7 @@ class ModShoutboxHelper
 		$query->select('*')
 			->from($db->quoteName('#__shoutbox'))
 			->where($db->quoteName('id') . ' = ' . (int) $id);
-	
+
 		$db->setQuery($query);
 
 		$result = $db->loadObjectList();
@@ -1235,5 +1305,5 @@ class ModShoutboxHelper
 
 		return $result;
 	}
-	
+
 }

@@ -14,8 +14,16 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-###Wip
 
+Version 7.0.3
++ Added "Elapsed time" option
+# Fixed timestamp changing on shout edit
+$ Updated French language files (thanks MATsxm)
+$ Updated Polish language files (thanks asmax)
+^ Shoutbox only refreshes for logged in users
+^ Javascript improvements
+^ CSS improvements
+^ Other general code imporvements
 
 Version 7.0.2
 # Fixed drawMathsQuestion executing when it shouldn't
