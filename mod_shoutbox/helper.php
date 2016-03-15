@@ -972,7 +972,7 @@ class ModShoutboxHelper
 	 *
 	 * @return    string   The elapsed time
 	 *
-	 * @since     8.0.0
+	 * @since     7.0.3
 	 *
 	 * @adapted from       http://stackoverflow.com/a/18602474/1362108
 	 */
