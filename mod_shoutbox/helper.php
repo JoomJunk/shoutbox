@@ -729,7 +729,7 @@ class ModShoutboxHelper
 	 */
 	public function deletepost($id)
 	{
-		$db	= JFactory::getDBO();
+		$db	= JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->delete()
 			  ->from($db->qn('#__shoutbox'))
@@ -760,7 +760,7 @@ class ModShoutboxHelper
 			$dir = 'DESC';
 		}
 
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
 			  ->from($db->qn('#__shoutbox'))
