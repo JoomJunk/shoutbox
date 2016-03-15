@@ -207,8 +207,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from($db->quoteName('#__shoutbox'))
-			->order($db->quoteName('id') . ' DESC')
+			->from($db->qn('#__shoutbox'))
+			->order($db->qn('id') . ' DESC')
 			->setLimit($number, $offset);
 
 		$db->setQuery($query);
@@ -247,8 +247,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from($db->quoteName('#__shoutbox'))
-			->where($db->quoteName('id') . ' = ' . (int)$id);
+			->from($db->qn('#__shoutbox'))
+			->where($db->qn('id') . ' = ' . (int)$id);
 
 		$db->setQuery($query);
 
@@ -302,7 +302,7 @@ class ModShoutboxHelper
 
 		$query = $db->getQuery(true);
 		$query->select('COUNT(id)')
-			->from($db->quoteName('#__shoutbox'));
+			->from($db->qn('#__shoutbox'));
 
 		$db->setQuery($query);
 		
@@ -686,15 +686,15 @@ class ModShoutboxHelper
 			$columns = array('name', 'when', 'ip', 'msg', 'user_id');
 
 			$values = array(
-				$db->quote($name),
-				$db->quote(JFactory::getDate('now')->toSql(true)),
-				$db->quote($ip),
-				$db->quote($message),
-				$db->quote(JFactory::getUser()->id)
+				$db->q($name),
+				$db->q(JFactory::getDate('now')->toSql(true)),
+				$db->q($ip),
+				$db->q($message),
+				$db->q(JFactory::getUser()->id)
 			);
 
-			$query->insert($db->quoteName('#__shoutbox'))
-				  ->columns($db->quoteName($columns))
+			$query->insert($db->qn('#__shoutbox'))
+				  ->columns($db->qn($columns))
 				  ->values(implode(',', $values));
 
 			$db->setQuery($query);
@@ -732,8 +732,8 @@ class ModShoutboxHelper
 		$db	= JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->delete()
-			  ->from($db->quoteName('#__shoutbox'))
-			  ->where($db->quoteName('id') . ' = ' . (int) $id);
+			  ->from($db->qn('#__shoutbox'))
+			  ->where($db->qn('id') . ' = ' . (int) $id);
 
 		$db->setQuery($query);
 
@@ -763,8 +763,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDBO();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			  ->from($db->quoteName('#__shoutbox'))
-			  ->order($db->quoteName('id') . ' ' . $dir)
+			  ->from($db->qn('#__shoutbox'))
+			  ->order($db->qn('id') . ' ' . $dir)
 			  ->setLimit($delete);
 
 		$db->setQuery($query);
@@ -1174,9 +1174,9 @@ class ModShoutboxHelper
 
 			$query = $db->getQuery(true);
 
-			$query->select($db->quoteName('avatar'))
-				->from($db->quoteName('#__comprofiler'))
-				->where($db->quoteName('user_id') . ' = ' . $db->quote($user->id));
+			$query->select($db->qn('avatar'))
+				->from($db->qn('#__comprofiler'))
+				->where($db->qn('user_id') . ' = ' . $db->q($user->id));
 
 			$db->setQuery($query);
 
@@ -1290,8 +1290,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from($db->quoteName('#__shoutbox'))
-			->where($db->quoteName('id') . ' = ' . (int) $id);
+			->from($db->qn('#__shoutbox'))
+			->where($db->qn('id') . ' = ' . (int) $id);
 
 		$db->setQuery($query);
 
