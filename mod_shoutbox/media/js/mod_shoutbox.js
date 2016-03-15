@@ -32,9 +32,9 @@ JJShoutbox.createNotification = function(title, options)
 	options = {
 		icon: 'media/mod_shoutbox/images/notification.png'
 	};
-	
+
 	// Let's check if the browser supports notifications
-	if (!('Notification' in window)) 
+	if (!('Notification' in window))
 	{
 		// Browser does not support Notifications. Abort
 		return;
@@ -44,7 +44,7 @@ JJShoutbox.createNotification = function(title, options)
 	{
 		var notification = new Notification(title, options);
 	}
-	else if (Notification.permission !== 'denied') 
+	else if (Notification.permission !== 'denied')
 	{
 		Notification.requestPermission(function(permission) {
 			// If the user accepts, let's create a notification
@@ -60,17 +60,17 @@ JJShoutbox.createNotification = function(title, options)
 /**
  * Adds a smiley to the textarea
  */
-JJShoutbox.addSmiley = function(smiley, id) 
+JJShoutbox.addSmiley = function(smiley, id)
 {
 	// Get the text area object
 	var el = document.getElementById(id);
-	
+
 	// Define ID is not already defined
 	if (!el)
 	{
 		var el = 'jj_message';
 	}
-	
+
 	// IE Support
 	if (document.selection)
 	{
@@ -85,39 +85,39 @@ JJShoutbox.addSmiley = function(smiley, id)
 	{
 		pos = el.selectionStart;
 	}
-	
+
 	var strBegin = el.value.substring(0, pos);
 	var strEnd   = el.value.substring(pos);
 
 	// Piece the text back together with the cursor in the midle
-	el.value = strBegin + " " + smiley + " " + strEnd;
+	el.value = strBegin + ' ' + smiley + ' ' + strEnd;
 }
 
 
 /**
  * Inserts the BBCode selected to the textarea
  */
-JJShoutbox.insertBBCode = function(start, end, el) 
+JJShoutbox.insertBBCode = function(start, end, el)
 {
 	// IE Support
-	if (document.selection) 
+	if (document.selection)
 	{
 		el.focus();
-		sel = document.selection.createRange();
+		sel      = document.selection.createRange();
 		sel.text = start + sel.text + end;
 	} 
 	// Firefox support
-	else if (el.selectionStart || el.selectionStart == '0') 
+	else if (el.selectionStart || el.selectionStart == '0')
 	{
 		el.focus();
 		var startPos = el.selectionStart;
-		var endPos = el.selectionEnd;
-		el.value = el.value.substring(0, startPos) + start + el.value.substring(startPos, endPos) + end + el.value.substring(endPos, el.value.length);
-	} 
-	else 
-	{			
+		var endPos   = el.selectionEnd;
+		el.value     = el.value.substring(0, startPos) + start + el.value.substring(startPos, endPos) + end + el.value.substring(endPos, el.value.length);
+	}
+	else
+	{
 		el.value += start + end;
-	}	
+	}
 }
 
 
@@ -127,8 +127,8 @@ JJShoutbox.insertBBCode = function(start, end, el)
 JJShoutbox.textCounter = function(textarea, countdown, maxlimit, alertLength, warnLength, shoutRemainingText)
 {
 	var textareaid = document.getElementById(textarea);
-	var charsLeft = document.getElementById('charsLeft');
-	
+	var charsLeft  = document.getElementById('charsLeft');
+
 	if (textareaid.value.length > maxlimit)
 	{
 		textareaid.value = textareaid.value.substring(0, maxlimit);
@@ -137,15 +137,15 @@ JJShoutbox.textCounter = function(textarea, countdown, maxlimit, alertLength, wa
 	{
 		charsLeft.innerHTML = (maxlimit-textareaid.value.length) + ' ' + shoutRemainingText;
 	}
-	
+
 	if (maxlimit-textareaid.value.length > alertLength)
 	{
 		charsLeft.style.color = 'Black';
-	}	
+	}
 	if (maxlimit-textareaid.value.length <= alertLength && maxlimit-textareaid.value.length > warnLength)
 	{
 		charsLeft.style.color = 'Orange';
-	}	
+	}
 	if (maxlimit-textareaid.value.length <= warnLength)
 	{
 		charsLeft.style.color = 'Red';
@@ -156,7 +156,7 @@ JJShoutbox.textCounter = function(textarea, countdown, maxlimit, alertLength, wa
 /**
  * Returns a random integer number between min (inclusive) and max (exclusive)
  */
-JJShoutbox.getRandomArbitrary = function(min, max) 
+JJShoutbox.getRandomArbitrary = function(min, max)
 {
 	var random = 0;
     random = Math.random() * (max - min) + min;
@@ -168,7 +168,7 @@ JJShoutbox.getRandomArbitrary = function(min, max)
 /**
  * Draw the maths question using a canvas
  */
-JJShoutbox.drawMathsQuestion = function(number1, number2) 
+JJShoutbox.drawMathsQuestion = function(number1, number2)
 {	
 	var c = document.getElementById('mathscanvas');
 	var ctx = c.getContext('2d');
@@ -221,7 +221,7 @@ JJShoutbox.showError = function(msg, instance)
 	{
 		var alertClass = 'alert alert-error';
 	}
-	
+
 	var errorBox = instance.find('.jj-shout-error');
 	var errorMsg = '<div class="' + alertClass + '">' + msg + '</div>';
 
@@ -229,29 +229,27 @@ JJShoutbox.showError = function(msg, instance)
 			.slideDown().delay(5000).slideUp(400, function() {
 				errorBox.empty();
 			});
-	
+
 	return false;
 }
-	
-	
+
 
 jQuery(document).ready(function($) {
-	
 
 	/**
 	 * Compile the BBCode ready to insert
 	 * Display insert box for images and links
 	 */
 	$('#jjshoutboxform .bbcode-button').on('click', function() {
-		
+
 		var bbcode 	= $(this).data('bbcode-type');
 		var start 	= '[' + bbcode + ']';
 		var end 	= '[/' + bbcode + ']';
-		
+
 		if (bbcode == 'url' || bbcode == 'img')
 		{
 			$('#jj-bbcode-type').data('bbcode-input-type', bbcode);
-			
+
 			if (bbcode == 'url')
 			{
 				$('#bbcode-form p').text(Joomla.JText._('SHOUT_BBCODE_INSERT_URL'));
@@ -260,7 +258,7 @@ jQuery(document).ready(function($) {
 			{
 				$('#bbcode-form p').text(Joomla.JText._('SHOUT_BBCODE_INSERT_IMG'));
 			}
-			
+
 			$('#bbcode-form').slideDown();
 		}
 		else
@@ -269,39 +267,40 @@ jQuery(document).ready(function($) {
 		}
 
 	});
-	
-	
+
+
 	/**
 	 * Insert the BBCode and close the form
 	 */
 	$('#jjshoutboxform #bbcode-insert').on('click', function() {
-			
-		var bbcode = $('#jj-bbcode-type').data('bbcode-input-type');		
+
+		var bbcode = $('#jj-bbcode-type').data('bbcode-input-type');
 		var start  = '[' + bbcode + '=' + $('#bbcode-form #bbcode-url').val() + ']' + $('#bbcode-form #bbcode-text').val();
 		var end    = '[/' + bbcode + ']';
-		
+
 		JJShoutbox.insertBBCode(start, end, $('#jj_message').get(0));	
-		
+
 		$('#bbcode-form').slideUp();
 	});
-	
+
+
 	/**
 	 * Close the form
 	 */
 	$('#jjshoutboxform #bbcode-cancel').on('click', function() {
-			
+
 		$('#bbcode-form').slideUp();
-		
+
 	});
 
-	
+
 	/**
 	 * Populate modal with image
 	 */
 	$('#jjshoutboxoutput').on('click', '.jj-image-modal', function(e) {
 
 		e.preventDefault();
-		
+
 		if (JJ_frameworkType == 'uikit')
 		{
 			var modal = UIkit.modal('#jj-image-modal');
@@ -310,7 +309,7 @@ jQuery(document).ready(function($) {
 		{
 			var modal = $('#jj-image-modal');
 		}
-		
+
 		// Get the image src and name
 		var image 	= $(this).data('jj-image');
 		var alt 	= $(this).data('jj-image-alt');
@@ -319,7 +318,7 @@ jQuery(document).ready(function($) {
 		modal.find('img').attr('src', image);
 		modal.find('img').attr('alt', alt);
 		modal.find('.image-name').text(alt);
-		
+
 		// Show the modal
 		if (JJ_frameworkType == 'uikit')
 		{
@@ -331,15 +330,15 @@ jQuery(document).ready(function($) {
 		}
 
 	});
-	
-	
+
+
 	/**
 	 * Open the history modal
 	 */
 	$('#jjshoutboxoutput').on('click', '#jj-history-trigger', function(e) {
 
 		e.preventDefault();
-		
+
 		if (JJ_frameworkType == 'uikit')
 		{
 			UIkit.modal('#jj-history-modal').show();
@@ -350,21 +349,21 @@ jQuery(document).ready(function($) {
 		}
 
 	});
-	
-	
+
+
 	/**
 	 * Return shoutbox to "insert" mode if cancel button is clicked
 	 */
 	$('#jjshoutboxform').on('click', '#edit-cancel', function(e) {
-		
+
 		e.preventDefault();
-		
-		$self   = $(this);
+
+		$self = $(this);
 		$self.css('display', 'none');
-				
+
 		$parent = $(this).parents('#jjshoutboxform');
 		$parent.find('#jj_message').val('');		
-		$parent.find('#shoutbox-submit').val(Joomla.JText._('SHOUT_SUBMITTEXT'));							 
+		$parent.find('#shoutbox-submit').val(Joomla.JText._('SHOUT_SUBMITTEXT'));
 		$parent.find('#shout-submit-type').attr('data-submit-type', 'insert')
 										  .attr('data-shout-id', '');
 
@@ -379,7 +378,7 @@ jQuery(document).ready(function($) {
 		// Assemble variables to submit
 		var request = {
 			'jjshout[title]' : title,
-			'jjshout[id]' : id
+			'jjshout[id]'    : id
 		};
 
 		// If there is an active menu item then we need to add it to the request.
@@ -402,17 +401,16 @@ jQuery(document).ready(function($) {
 				else
 				{
 					var json = $.parseJSON(response);
-					
+
 					$('#jj_message').val(json[0].msg);
-					
+
 					$('#edit-cancel').css('display', 'block');
-					
+
 					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_UPDATE'));
-										 
+
 					$('#shout-submit-type').attr('data-submit-type', 'update')
 										   .attr('data-shout-id', json[0].id);
-				}			
-				
+				}
 			},
 			error: function(){
 				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
@@ -422,7 +420,7 @@ jQuery(document).ready(function($) {
 		return false;
 	}
 
-		
+
 	/**
 	 * Submit a shout
 	 */
@@ -441,7 +439,7 @@ jQuery(document).ready(function($) {
 			'jjshout[shout]'   : 'Shout!',
 			'jjshout[title]'   : params.title,
 		};
-		
+
 		request[params.token] = 1;
 
 		if (params.securityType == 1)
@@ -478,12 +476,12 @@ jQuery(document).ready(function($) {
 					{
 						params.instance.find('#shoutbox-name').val('');
 					}
-					
+
 					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_SUBMITTEXT'));
-					
+
 					$('#shout-submit-type').attr('data-submit-type', 'insert')
 										   .attr('data-shout-id', '');
-					
+
 					$('#edit-cancel').css('display', 'none');
 
 					// Refresh the output
@@ -522,8 +520,8 @@ jQuery(document).ready(function($) {
 
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * Get the latest shouts
 	 * Play a sound notification if new shouts are shown
@@ -531,9 +529,9 @@ jQuery(document).ready(function($) {
 	JJShoutbox.getPosts = function(title, sound, notifications, Itemid, instance, loggedInUser, history)
 	{
 		// Get the ID of the last shout
-		var lastID 		= JJShoutbox.getLastID(instance);
-		var lastName 	= JJShoutbox.getLastAuthor(instance);
-		
+		var lastID 	 = JJShoutbox.getLastID(instance);
+		var lastName = JJShoutbox.getLastAuthor(instance);
+
 		// Assemble variables to submit
 		var request = {
 			'jjshout[title]' : title,
@@ -561,23 +559,23 @@ jQuery(document).ready(function($) {
 					{
 						historyButton = '<div class="center-block"><a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini">' + Joomla.JText._('SHOUT_HISTORY_BUTTON') + '</a></div>';
 					}
-					
+
 					// Grab the html output and append it to the shoutbox message
 					instance.find('.jj-shout-new').after(response.data.html + historyButton);
-					
+
 					// Get the ID of the last shout after the output has been updated
 					var newLastID = JJShoutbox.getLastID(instance);
-					
+
 					// Post ID and name checks
-					if (newLastID > lastID && (loggedInUser == lastName)) 
+					if (newLastID > lastID && (loggedInUser == lastName))
 					{
 						// Show HTML5 Notification if enabled
-						if (notifications == 1) 
+						if (notifications == 1)
 						{
 							JJShoutbox.createNotification(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
 						}
 						// Play notification sound if enabled
-						if (sound == 1) 
+						if (sound == 1)
 						{
 							instance.find('.jjshoutbox-audio').get(0).play();
 						}
@@ -595,8 +593,8 @@ jQuery(document).ready(function($) {
 
 		return false;
 	}
-	
-	
+
+
 	/**
 	 * Get the the shouts history based on the offset and count
 	 */
@@ -604,7 +602,7 @@ jQuery(document).ready(function($) {
 	{
 		// Assemble variables to submit
 		var request = {
-			'jjshout[title]' : title,
+			'jjshout[title]'  : title,
 			'jjshout[offset]' : offset,
 		};
 
@@ -644,5 +642,5 @@ jQuery(document).ready(function($) {
 
 		return false;
 	}
-	
+
 });
