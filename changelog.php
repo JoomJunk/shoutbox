@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+### WIP
++ Added User Tagging (Beta)
+$ Improvements to French language files
 
 Version 7.0.3
 + Added "Elapsed time" option

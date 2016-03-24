@@ -161,6 +161,11 @@
 							type="text" />
 					</fieldset>
 				</field>
+				<field type="sep" label="SHOUT_TAG_USER" />
+				<field name="taguser" class="btn-group" type="radio" default="0" label="SHOUT_TAG_USER_LABEL" description="SHOUT_TAG_USER_DESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
+				</field>
 				<field type="sep" label="SHOUT_SWEAR_WORDS" />
 				<field name="list_swearwords"
 					type="Repeatable"

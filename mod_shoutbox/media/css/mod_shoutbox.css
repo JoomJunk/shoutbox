@@ -183,6 +183,16 @@
 	box-sizing: border-box;
 }
 
+/**
+Tag a user dropdown
+**/
+.jj_tag_user.dropdown-menu > .active > a, 
+.jj_tag_user.dropdown-menu > .active > a:hover, 
+.jj_tag_user.dropdown-menu > .active > a:focus {
+	background: none;
+	padding-left: 0;
+	padding-right: 0;
+}
 
 /**
 Shoutbox history
