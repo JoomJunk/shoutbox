@@ -61,6 +61,12 @@ class ModShoutboxHelper
 
 		$users = $db->loadAssocList();
 		
+		// If we have an error then we'll create an exception
+		if ($db->getErrorNum())
+		{
+			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
+		}
+		
 		// rename the array key
 		$users = array_map(function($users)
 		{
@@ -68,12 +74,6 @@ class ModShoutboxHelper
 				'username' => $users['username']
 			);
 		}, $users);
-
-		// If we have an error then we'll create an exception
-		if ($db->getErrorNum())
-		{
-			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
-		}
 
 		return $users;
 	}
