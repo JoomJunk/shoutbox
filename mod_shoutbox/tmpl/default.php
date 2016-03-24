@@ -322,104 +322,13 @@ JText::script('SHOUT_AJAX_ERROR');
 			echo '<p id="noguest">' . JText::_('SHOUT_NONMEMBER') . '</p>';
 		}
 		?>
-
-		<?php if ($bbcode == 1) : ?>
-			<div id="jj-image-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ Image Modal" aria-hidden="true">
-				<?php if ($framework == 'uikit') : ?>
-					<div class="uk-modal-dialog">
-						<a class="uk-modal-close uk-close"></a>
-						<div class="uk-modal-header">
-							<h3 class="image-name"></h3>
-						</div>
-						<img src="" alt="" />
-					</div>
-				<?php else: ?>
-					<div class="modal-dialog modal-lg" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h3 class="image-name"></h3>
-							</div>
-							<div class="modal-body">
-								<img class="<?php echo $modal_img; ?>" src="" alt="" />
-							</div>
-						</div>
-					</div>
-				<?php endif; ?>
-			</div>
-		<?php endif; ?>	
 	</div>
-
-	<?php if ($history == 1 ) : ?>
-		<div id="jj-history-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ History Modal" aria-hidden="true">	
-			<?php if ($framework == 'uikit') : ?>
-				<div class="uk-modal-dialog">
-					<a class="uk-modal-close uk-close"></a>
-					<div class="uk-modal-header">
-						<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
-					</div>
-					<div id="jj-shout-history" class="jj-shout-history uk-overflow-container">
-						<?php 
-							// Retrieves the shouts from the database
-							$shouts = $helper->getShouts(0, $number, $dataerror);
-
-							// Counts the number of shouts retrieved from the database
-							$actualnumber = count($shouts);
-
-							if ($actualnumber == 0)
-							{
-								echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
-							} 
-							else
-							{
-								foreach ($shouts as $shout) 
-								{
-									echo $helper->renderPost($shout);
-								}
-							} 
-						 ?>
-						 <div class="center-block">
-							<a href="#" id="jj-load-more" class="uk-button uk-button-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
-						 </div>
-					</div>
-				</div>
-			<?php else: ?>
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
-						</div>
-						<div id="jj-shout-history" class="jj-shout-history modal-body">
-							<?php
-								// Retrieves the shouts from the database
-								$shouts = $helper->getShouts(0, $number, $dataerror);
-
-								// Counts the number of shouts retrieved from the database
-								$actualnumber = count($shouts);
-
-								if ($actualnumber == 0) 
-								{
-									echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
-								}
-								else
-								{
-									foreach ($shouts as $shout) 
-									{
-										echo $helper->renderPost($shout);
-									}
-								}
-							 ?>
-							 <div class="center-block">
-								<a href="#" id="jj-load-more" class="btn btn-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
-							 </div>
-						</div>
-					</div>
-				</div>
-			<?php endif; ?>
-		</div>
-	<?php endif; ?>
 </div>
+
+<?php 
+	echo $helper->renderImageModal($modal, $modal_img);
+	echo $helper->renderHistoryModal($shouts, $modal);
+?>
 
 <script type="text/javascript">
 
@@ -429,6 +338,7 @@ JText::script('SHOUT_AJAX_ERROR');
 	<?php } } ?>
 
 	var JJ_frameworkType = '<?php echo $framework; ?>';
+	var JJ_BBCode        = '<?php echo $bbcode; ?>';
 	var JJ_history       = '<?php echo $history; ?>';
 	var JJ_editOwn       = '<?php echo $editown; ?>';
 
@@ -520,9 +430,18 @@ JText::script('SHOUT_AJAX_ERROR');
 				JJShoutbox.submitPost(JJ_ShoutPostParams);
 			}
 		}
-
+		
+		// Append modal before closing body tag
+		if (JJ_BBCode == 1)
+		{
+			$('body').append($('#jj-image-modal'));
+		}
+		
 		if (JJ_history == 1)
 		{
+			// Append modal before closing body tag
+			$('body').append($('#jj-history-modal'));
+			
 			$('#jj-load-more').on('click', function(e){
 
 				e.preventDefault();
