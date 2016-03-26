@@ -34,7 +34,7 @@ extract($displayData);
 				<h3 class="image-name"></h3>
 			</div>
 			<div class="modal-body">
-				<img class="<?php echo $modal_img; ?>" src="" alt="" />
+				<img class="" src="" alt="" />
 			</div>
 		</div>
 	</div>

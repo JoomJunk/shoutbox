@@ -14,7 +14,7 @@ extract($displayData);
  * ------------------
  * 	- shouts    : (stdClass) Object containing the shouts
  * 	- modal     : (string) The modal wrapper class.
- * 	- image     : (string) The image to be displayed.
+ * 	- title     : (string) The shoutbox title
  */
 
 $helper = new ModShoutboxHelper($title);

@@ -1202,11 +1202,12 @@ class ModShoutboxHelper
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
-	public function renderHistoryModal($shouts, $modal, $layout = 'history')
+	public function renderHistoryModal($shouts, $modal, $title, $layout = 'history')
 	{
 		$data = array(
 			'shouts' => $shouts,
 			'modal'  => $modal,
+			'title'  => $title,
 			'params' => $this->params,
 		);
 				
