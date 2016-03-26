@@ -1098,12 +1098,14 @@ class ModShoutboxHelper
 				break;
 		}
 
-		$shout->when = JHtml::date($shout->when, $show_date . $show_time, true);
-
-		// Convert to "time elapsed" format 
+		// Convert to "time elapsed" format. Else convert date when to the logged in user's timezone
 		if ($this->params->get('date') == 6)
 		{
 			$shout->when = $this->timeElapsed($shout->when);
+		}
+		else
+		{
+			$shout->when = JHtml::date($shout->when, $show_date . $show_time, true);
 		}
 
 		$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
