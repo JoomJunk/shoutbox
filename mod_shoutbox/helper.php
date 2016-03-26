@@ -1207,7 +1207,6 @@ class ModShoutboxHelper
 		$data = array(
 			'shouts' => $shouts,
 			'modal'  => $modal,
-			'image'  => $image,
 			'params' => $this->params,
 		);
 				
