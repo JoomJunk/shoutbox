@@ -41,7 +41,7 @@ class ModShoutboxHelper
 	{
 		$this->params = $this->getParams($id);
 	}
-	
+
 	/**
 	 * Gets a list of all users from the #__users table
 	 *
@@ -77,7 +77,7 @@ class ModShoutboxHelper
 
 		return $users;
 	}
-
+	
 	/**
 	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
 	 *
@@ -1050,21 +1050,18 @@ class ModShoutboxHelper
 
 		return $string ? implode(', ', $string) . ' ago' : 'just now';
 	}
-
+	
 	/**
-	 * Renders the message contents with the special variables
+	 * Pre-execution before rending the output
 	 *
-	 * @param   string  $layout  The layout to render for the post (defaults to 'message')
+	 * @param   object  $shout  The shout object
 	 *
-	 * @return  string  The rendered post contents
+	 * @return  object  The shout object
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
-	public function renderPost($shout, $layout = 'message')
+	public function preRender($shout)
 	{
-		// Grab the current user object
-		$user = JFactory::getUser();
-
 		// Grab the bbcode and smiley params
 		$bbcode = $this->params->get('bbcode', 1);
 
@@ -1123,6 +1120,25 @@ class ModShoutboxHelper
 			$shout->name = $profile_link;
 		}
 
+		return $shout;
+	}
+
+	/**
+	 * Renders the message contents with the special variables
+	 *
+	 * @param   string  $layout  The layout to render for the post (defaults to 'message')
+	 *
+	 * @return  string  The rendered post contents
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function renderPost($shout, $layout = 'message')
+	{
+		// Grab the current user object
+		$user = JFactory::getUser();
+
+		$shout = $this->preRender($shout);
+
 		// Assemble the data together
 		$data = array(
 			'post'   => $shout,
@@ -1137,6 +1153,70 @@ class ModShoutboxHelper
 			'module' => 'mod_shoutbox',
 			'client' => 0
 		);
+		$registry = new JRegistry($options);
+		$layout   = new JJShoutboxLayoutFile($layout, null, $registry);
+		$output   = $layout->render($data);
+
+		return $output;
+	}
+	
+	/**
+	 * Renders the modal for an image
+	 *
+	 * @param   string  $modal   The modal wrapper class
+	 * @param   string  $image   The image to be displayed
+	 * @param   string  $layout  The layout to render for the post (defaults to 'modal')
+	 *
+	 * @return  string  The rendered modal
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function renderImageModal($modal, $image, $layout = 'image')
+	{
+		// Assemble the data together
+		$data = array(
+			'modal'  => $modal,
+			'image'  => $image,
+			'params' => $this->params,
+		);
+
+		// Render the layout
+		$options = array(
+			'module' => 'mod_shoutbox',
+			'client' => 0
+		);
+		$registry = new JRegistry($options);
+		$layout   = new JJShoutboxLayoutFile($layout, null, $registry);
+		$output   = $layout->render($data);
+
+		return $output;
+	}
+	
+	/**
+	 * Renders the modal for the shout history
+	 *
+	 * @param   string  $modal   The modal wrapper class
+	 * @param   string  $layout  The layout to render for the post (defaults to 'modal')
+	 *
+	 * @return  string  The rendered modal
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function renderHistoryModal($shouts, $modal, $title, $layout = 'history')
+	{
+		$data = array(
+			'shouts' => $shouts,
+			'modal'  => $modal,
+			'title'  => $title,
+			'params' => $this->params,
+		);
+				
+		// Render the layout
+		$options = array(
+			'module' => 'mod_shoutbox',
+			'client' => 0
+		);
+
 		$registry = new JRegistry($options);
 		$layout   = new JJShoutboxLayoutFile($layout, null, $registry);
 		$output   = $layout->render($data);

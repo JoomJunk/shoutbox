@@ -61,24 +61,19 @@ else
 <div>
 	<div data-shout-id="<?php echo $post->id; ?>" data-shout-name="<?php echo $postName; ?>" class="shout-header" <?php echo $title; ?>>
 		<span class="avatar"><?php echo $avatar; ?></span> <?php echo $post->name; ?> - <?php echo $post->when; ?>
-		
 		<div class="shout-actions">
-		
 			<?php if (($params->get('editown', 1) == 1) && $postName == $userName) : ?>
 				<a href="#" data-shout-edit-id="<?php echo $post->id; ?>" class="jj-shout-edit <?php echo $iconEdit;?>"></a>
 			<?php endif; ?>
-			
 			<?php if ($user->authorise('core.delete') || ($postName == $userName && $params->get('deleteown') == 1)) : ?>
 				<form method="post" name="delete">			
-					<button type="submit" name="jjshout[delete]" class="shout-remove <?php echo $iconRemove;?>"></button>			
+					<button type="submit" name="jjshout[delete]" class="shout-remove <?php echo $iconRemove;?>"></button>
 					<input name="jjshout[idvalue]" type="hidden" value="<?php echo $post->id; ?>" />
 					<input name="jjshout[namevalue]" type="hidden" value="<?php echo $postName; ?>" />
 					<?php echo JHtml::_('form.token'); ?>
 				</form>
 			<?php endif; ?>
-			
 		</div>
-		
 	</div>
 	<p><?php echo $post->msg; ?></p>
 </div>
