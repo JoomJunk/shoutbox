@@ -234,6 +234,36 @@ JJShoutbox.showError = function(msg, instance)
 }
 
 
+/**
+ * Change the document title when a new shout is posted
+ */
+var JJ_original = document.title;
+var JJ_timeout;
+
+window.JJTitleBlink = function (msg, count)
+{
+	count = 2000;
+	
+	function step()
+	{
+		document.title = (document.title == JJ_original) ? msg : JJ_original;
+
+		if (--count > 0)
+		{
+			JJ_timeout = setTimeout(step, 1000);
+		};
+	};
+
+	JJCancelTitleBlink(JJ_timeout);
+	step();
+};
+
+window.JJCancelTitleBlink = function () {
+	clearTimeout(JJ_timeout);
+	document.title = JJ_original;
+};
+
+
 jQuery(document).ready(function($) {
 
 	/**
@@ -567,8 +597,10 @@ jQuery(document).ready(function($) {
 					var newLastID = JJShoutbox.getLastID(instance);
 
 					// Post ID and name checks
-					if (newLastID > lastID && (loggedInUser === lastName))
+					if (newLastID > lastID && (loggedInUser !== lastName))
 					{
+						JJTitleBlink(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
+
 						// Show HTML5 Notification if enabled
 						if (notifications == 1)
 						{
@@ -642,5 +674,9 @@ jQuery(document).ready(function($) {
 
 		return false;
 	}
+	
+	$(window).on('focus', function() {
+		JJCancelTitleBlink();
+	});
 
 });
