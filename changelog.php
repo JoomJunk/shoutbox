@@ -16,7 +16,7 @@ $ -> Language fix or change
 
 ### WIP
 + Added User Tagging (Beta)
-$ Improvements to French language files
+$ Improvements to French language files (thanks MATsxm)
 # Fixed time elapsed timezone issue
 
 Version 7.0.3
