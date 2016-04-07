@@ -237,7 +237,7 @@ JText::script('SHOUT_AJAX_ERROR');
 				<?php endif; ?>
 
 				<?php
-				// Shows recapture or math question depending on the parameters
+				// Shows recapture or maths question depending on the parameters
 				if ($securitytype == 1)
 				{	
 					if ($securityHide == 0 || ($user->guest && $securityHide == 1))
