@@ -338,9 +338,9 @@ JText::script('SHOUT_AJAX_ERROR');
 	<?php } } ?>
 
 	var JJ_frameworkType = '<?php echo $framework; ?>';
-	var JJ_BBCode        = '<?php echo $bbcode; ?>';
-	var JJ_history       = '<?php echo $history; ?>';
-	var JJ_editOwn       = '<?php echo $editown; ?>';
+	var JJ_BBCode        = <?php echo $bbcode; ?>;
+	var JJ_history       = <?php echo $history; ?>;
+	var JJ_editOwn       = <?php echo $editown; ?>;
 
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 
@@ -352,10 +352,10 @@ JText::script('SHOUT_AJAX_ERROR');
 
 		var JJ_offset      = <?php echo $number; ?>;
 		var JJ_itemId      = <?php echo $Itemid ? $Itemid : 'null'; ?>;
+		var JJ_entersubmit = <?php echo $entersubmit; ?>;
 		var JJ_instance    = $('#<?php echo $uniqueIdentifier; ?>');		
-		var JJ_entersubmit = '<?php echo $entersubmit; ?>';
 
-		if (JJ_entersubmit == 0)
+		if (JJ_entersubmit === 0)
 		{
 			JJ_instance.on('click', '#shoutbox-submit', function(e){
 				e.preventDefault();
@@ -365,7 +365,7 @@ JText::script('SHOUT_AJAX_ERROR');
 		else
 		{
 			JJ_instance.on('keydown', '#jj_message', function(e) {
-				if (e.which == 13) 
+				if (e.which === 13) 
 				{
 					e.preventDefault();
 					JJShoutbox.doShoutboxSubmission(JJ_instance.find('#shout-submit-type').attr('data-submit-type'), JJ_instance.find('#shout-submit-type').attr('data-shout-id'));
@@ -376,7 +376,7 @@ JText::script('SHOUT_AJAX_ERROR');
 		JJShoutbox.doShoutboxSubmission = function(JJ_type, JJ_shoutId) 
 		{
 			var JJ_shoutboxName = JJ_instance.find('#shoutbox-name').val();
-			var JJ_shoutboxMsg	= JJ_instance.find('#jj_message').val();
+			var JJ_shoutboxMsg  = JJ_instance.find('#jj_message').val();
 
 			<?php if ($displayName == 'user' && !$user->guest) : ?>
 				var JJ_name = '<?php echo $user->username;?>';
@@ -419,8 +419,8 @@ JText::script('SHOUT_AJAX_ERROR');
 					type        : JJ_type,
 					name        : JJ_name,
 					title       : '<?php echo $title; ?>',
-					secrityType : '<?php echo $securitytype; ?>',
-					secrityHide : '<?php echo $securityHide; ?>',
+					secrityType : <?php echo $securitytype; ?>,
+					secrityHide : <?php echo $securityHide; ?>,
 					token       : '<?php echo JSession::getFormToken(); ?>',
 					recaptcha   : JJ_recaptcha,
 					instance    : JJ_instance,
@@ -432,12 +432,12 @@ JText::script('SHOUT_AJAX_ERROR');
 		}
 		
 		// Append modal before closing body tag
-		if (JJ_BBCode == 1)
+		if (JJ_BBCode === 1)
 		{
 			$('body').append($('#jj-image-modal'));
 		}
 		
-		if (JJ_history == 1)
+		if (JJ_history === 1)
 		{
 			// Append modal before closing body tag
 			$('body').append($('#jj-history-modal'));
@@ -453,7 +453,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			});
 		}
 
-		if (JJ_editOwn == 1)
+		if (JJ_editOwn === 1)
 		{
 			$('#jjshoutboxoutput').on('click', '.jj-shout-edit', function(e) {
 
@@ -471,7 +471,7 @@ JText::script('SHOUT_AJAX_ERROR');
 		setInterval(function(){
 			var JJ_itemId = '<?php echo $Itemid; ?>';
 			var JJ_insertName = '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>';
-			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', <?php echo $notifications; ?>, JJ_itemId, JJ_instance, JJ_insertName, JJ_history);
+			JJShoutbox.getPosts('<?php echo $title; ?>', <?php echo $sound; ?>, <?php echo $notifications; ?>, JJ_itemId, JJ_instance, JJ_insertName, JJ_history);
 		}, <?php echo $refresh; ?>);
 		<?php endif; ?>
 	});	

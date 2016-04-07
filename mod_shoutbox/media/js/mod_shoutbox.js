@@ -209,11 +209,11 @@ JJShoutbox.getLastAuthor = function(instance)
  */
 JJShoutbox.showError = function(msg, instance)
 {
-	if (JJ_frameworkType == 'uikit')
+	if (JJ_frameworkType === 'uikit')
 	{
 		var alertClass = 'uk-alert uk-alert-danger';
 	}
-	else if (JJ_frameworkType == 'bootstrap3')
+	else if (JJ_frameworkType === 'bootstrap3')
 	{
 		var alertClass = 'alert alert-danger';
 	}
@@ -242,15 +242,15 @@ jQuery(document).ready(function($) {
 	 */
 	$('#jjshoutboxform .bbcode-button').on('click', function() {
 
-		var bbcode 	= $(this).data('bbcode-type');
-		var start 	= '[' + bbcode + ']';
-		var end 	= '[/' + bbcode + ']';
+		var bbcode = $(this).data('bbcode-type');
+		var start  = '[' + bbcode + ']';
+		var end    = '[/' + bbcode + ']';
 
-		if (bbcode == 'url' || bbcode == 'img')
+		if (bbcode === 'url' || bbcode === 'img')
 		{
 			$('#jj-bbcode-type').data('bbcode-input-type', bbcode);
 
-			if (bbcode == 'url')
+			if (bbcode === 'url')
 			{
 				$('#bbcode-form p').text(Joomla.JText._('SHOUT_BBCODE_INSERT_URL'));
 			}
@@ -301,7 +301,7 @@ jQuery(document).ready(function($) {
 
 		e.preventDefault();
 
-		if (JJ_frameworkType == 'uikit')
+		if (JJ_frameworkType === 'uikit')
 		{
 			var modal = UIkit.modal('#jj-image-modal');
 		}
@@ -320,7 +320,7 @@ jQuery(document).ready(function($) {
 		modal.find('.image-name').text(alt);
 
 		// Show the modal
-		if (JJ_frameworkType == 'uikit')
+		if (JJ_frameworkType === 'uikit')
 		{
 			modal.show();
 		}
@@ -339,7 +339,7 @@ jQuery(document).ready(function($) {
 
 		e.preventDefault();
 
-		if (JJ_frameworkType == 'uikit')
+		if (JJ_frameworkType === 'uikit')
 		{
 			UIkit.modal('#jj-history-modal').show();
 		}
@@ -442,12 +442,12 @@ jQuery(document).ready(function($) {
 
 		request[params.token] = 1;
 
-		if (params.securityType == 1)
+		if (params.securityType === 1)
 		{
 			request['g-recaptcha-response'] = params.recaptcha;
 		}
 
-		if (params.securityType == 2)
+		if (params.securityType === 2)
 		{
 			request['jjshout[sum1]']  = params.instance.find('input[name="jjshout[sum1]"]').val();
 			request['jjshout[sum2]']  = params.instance.find('input[name="jjshout[sum2]"]').val();
@@ -498,7 +498,7 @@ jQuery(document).ready(function($) {
 		});
 
 		// Valid or not refresh recaptcha
-		if (params.securityType == 1)
+		if (params.securityType === 1)
 		{
 			var JJ_RecaptchaReset = typeof(grecaptcha) == 'undefined' ? '' : grecaptcha.reset();
 			
@@ -506,7 +506,7 @@ jQuery(document).ready(function($) {
 		}
 
 		// Valid or not refresh maths values and empty answer
-		if (params.securityType == 2 && params.securityHide != 1)
+		if (params.securityType === 2 && params.securityHide !== 1)
 		{
 			var val1, val2;
 			val1 = JJShoutbox.getRandomArbitrary(0,9);
@@ -555,7 +555,7 @@ jQuery(document).ready(function($) {
 					
 					var historyButton = '';
 					
-					if (history == 1)
+					if (history === 1)
 					{
 						historyButton = '<div class="center-block"><a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini">' + Joomla.JText._('SHOUT_HISTORY_BUTTON') + '</a></div>';
 					}
@@ -567,7 +567,7 @@ jQuery(document).ready(function($) {
 					var newLastID = JJShoutbox.getLastID(instance);
 
 					// Post ID and name checks
-					if (newLastID > lastID && (loggedInUser == lastName))
+					if (newLastID > lastID && (loggedInUser === lastName))
 					{
 						// Show HTML5 Notification if enabled
 						if (notifications == 1)
@@ -575,7 +575,7 @@ jQuery(document).ready(function($) {
 							JJShoutbox.createNotification(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
 						}
 						// Play notification sound if enabled
-						if (sound == 1)
+						if (sound === 1)
 						{
 							instance.find('.jjshoutbox-audio').get(0).play();
 						}
