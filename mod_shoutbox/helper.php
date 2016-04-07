@@ -992,6 +992,8 @@ class ModShoutboxHelper
 				{
 					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 				}
+
+				throw new RuntimeException('Maths Question Data was Invalid');
 			}
 			else
 			{
