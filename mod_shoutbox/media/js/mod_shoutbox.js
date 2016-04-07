@@ -622,12 +622,12 @@ jQuery(document).ready(function($) {
 				{
 					if (response.data.html == '')
 					{
-						instance.find('#jj-load-more').hide();
+						$('#jj-load-more').hide();
 					}
 					else
 					{
 						// Grab the html output and append it to the shoutbox message
-						instance.find('#jj-load-more').parent().before(response.data.html);
+						$('#jj-load-more').parent().before(response.data.html);
 					}
 				}
 				else
