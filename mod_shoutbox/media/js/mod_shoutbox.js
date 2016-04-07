@@ -541,10 +541,10 @@ jQuery(document).ready(function($) {
 			var val1, val2;
 			val1 = JJShoutbox.getRandomArbitrary(0,9);
 			val2 = JJShoutbox.getRandomArbitrary(0,9);
-			instance.find('input[name="jjshout[sum1]"]').val(val1);
-			instance.find('input[name="jjshout[sum2]"]').val(val2);
-			instance.find('label[for="math_output"]').text(val1 + ' + ' + val2);
-			instance.find('input[name="jjshout[human]"]').val('');
+			params.instance.find('input[name="jjshout[sum1]"]').val(val1);
+			params.instance.find('input[name="jjshout[sum2]"]').val(val2);
+			params.instance.find('label[for="math_output"]').text(val1 + ' + ' + val2);
+			params.instance.find('input[name="jjshout[human]"]').val('');
 			JJShoutbox.drawMathsQuestion(val1, val2);
 		}
 
