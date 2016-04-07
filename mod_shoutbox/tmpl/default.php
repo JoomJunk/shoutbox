@@ -327,7 +327,11 @@ JText::script('SHOUT_AJAX_ERROR');
 
 <?php 
 	echo $helper->renderImageModal($modal, $modal_img);
-	echo $helper->renderHistoryModal($shouts, $modal, $title);
+
+	if ($history == 1)
+	{
+		echo $helper->renderHistoryModal($shouts, $modal, $title);
+	}
 ?>
 
 <script type="text/javascript">
