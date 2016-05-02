@@ -94,7 +94,7 @@ class ModShoutboxHelper
 		// Retrieve relevant parameters
 		if (!isset($post['title']))
 		{
-			throw new RuntimeException("Couldn't assemble the necessary parameters for the module");
+			throw new InvalidArgumentException(JText::_('SHOUT_INVALID_AJAX_PARAMS'));
 		}
 
 		$helper       = new ModShoutboxHelper($post['title']);
@@ -103,12 +103,12 @@ class ModShoutboxHelper
 		// Make sure someone pressed shout and the post message isn't empty
 		if (!isset($post['shout']))
 		{
-			throw new RuntimeException('There was an error processing the form.');				
+			throw new RuntimeException(JText::_('SHOUT_INVALID_AJAX_PARAMS'));
 		}
 
 		if (empty($post['message']))
 		{
-			throw new InvalidArgumentException('The message body is empty');				
+			throw new InvalidArgumentException(JText::_('SHOUT_MESSAGE_EMPTY'));
 		}
 
 		$id    = $helper->submitPost($post);
@@ -142,7 +142,7 @@ class ModShoutboxHelper
 		// Retrieve required parameter
 		if (!isset($post['title']))
 		{
-			throw new InvalidArgumentException("Couldn't assemble the necessary parameters for the module");
+			throw new InvalidArgumentException(JText::_('SHOUT_INVALID_AJAX_PARAMS'));
 		}
 
 		$helper       = new ModShoutboxHelper($post['title']);
@@ -993,7 +993,7 @@ class ModShoutboxHelper
 					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 				}
 
-				throw new RuntimeException('Maths Question Data was Invalid');
+				throw new RuntimeException(JText::_('SHOUT_MATHS_QUESTION_INVALID'));
 			}
 			else
 			{
@@ -1347,7 +1347,7 @@ class ModShoutboxHelper
 		// Retrieve required parameter
 		if (!isset($post['title']))
 		{
-			throw new RuntimeException("Couldn't assemble the necessary parameters for the module");
+			throw new RuntimeException(JText::_('SHOUT_INVALID_AJAX_PARAMS'));
 		}
 
 		$helper       = new ModShoutboxHelper($post['title']);
