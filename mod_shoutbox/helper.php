@@ -1024,20 +1024,27 @@ class ModShoutboxHelper
 		$diff->d -= $diff->w * 7;
 
 		$string = array(
-			'y' => 'year',
-			'm' => 'month',
-			'w' => 'week',
-			'd' => 'day',
-			'h' => 'hour',
-			'i' => 'minute',
-			's' => 'second',
+			'y' => 'SHOUT_TIME_YEAR',
+			'm' => 'SHOUT_TIME_MONTH',
+			'w' => 'SHOUT_TIME_WEEK',
+			'd' => 'SHOUT_TIME_DAY',
+			'h' => 'SHOUT_TIME_HOUR',
+			'i' => 'SHOUT_TIME_MINUTE',
+			's' => 'SHOUT_TIME_SECOND',
 		);
 
-		foreach ($string as $k => &$v) 
+		foreach ($string as $k => &$v)
 		{
 			if ($diff->$k)
 			{
-				$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+				$translated = JText::_($v);
+
+				if ($diff->$k > 1)
+				{
+					$translated = JText::_($v . 'S');
+				}
+
+				$v = $diff->$k . ' ' . $translated;
 			}
 			else
 			{
@@ -1050,7 +1057,7 @@ class ModShoutboxHelper
 			$string = array_slice($string, 0, 1);
 		}
 
-		return $string ? implode(', ', $string) . ' ago' : 'just now';
+		return $string ? implode(', ', $string) . ' ' . JText::_('SHOUT_TIME_AGO') : JText::_('SHOUT_TIME_JUST_NOW');
 	}
 	
 	/**
