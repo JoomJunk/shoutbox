@@ -240,7 +240,7 @@ JJShoutbox.showError = function(msg, instance)
 var JJ_original = document.title;
 var JJ_timeout;
 
-window.JJTitleBlink = function (msg, count)
+window.JJTitleBlink = function (msg, count, user)
 {
 	count = 2000;
 	
@@ -255,7 +255,11 @@ window.JJTitleBlink = function (msg, count)
 	};
 
 	JJCancelTitleBlink(JJ_timeout);
-	step();
+
+	if (!document.hasFocus())
+	{
+		step();
+	}
 };
 
 window.JJCancelTitleBlink = function () {
@@ -515,7 +519,7 @@ jQuery(document).ready(function($) {
 					$('#edit-cancel').css('display', 'none');
 
 					// Refresh the output
-					JJShoutbox.getPosts(params.title, false, false, params.itemId, params.instance, false, params.history)
+					JJShoutbox.getPosts(params.title, false, false, params.itemId, params.instance, params.name, params.history)
 				}
 				else
 				{
@@ -599,7 +603,9 @@ jQuery(document).ready(function($) {
 					// Post ID and name checks
 					if (newLastID > lastID && (loggedInUser !== lastName))
 					{
-						JJTitleBlink(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
+						console.log(document.hasFocus());
+						
+							JJTitleBlink(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
 
 						// Show HTML5 Notification if enabled
 						if (notifications == 1)
@@ -674,7 +680,7 @@ jQuery(document).ready(function($) {
 
 		return false;
 	}
-	
+
 	$(window).on('focus', function() {
 		JJCancelTitleBlink();
 	});
