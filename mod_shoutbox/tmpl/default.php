@@ -406,7 +406,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			{
 				JJShoutbox.showError(Joomla.JText._('SHOUT_MESSAGE_EMPTY'), JJ_instance);
 			}
-			else if (name == 'JJ_None')
+			else if (JJ_name == 'JJ_None')
 			{
 				JJShoutbox.showError(Joomla.JText._('SHOUT_NAME_EMPTY'), JJ_instance);
 			}
