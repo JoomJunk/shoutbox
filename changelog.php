@@ -22,6 +22,8 @@ $ Updates to Russian language files
 $ Updated missing language strings
 # Fixed variable name causing the "no name" error to not show
 # Fixed time elapsed timezone issue
+# Fixed cancel button sometimes showing
+^ Modal now appended before `</body>` tag to fix `x-index` issues
 
 Version 7.0.3
 + Added "Elapsed time" option
@@ -39,7 +41,7 @@ Version 7.0.2
 # Fixed cancel buttons showing for Non-Bootstrap
 ^ PHP Exception improvements
 ^ Improved sanity check for showing IP address
-^ Other minor improvements anf fixes
+^ Other minor improvements and fixes
 
 Version 7.0.1
 # Fixed images sometimes not being inline
