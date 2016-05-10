@@ -16,8 +16,11 @@ $ -> Language fix or change
 
 ### WIP
 + Added User Tagging (Beta)
-$ Improvements to French language files (thanks MATsxm)
-$ Added missing language strings
++ Added browser tab title blinking when new shout is posted
+$ Updates to French language files (thanks MATsxm)
+$ Updates to Russian language files
+$ Updated missing language strings
+# Fixed variable name causing the "no name" error to not show
 # Fixed time elapsed timezone issue
 
 Version 7.0.3
