@@ -18,6 +18,7 @@ $ -> Language fix or change
 + Added User Tagging (Beta)
 + Added browser tab title blinking when new shout is posted
 + Added output box colour option
++ Added Easy Profile integration
 $ Updates to French language files (thanks MATsxm)
 $ Updates to Russian language files
 $ Updated missing language strings

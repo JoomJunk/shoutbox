@@ -684,6 +684,14 @@ class ModShoutboxHelper
 				$profile_link = '<a href="' . JRoute::_('index.php?option=com_k2&view=itemlist&layout=user&id=' . $user_id .
 					'&task=user') . '">' . $name . '</a>';
 			}
+			elseif ($profile == 5)
+			{
+				// Easy Profile Link
+				require_once JPATH_SITE . '/components/com_jsn/helpers/helper.php';
+
+				$href = JsnHelper::getUser($user_id)->getLink();
+				$profile_link = '<a href="' . $href .'">' . $name . '</a>';
+			}
 			else
 			{
 				// No profile Link
@@ -1335,10 +1343,20 @@ class ModShoutboxHelper
 
 			$url = '<img src="' . $avatar . '" height="30" width="30">';
 		}
+		elseif ($type == 'easyprofile')
+		{
+			// Easy Profile Link
+			require_once JPATH_SITE . '/components/com_jsn/helpers/helper.php';
+
+			$epuser = JsnHelper::getUser($user->id);
+			$avatar = $epuser->avatar_mini;
+
+			$url = '<img src="' . $avatar . '" height="30" width="30">';
+		}
 
 		return $url;
 	}
-	
+
 	/*
 	 * Check the timestamp of the shout is still within limits
 	 * 
