@@ -11,6 +11,7 @@ JHtml::_('stylesheet', 'jui/icomoon.css', array(), true);
 JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '.jjshoutboxoutput {
 			height: ' . $outputheight . 'px;
+			background: ' . $outputboxcolor . ';
 			border-color: ' . $bordercolour . ';
 			border-width: ' . $borderwidth . 'px;
 		}

@@ -31,6 +31,7 @@ $recaptchaTheme  = $params->get('recaptcha-theme', 'light');
 $securityHide    = $params->get('security-hide', 0);
 $mass_delete     = $params->get('mass_delete', 0);
 $permissions     = $params->get('guestpost');
+$outputboxcolor  = $params->get('outputboxcolor', '#FFFFFF');
 $deletecolor     = $params->get('deletecolor', '#FF0000');
 $editcolor       = $params->get('editcolor', '#444444');
 $bordercolour    = $params->get('bordercolor', '#FF3C16');

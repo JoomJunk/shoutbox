@@ -17,6 +17,7 @@ $ -> Language fix or change
 ### WIP
 + Added User Tagging (Beta)
 + Added browser tab title blinking when new shout is posted
++ Added output box colour option
 $ Updates to French language files (thanks MATsxm)
 $ Updates to Russian language files
 $ Updated missing language strings

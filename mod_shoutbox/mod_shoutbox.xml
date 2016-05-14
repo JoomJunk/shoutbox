@@ -121,6 +121,7 @@
 			</fieldset>
 
 			<fieldset name="styling" label="SHOUT_STYLING">
+				<field name="outputboxcolor" type="color" default="#ffffff" label="SHOUT_OUTOUTBOX_COLOUR" description="SHOUT_OUTOUTBOX_COLOUR_DESC" />
 				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
 				<field name="editcolor" type="color" default="#444444" label="SHOUT_EDIT_COLOUR" description="SHOUT_EDIT_COLOUR_DESC" />
 				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />				
