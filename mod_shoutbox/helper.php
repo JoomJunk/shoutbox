@@ -954,7 +954,7 @@ class ModShoutboxHelper
 
 					$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
 
-					$resp = $recaptcha->verify($challengeField, JFactory::getInput()->server->get('REMOTE_ADDR'));
+					$resp = $recaptcha->verify($challengeField, JFactory::getApplication()->input->server->get('REMOTE_ADDR'));
 
 					if ($resp->isSuccess())
 					{
