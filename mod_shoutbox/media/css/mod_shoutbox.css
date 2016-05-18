@@ -176,10 +176,10 @@
 .edit-cancel,
 .edit-cancel.btn,
 .uk-button.edit-cancel {
-    	display: none !important;
+    display: none !important;
 	width: 100%;
 	margin-top: 5px;
-    	min-height: 30px;
+    min-height: 30px;
 	box-sizing: border-box;
 }
 

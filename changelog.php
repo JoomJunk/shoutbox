@@ -25,7 +25,9 @@ $ Updated missing language strings
 # Fixed variable name causing the "no name" error to not show
 # Fixed time elapsed timezone issue
 # Fixed cancel button sometimes showing
-^ Modal now appended before <body> tag to fix z-index issues
+# Fixed error when using math question
+# Fixed fatal error when using ReCaptcha
+^ Modal now appended before body tag to fix z-index issues
 
 Version 7.0.3
 + Added "Elapsed time" option
