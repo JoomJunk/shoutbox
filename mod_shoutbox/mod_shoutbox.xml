@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
 	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>7.0.3</version> 
+	<version>8.0.0</version> 
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 
 	<install>
@@ -85,6 +85,7 @@
 					<option value="2">SHOUT_KUNENA_USERS</option>
 					<option value="3">SHOUT_JOM_SOCIAL_USERS</option>
 					<option value="4">SHOUT_K2_BLOG_USERS</option>
+					<option value="5">SHOUT_EASY_PROFILE_USERS</option>
 				</field>
 				<field name="avatar" type="list" default="none" label="SHOUT_AVATAR" description="SHOUT_AVATAR_DESC">
 					<option value="none">SHOUT_NONE</option>
@@ -92,6 +93,7 @@
 					<option value="cb">SHOUT_CB_USERS</option>
 					<option value="kunena">SHOUT_KUNENA_USERS</option>
 					<option value="jomsocial">SHOUT_JOM_SOCIAL_USERS</option>
+					<option value="easyprofile">SHOUT_EASY_PROFILE_USERS</option>
 				</field>
 				<field name="maximum" type="text" default="5" label="SHOUT_MAXIMUMLABEL" description="SHOUT_MAXIMUMDESC" />
 				<field name="loginname" type="radio" class="btn-group" default="user" label="SHOUT_LOGIN_NAMELABEL" description="SHOUT_LOGIN_NAMEDESC">
@@ -121,6 +123,7 @@
 			</fieldset>
 
 			<fieldset name="styling" label="SHOUT_STYLING">
+				<field name="outputboxcolor" type="color" default="#ffffff" label="SHOUT_OUTOUTBOX_COLOUR" description="SHOUT_OUTOUTBOX_COLOUR_DESC" />
 				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
 				<field name="editcolor" type="color" default="#444444" label="SHOUT_EDIT_COLOUR" description="SHOUT_EDIT_COLOUR_DESC" />
 				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />				
@@ -160,6 +163,11 @@
 							size="10"
 							type="text" />
 					</fieldset>
+				</field>
+				<field type="sep" label="SHOUT_TAG_USER" />
+				<field name="taguser" class="btn-group" type="radio" default="0" label="SHOUT_TAG_USER_LABEL" description="SHOUT_TAG_USER_DESC">
+					<option value="0">JOFF</option>
+					<option value="1">JON</option>
 				</field>
 				<field type="sep" label="SHOUT_SWEAR_WORDS" />
 				<field name="list_swearwords"
@@ -243,6 +251,16 @@
 				
 				<field type="sep" label="" />
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
+				<field
+					name="cache"
+					type="list"
+					default="0"
+					label="COM_MODULES_FIELD_CACHING_LABEL"
+					description="COM_MODULES_FIELD_CACHING_DESC"
+				>
+					<option value="0">COM_MODULES_FIELD_VALUE_NOCACHING</option>
+				</field>
+
 			</fieldset>
 
 		</fields>

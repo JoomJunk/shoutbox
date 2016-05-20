@@ -31,10 +31,11 @@ $recaptchaTheme  = $params->get('recaptcha-theme', 'light');
 $securityHide    = $params->get('security-hide', 0);
 $mass_delete     = $params->get('mass_delete', 0);
 $permissions     = $params->get('guestpost');
+$outputboxcolor  = $params->get('outputboxcolor', '#FFFFFF');
 $deletecolor     = $params->get('deletecolor', '#FF0000');
 $editcolor       = $params->get('editcolor', '#444444');
 $bordercolour    = $params->get('bordercolor', '#FF3C16');
-$borderwidth     = $params->get('borderwidth', '1');
+$borderwidth     = $params->get('borderwidth', 1);
 $headercolor     = $params->get('headercolor', '#D0D0D0');
 $headertextcolor = $params->get('headertextcolor', '#000000');
 $textcolor       = $params->get('textcolor', '#000000');
@@ -47,15 +48,16 @@ $notifications   = $params->get('notifications', 0);
 $framework       = $params->get('framework', 'bootstrap');
 $genericName     = $params->get('genericname', 'Anonymous');
 $nameRequired    = $params->get('namerequired', 0);
-$alertLength     = $params->get('alertlength', '50');
-$warnLength      = $params->get('warnlength', '10');
+$alertLength     = $params->get('alertlength', 50);
+$warnLength      = $params->get('warnlength', 10);
 $enablelimit     = $params->get('enablelimit', 1);
-$messageLength   = $params->get('messagelength', '200');
+$messageLength   = $params->get('messagelength', 200);
 $refresh         = $params->get('refresh', 10) * 1000;
 $deleteown       = $params->get('deleteown', 0);
 $editown         = $params->get('editown', 1);
 $editowntime     = $params->get('editown-time', 5);
 $history         = $params->get('history', 1);
+$tagUser         = $params->get('taguser', 0);
 $remainingLength = JText::_('SHOUT_REMAINING');
 
 // Assemble the factory variables needed
@@ -82,6 +84,7 @@ switch ($framework)
 		$modal_img     = null;
 		$jj_class      = null;
 		$input_small   = 'uk-form-width-small';
+		$dropdown_menu = 'uk-dropdown';
 		break;
 
 	case 'bootstrap':
@@ -98,6 +101,7 @@ switch ($framework)
 		$modal_img     = null;
 		$jj_class      = null;
 		$input_small   = 'input-small';
+		$dropdown_menu = 'dropdown-menu unstyled';
 		break;
 
 	case 'bootstrap3':
@@ -114,6 +118,7 @@ switch ($framework)
 		$modal_img     = ' img-responsive';
 		$jj_class      = null;
 		$input_small   = 'input-sm';
+		$dropdown_menu = 'dropdown-menu list-unstyled';
 		break;
 
 	default:
@@ -130,6 +135,7 @@ switch ($framework)
 		$modal_img     = null;
 		$jj_class      = 'jj_fallback';
 		$input_small   = 'input-small';
+		$dropdown_menu = 'dropdown-menu unstyled';
 		break;
 }
 
@@ -142,6 +148,31 @@ if ($securitytype == 1)
 	}
 }
 JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
+
+
+// Tag a username
+if ($tagUser == 1)
+{
+	$users = json_encode($helper->getAllUsers());
+
+	JHtml::_('script', 'mod_shoutbox/mention.min.js', false, true);
+	JHtml::_('script', 'mod_shoutbox/typeahead.min.js', false, true);
+
+	$doc->addScriptDeclaration("
+		jQuery(document).ready(function($) {
+
+			var users    = " . $users . ";
+
+			$('#jj_message').mention({
+				delimiter: '@',
+				users: users,
+				typeaheadOpts: {
+					menu: '<ul class=\"jj_tag_user typeahead . $dropdown_menu . \"></ul>'
+				}
+			});
+		});
+	");
+}
 
 $dataerror = JText::_('SHOUT_DATABASEERRORSHOUT');
 

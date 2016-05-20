@@ -176,13 +176,23 @@
 .edit-cancel,
 .edit-cancel.btn,
 .uk-button.edit-cancel {
-    display: none;
+    display: none !important;
 	width: 100%;
 	margin-top: 5px;
     min-height: 30px;
 	box-sizing: border-box;
 }
 
+/**
+Tag a user dropdown
+**/
+.jj_tag_user.dropdown-menu > .active > a, 
+.jj_tag_user.dropdown-menu > .active > a:hover, 
+.jj_tag_user.dropdown-menu > .active > a:focus {
+	background: none;
+	padding-left: 0;
+	padding-right: 0;
+}
 
 /**
 Shoutbox history

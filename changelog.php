@@ -14,6 +14,20 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.0.0
++ Added User Tagging (Beta)
++ Added browser tab title blinking when new shout is posted
++ Added output box colour option
++ Added Easy Profile integration
+$ Updates to French language files (thanks MATsxm)
+$ Updates to Russian language files
+$ Updated missing language strings
+# Fixed variable name causing the "no name" error to not show
+# Fixed time elapsed timezone issue
+# Fixed cancel button sometimes showing
+# Fixed error when using math question
+# Fixed fatal error when using ReCaptcha
+^ Modal now appended before body tag to fix z-index issues
 
 Version 7.0.3
 + Added "Elapsed time" option
@@ -31,7 +45,7 @@ Version 7.0.2
 # Fixed cancel buttons showing for Non-Bootstrap
 ^ PHP Exception improvements
 ^ Improved sanity check for showing IP address
-^ Other minor improvements anf fixes
+^ Other minor improvements and fixes
 
 Version 7.0.1
 # Fixed images sometimes not being inline

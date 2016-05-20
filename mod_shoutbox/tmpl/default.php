@@ -11,6 +11,7 @@ JHtml::_('stylesheet', 'jui/icomoon.css', array(), true);
 JHtml::_('stylesheet', 'mod_shoutbox/mod_shoutbox.css', array(), true);
 $style = '.jjshoutboxoutput {
 			height: ' . $outputheight . 'px;
+			background: ' . $outputboxcolor . ';
 			border-color: ' . $bordercolour . ';
 			border-width: ' . $borderwidth . 'px;
 		}
@@ -237,7 +238,7 @@ JText::script('SHOUT_AJAX_ERROR');
 				<?php endif; ?>
 
 				<?php
-				// Shows recapture or math question depending on the parameters
+				// Shows recapture or maths question depending on the parameters
 				if ($securitytype == 1)
 				{	
 					if ($securityHide == 0 || ($user->guest && $securityHide == 1))
@@ -322,104 +323,17 @@ JText::script('SHOUT_AJAX_ERROR');
 			echo '<p id="noguest">' . JText::_('SHOUT_NONMEMBER') . '</p>';
 		}
 		?>
-
-		<?php if ($bbcode == 1) : ?>
-			<div id="jj-image-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ Image Modal" aria-hidden="true">
-				<?php if ($framework == 'uikit') : ?>
-					<div class="uk-modal-dialog">
-						<a class="uk-modal-close uk-close"></a>
-						<div class="uk-modal-header">
-							<h3 class="image-name"></h3>
-						</div>
-						<img src="" alt="" />
-					</div>
-				<?php else: ?>
-					<div class="modal-dialog modal-lg" role="document">
-						<div class="modal-content">
-							<div class="modal-header">
-								<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-								<h3 class="image-name"></h3>
-							</div>
-							<div class="modal-body">
-								<img class="<?php echo $modal_img; ?>" src="" alt="" />
-							</div>
-						</div>
-					</div>
-				<?php endif; ?>
-			</div>
-		<?php endif; ?>	
 	</div>
-
-	<?php if ($history == 1 ) : ?>
-		<div id="jj-history-modal" class="<?php echo $modal; ?>" tabindex="-1" role="dialog" aria-labelledby="JJ History Modal" aria-hidden="true">	
-			<?php if ($framework == 'uikit') : ?>
-				<div class="uk-modal-dialog">
-					<a class="uk-modal-close uk-close"></a>
-					<div class="uk-modal-header">
-						<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
-					</div>
-					<div id="jj-shout-history" class="jj-shout-history uk-overflow-container">
-						<?php 
-							// Retrieves the shouts from the database
-							$shouts = $helper->getShouts(0, $number, $dataerror);
-
-							// Counts the number of shouts retrieved from the database
-							$actualnumber = count($shouts);
-
-							if ($actualnumber == 0)
-							{
-								echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
-							} 
-							else
-							{
-								foreach ($shouts as $shout) 
-								{
-									echo $helper->renderPost($shout);
-								}
-							} 
-						 ?>
-						 <div class="center-block">
-							<a href="#" id="jj-load-more" class="uk-button uk-button-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
-						 </div>
-					</div>
-				</div>
-			<?php else: ?>
-				<div class="modal-dialog modal-lg" role="document">
-					<div class="modal-content">
-						<div class="modal-header">
-							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-							<h3><?php echo JText::_('SHOUT_HISTORY'); ?></h3>
-						</div>
-						<div id="jj-shout-history" class="jj-shout-history modal-body">
-							<?php
-								// Retrieves the shouts from the database
-								$shouts = $helper->getShouts(0, $number, $dataerror);
-
-								// Counts the number of shouts retrieved from the database
-								$actualnumber = count($shouts);
-
-								if ($actualnumber == 0) 
-								{
-									echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
-								}
-								else
-								{
-									foreach ($shouts as $shout) 
-									{
-										echo $helper->renderPost($shout);
-									}
-								}
-							 ?>
-							 <div class="center-block">
-								<a href="#" id="jj-load-more" class="btn btn-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
-							 </div>
-						</div>
-					</div>
-				</div>
-			<?php endif; ?>
-		</div>
-	<?php endif; ?>
 </div>
+
+<?php 
+	echo $helper->renderImageModal($modal, $modal_img);
+
+	if ($history == 1)
+	{
+		echo $helper->renderHistoryModal($shouts, $modal, $title);
+	}
+?>
 
 <script type="text/javascript">
 
@@ -429,8 +343,9 @@ JText::script('SHOUT_AJAX_ERROR');
 	<?php } } ?>
 
 	var JJ_frameworkType = '<?php echo $framework; ?>';
-	var JJ_history       = '<?php echo $history; ?>';
-	var JJ_editOwn       = '<?php echo $editown; ?>';
+	var JJ_BBCode        = <?php echo $bbcode; ?>;
+	var JJ_history       = <?php echo $history; ?>;
+	var JJ_editOwn       = <?php echo $editown; ?>;
 
 	<?php if (file_exists(JPATH_ROOT . '/components/com_ajax/ajax.php')) : ?>
 
@@ -442,10 +357,10 @@ JText::script('SHOUT_AJAX_ERROR');
 
 		var JJ_offset      = <?php echo $number; ?>;
 		var JJ_itemId      = <?php echo $Itemid ? $Itemid : 'null'; ?>;
+		var JJ_entersubmit = <?php echo $entersubmit; ?>;
 		var JJ_instance    = $('#<?php echo $uniqueIdentifier; ?>');		
-		var JJ_entersubmit = '<?php echo $entersubmit; ?>';
 
-		if (JJ_entersubmit == 0)
+		if (JJ_entersubmit === 0)
 		{
 			JJ_instance.on('click', '#shoutbox-submit', function(e){
 				e.preventDefault();
@@ -455,7 +370,7 @@ JText::script('SHOUT_AJAX_ERROR');
 		else
 		{
 			JJ_instance.on('keydown', '#jj_message', function(e) {
-				if (e.which == 13) 
+				if (e.which === 13) 
 				{
 					e.preventDefault();
 					JJShoutbox.doShoutboxSubmission(JJ_instance.find('#shout-submit-type').attr('data-submit-type'), JJ_instance.find('#shout-submit-type').attr('data-shout-id'));
@@ -466,7 +381,7 @@ JText::script('SHOUT_AJAX_ERROR');
 		JJShoutbox.doShoutboxSubmission = function(JJ_type, JJ_shoutId) 
 		{
 			var JJ_shoutboxName = JJ_instance.find('#shoutbox-name').val();
-			var JJ_shoutboxMsg	= JJ_instance.find('#jj_message').val();
+			var JJ_shoutboxMsg  = JJ_instance.find('#jj_message').val();
 
 			<?php if ($displayName == 'user' && !$user->guest) : ?>
 				var JJ_name = '<?php echo $user->username;?>';
@@ -492,7 +407,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			{
 				JJShoutbox.showError(Joomla.JText._('SHOUT_MESSAGE_EMPTY'), JJ_instance);
 			}
-			else if (name == 'JJ_None')
+			else if (JJ_name == 'JJ_None')
 			{
 				JJShoutbox.showError(Joomla.JText._('SHOUT_NAME_EMPTY'), JJ_instance);
 			}
@@ -509,8 +424,8 @@ JText::script('SHOUT_AJAX_ERROR');
 					type        : JJ_type,
 					name        : JJ_name,
 					title       : '<?php echo $title; ?>',
-					secrityType : '<?php echo $securitytype; ?>',
-					secrityHide : '<?php echo $securityHide; ?>',
+					securityType : <?php echo $securitytype; ?>,
+					securityHide : <?php echo $securityHide; ?>,
 					token       : '<?php echo JSession::getFormToken(); ?>',
 					recaptcha   : JJ_recaptcha,
 					instance    : JJ_instance,
@@ -520,9 +435,18 @@ JText::script('SHOUT_AJAX_ERROR');
 				JJShoutbox.submitPost(JJ_ShoutPostParams);
 			}
 		}
-
-		if (JJ_history == 1)
+		
+		// Append modal before closing body tag
+		if (JJ_BBCode === 1)
 		{
+			$('body').append($('#jj-image-modal'));
+		}
+		
+		if (JJ_history === 1)
+		{
+			// Append modal before closing body tag
+			$('body').append($('#jj-history-modal'));
+			
 			$('#jj-load-more').on('click', function(e){
 
 				e.preventDefault();
@@ -534,7 +458,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			});
 		}
 
-		if (JJ_editOwn == 1)
+		if (JJ_editOwn === 1)
 		{
 			$('#jjshoutboxoutput').on('click', '.jj-shout-edit', function(e) {
 
@@ -552,7 +476,7 @@ JText::script('SHOUT_AJAX_ERROR');
 		setInterval(function(){
 			var JJ_itemId = '<?php echo $Itemid; ?>';
 			var JJ_insertName = '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>';
-			JJShoutbox.getPosts('<?php echo $title; ?>', '<?php echo $sound; ?>', '<?php echo $notifications; ?>', JJ_itemId, JJ_instance, JJ_insertName, JJ_history);
+			JJShoutbox.getPosts('<?php echo $title; ?>', <?php echo $sound; ?>, <?php echo $notifications; ?>, JJ_itemId, JJ_instance, JJ_insertName, JJ_history);
 		}, <?php echo $refresh; ?>);
 		<?php endif; ?>
 	});	

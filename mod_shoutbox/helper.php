@@ -43,6 +43,42 @@ class ModShoutboxHelper
 	}
 
 	/**
+	 * Gets a list of all users from the #__users table
+	 *
+	 * @return  object
+	 *
+	 * @since   8.0.0
+	 */
+	public function getAllUsers()
+	{
+		$db = JFactory::getDbo();
+
+		$query = $db->getQuery(true);
+		$query->select('username')
+			->from($db->qn('#__users'));
+
+		$db->setQuery($query);
+
+		$users = $db->loadAssocList();
+		
+		// If we have an error then we'll create an exception
+		if ($db->getErrorNum())
+		{
+			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
+		}
+		
+		// rename the array key
+		$users = array_map(function($users)
+		{
+			return array(
+				'username' => $users['username']
+			);
+		}, $users);
+
+		return $users;
+	}
+	
+	/**
 	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
 	 *
 	 * @return   array  The details of the post created.
@@ -58,7 +94,7 @@ class ModShoutboxHelper
 		// Retrieve relevant parameters
 		if (!isset($post['title']))
 		{
-			throw new RuntimeException("Couldn't assemble the necessary parameters for the module");
+			throw new InvalidArgumentException(JText::_('SHOUT_INVALID_AJAX_PARAMS'));
 		}
 
 		$helper       = new ModShoutboxHelper($post['title']);
@@ -67,12 +103,12 @@ class ModShoutboxHelper
 		// Make sure someone pressed shout and the post message isn't empty
 		if (!isset($post['shout']))
 		{
-			throw new RuntimeException('There was an error processing the form.');				
+			throw new RuntimeException(JText::_('SHOUT_INVALID_AJAX_PARAMS'));
 		}
 
 		if (empty($post['message']))
 		{
-			throw new InvalidArgumentException('The message body is empty');				
+			throw new InvalidArgumentException(JText::_('SHOUT_MESSAGE_EMPTY'));
 		}
 
 		$id    = $helper->submitPost($post);
@@ -106,7 +142,7 @@ class ModShoutboxHelper
 		// Retrieve required parameter
 		if (!isset($post['title']))
 		{
-			throw new InvalidArgumentException("Couldn't assemble the necessary parameters for the module");
+			throw new InvalidArgumentException(JText::_('SHOUT_INVALID_AJAX_PARAMS'));
 		}
 
 		$helper       = new ModShoutboxHelper($post['title']);
@@ -207,8 +243,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from($db->quoteName('#__shoutbox'))
-			->order($db->quoteName('id') . ' DESC')
+			->from($db->qn('#__shoutbox'))
+			->order($db->qn('id') . ' DESC')
 			->setLimit($number, $offset);
 
 		$db->setQuery($query);
@@ -247,8 +283,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from($db->quoteName('#__shoutbox'))
-			->where($db->quoteName('id') . ' = ' . (int)$id);
+			->from($db->qn('#__shoutbox'))
+			->where($db->qn('id') . ' = ' . (int)$id);
 
 		$db->setQuery($query);
 
@@ -302,7 +338,7 @@ class ModShoutboxHelper
 
 		$query = $db->getQuery(true);
 		$query->select('COUNT(id)')
-			->from($db->quoteName('#__shoutbox'));
+			->from($db->qn('#__shoutbox'));
 
 		$db->setQuery($query);
 		
@@ -648,6 +684,14 @@ class ModShoutboxHelper
 				$profile_link = '<a href="' . JRoute::_('index.php?option=com_k2&view=itemlist&layout=user&id=' . $user_id .
 					'&task=user') . '">' . $name . '</a>';
 			}
+			elseif ($profile == 5)
+			{
+				// Easy Profile Link
+				require_once JPATH_SITE . '/components/com_jsn/helpers/helper.php';
+
+				$href = JsnHelper::getUser($user_id)->getLink();
+				$profile_link = '<a href="' . $href .'">' . $name . '</a>';
+			}
 			else
 			{
 				// No profile Link
@@ -686,15 +730,15 @@ class ModShoutboxHelper
 			$columns = array('name', 'when', 'ip', 'msg', 'user_id');
 
 			$values = array(
-				$db->quote($name),
-				$db->quote(JFactory::getDate('now')->toSql(true)),
-				$db->quote($ip),
-				$db->quote($message),
-				$db->quote(JFactory::getUser()->id)
+				$db->q($name),
+				$db->q(JFactory::getDate('now')->toSql(true)),
+				$db->q($ip),
+				$db->q($message),
+				$db->q(JFactory::getUser()->id)
 			);
 
-			$query->insert($db->quoteName('#__shoutbox'))
-				  ->columns($db->quoteName($columns))
+			$query->insert($db->qn('#__shoutbox'))
+				  ->columns($db->qn($columns))
 				  ->values(implode(',', $values));
 
 			$db->setQuery($query);
@@ -729,11 +773,11 @@ class ModShoutboxHelper
 	 */
 	public function deletepost($id)
 	{
-		$db	= JFactory::getDBO();
+		$db	= JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->delete()
-			  ->from($db->quoteName('#__shoutbox'))
-			  ->where($db->quoteName('id') . ' = ' . (int) $id);
+			  ->from($db->qn('#__shoutbox'))
+			  ->where($db->qn('id') . ' = ' . (int) $id);
 
 		$db->setQuery($query);
 
@@ -760,11 +804,11 @@ class ModShoutboxHelper
 			$dir = 'DESC';
 		}
 
-		$db = JFactory::getDBO();
+		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			  ->from($db->quoteName('#__shoutbox'))
-			  ->order($db->quoteName('id') . ' ' . $dir)
+			  ->from($db->qn('#__shoutbox'))
+			  ->order($db->qn('id') . ' ' . $dir)
 			  ->setLimit($delete);
 
 		$db->setQuery($query);
@@ -910,7 +954,7 @@ class ModShoutboxHelper
 
 					$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
 
-					$resp = $recaptcha->verify($challengeField, JFactory::getInput()->server->get('REMOTE_ADDR'));
+					$resp = $recaptcha->verify($challengeField, JFactory::getApplication()->input->server->get('REMOTE_ADDR'));
 
 					if ($resp->isSuccess())
 					{
@@ -956,6 +1000,8 @@ class ModShoutboxHelper
 				{
 					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 				}
+
+				throw new RuntimeException(JText::_('SHOUT_MATHS_QUESTION_INVALID'));
 			}
 			else
 			{
@@ -972,7 +1018,7 @@ class ModShoutboxHelper
 	 *
 	 * @return    string   The elapsed time
 	 *
-	 * @since     8.0.0
+	 * @since     7.0.3
 	 *
 	 * @adapted from       http://stackoverflow.com/a/18602474/1362108
 	 */
@@ -986,20 +1032,27 @@ class ModShoutboxHelper
 		$diff->d -= $diff->w * 7;
 
 		$string = array(
-			'y' => 'year',
-			'm' => 'month',
-			'w' => 'week',
-			'd' => 'day',
-			'h' => 'hour',
-			'i' => 'minute',
-			's' => 'second',
+			'y' => 'SHOUT_TIME_YEAR',
+			'm' => 'SHOUT_TIME_MONTH',
+			'w' => 'SHOUT_TIME_WEEK',
+			'd' => 'SHOUT_TIME_DAY',
+			'h' => 'SHOUT_TIME_HOUR',
+			'i' => 'SHOUT_TIME_MINUTE',
+			's' => 'SHOUT_TIME_SECOND',
 		);
 
-		foreach ($string as $k => &$v) 
+		foreach ($string as $k => &$v)
 		{
 			if ($diff->$k)
 			{
-				$v = $diff->$k . ' ' . $v . ($diff->$k > 1 ? 's' : '');
+				$translated = JText::_($v);
+
+				if ($diff->$k > 1)
+				{
+					$translated = JText::_($v . 'S');
+				}
+
+				$v = $diff->$k . ' ' . $translated;
 			}
 			else
 			{
@@ -1012,23 +1065,20 @@ class ModShoutboxHelper
 			$string = array_slice($string, 0, 1);
 		}
 
-		return $string ? implode(', ', $string) . ' ago' : 'just now';
+		return $string ? implode(', ', $string) . ' ' . JText::_('SHOUT_TIME_AGO') : JText::_('SHOUT_TIME_JUST_NOW');
 	}
-
+	
 	/**
-	 * Renders the message contents with the special variables
+	 * Pre-execution before rending the output
 	 *
-	 * @param   string  $layout  The layout to render for the post (defaults to 'message')
+	 * @param   object  $shout  The shout object
 	 *
-	 * @return  string  The rendered post contents
+	 * @return  object  The shout object
 	 *
 	 * @since   __DEPLOY_VERSION__
 	 */
-	public function renderPost($shout, $layout = 'message')
+	public function preRender($shout)
 	{
-		// Grab the current user object
-		$user = JFactory::getUser();
-
 		// Grab the bbcode and smiley params
 		$bbcode = $this->params->get('bbcode', 1);
 
@@ -1065,12 +1115,14 @@ class ModShoutboxHelper
 				break;
 		}
 
-		$shout->when = JHtml::date($shout->when, $show_date . $show_time, true);
-
-		// Convert to "time elapsed" format 
+		// Convert to "time elapsed" format. Else convert date when to the logged in user's timezone
 		if ($this->params->get('date') == 6)
 		{
 			$shout->when = $this->timeElapsed($shout->when);
+		}
+		else
+		{
+			$shout->when = JHtml::date($shout->when, $show_date . $show_time, true);
 		}
 
 		$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
@@ -1087,6 +1139,25 @@ class ModShoutboxHelper
 			$shout->name = $profile_link;
 		}
 
+		return $shout;
+	}
+
+	/**
+	 * Renders the message contents with the special variables
+	 *
+	 * @param   string  $layout  The layout to render for the post (defaults to 'message')
+	 *
+	 * @return  string  The rendered post contents
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function renderPost($shout, $layout = 'message')
+	{
+		// Grab the current user object
+		$user = JFactory::getUser();
+
+		$shout = $this->preRender($shout);
+
 		// Assemble the data together
 		$data = array(
 			'post'   => $shout,
@@ -1101,6 +1172,70 @@ class ModShoutboxHelper
 			'module' => 'mod_shoutbox',
 			'client' => 0
 		);
+		$registry = new JRegistry($options);
+		$layout   = new JJShoutboxLayoutFile($layout, null, $registry);
+		$output   = $layout->render($data);
+
+		return $output;
+	}
+	
+	/**
+	 * Renders the modal for an image
+	 *
+	 * @param   string  $modal   The modal wrapper class
+	 * @param   string  $image   The image to be displayed
+	 * @param   string  $layout  The layout to render for the post (defaults to 'modal')
+	 *
+	 * @return  string  The rendered modal
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function renderImageModal($modal, $image, $layout = 'image')
+	{
+		// Assemble the data together
+		$data = array(
+			'modal'  => $modal,
+			'image'  => $image,
+			'params' => $this->params,
+		);
+
+		// Render the layout
+		$options = array(
+			'module' => 'mod_shoutbox',
+			'client' => 0
+		);
+		$registry = new JRegistry($options);
+		$layout   = new JJShoutboxLayoutFile($layout, null, $registry);
+		$output   = $layout->render($data);
+
+		return $output;
+	}
+	
+	/**
+	 * Renders the modal for the shout history
+	 *
+	 * @param   string  $modal   The modal wrapper class
+	 * @param   string  $layout  The layout to render for the post (defaults to 'modal')
+	 *
+	 * @return  string  The rendered modal
+	 *
+	 * @since   __DEPLOY_VERSION__
+	 */
+	public function renderHistoryModal($shouts, $modal, $title, $layout = 'history')
+	{
+		$data = array(
+			'shouts' => $shouts,
+			'modal'  => $modal,
+			'title'  => $title,
+			'params' => $this->params,
+		);
+				
+		// Render the layout
+		$options = array(
+			'module' => 'mod_shoutbox',
+			'client' => 0
+		);
+
 		$registry = new JRegistry($options);
 		$layout   = new JJShoutboxLayoutFile($layout, null, $registry);
 		$output   = $layout->render($data);
@@ -1174,9 +1309,9 @@ class ModShoutboxHelper
 
 			$query = $db->getQuery(true);
 
-			$query->select($db->quoteName('avatar'))
-				->from($db->quoteName('#__comprofiler'))
-				->where($db->quoteName('user_id') . ' = ' . $db->quote($user->id));
+			$query->select($db->qn('avatar'))
+				->from($db->qn('#__comprofiler'))
+				->where($db->qn('user_id') . ' = ' . $db->q($user->id));
 
 			$db->setQuery($query);
 
@@ -1208,10 +1343,20 @@ class ModShoutboxHelper
 
 			$url = '<img src="' . $avatar . '" height="30" width="30">';
 		}
+		elseif ($type == 'easyprofile')
+		{
+			// Easy Profile Link
+			require_once JPATH_SITE . '/components/com_jsn/helpers/helper.php';
+
+			$epuser = JsnHelper::getUser($user->id);
+			$avatar = $epuser->avatar_mini;
+
+			$url = '<img src="' . $avatar . '" height="30" width="30">';
+		}
 
 		return $url;
 	}
-	
+
 	/*
 	 * Check the timestamp of the shout is still within limits
 	 * 
@@ -1227,7 +1372,7 @@ class ModShoutboxHelper
 		// Retrieve required parameter
 		if (!isset($post['title']))
 		{
-			throw new RuntimeException("Couldn't assemble the necessary parameters for the module");
+			throw new RuntimeException(JText::_('SHOUT_INVALID_AJAX_PARAMS'));
 		}
 
 		$helper       = new ModShoutboxHelper($post['title']);
@@ -1290,8 +1435,8 @@ class ModShoutboxHelper
 		$db = JFactory::getDbo();
 		$query = $db->getQuery(true);
 		$query->select('*')
-			->from($db->quoteName('#__shoutbox'))
-			->where($db->quoteName('id') . ' = ' . (int) $id);
+			->from($db->qn('#__shoutbox'))
+			->where($db->qn('id') . ' = ' . (int) $id);
 
 		$db->setQuery($query);
 
