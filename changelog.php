@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-### WIP
+Version 8.0.0
 + Added User Tagging (Beta)
 + Added browser tab title blinking when new shout is posted
 + Added output box colour option
