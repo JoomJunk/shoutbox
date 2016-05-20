@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.0.1
+# Fixed PHP error when showing the shout date
+
 Version 8.0.0
 + Added User Tagging (Beta)
 + Added browser tab title blinking when new shout is posted
