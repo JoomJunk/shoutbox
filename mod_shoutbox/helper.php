@@ -260,7 +260,6 @@ class ModShoutboxHelper
 		// Ensure the date formatting
 		foreach ($rows as $row)
 		{
-			//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
 			$row->when = JFactory::getDate($row->when);
 		}
 
@@ -297,7 +296,6 @@ class ModShoutboxHelper
 		}
 
 		// Format the when correctly
-		//$row->when = JFactory::getDate($row->when)->format('Y-m-d H:i:s');
 		$row->when = JFactory::getDate($row->when);
 
 		return $row;
@@ -1122,7 +1120,9 @@ class ModShoutboxHelper
 		}
 		else
 		{
-			$shout->when = JHtml::date($shout->when, $show_date . $show_time, true);
+			// Not sure why, but this needs to be converted to an array to access the 'date' value
+			$shout->when = (array) $shout->when;
+			$shout->when = JHtml::_('date', $shout->when['date'], $show_date . $show_time, true);
 		}
 
 		$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
@@ -1210,7 +1210,7 @@ class ModShoutboxHelper
 
 		return $output;
 	}
-	
+
 	/**
 	 * Renders the modal for the shout history
 	 *
@@ -1229,7 +1229,7 @@ class ModShoutboxHelper
 			'title'  => $title,
 			'params' => $this->params,
 		);
-				
+
 		// Render the layout
 		$options = array(
 			'module' => 'mod_shoutbox',
