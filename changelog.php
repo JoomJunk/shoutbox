@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+### WIP
+^ Enter to submit now works on maths question input
+
 Version 8.0.1
 # Fixed PHP error when showing the shout date
 
