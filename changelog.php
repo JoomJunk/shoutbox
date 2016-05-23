@@ -17,6 +17,8 @@ $ -> Language fix or change
 ### WIP
 ^ Enter to submit now works on maths question input
 ^ Move checks from layout to helper
+# Fixed not being able to edit a shout if "User Input" is enabled
+# Fixed error when submitting a smiley in the name input
 
 Version 8.0.1
 # Fixed PHP error when showing the shout date
