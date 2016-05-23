@@ -1125,18 +1125,23 @@ class ModShoutboxHelper
 			$shout->when = JHtml::_('date', $shout->when['date'], $show_date . $show_time, true);
 		}
 
-		$profile_link = $this->linkUser($this->params->get('profile'), $shout->name, $shout->user_id);
+		$profile     = $this->params->get('profile');
+		$shout->name = $this->linkUser($profile, $shout->name, $shout->user_id);
+
+		// Strip <a> from the username
+		if (in_array($profile, array(1, 2, 3, 4)))
+		{
+			$shout->name = strip_tags($shout->name);
+		}
 
 		// Perform Smiley and BBCode filtering if required
 		if ($bbcode == 1)
 		{
-			$shout->msg  = $this->bbcodeFilter($shout->msg);
-			$shout->name = $this->bbcodeFilter($profile_link);
+			$shout->msg = $this->bbcodeFilter($shout->msg);
 		}
 		else
 		{
-			$shout->msg  = nl2br($shout->msg);
-			$shout->name = $profile_link;
+			$shout->msg = nl2br($shout->msg);
 		}
 
 		return $shout;
@@ -1158,12 +1163,33 @@ class ModShoutboxHelper
 
 		$shout = $this->preRender($shout);
 
+		// Create object for icons
+		$framework = $this->params->get('framework', 'bootstrap');
+		$icon = new stdClass();
+
+		if ($framework == 'uikit')
+		{
+			$icon->edit   = 'uk-icon-pencil-square-o';
+			$icon->remove = 'uk-icon-times';
+		}
+		else if ($framework == 'bootstrap3')
+		{
+			$icon->edit   = 'glyphicon glyphicon-pencil';
+			$icon->remove = 'glyphicon glyphicon-remove';
+		}
+		else
+		{
+			$icon->edit   = 'icon-pencil';
+			$icon->remove = 'icon-remove';
+		}
+
 		// Assemble the data together
 		$data = array(
 			'post'   => $shout,
 			'user'   => $user,
 			'title'  => $this->shouttitle($user, $shout->ip),
 			'avatar' => $this->getAvatar($this->params->get('avatar', 'none'), $shout->user_id),
+			'icon'   => $icon,
 			'params' => $this->params,
 		);
 

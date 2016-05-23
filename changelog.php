@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 ### WIP
 ^ Enter to submit now works on maths question input
+^ Move checks from layout to helper
 
 Version 8.0.1
 # Fixed PHP error when showing the shout date
