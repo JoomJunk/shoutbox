@@ -1163,33 +1163,12 @@ class ModShoutboxHelper
 
 		$shout = $this->preRender($shout);
 
-		// Create object for icons
-		$framework = $this->params->get('framework', 'bootstrap');
-		$icon = new stdClass();
-
-		if ($framework == 'uikit')
-		{
-			$icon->edit   = 'uk-icon-pencil-square-o';
-			$icon->remove = 'uk-icon-times';
-		}
-		else if ($framework == 'bootstrap3')
-		{
-			$icon->edit   = 'glyphicon glyphicon-pencil';
-			$icon->remove = 'glyphicon glyphicon-remove';
-		}
-		else
-		{
-			$icon->edit   = 'icon-pencil';
-			$icon->remove = 'icon-remove';
-		}
-
 		// Assemble the data together
 		$data = array(
 			'post'   => $shout,
 			'user'   => $user,
 			'title'  => $this->shouttitle($user, $shout->ip),
 			'avatar' => $this->getAvatar($this->params->get('avatar', 'none'), $shout->user_id),
-			'icon'   => $icon,
 			'params' => $this->params,
 		);
 

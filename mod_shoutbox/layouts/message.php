@@ -24,11 +24,11 @@ extract($displayData);
 		<span class="avatar"><?php echo $avatar; ?></span> <?php echo $post->name; ?> - <?php echo $post->when; ?>
 		<div class="shout-actions">
 			<?php if (($params->get('editown', 1) == 1) && $user->id == $post->user_id) : ?>
-				<a href="#" data-shout-edit-id="<?php echo $post->id; ?>" class="jj-shout-edit <?php echo $icon->edit; ?>"></a>
+				<a href="#" data-shout-edit-id="<?php echo $post->id; ?>" class="jj-shout-edit"><img src="<?php echo JUri::root(true); ?>media/mod_shoutbox/images/edit.svg" width="13" /></a>
 			<?php endif; ?>
 			<?php if ($user->authorise('core.delete') || ($user->id == $post->user_id && $params->get('deleteown') == 1)) : ?>
-				<form method="post" name="delete">			
-					<button type="submit" name="jjshout[delete]" class="shout-remove <?php echo $icon->remove; ?>"></button>
+				<form method="post" name="delete">
+					<button type="submit" name="jjshout[delete]" class="shout-remove"><img src="<?php echo JUri::root(true); ?>media/mod_shoutbox/images/remove.svg" width="13" /></button>
 					<input name="jjshout[idvalue]" type="hidden" value="<?php echo $post->id; ?>" />
 					<input name="jjshout[namevalue]" type="hidden" value="<?php echo $post->name; ?>" />
 					<?php echo JHtml::_('form.token'); ?>
