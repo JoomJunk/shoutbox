@@ -369,7 +369,7 @@ JText::script('SHOUT_AJAX_ERROR');
 		}
 		else
 		{
-			JJ_instance.on('keydown', '#jj_message', function(e) {
+			JJ_instance.on('keydown', '#jj_message, #math_output', function(e) {
 				if (e.which === 13) 
 				{
 					e.preventDefault();
