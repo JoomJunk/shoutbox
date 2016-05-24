@@ -161,10 +161,10 @@
 .jjshoutbox-audio {
     display: none;
 }
-.edit-cancel,
-.edit-cancel.btn,
+a.edit-cancel,
+a.edit-cancel.btn,
 .uk-button.edit-cancel {
-    display: none !important;
+    display: none;
 	width: 100%;
 	margin-top: 5px;
     min-height: 30px;
@@ -238,7 +238,7 @@ Shoutbox history
 }
 #jj-shout-history .shout-header {
 	font-weight: bold;
-	color: 000;
+	color: #000;
 	background: none;
 }
 
