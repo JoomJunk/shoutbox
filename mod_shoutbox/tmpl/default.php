@@ -103,7 +103,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			{
 				echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
 			} 
-			else 
+			else
 			{
 				foreach ($shouts as $shout) 
 				{
@@ -116,7 +116,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			?>
 				<div id="jj-history-container" class="center-block">
 					<a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini"><?php echo JText::_('SHOUT_HISTORY_BUTTON'); ?></a>
-				</div>	 
+				</div>
 			<?php 
 			} 
 		?>
@@ -331,7 +331,7 @@ JText::script('SHOUT_AJAX_ERROR');
 
 	if ($history == 1)
 	{
-		echo $helper->renderHistoryModal($shouts, $modal, $title);
+		echo $helper->renderHistoryModal($helper->getShouts(0, $number, $dataerror), $modal, $title);
 	}
 ?>
 
@@ -392,7 +392,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			{
 				<?php if ($nameRequired == 0 && $user->guest) : ?>
 					var JJ_name = '<?php echo $genericName;?>';
-				<?php else : ?>		
+				<?php else : ?>
 					var JJ_name = 'JJ_None';
 				<?php endif; ?>
 			}

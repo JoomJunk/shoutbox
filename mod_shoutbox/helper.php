@@ -1077,11 +1077,12 @@ class ModShoutboxHelper
 	 */
 	public function preRender($shout)
 	{
-		// Grab the bbcode and smiley params
+		// params
 		$bbcode = $this->params->get('bbcode', 1);
+		$date   = $this->params->get('date');
 
 		// Get the date format
-		switch ($this->params->get('date'))
+		switch ($date)
 		{
 			case 0:
 				$show_date = 'd/m/Y - ';
@@ -1114,15 +1115,13 @@ class ModShoutboxHelper
 		}
 
 		// Convert to "time elapsed" format. Else convert date when to the logged in user's timezone
-		if ($this->params->get('date') == 6)
+		if ($date == 6)
 		{
 			$shout->when = $this->timeElapsed($shout->when);
 		}
 		else
 		{
-			// Not sure why, but this needs to be converted to an array to access the 'date' value
-			$shout->when = (array) $shout->when;
-			$shout->when = JHtml::_('date', $shout->when['date'], $show_date . $show_time, true);
+			$shout->when = JHtml::_('date', $shout->when, $show_date . $show_time, true);
 		}
 
 		$profile     = $this->params->get('profile');

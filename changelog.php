@@ -20,6 +20,7 @@ $ -> Language fix or change
 ^ Now using our own SVG edit/remove icons
 # Fixed not being able to edit a shout if "User Input" is enabled
 # Fixed error when submitting a smiley in the name input
+# Fixed PHP error in history modal when date is enabled
 $ Updated Ducth language file (thanks Kees)
 
 Version 8.0.1
