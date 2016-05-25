@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-### WIP
+Version 8.1.0
 ^ Enter to submit now works on maths question input
 ^ Move checks from layout to helper
 ^ Now using our own SVG edit/remove icons
