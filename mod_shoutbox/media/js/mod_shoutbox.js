@@ -437,6 +437,7 @@ jQuery(document).ready(function($) {
 					var json = $.parseJSON(response);
 
 					$('#jj_message').val(json[0].msg);
+					$('#shoutbox-name').val(json[0].name);
 
 					$('#edit-cancel').css('display', 'block');
 
