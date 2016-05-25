@@ -474,9 +474,17 @@ JText::script('SHOUT_AJAX_ERROR');
 		// Refresh the shoutbox posts every X seconds
 		<?php if (!$user->guest): ?>
 		setInterval(function(){
-			var JJ_itemId = '<?php echo $Itemid; ?>';
-			var JJ_insertName = '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>';
-			JJShoutbox.getPosts('<?php echo $title; ?>', <?php echo $sound; ?>, <?php echo $notifications; ?>, JJ_itemId, JJ_instance, JJ_insertName, JJ_history);
+			var JJ_ShoutGetParams = {
+				title         : '<?php echo $title; ?>',
+				sound         : <?php echo $sound; ?>,
+				notifications : <?php echo $notifications; ?>,
+				Itemid        : '<?php echo $Itemid; ?>',
+				instance      : JJ_instance,
+				loggedInUser  : '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>',
+				history       : JJ_history,
+			};
+
+			JJShoutbox.getPosts(JJ_ShoutGetParams);
 		}, <?php echo $refresh; ?>);
 		<?php endif; ?>
 	});	

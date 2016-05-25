@@ -18,6 +18,7 @@ $ -> Language fix or change
 ^ Enter to submit now works on maths question input
 ^ Move checks from layout to helper
 ^ Now using our own SVG edit/remove icons
+^ Some Javascript improvements
 # Fixed not being able to edit a shout if "User Input" is enabled
 # Fixed error when submitting a smiley in the name input
 # Fixed PHP error in history modal when date is enabled

@@ -517,9 +517,19 @@ jQuery(document).ready(function($) {
 										   .attr('data-shout-id', '');
 
 					$('#edit-cancel').css('display', 'none');
+					
+					var JJ_ShoutGetParams = {
+						title         : params.title,
+						sound         : false,
+						notifications : false,
+						Itemid        : params.itemId,
+						instance      : params.instance,
+						loggedInUser  : params.name,
+						history       : params.history,
+					};
 
 					// Refresh the output
-					JJShoutbox.getPosts(params.title, false, false, params.itemId, params.instance, params.name, params.history)
+					JJShoutbox.getPosts(JJ_ShoutGetParams);
 				}
 				else
 				{
@@ -560,21 +570,21 @@ jQuery(document).ready(function($) {
 	 * Get the latest shouts
 	 * Play a sound notification if new shouts are shown
 	 */
-	JJShoutbox.getPosts = function(title, sound, notifications, Itemid, instance, loggedInUser, history)
+	JJShoutbox.getPosts = function(params)
 	{
 		// Get the ID of the last shout
-		var lastID 	 = JJShoutbox.getLastID(instance);
-		var lastName = JJShoutbox.getLastAuthor(instance);
+		var lastID 	 = JJShoutbox.getLastID(params.instance);
+		var lastName = JJShoutbox.getLastAuthor(params.instance);
 
 		// Assemble variables to submit
 		var request = {
-			'jjshout[title]' : title,
+			'jjshout[title]' : params.title,
 		};
 
 		// If there is an active menu item then we need to add it to the request.
-		if (Itemid !== null)
+		if (params.Itemid !== null)
 		{
-			request['Itemid'] = Itemid;
+			request['Itemid'] = params.Itemid;
 		}
 
 		// AJAX request
@@ -585,47 +595,45 @@ jQuery(document).ready(function($) {
 			success: function(response){
 				if (response.success)
 				{
-					instance.find('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
+					params.instance.find('#jjshoutboxoutput').empty().prepend($('<div class="jj-shout-new"></div>'));
 					
 					var historyButton = '';
 					
-					if (history === 1)
+					if (params.history === 1)
 					{
 						historyButton = '<div class="center-block"><a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini">' + Joomla.JText._('SHOUT_HISTORY_BUTTON') + '</a></div>';
 					}
 
 					// Grab the html output and append it to the shoutbox message
-					instance.find('.jj-shout-new').after(response.data.html + historyButton);
+					params.instance.find('.jj-shout-new').after(response.data.html + historyButton);
 
 					// Get the ID of the last shout after the output has been updated
-					var newLastID = JJShoutbox.getLastID(instance);
+					var newLastID = JJShoutbox.getLastID(params.instance);
 
 					// Post ID and name checks
-					if (newLastID > lastID && (loggedInUser !== lastName))
+					if (newLastID > lastID && (params.loggedInUser !== lastName))
 					{
-						console.log(document.hasFocus());
-						
-							JJTitleBlink(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
+						JJTitleBlink(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
 
 						// Show HTML5 Notification if enabled
-						if (notifications == 1)
+						if (params.notifications == 1)
 						{
 							JJShoutbox.createNotification(Joomla.JText._('SHOUT_NEW_SHOUT_ALERT'));
 						}
 						// Play notification sound if enabled
-						if (sound === 1)
+						if (params.sound === 1)
 						{
-							instance.find('.jjshoutbox-audio').get(0).play();
+							params.instance.find('.jjshoutbox-audio').get(0).play();
 						}
 					}
 				}
 				else
 				{
-					JJShoutbox.showError(response.message, instance);
+					JJShoutbox.showError(response.message, params.instance);
 				}
 			},
 			error: function(){
-				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), instance);
+				JJShoutbox.showError(Joomla.JText._('SHOUT_AJAX_ERROR'), params.instance);
 			}
 		});
 
