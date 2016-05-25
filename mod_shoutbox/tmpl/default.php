@@ -103,7 +103,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			{
 				echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
 			} 
-			else 
+			else
 			{
 				foreach ($shouts as $shout) 
 				{
@@ -116,7 +116,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			?>
 				<div id="jj-history-container" class="center-block">
 					<a href="#" id="jj-history-trigger" class="btn btn-primary btn-mini btn-xs uk-button uk-button-primary uk-button-mini"><?php echo JText::_('SHOUT_HISTORY_BUTTON'); ?></a>
-				</div>	 
+				</div>
 			<?php 
 			} 
 		?>
@@ -331,7 +331,7 @@ JText::script('SHOUT_AJAX_ERROR');
 
 	if ($history == 1)
 	{
-		echo $helper->renderHistoryModal($shouts, $modal, $title);
+		echo $helper->renderHistoryModal($helper->getShouts(0, $number, $dataerror), $modal, $title);
 	}
 ?>
 
@@ -369,7 +369,7 @@ JText::script('SHOUT_AJAX_ERROR');
 		}
 		else
 		{
-			JJ_instance.on('keydown', '#jj_message', function(e) {
+			JJ_instance.on('keydown', '#jj_message, #math_output', function(e) {
 				if (e.which === 13) 
 				{
 					e.preventDefault();
@@ -392,7 +392,7 @@ JText::script('SHOUT_AJAX_ERROR');
 			{
 				<?php if ($nameRequired == 0 && $user->guest) : ?>
 					var JJ_name = '<?php echo $genericName;?>';
-				<?php else : ?>		
+				<?php else : ?>
 					var JJ_name = 'JJ_None';
 				<?php endif; ?>
 			}
@@ -474,9 +474,17 @@ JText::script('SHOUT_AJAX_ERROR');
 		// Refresh the shoutbox posts every X seconds
 		<?php if (!$user->guest): ?>
 		setInterval(function(){
-			var JJ_itemId = '<?php echo $Itemid; ?>';
-			var JJ_insertName = '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>';
-			JJShoutbox.getPosts('<?php echo $title; ?>', <?php echo $sound; ?>, <?php echo $notifications; ?>, JJ_itemId, JJ_instance, JJ_insertName, JJ_history);
+			var JJ_ShoutGetParams = {
+				title         : '<?php echo $title; ?>',
+				sound         : <?php echo $sound; ?>,
+				notifications : <?php echo $notifications; ?>,
+				Itemid        : '<?php echo $Itemid; ?>',
+				instance      : JJ_instance,
+				loggedInUser  : '<?php echo $displayName == 'user' ? $user->username : $user->name; ?>',
+				history       : JJ_history,
+			};
+
+			JJShoutbox.getPosts(JJ_ShoutGetParams);
 		}, <?php echo $refresh; ?>);
 		<?php endif; ?>
 	});	

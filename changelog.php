@@ -14,6 +14,17 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.0
+^ Enter to submit now works on maths question input
+^ Move checks from layout to helper
+^ Now using our own SVG edit/remove icons
+^ Some Javascript improvements
+# Fixed not being able to edit a shout if "User Input" is enabled
+# Fixed error when submitting a smiley in the name input
+# Fixed PHP error in history modal when date is enabled
+# Fixed empty name field on shout edit with "User Input" enabled
+$ Updated Ducth language file (thanks Kees)
+
 Version 8.0.1
 # Fixed PHP error when showing the shout date
 
