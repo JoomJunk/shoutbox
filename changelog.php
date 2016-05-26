@@ -14,6 +14,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.1
+# Fixed edit/remove icons not showing on refresh
+# Fixed name not updating on shout edit
+# Fixed user with different name not being able to delete own shout
+
 Version 8.1.0
 ^ Enter to submit now works on maths question input
 ^ Move checks from layout to helper

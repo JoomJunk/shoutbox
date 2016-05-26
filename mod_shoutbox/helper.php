@@ -750,6 +750,7 @@ class ModShoutboxHelper
 			// Update an existing shout in the database
 			$object = new stdClass();
 			$object->id   = $id;
+			$object->name = $name;
 			$object->msg  = $message;
 			$object->when = JFactory::getDate('now')->toSql(true);
 
