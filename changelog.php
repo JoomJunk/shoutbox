@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-###WIP
+Version 8.1.1
 # Fixed edit/remove icons not showing on refresh
 # Fixed name not updating on shout edit
 # Fixed user with different name not being able to delete own shout
