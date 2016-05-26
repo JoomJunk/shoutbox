@@ -200,10 +200,10 @@ if (isset($_POST))
 	if (isset($post['delete']))
 	{
 		JSession::checkToken() or die(JText::_('JINVALID_TOKEN'));
-		$deletepostnumber	= $post['idvalue'];
-		$postnamevalue		= $post['namevalue'];
+		$deletepostnumber = $post['idvalue'];
+		$postidvalue      = $post['useridvalue'];
 
-		if ($user->authorise('core.delete') || ($postnamevalue == $user->username && $deleteown == 1))
+		if ($user->authorise('core.delete') || ($postidvalue == $user->id && $deleteown == 1))
 		{
 			$helper->deletepost($deletepostnumber);
 		}

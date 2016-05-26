@@ -30,7 +30,7 @@ extract($displayData);
 				<form method="post" name="delete">
 					<button type="submit" name="jjshout[delete]" class="shout-remove"><img src="<?php echo JUri::root(true); ?>/media/mod_shoutbox/images/remove.svg" width="13" /></button>
 					<input name="jjshout[idvalue]" type="hidden" value="<?php echo $post->id; ?>" />
-					<input name="jjshout[namevalue]" type="hidden" value="<?php echo $post->name; ?>" />
+					<input name="jjshout[useridvalue]" type="hidden" value="<?php echo $post->user_id; ?>" />
 					<?php echo JHtml::_('form.token'); ?>
 				</form>
 			<?php endif; ?>
