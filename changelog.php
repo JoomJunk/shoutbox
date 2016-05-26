@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 ###WIP
 # Fixed edit/remove icons not showing on refresh
+# Fixed name not updating on shout edit
 
 Version 8.1.0
 ^ Enter to submit now works on maths question input
