@@ -97,26 +97,68 @@ JJShoutbox.addSmiley = function(smiley, id)
 /**
  * Inserts the BBCode selected to the textarea
  */
-JJShoutbox.insertBBCode = function(start, end, el)
+JJShoutbox.insertBBCode = function(tag, tag2, data)
 {
-	// IE Support
-	if (document.selection)
+	var val, startPos, endPos;
+	var range = data.range;
+	var text  = '';
+
+	if (range != null)
 	{
-		el.focus();
-		sel      = document.selection.createRange();
-		sel.text = start + sel.text + end;
-	} 
-	// Firefox support
-	else if (el.selectionStart || el.selectionStart == '0')
+		text = range.text;
+	}
+	else if (typeof data.selectionStart != 'undefined')
 	{
-		el.focus();
-		var startPos = el.selectionStart;
-		var endPos   = el.selectionEnd;
-		el.value     = el.value.substring(0, startPos) + start + el.value.substring(startPos, endPos) + end + el.value.substring(endPos, el.value.length);
+		startPos = data.selectionStart;
+		endPos   = data.selectionEnd;
+		text     = data.value.substring(startPos, endPos);
+	}
+
+	// Define the tags and text
+	val = tag + text + tag2;
+
+	if (range != null)
+	{
+		range.text = val;
+
+		if (data.highlight)
+		{
+			range.moveStart('character', -val.length);
+		}
+		else
+		{
+			range.moveStart('character', 0);
+		}
+
+		range.select();
+	}
+	else if (typeof data.selectionStart != 'undefined')
+	{
+		data.value = data.value.substring(0, startPos) + val + data.value.substr(endPos);
+
+		if (data.highlight)
+		{
+			data.selectionStart = startPos;
+			data.selectionEnd   = startPos + val.length;
+		}
+		else
+		{
+			data.selectionStart = startPos + val.length;
+			data.selectionEnd   = startPos + val.length;
+		}
 	}
 	else
 	{
-		el.value += start + end;
+		data.value += val;
+	}
+
+	data.focus();
+
+	// If the there's no text inbetween the tags, insert the cursor there
+	if (text == '')
+	{
+		var cursorpos = startPos + val.length - tag2.length;
+		data.setSelectionRange(cursorpos, cursorpos);
 	}
 }
 
