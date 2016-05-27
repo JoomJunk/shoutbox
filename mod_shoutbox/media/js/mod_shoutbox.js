@@ -503,6 +503,13 @@ jQuery(document).ready(function($) {
 	 */
 	JJShoutbox.submitPost = function(params)
 	{
+		// If the session state is "destroyed", throw an error
+		if (params.session === 'destroyed')
+		{
+			JJShoutbox.showError(Joomla.JText._('SHOUT_SESSION_EXPIRED'), params.instance);
+			return false;
+		}
+
 		// Assemble some commonly used vars
 		var textarea = params.instance.find('#jj_message'),
 		message = textarea.val();

@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 ###WIP
 ^ Cursor is now inserted between tags if they're empty
+^ Error now thrown if session has expired
 
 Version 8.1.1
 # Fixed edit/remove icons not showing on refresh

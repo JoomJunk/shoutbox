@@ -86,6 +86,7 @@ JText::script('SHOUT_EDITOWN_TOO_LATE');
 JText::script('SHOUT_SUBMITTEXT');
 JText::script('SHOUT_UPDATE');
 JText::script('SHOUT_AJAX_ERROR');
+JText::script('SHOUT_SESSION_EXPIRED');
 ?>
 
 <div id="<?php echo $uniqueIdentifier; ?>" class="jjshoutbox <?php echo $jj_class; ?>">
@@ -429,7 +430,8 @@ JText::script('SHOUT_AJAX_ERROR');
 					token       : '<?php echo JSession::getFormToken(); ?>',
 					recaptcha   : JJ_recaptcha,
 					instance    : JJ_instance,
-					history     : JJ_history
+					history     : JJ_history,
+					session     : '<?php echo JFactory::getSession()->getState(); ?>',
 				};
 
 				JJShoutbox.submitPost(JJ_ShoutPostParams);
