@@ -264,6 +264,11 @@ BBCode
 .bbcode-form p {
 	font-weight: bold;
 }
+.bbcode-form input {
+	width: 100%;
+	min-height: 30px;
+	margin-bottom: 5px;
+}
 #bbcode-insert,
 #bbcode-cancel {
 	margin-top: 5px;
