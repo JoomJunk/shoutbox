@@ -120,6 +120,8 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
+
+				<field name="pro" type="pro" label="" />
 			</fieldset>
 
 			<fieldset name="styling" label="SHOUT_STYLING">
