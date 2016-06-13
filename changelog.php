@@ -14,6 +14,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.2
+^ Cursor is now inserted between tags if they're empty
+^ Error now thrown if session has expired
+^ CSS improvements
+- Remove User Tagging beta feature (pro only feature)
+
 Version 8.1.1
 # Fixed edit/remove icons not showing on refresh
 # Fixed name not updating on shout edit
