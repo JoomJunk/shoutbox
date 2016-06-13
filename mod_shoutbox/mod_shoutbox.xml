@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <extension type="module" version="3.4" client="site" method="upgrade">
-	<name>JJ Shoutbox</name> 
-	<author>JoomJunk</author> 
-	<creationDate>05-Mar-2012</creationDate> 
-	<copyright>Copyright (C) 2011 - 2016 JoomJunk</copyright> 
-	<license>http://www.gnu.org/licenses/gpl-3.0.html</license> 
-	<authorEmail>admin@joomjunk.co.uk</authorEmail> 
-	<authorUrl>http://www.joomjunk.co.uk</authorUrl> 
-	<version>8.1.1</version> 
+	<name>JJ Shoutbox</name>
+	<author>JoomJunk</author>
+	<creationDate>05-Mar-2012</creationDate>
+	<copyright>Copyright (C) 2011 - 2016 JoomJunk</copyright>
+	<license>http://www.gnu.org/licenses/gpl-3.0.html</license>
+	<authorEmail>admin@joomjunk.co.uk</authorEmail>
+	<authorUrl>http://www.joomjunk.co.uk</authorUrl>
+	<version>8.1.2</version>
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 
 	<install>
@@ -24,11 +24,11 @@
 		</sql>
 	</uninstall>
 
-	<update> 
+	<update>
 		<schemas>
-			<schemapath type="mysql">sql/mysql/updates</schemapath> 
-			<schemapath type="postgresql">sql/postgresql/updates</schemapath> 
-		</schemas> 
+			<schemapath type="mysql">sql/mysql/updates</schemapath>
+			<schemapath type="postgresql">sql/postgresql/updates</schemapath>
+		</schemas>
 	</update>
 
 	<scriptfile>script.php</scriptfile>
@@ -110,7 +110,7 @@
 					<option value="5">SHOUT_DATE_REVERSED</option>
 					<option value="6">SHOUT_DATE_ELAPSED</option>
 					<option value="2">SHOUT_DONT_SHOW</option>
-				</field>		
+				</field>
 				<field name="refresh" type="text" default="10" label="SHOUT_AUTO_REFRESH" description="SHOUT_AUTO_REFRESH_DESC" />
 				<field name="entersubmit" type="radio" class="btn-group" default="0" label="SHOUT_ENTERTOSUBMIT" description="SHOUT_ENTERTOSUBMITDESC">
 					<option value="0">JOFF</option>
@@ -128,7 +128,7 @@
 				<field name="outputboxcolor" type="color" default="#ffffff" label="SHOUT_OUTOUTBOX_COLOUR" description="SHOUT_OUTOUTBOX_COLOUR_DESC" />
 				<field name="deletecolor" type="color" default="#FF0000" label="SHOUT_DELETELABEL" description="SHOUT_DELETEDESC" />
 				<field name="editcolor" type="color" default="#444444" label="SHOUT_EDIT_COLOUR" description="SHOUT_EDIT_COLOUR_DESC" />
-				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />				
+				<field name="headercolor" type="color" default="#D0D0D0" label="SHOUT_HEADERLABEL" description="SHOUT_HEADERDESC" />
 				<field name="headertextcolor" type="color" default="#000000" label="SHOUT_HEADER_TEXT_COLOUR" description="SHOUT_HEADER_TEXT_COLOUR_DESC" />
 				<field name="textcolor" type="color" default="#000000" label="SHOUT_TEXT_COLOUR" description="SHOUT_TEXT_COLOUR_DESC" />
 				<field name="bordercolor" type="color" default="#FF3C16" label="SHOUT_BORDERLABEL" description="SHOUT_BORDERDESC" />
@@ -185,7 +185,7 @@
 					<option value="1">JON</option>
 				</field>
 				<field name="swearingnumber" type="text" default="3" label="SHOUT_SWEARNUMLABEL" description="SHOUT_SWEARNUMDESC" />
-				
+
 				<field type="sep" label="SHOUT_USER_OPTIONS" />
 				<field name="deleteown" class="btn-group" type="radio" default="0" label="SHOUT_DELETEOWN" description="SHOUT_DELETEOWNDESC">
 					<option value="0">JNO</option>
@@ -218,7 +218,7 @@
 					<option value="0">SHOUT_NONE</option>
 					<option value="1">SHOUT_RECAPTCHA</option>
 					<option value="2">SHOUT_MATHS_QUESTION</option>
-				</field>			
+				</field>
 				<field name="recaptcha-public" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PUBLIC_LABEL" description="SHOUT_RECAPTCHA_PUBLIC_DESC" />
 				<field name="recaptcha-private" type="text" showon="securitytype:1" label="SHOUT_RECAPTCHA_PRIVATE_LABEL" description="SHOUT_RECAPTCHA_PRIVATE_DESC" />	
 				<field name="recaptcha-theme" type="list" showon="securitytype:1" label="SHOUT_RECAPTCHA_THEME_LABEL">
@@ -245,7 +245,7 @@
 					<option value="0">JNO</option>
 					<option value="1">JYES</option>
 				</field>
-				
+
 				<field type="sep" label="" />
 				<field name="moduleclass_sfx" type="text" default="" label="COM_MODULES_FIELD_MODULECLASS_SFX_LABEL" description="COM_MODULES_FIELD_MODULECLASS_SFX_DESC" />
 				<field
