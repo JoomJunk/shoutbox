@@ -303,7 +303,7 @@ class ModShoutboxHelper
 			->from($db->qn('#__shoutbox'));
 
 		$db->setQuery($query);
-		
+
 		return $db->loadResult();
 	}
 
@@ -378,11 +378,11 @@ class ModShoutboxHelper
 		// Ensure the max length of posts is the parameter value
 		if ($this->params->get('messagelength') == 1)
 		{
-			$length  = $this->params->get('messagelength', '200');
+			$length = $this->params->get('messagelength', '200');
 		}
 		else
 		{
-			$length  = false;
+			$length = false;
 		}
 		$message = JString::substr($message, 0, $length);
 
@@ -403,8 +403,8 @@ class ModShoutboxHelper
 		$messageFilter   = JFilterInput::getInstance($acceptedtags,$acceptedAttribs);
 
 		// Do the filtering
-		$name 		= $nameFilter->clean($name, 'string');
-		$message 	= $messageFilter->clean($message, 'string');
+		$name    = $nameFilter->clean($name, 'string');
+		$message = $messageFilter->clean($message, 'string');
 
 		// Start the email cloaking process
 		$searchEmail = '([\w\.\-\+]+\@(?:[a-z0-9\.\-]+\.)+(?:[a-zA-Z0-9\-]{2,10}))';
@@ -420,7 +420,7 @@ class ModShoutboxHelper
 			// Replace the found address with the js cloaked email
 			$message = substr_replace($message, $replacement, $regs[1][1], strlen($mail));
 		}
-		
+
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
 			return $this->addShout($shout['type'], $shout['id'], $name, $message, $ip);
@@ -506,7 +506,7 @@ class ModShoutboxHelper
 			'<a href="#" data-jj-image="http$1://$2" data-jj-image-alt="$3" class="jj-image-modal">$3</a>',
 			'<a href="http$1://$2" target="_blank">$3</a>'
 		);
-		
+
 		$message = preg_replace($search, $replace, $message);
 
 		return $message;
@@ -1091,12 +1091,6 @@ class ModShoutboxHelper
 
 		$profile     = $this->params->get('profile');
 		$shout->name = $this->linkUser($profile, $shout->name, $shout->user_id);
-
-		// Strip <a> from the username
-		if (in_array($profile, array(1, 2, 3, 4)))
-		{
-			$shout->name = strip_tags($shout->name);
-		}
 
 		// Perform Smiley and BBCode filtering if required
 		if ($bbcode == 1)

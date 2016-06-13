@@ -20,7 +20,7 @@ extract($displayData);
 
 ?>
 <div>
-	<div data-shout-id="<?php echo $post->id; ?>" data-shout-name="<?php echo $post->name; ?>" class="shout-header" <?php echo $title; ?>>
+	<div data-shout-id="<?php echo $post->id; ?>" data-shout-name="<?php echo strip_tags($post->name); ?>" class="shout-header" <?php echo $title; ?>>
 		<span class="avatar"><?php echo $avatar; ?></span> <?php echo $post->name; ?> - <?php echo $post->when; ?>
 		<div class="shout-actions">
 			<?php if (($params->get('editown', 1) == 1) && $user->id == $post->user_id) : ?>
