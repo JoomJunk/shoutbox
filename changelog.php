@@ -22,6 +22,7 @@ Version 8.1.1
 # Fixed edit/remove icons not showing on refresh
 # Fixed name not updating on shout edit
 # Fixed user with different name not being able to delete own shout
+- Remove User Tagging beta feature (pro only)
 
 Version 8.1.0
 ^ Enter to submit now works on maths question input

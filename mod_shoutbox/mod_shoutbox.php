@@ -57,7 +57,6 @@ $deleteown       = $params->get('deleteown', 0);
 $editown         = $params->get('editown', 1);
 $editowntime     = $params->get('editown-time', 5);
 $history         = $params->get('history', 1);
-$tagUser         = $params->get('taguser', 0);
 $remainingLength = JText::_('SHOUT_REMAINING');
 
 // Assemble the factory variables needed
@@ -148,31 +147,6 @@ if ($securitytype == 1)
 	}
 }
 JHtml::_('script', 'mod_shoutbox/mod_shoutbox.js', false, true);
-
-
-// Tag a username
-if ($tagUser == 1)
-{
-	$users = json_encode($helper->getAllUsers());
-
-	JHtml::_('script', 'mod_shoutbox/mention.min.js', false, true);
-	JHtml::_('script', 'mod_shoutbox/typeahead.min.js', false, true);
-
-	$doc->addScriptDeclaration("
-		jQuery(document).ready(function($) {
-
-			var users    = " . $users . ";
-
-			$('#jj_message').mention({
-				delimiter: '@',
-				users: users,
-				typeaheadOpts: {
-					menu: '<ul class=\"jj_tag_user typeahead . $dropdown_menu . \"></ul>'
-				}
-			});
-		});
-	");
-}
 
 $dataerror = JText::_('SHOUT_DATABASEERRORSHOUT');
 

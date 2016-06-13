@@ -43,42 +43,6 @@ class ModShoutboxHelper
 	}
 
 	/**
-	 * Gets a list of all users from the #__users table
-	 *
-	 * @return  object
-	 *
-	 * @since   8.0.0
-	 */
-	public function getAllUsers()
-	{
-		$db = JFactory::getDbo();
-
-		$query = $db->getQuery(true);
-		$query->select('username')
-			->from($db->qn('#__users'));
-
-		$db->setQuery($query);
-
-		$users = $db->loadAssocList();
-		
-		// If we have an error then we'll create an exception
-		if ($db->getErrorNum())
-		{
-			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
-		}
-		
-		// rename the array key
-		$users = array_map(function($users)
-		{
-			return array(
-				'username' => $users['username']
-			);
-		}, $users);
-
-		return $users;
-	}
-	
-	/**
 	 * Method for submitting the post. Note AJAX suffix so it can take advantage of com_ajax
 	 *
 	 * @return   array  The details of the post created.
