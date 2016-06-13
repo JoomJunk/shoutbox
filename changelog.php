@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.3
+# Fixed profile link not working
+
 Version 8.1.2
 ^ Cursor is now inserted between tags if they're empty
 ^ Error now thrown if session has expired
