@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+###WIP
+# Fixed duplicate submissions when button is clicked multiple times
+
 Version 8.1.3
 # Fixed profile link not working
 
