@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.5
+# Fixed refreshIncludePaths() method being remove in Joomla 3.6
+! Minimum version for Joomla 3.6
+
 Version 8.1.4
 # Fixed duplicate submissions when button is clicked multiple times
 ! Last version for Joomla 3.4 and 3.5
