@@ -17,7 +17,7 @@ defined('_JEXEC') or die('Restricted access');
  * layout files default.j30.php, default.j3.php and default.php, in this
  * order.
  *
- * @since    1.0
+ * @since    3.0
  */
 class JJShoutboxLayoutFile extends JLayoutFile
 {
@@ -26,9 +26,9 @@ class JJShoutboxLayoutFile extends JLayoutFile
 	 *
 	 * @return  void
 	 *
-	 * @since   3.2
+	 * @since   3.5
 	 */
-	protected function refreshIncludePaths()
+	public function clearIncludePaths()
 	{
 		// Reset includePaths
 		$this->includePaths = array();
