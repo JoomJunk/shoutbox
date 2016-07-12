@@ -544,6 +544,9 @@ jQuery(document).ready(function($) {
 			request['Itemid'] = params.itemId;
 		}
 
+		var submitButton = $('#shoutbox-submit');
+		submitButton.prop('disabled', true);
+
 		// AJAX request
 		$.ajax({
 			type: 'POST',
@@ -561,7 +564,8 @@ jQuery(document).ready(function($) {
 						params.instance.find('#shoutbox-name').val('');
 					}
 
-					$('#shoutbox-submit').val(Joomla.JText._('SHOUT_SUBMITTEXT'));
+					submitButton.prop('disabled', false);
+					submitButton.val(Joomla.JText._('SHOUT_SUBMITTEXT'));
 
 					$('#shout-submit-type').attr('data-submit-type', 'insert')
 										   .attr('data-shout-id', '');

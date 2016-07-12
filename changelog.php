@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.4
+# Fixed duplicate submissions when button is clicked multiple times
+! Last version for Joomla 3.4 and 3.5
+
 Version 8.1.3
 # Fixed profile link not working
 
