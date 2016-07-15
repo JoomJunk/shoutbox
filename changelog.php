@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-###WIP
+Version 8.1.6
 # Fixed some instances where the Ajax request URL wasn't working
 
 Version 8.1.5
