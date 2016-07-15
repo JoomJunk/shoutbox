@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+###WIP
+# Fixed some instances where the Ajax request URL wasn't working
+
 Version 8.1.5
 # Fixed refreshIncludePaths() method being remove in Joomla 3.6
 ! Minimum version for Joomla 3.6

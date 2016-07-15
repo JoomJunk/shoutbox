@@ -453,6 +453,10 @@ jQuery(document).ready(function($) {
 	{
 		// Assemble variables to submit
 		var request = {
+			'option'         : 'com_ajax',
+			'module'         : 'shoutbox',
+			'method'         : 'checkTimestamp',
+			'format'         : 'raw',
 			'jjshout[title]' : title,
 			'jjshout[id]'    : id
 		};
@@ -466,7 +470,6 @@ jQuery(document).ready(function($) {
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=checkTimestamp&format=raw',
 			data: request,
 			success: function(response){
 
@@ -516,6 +519,10 @@ jQuery(document).ready(function($) {
 
 		// Assemble variables to submit	
 		var request = {
+			'option'           : 'com_ajax',
+			'module'           : 'shoutbox',
+			'method'           : 'submit',
+			'format'           : 'json',
 			'jjshout[id]'      : params.shoutId,
 			'jjshout[type]'    : params.type,
 			'jjshout[name]'    : params.name,
@@ -550,7 +557,6 @@ jQuery(document).ready(function($) {
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=submit&format=json',
 			data: request,
 			success: function(response){
 				if (response.success)
@@ -632,6 +638,10 @@ jQuery(document).ready(function($) {
 
 		// Assemble variables to submit
 		var request = {
+			'option'         : 'com_ajax',
+			'module'         : 'shoutbox',
+			'method'         : 'getPosts',
+			'format'         : 'json',
 			'jjshout[title]' : params.title,
 		};
 
@@ -644,7 +654,6 @@ jQuery(document).ready(function($) {
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&format=json',
 			data: request,
 			success: function(response){
 				if (response.success)
@@ -702,6 +711,10 @@ jQuery(document).ready(function($) {
 	{
 		// Assemble variables to submit
 		var request = {
+			'option'          : 'com_ajax',
+			'module'          : 'shoutbox',
+			'method'          : 'getPosts',
+			'format'          : 'json',
 			'jjshout[title]'  : title,
 			'jjshout[offset]' : offset,
 		};
