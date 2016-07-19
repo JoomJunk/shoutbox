@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+###WIP
+$ Updated NL language file (thanks Peter)
+
 Version 8.1.6
 # Fixed some instances where the Ajax request URL wasn't working
 
