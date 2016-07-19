@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 ###WIP
 $ Updated NL language file (thanks Peter)
+# Fixed disabled button not reverting on error
 
 Version 8.1.6
 # Fixed some instances where the Ajax request URL wasn't working
