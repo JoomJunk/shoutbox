@@ -359,7 +359,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 		var JJ_offset      = <?php echo $number; ?>;
 		var JJ_itemId      = <?php echo $Itemid ? $Itemid : 'null'; ?>;
 		var JJ_entersubmit = <?php echo $entersubmit; ?>;
-		var JJ_instance    = $('#<?php echo $uniqueIdentifier; ?>');		
+		var JJ_instance    = $('#<?php echo $uniqueIdentifier; ?>');
 
 		if (JJ_entersubmit === 0)
 		{
@@ -420,35 +420,35 @@ JText::script('SHOUT_SESSION_EXPIRED');
 				<?php endif; ?>
 
 				var JJ_ShoutPostParams = {
-					shoutId     : JJ_shoutId,
-					itemId      : JJ_itemId,
-					type        : JJ_type,
-					name        : JJ_name,
-					title       : '<?php echo $title; ?>',
+					shoutId      : JJ_shoutId,
+					itemId       : JJ_itemId,
+					type         : JJ_type,
+					name         : JJ_name,
+					title        : '<?php echo $title; ?>',
 					securityType : <?php echo $securitytype; ?>,
 					securityHide : <?php echo $securityHide; ?>,
-					token       : '<?php echo JSession::getFormToken(); ?>',
-					recaptcha   : JJ_recaptcha,
-					instance    : JJ_instance,
-					history     : JJ_history,
-					session     : '<?php echo JFactory::getSession()->getState(); ?>',
+					token        : '<?php echo JSession::getFormToken(); ?>',
+					recaptcha    : JJ_recaptcha,
+					instance     : JJ_instance,
+					history      : JJ_history,
+					session      : '<?php echo JFactory::getSession()->getState(); ?>',
 				};
 
 				JJShoutbox.submitPost(JJ_ShoutPostParams);
 			}
 		}
-		
+
 		// Append modal before closing body tag
 		if (JJ_BBCode === 1)
 		{
 			$('body').append($('#jj-image-modal'));
 		}
-		
+
 		if (JJ_history === 1)
 		{
 			// Append modal before closing body tag
 			$('body').append($('#jj-history-modal'));
-			
+
 			$('#jj-load-more').on('click', function(e){
 
 				e.preventDefault();
