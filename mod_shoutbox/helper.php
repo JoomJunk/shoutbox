@@ -1135,11 +1135,12 @@ class ModShoutboxHelper
 			'module' => 'mod_shoutbox',
 			'client' => 0
 		);
+
 		$registry = new JRegistry($options);
 		$layout   = new JJShoutboxLayoutFile($layout, null, $registry);
-		$output   = $layout->render($data);
+		$layout->addIncludePaths(JPATH_SITE . '/modules/mod_shoutbox/layouts');
 
-		return $output;
+		return $layout->render($data);
 	}
 	
 	/**
