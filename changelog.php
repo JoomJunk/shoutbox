@@ -14,6 +14,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.7
+$ Updated NL language file (thanks Peter)
+# Fixed disabled button not reverting on error
+# Fixed layout rendering if 3PD's have extended JLayoutBase
+
 Version 8.1.6
 # Fixed some instances where the Ajax request URL wasn't working
 

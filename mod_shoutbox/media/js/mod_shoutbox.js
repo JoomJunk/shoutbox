@@ -272,6 +272,8 @@ JJShoutbox.showError = function(msg, instance)
 				errorBox.empty();
 			});
 
+	instance.find('#shoutbox-submit').prop('disabled', false);
+
 	return false;
 }
 
@@ -551,7 +553,7 @@ jQuery(document).ready(function($) {
 			request['Itemid'] = params.itemId;
 		}
 
-		var submitButton = $('#shoutbox-submit');
+		var submitButton = params.instance.find('#shoutbox-submit');
 		submitButton.prop('disabled', true);
 
 		// AJAX request
@@ -728,7 +730,6 @@ jQuery(document).ready(function($) {
 		// AJAX request
 		$.ajax({
 			type: 'POST',
-			url: 'index.php?option=com_ajax&module=shoutbox&method=getPosts&format=json',
 			data: request,
 			success: function(response){
 				if (response.success)
