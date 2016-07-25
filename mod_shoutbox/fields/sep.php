@@ -18,19 +18,20 @@ class JFormFieldSep extends JFormField
 	 * @var string
 	 */
 	protected $type = 'Sep';
+
 	/**
 	 * @return string
 	 */
 	protected function getLabel()
 	{
-        $doc = JFactory::getDocument();
-        $doc->addStyleDeclaration('.jj-sep { border-bottom:1px solid #eee;font-size:16px;color:#BD362F;margin-top:15px;padding:2px 0;width:100% }');
-		
+        JFactory::getDocument()->addStyleDeclaration('.jj-sep { border-bottom:1px solid #eee;font-size:16px;color:#BD362F;margin-top:15px;padding:2px 0;width:100% }');
+
         $label = JText::_((string)$this->element['label']);
         $css   = (string)$this->element['class'];
-		
+
         return '<div class="jj-sep ' . $css . '">' . $label . '</div>';
 	}
+
 	/**
 	 * @return mixed
 	 */

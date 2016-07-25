@@ -643,8 +643,7 @@ class ModShoutboxHelper
 			elseif ($profile == 4)
 			{
 				// K2 Profile Link
-				$profile_link = '<a href="' . JRoute::_('index.php?option=com_k2&view=itemlist&layout=user&id=' . $user_id .
-					'&task=user') . '">' . $name . '</a>';
+				$profile_link = '<a href="' . JRoute::_('index.php?option=com_k2&view=itemlist&layout=user&id=' . $user_id . '&task=user') . '">' . $name . '</a>';
 			}
 			elseif ($profile == 5)
 			{

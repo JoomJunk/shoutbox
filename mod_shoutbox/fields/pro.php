@@ -26,10 +26,9 @@ class JFormFieldPro extends JFormField
 	 */
 	protected function getLabel()
 	{
-		$app = JFactory::getApplication();
 		$msg = '<h3>Love JJ Shoutbox? Take a look at the <a href="https://joomjunk.co.uk/products/ajax-shoutbox-pro.html" target="_blank">Pro version</a> which is packed with many more features.</h3>';
 
-        return $app->enqueueMessage($msg, 'message');
+        return JFactory::getApplication()->enqueueMessage($msg, 'message');
 	}
 
 	/**
