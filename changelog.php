@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+###WIP
+$ Updated NL language file (thanks Peter)
+
 Version 8.1.7
 $ Updated NL language file (thanks Peter)
 # Fixed disabled button not reverting on error
