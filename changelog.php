@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.8
+^ General PHP improvements
+$ Updated NL language file (thanks Peter)
+
 Version 8.1.7
 $ Updated NL language file (thanks Peter)
 # Fixed disabled button not reverting on error

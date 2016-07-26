@@ -217,7 +217,6 @@ if (isset($_POST))
 			}
 		}
 	}
-
 }
 
 require JModuleHelper::getLayoutPath('mod_shoutbox');

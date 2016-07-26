@@ -101,7 +101,7 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update300();
 				}
-				
+
 				/**
 				 * In 6.0.0 we updated to ReCaptcha v2 which doesn't accept old keys
 				 */
@@ -109,7 +109,7 @@ class Mod_ShoutboxInstallerScript
 				{
 					$this->update600();
 				}
-				
+
 				/**
 				 * In 7.0.0 show a notification
 				 */
@@ -135,7 +135,7 @@ class Mod_ShoutboxInstallerScript
 	public function install($parent)
 	{
 		$this->manageSmilies();
-		
+
 		echo '<p>' . JText::_('MOD_SHOUTBOX_INSTALL') . '</p>';
 	}
 
@@ -152,7 +152,7 @@ class Mod_ShoutboxInstallerScript
 	{
 		echo '<p>' . JText::sprintf('MOD_SHOUTBOX_UPDATE', $this->release) . '</p>';
 	}
-	
+
 	/**
 	 * Function called on uninstall of module
 	 *
@@ -187,17 +187,17 @@ class Mod_ShoutboxInstallerScript
 		$query = $db->getQuery(true);
 
 		// Select the item(s) and retrieve the id
-		$query->select($db->quoteName('id'));
+		$query->select($db->qn('id'));
 
 		if ($isModule)
 		{
-			$query->from($db->quoteName('#__modules'))
-				->where($db->quoteName('module') . ' = ' . $db->Quote($this->extension));
+			$query->from($db->qn('#__modules'))
+			      ->where($db->qn('module') . ' = ' . $db->q($this->extension));
 		}
 		else
 		{
-			$query->from($db->quoteName('#__extensions'))
-				->where($db->quoteName('element') . ' = ' . $db->Quote($this->extension));
+			$query->from($db->qn('#__extensions'))
+			      ->where($db->qn('element') . ' = ' . $db->q($this->extension));
 		}
 
 		// Set the query and obtain an array of id's
@@ -280,10 +280,11 @@ class Mod_ShoutboxInstallerScript
 		$paramsString = json_encode($params);
 
 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->update($db->quoteName($this->paramTable))
-			->set('params = ' . $db->quote($paramsString))
-			->where('id = ' . $id);
+
+		$query = $db->getQuery(true)
+		->update($db->qn($this->paramTable))
+		->set('params = ' . $db->quote($paramsString))
+		->where('id = ' . $id);
 
 		// Update table
 		$db->setQuery($query);
@@ -315,14 +316,13 @@ class Mod_ShoutboxInstallerScript
 	 */
 	protected function getItemArray($element, $table, $column, $identifier)
 	{
-		// Get the DB and query objects
 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-
-		// Build the query
-		$query->select($db->quoteName($element))
-			->from($db->quoteName($table))
-			->where($db->quoteName($column) . ' = ' . $identifier);
+		
+		$query = $db->getQuery(true)
+		->select($db->qn($element))
+		->from($db->qn($table))
+		->where($db->qn($column) . ' = ' . $identifier);
+		
 		$db->setQuery($query);
 
 		// Load the single cell and json_decode data
@@ -330,7 +330,7 @@ class Mod_ShoutboxInstallerScript
 
 		return $array;
 	}
-	
+
 	/**
 	 * Function to create the smilies directory and populate it
 	 *
@@ -343,7 +343,7 @@ class Mod_ShoutboxInstallerScript
 		// Import dependencies
 		JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
 		JLoader::register('JFolder', JPATH_LIBRARIES . '/joomla/filesystem/folder.php');
-		
+
 		if (!JFolder::exists(JPATH_SITE . '/images/'. $this->extension))
 		{
 			if (JFolder::create(JPATH_SITE . '/images/'. $this->extension)
@@ -370,7 +370,6 @@ class Mod_ShoutboxInstallerScript
 			}
 		}
 	}
-		
 
 	/**
 	 * Function to update the db schema for the Shoutbox Version 1.1.4 Updates
@@ -453,14 +452,17 @@ class Mod_ShoutboxInstallerScript
 	{
 		// Retrieve all the user groups
 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select($db->quoteName('id'))
-			->from($db->quoteName('#__usergroups'));
+
+		$query = $db->getQuery(true)
+		->select($db->qn('id'))
+		->from($db->qn('#__usergroups'));
+
 		$db->setQuery($query);
+
 		$groups = $db->loadColumn();
 
 		$modules = $this->getInstances(true);
-		
+
 		// Display a notification to the user with a notification
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_126_UPDATE_NOTIFICATION'), 'error');
 
@@ -472,18 +474,20 @@ class Mod_ShoutboxInstallerScript
 
 			// Create array of params to change
 			$param = $this->getParam('guestpost', $module);
-			
+
 			if ($param == 1)
 			{
 				// Set the param values so that guests have no permissions
 				$groupsCopy = $groups;
 				$del_val = 1;
-				if(($key = array_search($del_val, $groupsCopy)) !== false) {
+				if (($key = array_search($del_val, $groupsCopy)) !== false)
+				{
 					unset($groupsCopy[$key]);
 				}
 
 				$del_val = 13;
-				if(($key = array_search($del_val, $groupsCopy)) !== false) {
+				if (($key = array_search($del_val, $groupsCopy)) !== false)
+				{
 					unset($groupsCopy[$key]);
 				}
 				$values['guestpost'] = $groupsCopy;
@@ -495,7 +499,7 @@ class Mod_ShoutboxInstallerScript
 				$values['guestpost'] = $groups;
 				$this->setParams($values, 'edit', $module);
 			}
-			
+
 			// Unset the array for the next loop
 			unset($values);
 		}
@@ -516,7 +520,7 @@ class Mod_ShoutboxInstallerScript
 
 		JFile::delete(JPATH_ROOT . '/modules/mod_shoutbox/fields/check.php');
 	}
-	
+
 	/**
 	 * Function to update the params for the Shoutbox Version 3.0.0 updates
 	 *
@@ -538,7 +542,7 @@ class Mod_ShoutboxInstallerScript
 
 			// Name to show is now a set of string values rather than numerical values.
 			$param = $this->getParam('loginname', $module);
-			
+
 			if ($param == 0)
 			{
 				$newParams['loginname'] = 'real';
@@ -552,11 +556,10 @@ class Mod_ShoutboxInstallerScript
 				$newParams['loginname'] = 'choose';
 			}
 
-
 			// Apply security param value to new securitytype param
 			$recaptcha = $this->getParam('recaptcha', $module);
 			$question  = $this->getParam('securityquestion', $module);
-			
+
 			if ($recaptcha == 0)
 			{
 				$newParams['securitytype'] = 1;
@@ -571,7 +574,7 @@ class Mod_ShoutboxInstallerScript
 			}
 
 			// To standardise off is 0 and on is 1. Swap some field names around.
-			$params   = array('bbcode', 'swearingcounter', 'mass_delete');
+			$params = array('bbcode', 'swearingcounter', 'mass_delete');
 
 			foreach ($params as $paramName)
 			{
@@ -587,7 +590,6 @@ class Mod_ShoutboxInstallerScript
 					$newParams[$paramName] = 0;
 				}
 			}
-			
 
 			// Set the param values
 			$this->setParams($newParams, 'edit', $module);
@@ -597,7 +599,7 @@ class Mod_ShoutboxInstallerScript
 			unset($newParams);
 		}
 	}
-		
+
 	/**
 	 * Function to set the swearwords parameter as a json object and delete the swearswords.php file
 	 *
@@ -609,30 +611,29 @@ class Mod_ShoutboxInstallerScript
 	{
 		// Import dependencies
 		JLoader::register('JFile', JPATH_LIBRARIES . '/joomla/filesystem/file.php');
-				
+
 		// Move the smilies
-		$this->manageSmilies();		
-		
+		$this->manageSmilies();
+
 		// Get the swearwords from the file
 		$file = file_get_contents(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php', NULL, NULL, 249);
-		$explode = explode("\n", $file);	// Explode the contents of the file
-		$words = array_filter($explode);	// Remove empty values from array
-		unset($words[0]);					// Unset the first array index which contains a space
-		
-		
+		$explode = explode("\n", $file); // Explode the contents of the file
+		$words = array_filter($explode); // Remove empty values from array
+		unset($words[0]);                // Unset the first array index which contains a space
+
 		$modules = $this->getInstances(true);
-		
+
 		foreach ($modules as $module)
 		{
 			// Convert string to integer
 			$module = (int) $module;
-			
+
 			//  Create a json object with an array of words
 			$json_words = json_encode(array('word' => array_values($words)));
-			
+
 			// Remove line breaks in the json string
 			$json_words = preg_replace('/\\\r/m', '', $json_words);
-			
+
 			$json_smilies = json_encode(array(
 				'image' => array(
 					'icon_e_biggrin.gif',
@@ -665,12 +666,12 @@ class Mod_ShoutboxInstallerScript
 			// We merged the smiley and bbCode param. So if smileys were previously enabled then we need to enable the bbCode param.
 			$newParams = array();
 			$param = $this->getParam('smile', $module);
-			
+
 			if ($param != 4)
 			{
 				$newParams['bbcode'] = 1;
 			}
-			
+
 			// Create array of params to change
 			$newParams['list_swearwords'] = $json_words;
 			$newParams['list_smilies']    = $json_smilies;
@@ -682,13 +683,13 @@ class Mod_ShoutboxInstallerScript
 			unset($params);
 			unset($newParams);
 		}
-			
+
 		// Delete swearwords file
 		if (JFile::exists(JPATH_ROOT . '/modules/' . $this->extension . '/swearWords.php'))
 		{
 			JFile::delete(JPATH_ROOT . '/modules/' . $this->extension . '/swearWords.php');
 		}
-			
+
 		JFactory::getApplication()->enqueueMessage(JText::_('SHOUT_600_UPDATE_NOTIFICATION'), 'warning');
 	}
 	

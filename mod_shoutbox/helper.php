@@ -205,11 +205,12 @@ class ModShoutboxHelper
 	private function getShoutData($offset, $number)
 	{
 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select('*')
-			->from($db->qn('#__shoutbox'))
-			->order($db->qn('id') . ' DESC')
-			->setLimit($number, $offset);
+
+		$query = $db->getQuery(true)
+		->select('*')
+		->from($db->qn('#__shoutbox'))
+		->order($db->qn('id') . ' DESC')
+		->setLimit($number, $offset);
 
 		$db->setQuery($query);
 
@@ -244,10 +245,11 @@ class ModShoutboxHelper
 	public function getAShout($id)
 	{
 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select('*')
-			->from($db->qn('#__shoutbox'))
-			->where($db->qn('id') . ' = ' . (int)$id);
+
+		$query = $db->getQuery(true)
+		->select('*')
+		->from($db->qn('#__shoutbox'))
+		->where($db->qn('id') . ' = ' . (int)$id);
 
 		$db->setQuery($query);
 
@@ -298,9 +300,9 @@ class ModShoutboxHelper
 	{
 		$db = JFactory::getDbo();
 
-		$query = $db->getQuery(true);
-		$query->select('COUNT(id)')
-			->from($db->qn('#__shoutbox'));
+		$query = $db->getQuery(true)
+		->select('COUNT(id)')
+		->from($db->qn('#__shoutbox'));
 
 		$db->setQuery($query);
 
@@ -643,8 +645,7 @@ class ModShoutboxHelper
 			elseif ($profile == 4)
 			{
 				// K2 Profile Link
-				$profile_link = '<a href="' . JRoute::_('index.php?option=com_k2&view=itemlist&layout=user&id=' . $user_id .
-					'&task=user') . '">' . $name . '</a>';
+				$profile_link = '<a href="' . JRoute::_('index.php?option=com_k2&view=itemlist&layout=user&id=' . $user_id . '&task=user') . '">' . $name . '</a>';
 			}
 			elseif ($profile == 5)
 			{
@@ -688,7 +689,6 @@ class ModShoutboxHelper
 		if ($type == 'insert')
 		{
 			// Insert a new shout into the database
-			$query = $db->getQuery(true);
 			$columns = array('name', 'when', 'ip', 'msg', 'user_id');
 
 			$values = array(
@@ -699,12 +699,12 @@ class ModShoutboxHelper
 				$db->q(JFactory::getUser()->id)
 			);
 
-			$query->insert($db->qn('#__shoutbox'))
-				  ->columns($db->qn($columns))
-				  ->values(implode(',', $values));
+			$query = $db->getQuery(true)
+			->insert($db->qn('#__shoutbox'))
+			->columns($db->qn($columns))
+			->values(implode(',', $values));
 
 			$db->setQuery($query);
-
 			$db->execute();
 
 			return $db->insertid();
@@ -737,13 +737,12 @@ class ModShoutboxHelper
 	public function deletepost($id)
 	{
 		$db	= JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->delete()
-			  ->from($db->qn('#__shoutbox'))
-			  ->where($db->qn('id') . ' = ' . (int) $id);
+		$query = $db->getQuery(true)
+		->delete()
+		->from($db->qn('#__shoutbox'))
+		->where($db->qn('id') . ' = ' . (int) $id);
 
 		$db->setQuery($query);
-
 		$db->execute();
 	}
 
@@ -768,11 +767,11 @@ class ModShoutboxHelper
 		}
 
 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select('*')
-			  ->from($db->qn('#__shoutbox'))
-			  ->order($db->qn('id') . ' ' . $dir)
-			  ->setLimit($delete);
+		$query = $db->getQuery(true)
+		->select('*')
+		->from($db->qn('#__shoutbox'))
+		->order($db->qn('id') . ' ' . $dir)
+		->setLimit($delete);
 
 		$db->setQuery($query);
 
@@ -1271,12 +1270,10 @@ class ModShoutboxHelper
 		{
 			// Use a database query as the CB framework is horrible
 			$db = JFactory::getDbo();
-
-			$query = $db->getQuery(true);
-
-			$query->select($db->qn('avatar'))
-				->from($db->qn('#__comprofiler'))
-				->where($db->qn('user_id') . ' = ' . $db->q($user->id));
+			$query = $db->getQuery(true)
+			->select($db->qn('avatar'))
+			->from($db->qn('#__comprofiler'))
+			->where($db->qn('user_id') . ' = ' . $db->q($user->id));
 
 			$db->setQuery($query);
 
@@ -1398,10 +1395,11 @@ class ModShoutboxHelper
 	private function getTimestampData($id)
 	{
 		$db = JFactory::getDbo();
-		$query = $db->getQuery(true);
-		$query->select('*')
-			->from($db->qn('#__shoutbox'))
-			->where($db->qn('id') . ' = ' . (int) $id);
+
+		$query = $db->getQuery(true)
+		->select('*')
+		->from($db->qn('#__shoutbox'))
+		->where($db->qn('id') . ' = ' . (int) $id);
 
 		$db->setQuery($query);
 

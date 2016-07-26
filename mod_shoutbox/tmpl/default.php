@@ -100,7 +100,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 			// Counts the number of shouts retrieved from the database
 			$actualnumber = count($shouts);
 
-			if ($actualnumber == 0) 
+			if ($actualnumber == 0)
 			{
 				echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
 			} 
@@ -154,7 +154,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 		{
 		?>
 			<form method="post" name="shout" class="<?php echo $form; ?>">
-				
+
 				<div class="<?php echo $form_row; ?>">
 					<?php
 						// Displays the Name of the user if logged in unless stated in the parameters to be a input box
@@ -210,7 +210,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-underline" data-bbcode-type="u"><?php echo JText::_('SHOUT_BBCODE_UNDERLINE'); ?></button>
 							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-image jj-trigger-insert" data-bbcode-type="img"><?php echo JText::_('SHOUT_BBCODE_IMG'); ?></button>
 							<button type="button" class="<?php echo $button . $button_small; ?> bbcode-button jj-link jj-trigger-insert" data-bbcode-type="url"><?php echo JText::_('SHOUT_BBCODE_LINK'); ?></button>
-							<?php if ($framework == 'uikit') : ?>						
+							<?php if ($framework == 'uikit') : ?>
 								<div class="uk-button-dropdown" data-uk-dropdown>
 									<button class="uk-button uk-button-small" type="button">
 										<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
@@ -271,7 +271,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 					?>
 						<?php $que_number1 = $helper->randomnumber(1); ?>
 						<?php $que_number2 = $helper->randomnumber(1); ?>
-						<div class="form-inline <?php echo $form_row; ?>">				
+						<div class="form-inline <?php echo $form_row; ?>">
 							<canvas id="mathscanvas" width="80" height="30">Your browser does not support the HTML5 canvas tag.</canvas>
 							<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
 							<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
