@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+###WIP
+- Removed IcoMoon library reference
+
 Version 8.1.8
 ^ General PHP improvements
 $ Updated NL language file (thanks Peter)
