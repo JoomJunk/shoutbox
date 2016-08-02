@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-###WIP
+Version 8.1.9
 ^ Prevent F5 refresh showing message after deleting a shout
 ^ General PHP improvements
 # Fixed unecessary characters next to 'load more' button
