@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.10
+# Fixed PHP fatal error with session token still existing
+
 Version 8.1.9
 ^ Prevent F5 refresh showing message after deleting a shout
 ^ General PHP improvements

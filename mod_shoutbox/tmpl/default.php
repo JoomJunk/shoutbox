@@ -169,8 +169,6 @@ JText::script('SHOUT_SESSION_EXPIRED');
 					?>
 				</div>
 
-				<input name="jjshout[token]" type="hidden" value="<?php echo $_SESSION['token'];?>" />
-
 				<div class="<?php echo $form_row; ?>">
 					<?php if ($enablelimit == 1) : ?>
 						<span id="charsLeft"></span>
