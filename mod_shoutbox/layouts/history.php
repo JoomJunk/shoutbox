@@ -33,7 +33,7 @@ $helper = new ModShoutboxHelper($title);
 						echo $helper->renderPost($shout);
 					}
 				?>
-				<div class="center-block">';
+				<div class="center-block">
 					<a href="#" id="jj-load-more" class="uk-button uk-button-primary"><?php echo JText::_('SHOUT_HISTORY_LOAD_MORE'); ?></a>
 				</div>
 			</div>
