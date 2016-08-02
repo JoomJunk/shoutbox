@@ -93,12 +93,6 @@ JText::script('SHOUT_SESSION_EXPIRED');
 	<div id="jjshoutboxoutput" class="jjshoutboxoutput">
 		<div class="jj-shout-new"></div>
 		<?php
-			// Retrieves the shouts from the database
-			$shouts = $helper->getShouts(0, $number, $dataerror);
-
-			// Counts the number of shouts retrieved from the database
-			$actualnumber = count($shouts);
-
 			if ($actualnumber == 0)
 			{
 				echo '<div><p>' . JText::_('SHOUT_EMPTY') . '</p></div>';
@@ -170,8 +164,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 							echo '<input name="jjshout[name]" type="text" maxlength="25" required="required" id="shoutbox-name" class="' . $input_txtarea . ' fullwidth" placeholder="' . JText::_('SHOUT_NAME') . '" />';
 						}
 
-						// Adds in session token to prevent re-posts and a security token to prevent CRSF attacks
-						$_SESSION['token'] = uniqid("token", true);
+						// Adds in a security token to prevent CRSF attacks
 						echo JHtml::_('form.token');
 					?>
 				</div>
