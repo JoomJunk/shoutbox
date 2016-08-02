@@ -60,9 +60,9 @@ $history         = $params->get('history', 1);
 $remainingLength = JText::_('SHOUT_REMAINING');
 
 // Assemble the factory variables needed
-$doc 	= JFactory::getDocument();
-$user 	= JFactory::getUser();
-$app 	= JFactory::getApplication();
+$doc  = JFactory::getDocument();
+$user = JFactory::getUser();
+$app  = JFactory::getApplication();
 $activeMenuItem = $app->getMenu()->getActive();
 $Itemid = is_null($activeMenuItem) ? null : $activeMenuItem->id;
 
@@ -218,5 +218,11 @@ if (isset($_POST))
 		}
 	}
 }
+
+// Retrieves the shouts from the database
+$shouts = $helper->getShouts(0, $number, $dataerror);
+
+// Counts the number of shouts retrieved from the database
+$actualnumber = count($shouts);
 
 require JModuleHelper::getLayoutPath('mod_shoutbox');

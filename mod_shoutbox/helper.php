@@ -30,6 +30,12 @@ class ModShoutboxHelper
 	private $params = null;
 
 	/**
+	 * @var		JDatabase  The database object.
+	 * @since   __DEPLOY_VERSION__
+	 */
+	private $db = null;
+
+	/**
 	 * Fetches the parameters of the shoutbox independently of the view
 	 * so it can be used for the AJAX
 	 *
@@ -40,6 +46,7 @@ class ModShoutboxHelper
 	public function __construct($id)
 	{
 		$this->params = $this->getParams($id);
+		$this->db     = JFactory::getDbo();
 	}
 
 	/**
@@ -204,22 +211,20 @@ class ModShoutboxHelper
 	 */
 	private function getShoutData($offset, $number)
 	{
-		$db = JFactory::getDbo();
-
-		$query = $db->getQuery(true)
+		$query = $this->db->getQuery(true)
 		->select('*')
-		->from($db->qn('#__shoutbox'))
-		->order($db->qn('id') . ' DESC')
+		->from($this->db->qn('#__shoutbox'))
+		->order($this->db->qn('id') . ' DESC')
 		->setLimit($number, $offset);
 
-		$db->setQuery($query);
+		$this->db->setQuery($query);
 
-		$rows = $db->loadObjectList();
+		$rows = $this->db->loadObjectList();
 
 		// If we have an error then we'll create an exception
-		if ($db->getErrorNum())
+		if ($this->db->getErrorNum())
 		{
-			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
+			throw new RuntimeException($this->db->getErrorMsg(), $this->db->getErrorNum());
 		}
 
 		// Ensure the date formatting
@@ -244,21 +249,19 @@ class ModShoutboxHelper
 	 */
 	public function getAShout($id)
 	{
-		$db = JFactory::getDbo();
-
-		$query = $db->getQuery(true)
+		$query = $this->db->getQuery(true)
 		->select('*')
-		->from($db->qn('#__shoutbox'))
-		->where($db->qn('id') . ' = ' . (int)$id);
+		->from($this->db->qn('#__shoutbox'))
+		->where($this->db->qn('id') . ' = ' . (int)$id);
 
-		$db->setQuery($query);
+		$this->db->setQuery($query);
 
-		$row = $db->loadObject();
+		$row = $this->db->loadObject();
 
 		// If we have an error then we'll create an exception
-		if ($db->getErrorNum())
+		if ($this->db->getErrorNum())
 		{
-			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
+			throw new RuntimeException($this->db->getErrorMsg(), $this->db->getErrorNum());
 		}
 
 		// Format the when correctly
@@ -298,15 +301,13 @@ class ModShoutboxHelper
 	 */
 	public function countShouts()
 	{
-		$db = JFactory::getDbo();
-
-		$query = $db->getQuery(true)
+		$query = $this->db->getQuery(true)
 		->select('COUNT(id)')
-		->from($db->qn('#__shoutbox'));
+		->from($this->db->qn('#__shoutbox'));
 
-		$db->setQuery($query);
+		$this->db->setQuery($query);
 
-		return $db->loadResult();
+		return $this->db->loadResult();
 	}
 
 	/**
@@ -425,6 +426,8 @@ class ModShoutboxHelper
 
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
+			$shout['type'] = isset($shout['type']) ? $shout['type'] : 'insert';
+
 			return $this->addShout($shout['type'], $shout['id'], $name, $message, $ip);
 		}
 	}
@@ -684,30 +687,36 @@ class ModShoutboxHelper
 	 */
 	public function addShout($type, $id, $name, $message, $ip)
 	{
-		$db = JFactory::getDbo();
-
 		if ($type == 'insert')
 		{
 			// Insert a new shout into the database
 			$columns = array('name', 'when', 'ip', 'msg', 'user_id');
 
 			$values = array(
-				$db->q($name),
-				$db->q(JFactory::getDate('now')->toSql(true)),
-				$db->q($ip),
-				$db->q($message),
-				$db->q(JFactory::getUser()->id)
+				$this->db->q($name),
+				$this->db->q(JFactory::getDate('now')->toSql(true)),
+				$this->db->q($ip),
+				$this->db->q($message),
+				$this->db->q(JFactory::getUser()->id)
 			);
 
-			$query = $db->getQuery(true)
-			->insert($db->qn('#__shoutbox'))
-			->columns($db->qn($columns))
+			$query = $this->db->getQuery(true)
+			->insert($this->db->qn('#__shoutbox'))
+			->columns($this->db->qn($columns))
 			->values(implode(',', $values));
 
-			$db->setQuery($query);
-			$db->execute();
+			$this->db->setQuery($query);
+			$this->db->execute();
 
-			return $db->insertid();
+			// Return the last inserted ID if Ajax is present
+			if ($this->ajax)
+			{
+				return $this->db->insertid();
+			}
+
+			// Redirect to the current page if Ajax isn't present
+			// This prevents the F5 duplicate form submission
+			JFactory::getApplication()->redirect(JUri::current());
 		}
 		else if ($type == 'update' && $id != '')
 		{
@@ -736,14 +745,17 @@ class ModShoutboxHelper
 	 */
 	public function deletepost($id)
 	{
-		$db	= JFactory::getDbo();
-		$query = $db->getQuery(true)
+		$query = $this->db->getQuery(true)
 		->delete()
-		->from($db->qn('#__shoutbox'))
-		->where($db->qn('id') . ' = ' . (int) $id);
+		->from($this->db->qn('#__shoutbox'))
+		->where($this->db->qn('id') . ' = ' . (int) $id);
 
-		$db->setQuery($query);
-		$db->execute();
+		$this->db->setQuery($query);
+		$this->db->execute();
+		
+		// Redirect to the current page if Ajax isn't present
+		// This prevents the F5 duplicate form submission
+		JFactory::getApplication()->redirect(JUri::current());
 	}
 
 	/**
@@ -766,21 +778,24 @@ class ModShoutboxHelper
 			$dir = 'DESC';
 		}
 
-		$db = JFactory::getDbo();
-		$query = $db->getQuery(true)
+		$query = $this->db->getQuery(true)
 		->select('*')
-		->from($db->qn('#__shoutbox'))
-		->order($db->qn('id') . ' ' . $dir)
+		->from($this->db->qn('#__shoutbox'))
+		->order($this->db->qn('id') . ' ' . $dir)
 		->setLimit($delete);
 
-		$db->setQuery($query);
+		$this->db->setQuery($query);
 
-		$rows = $db->loadObjectList();
+		$rows = $this->db->loadObjectList();
 
 		foreach ($rows as $row)
 		{
 			$this->deletepost($row->id);
 		}
+
+		// Redirect to the current page if Ajax isn't present
+		// This prevents the F5 duplicate form submission
+		JFactory::getApplication()->redirect(JUri::current());
 	}
 
 	/**
@@ -866,109 +881,107 @@ class ModShoutboxHelper
 		$swearCounter = $this->params->get('swearingcounter');
 		$swearNumber  = $this->params->get('swearingnumber');
 
-		// If we submitted by PHP check for a session token
-		if ($this->ajax || $_SESSION['token'] == $post['token'])
+		// Check token
+		JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
+
+		// Sift through security types
+		if ($securityType == 1)
 		{
-			JSession::checkToken() or jexit(JText::_('JINVALID_TOKEN'));
-
-			if ($securityType == 1)
+			if ($securityHide == 0 || ($user->guest && $securityHide == 1))
 			{
-				if ($securityHide == 0 || ($user->guest && $securityHide == 1))
+				// Recaptcha fields aren't in the JJ post space so we have to grab these separately
+				$input = JFactory::getApplication()->input;
+				$challengeField = $input->get('g-recaptcha-response', '', 'string');
+
+				// Require Recaptcha Library
+				spl_autoload_register(function ($class)
 				{
-					// Recaptcha fields aren't in the JJ post space so we have to grab these separately
-					$input = JFactory::getApplication()->input;
-					$challengeField = $input->get('g-recaptcha-response', '', 'string');
+					// Project-specific namespace prefix
+					$prefix = 'ReCaptcha\\';
 
-					// Require Recaptcha Library
-					spl_autoload_register(function ($class)
+					// Base directory for the namespace prefix
+					$base_dir = JPATH_ROOT . '/media/mod_shoutbox/recaptcha/';
+
+					// Does the class use the namespace prefix?
+					$len = strlen($prefix);
+
+					if (strncmp($prefix, $class, $len) !== 0)
 					{
-						// Project-specific namespace prefix
-						$prefix = 'ReCaptcha\\';
+						// No, move to the next registered autoloader
+						return;
+					}
 
-						// Base directory for the namespace prefix
-						$base_dir = JPATH_ROOT . '/media/mod_shoutbox/recaptcha/';
+					// Get the relative class name
+					$relative_class = substr($class, $len);
 
-						// Does the class use the namespace prefix?
-						$len = strlen($prefix);
+					/**
+					 * replace the namespace prefix with the base directory, replace namespace
+					 * separators with directory separators in the relative class name, append
+					 * with .php
+					 */
+					$file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
 
-						if (strncmp($prefix, $class, $len) !== 0)
+					// if the file exists, require it
+					if (file_exists($file))
+					{
+						require $file;
+					}
+				});
+
+				$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
+
+				$resp = $recaptcha->verify($challengeField, JFactory::getApplication()->input->server->get('REMOTE_ADDR'));
+
+				if ($resp->isSuccess())
+				{
+					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
+				}
+
+				// Invalid submission of post. Throw an error.
+				$error = '';
+
+				foreach ($resp->getErrorCodes() as $code)
+				{
+					$error .= $code;
+				}
+
+				throw new RuntimeException($error);
+			}
+			else 
+			{
+				return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
+			}
+		}
+		elseif ($securityType == 2)
+		{
+			if ($securityHide == 0 || ($user->guest && $securityHide == 1))
+			{
+				// Our maths security question is on
+				if (isset($post['sum1']) && isset($post['sum2']))
+				{
+					$que_result = $post['sum1'] + $post['sum2'];
+
+					if (isset($post['human']))
+					{
+						if ($post['human'] != $que_result)
 						{
-							// No, move to the next registered autoloader
-							return;
+							throw new RuntimeException(JText::_('SHOUT_ANSWER_INCORRECT'));
 						}
 
-						// Get the relative class name
-						$relative_class = substr($class, $len);
-
-						/**
-						 * replace the namespace prefix with the base directory, replace namespace
-						 * separators with directory separators in the relative class name, append
-						 * with .php
-						 */
-						$file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
-
-						// if the file exists, require it
-						if (file_exists($file))
-						{
-							require $file;
-						}
-					});
-
-					$recaptcha = new ReCaptcha\ReCaptcha($this->params->get('recaptcha-private'));
-
-					$resp = $recaptcha->verify($challengeField, JFactory::getApplication()->input->server->get('REMOTE_ADDR'));
-
-					if ($resp->isSuccess())
-					{
 						return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 					}
-
-					// Invalid submission of post. Throw an error.
-					$error = '';
-
-					foreach ($resp->getErrorCodes() as $code)
-					{
-						$error .= $code;
-					}
-
-					throw new RuntimeException($error);
 				}
-				else 
-				{
-					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
-				}
-			}
-			elseif ($securityType == 2)
-			{
-				if ($securityHide == 0 || ($user->guest && $securityHide == 1))
-				{
-					// Our maths security question is on
-					if (isset($post['sum1']) && isset($post['sum2']))
-					{
-						$que_result = $post['sum1'] + $post['sum2'];
-
-						if (isset($post['human']))
-						{
-							if ($post['human'] != $que_result)
-							{
-								throw new RuntimeException(JText::_('SHOUT_ANSWER_INCORRECT'));
-							}
-
-							return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
-						}
-					}
-				}
-				else
-				{
-					return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
-				}
-
-				throw new RuntimeException(JText::_('SHOUT_MATHS_QUESTION_INVALID'));
 			}
 			else
 			{
 				return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 			}
+
+			throw new RuntimeException(JText::_('SHOUT_MATHS_QUESTION_INVALID'));
+		}
+		else
+		{
+			return $this->postFiltering($post, $user, $swearCounter, $swearNumber, $displayName, $this->params);
 		}
 	}
 	
@@ -1269,17 +1282,16 @@ class ModShoutboxHelper
 		elseif ($type == 'cb')
 		{
 			// Use a database query as the CB framework is horrible
-			$db = JFactory::getDbo();
-			$query = $db->getQuery(true)
-			->select($db->qn('avatar'))
-			->from($db->qn('#__comprofiler'))
-			->where($db->qn('user_id') . ' = ' . $db->q($user->id));
+			$query = $this->db->getQuery(true)
+			->select($this->db->qn('avatar'))
+			->from($this->db->qn('#__comprofiler'))
+			->where($this->db->qn('user_id') . ' = ' . $this->db->q($user->id));
 
-			$db->setQuery($query);
+			$this->db->setQuery($query);
 
 			try
 			{
-				$result = $db->loadResult();
+				$result = $this->db->loadResult();
 			}
 			catch (Exception $e)
 			{
@@ -1394,21 +1406,19 @@ class ModShoutboxHelper
 	 */	
 	private function getTimestampData($id)
 	{
-		$db = JFactory::getDbo();
-
-		$query = $db->getQuery(true)
+		$query = $this->db->getQuery(true)
 		->select('*')
-		->from($db->qn('#__shoutbox'))
-		->where($db->qn('id') . ' = ' . (int) $id);
+		->from($this->db->qn('#__shoutbox'))
+		->where($this->db->qn('id') . ' = ' . (int) $id);
 
-		$db->setQuery($query);
+		$this->db->setQuery($query);
 
-		$result = $db->loadObjectList();
+		$result = $this->db->loadObjectList();
 
 		// If we have an error then we'll create an exception
-		if ($db->getErrorNum())
+		if ($this->db->getErrorNum())
 		{
-			throw new RuntimeException($db->getErrorMsg(), $db->getErrorNum());
+			throw new RuntimeException($this->db->getErrorMsg(), $this->db->getErrorNum());
 		}
 
 		return $result;

@@ -14,6 +14,13 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.9
+^ Prevent F5 refresh showing message after deleting a shout
+^ General PHP improvements
+# Fixed unecessary characters next to 'load more' button
+- Remove last instance of native PHP $_SESSION
+- Removed IcoMoon library reference
+
 Version 8.1.8
 ^ General PHP improvements
 $ Updated NL language file (thanks Peter)
