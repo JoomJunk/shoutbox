@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
+$ French language file updated (thanks Marc)
+
 Version 8.1.10
 # Fixed PHP fatal error with session token still existing
 
