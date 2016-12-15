@@ -1325,7 +1325,7 @@ class ModShoutboxHelper
 			$epuser = JsnHelper::getUser($user->id);
 			$avatar = $epuser->avatar_mini;
 
-			$url = '<img src="' . $avatar . '" height="30" width="30">';
+			$url = '<img src="/' . $avatar . '" height="30" width="30">';
 		}
 
 		return $url;
