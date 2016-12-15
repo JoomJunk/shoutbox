@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 WIP
 $ French language file updated (thanks Marc)
+# Fix easyprofile avatars not showing on refresh
 
 Version 8.1.10
 # Fixed PHP fatal error with session token still existing
