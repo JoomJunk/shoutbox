@@ -16,7 +16,7 @@ $ -> Language fix or change
 
 Version 8.1.11
 # Fixed easyprofile avatars not showing on refresh
-# Fixed incorect name used when updating a different user's shout
+# Fixed incorrect name used when updating a different user's shout
 $ French language file updated (thanks Marc)
 
 Version 8.1.10
