@@ -428,6 +428,11 @@ class ModShoutboxHelper
 		{
 			$shout['type'] = isset($shout['type']) ? $shout['type'] : 'insert';
 
+			if ($shout['type'] === 'update')
+			{
+				$name = $shout['name'];
+			}
+
 			return $this->addShout($shout['type'], $shout['id'], $name, $message, $ip);
 		}
 	}

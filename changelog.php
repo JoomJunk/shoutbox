@@ -15,8 +15,9 @@ $ -> Language fix or change
 ! -> Note
 
 WIP
+# Fixed easyprofile avatars not showing on refresh
+# Fixed incorect name used when updating a different user's shout
 $ French language file updated (thanks Marc)
-# Fix easyprofile avatars not showing on refresh
 
 Version 8.1.10
 # Fixed PHP fatal error with session token still existing
