@@ -14,6 +14,11 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.11
+# Fixed easyprofile avatars not showing on refresh
+# Fixed incorrect name used when updating a different user's shout
+$ French language file updated (thanks Marc)
+
 Version 8.1.10
 # Fixed PHP fatal error with session token still existing
 

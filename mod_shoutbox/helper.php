@@ -1,7 +1,7 @@
 <?php
 /**
 * @package    JJ_Shoutbox
-* @copyright  Copyright (C) 2011 - 2016 JoomJunk. All rights reserved.
+* @copyright  Copyright (C) 2011 - 2017 JoomJunk. All rights reserved.
 * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
 */
 
@@ -427,6 +427,11 @@ class ModShoutboxHelper
 		if ($swearCounter == 0 || $swearCounter == 1 && (($nameSwears + $messageSwears) <= $swearNumber))
 		{
 			$shout['type'] = isset($shout['type']) ? $shout['type'] : 'insert';
+
+			if ($shout['type'] === 'update')
+			{
+				$name = $shout['name'];
+			}
 
 			return $this->addShout($shout['type'], $shout['id'], $name, $message, $ip);
 		}
@@ -1325,7 +1330,7 @@ class ModShoutboxHelper
 			$epuser = JsnHelper::getUser($user->id);
 			$avatar = $epuser->avatar_mini;
 
-			$url = '<img src="' . $avatar . '" height="30" width="30">';
+			$url = '<img src="/' . $avatar . '" height="30" width="30">';
 		}
 
 		return $url;
