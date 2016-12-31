@@ -14,6 +14,10 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
+WIP
+^ Fix smiley being shown multiple times for the same image if there are multiple shortcuts
+
 Version 8.1.11
 # Fixed easyprofile avatars not showing on refresh
 # Fixed incorrect name used when updating a different user's shout
