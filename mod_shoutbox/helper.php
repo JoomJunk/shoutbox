@@ -527,7 +527,7 @@ class ModShoutboxHelper
 	 *
 	 * @param   string  $id  The id of the textarea to insert the smiley into
 	 *
-	 * @return  array  $smilies The smiley images html code.
+	 * @return  string  $smilies The smiley images html code.
 	 *
 	 * @since   1.2
 	 */
@@ -536,8 +536,9 @@ class ModShoutboxHelper
 		$getSmilies = $this->getSmilies();
 
 		$smilies = '';
+		$uniqueSmilies = array_unique($getSmilies);
 
-		foreach ($getSmilies as $smile => $url)
+		foreach ($uniqueSmilies as $smile => $url)
 		{
 			$smilies .= '<li><img class="jj_smiley" src="images/mod_shoutbox/' . $url . '" alt="' . $smile . '" onClick="JJShoutbox.addSmiley(\'' . $smile . '\', \'' . $id . '\')" /></li>';
 		}
