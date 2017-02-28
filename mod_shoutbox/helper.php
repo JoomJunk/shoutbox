@@ -514,7 +514,7 @@ class ModShoutboxHelper
 			'<span class="jj-italic">$1</span>',
 			'<span class="jj-underline">$1</span>',
 			'<a href="#" data-jj-image="http$1://$2" data-jj-image-alt="$3" class="jj-image-modal">$3</a>',
-			'<a href="http$1://$2" target="_blank" rel="nofollow noreferrer">$3</a>'
+			'<a href="http$1://$2" target="_blank" rel="noopener noreferrer">$3</a>'
 		);
 
 		$message = preg_replace($search, $replace, $message);
