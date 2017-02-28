@@ -14,8 +14,8 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-WIP
-WIP
+###WIP
+* Prevent access via the 'window.opener' object with submitted links
 ^ Fix smiley being shown multiple times for the same image if there are multiple shortcuts
 
 Version 8.1.11
