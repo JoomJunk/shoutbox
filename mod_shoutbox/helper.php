@@ -514,7 +514,7 @@ class ModShoutboxHelper
 			'<span class="jj-italic">$1</span>',
 			'<span class="jj-underline">$1</span>',
 			'<a href="#" data-jj-image="http$1://$2" data-jj-image-alt="$3" class="jj-image-modal">$3</a>',
-			'<a href="http$1://$2" target="_blank">$3</a>'
+			'<a href="http$1://$2" target="_blank" rel="noopener noreferrer">$3</a>'
 		);
 
 		$message = preg_replace($search, $replace, $message);
@@ -527,7 +527,7 @@ class ModShoutboxHelper
 	 *
 	 * @param   string  $id  The id of the textarea to insert the smiley into
 	 *
-	 * @return  array  $smilies The smiley images html code.
+	 * @return  string  $smilies The smiley images html code.
 	 *
 	 * @since   1.2
 	 */
@@ -536,8 +536,9 @@ class ModShoutboxHelper
 		$getSmilies = $this->getSmilies();
 
 		$smilies = '';
+		$uniqueSmilies = array_unique($getSmilies);
 
-		foreach ($getSmilies as $smile => $url)
+		foreach ($uniqueSmilies as $smile => $url)
 		{
 			$smilies .= '<li><img class="jj_smiley" src="images/mod_shoutbox/' . $url . '" alt="' . $smile . '" onClick="JJShoutbox.addSmiley(\'' . $smile . '\', \'' . $id . '\')" /></li>';
 		}
