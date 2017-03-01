@@ -286,3 +286,24 @@ BBCode
 .jj-underline {
 	text-decoration: underline !important;
 }
+
+/**
+RTL
+**/
+html[dir="rtl"] .jjshoutboxoutput .shout-header {
+    padding: 0 5px 0 35px;
+}
+html[dir="rtl"] .jjshoutbox .btn-group .btn {
+    min-width: 26px;
+	margin-bottom: 5px;
+}
+html[dir="rtl"] .jjshoutboxoutput div p {
+    text-align: right;
+    padding: 0 5px 0 0;
+}
+html[dir="rtl"] .jjshoutboxoutput .shout-actions {
+    position: absolute;
+    top: 0;
+    left: 3px;
+    right: auto;
+}

@@ -58,6 +58,7 @@ $editown         = $params->get('editown', 1);
 $editowntime     = $params->get('editown-time', 5);
 $history         = $params->get('history', 1);
 $remainingLength = JText::_('SHOUT_REMAINING');
+$rtl             = JFactory::getLanguage()->isRTL();
 
 // Assemble the factory variables needed
 $doc  = JFactory::getDocument();
