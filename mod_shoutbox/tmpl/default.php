@@ -203,7 +203,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 							<?php if ($framework == 'uikit') : ?>
 								<div class="uk-button-dropdown" data-uk-dropdown>
 									<button class="uk-button uk-button-small" type="button">
-										<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
+										<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;">
 									</button>
 									<ul class="uk-dropdown uk-dropdown-flip">
 										<?php echo $helper->smileyshow(); ?>
@@ -211,14 +211,14 @@ JText::script('SHOUT_SESSION_EXPIRED');
 								</div>
 							<?php elseif ($framework == 'bootstrap') : ?>
 								<button type="button" class="<?php echo $button . $button_small; ?> dropdown-toggle" data-toggle="dropdown">
-									<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
+									<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;">
 								</button>
 								<ul class="dropdown-menu inline unstyled">
 									<?php echo $helper->smileyshow(); ?>
 								</ul>
 							<?php else : ?>
 								<button type="button" class="<?php echo $button . $button_small; ?> dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-									<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;" />
+									<img src="<?php echo JUri::root(); ?>images/mod_shoutbox/icon_e_smile.gif" alt="&#9786;">
 								</button>
 								<ul class="dropdown-menu list-inline list-unstyled">
 									<?php echo $helper->smileyshow(); ?>
@@ -262,10 +262,15 @@ JText::script('SHOUT_SESSION_EXPIRED');
 						<?php $que_number1 = $helper->randomnumber(1); ?>
 						<?php $que_number2 = $helper->randomnumber(1); ?>
 						<div class="form-inline <?php echo $form_row; ?>">
-							<canvas id="mathscanvas" width="80" height="30">Your browser does not support the HTML5 canvas tag.</canvas>
-							<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>" />
-							<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>" />
-							<input class="<?php echo $input_txtarea; ?> fullwidth" id="math_output" type="text" name="jjshout[human]" />
+							<?php if ($rtl) : ?>
+								<input class="<?php echo $input_txtarea; ?> fullwidth" id="math_output" type="text" name="jjshout[human]">
+								<canvas style="float:right" id="mathscanvas" width="80" height="30">Your browser does not support the HTML5 canvas tag.</canvas>
+							<?php else : ?>
+								<canvas id="mathscanvas" width="80" height="30">Your browser does not support the HTML5 canvas tag.</canvas>
+								<input class="<?php echo $input_txtarea; ?> fullwidth" id="math_output" type="text" name="jjshout[human]">
+							<?php endif; ?>
+							<input type="hidden" name="jjshout[sum1]" value="<?php echo $que_number1; ?>">
+							<input type="hidden" name="jjshout[sum2]" value="<?php echo $que_number2; ?>">
 						</div>
 					<?php 
 					}
@@ -277,7 +282,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 				<input id="shout-submit-type" type="hidden" data-shout-id="0" data-submit-type="insert" />
 
 				<?php if ($entersubmit == 0) : ?>
-					<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?> fullwidth" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?> />
+					<input name="jjshout[shout]" id="shoutbox-submit" class="<?php echo $button; ?> fullwidth" type="submit" value="<?php echo JText::_('SHOUT_SUBMITTEXT'); ?>" <?php if (($securitytype == 1 && !$siteKey) || ($securitytype == 1 && !$secretKey)) { echo 'disabled="disabled"'; }?>>
 				<?php endif; ?>
 
 			</form>
@@ -287,7 +292,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 			{
 			?>
 				<form method="post" <?php echo 'class="' . $form . '"'; ?>>
-					<input type="hidden" name="jjshout[max]" value="<?php echo $count; ?>" />
+					<input type="hidden" name="jjshout[max]" value="<?php echo $count; ?>">
 
 					<div class="mass_delete">
 						<?php $style   = ($framework == 'bootstrap3') ? 'style="display:inline-block"' : ''; ?>
@@ -330,7 +335,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 
 	<?php if ($securitytype == 2) {
 			if ($securityHide == 0 || ($user->guest && $securityHide == 1)) { ?>
-				JJShoutbox.drawMathsQuestion(<?php echo $que_number1; ?>, <?php echo $que_number2; ?>);
+				JJShoutbox.drawMathsQuestion(<?php echo $que_number1; ?>, <?php echo $que_number2; ?>, <?php echo $rtl; ?>);
 	<?php } } ?>
 
 	var JJ_frameworkType = '<?php echo $framework; ?>';
@@ -422,6 +427,7 @@ JText::script('SHOUT_SESSION_EXPIRED');
 					instance     : JJ_instance,
 					history      : JJ_history,
 					session      : '<?php echo JFactory::getSession()->getState(); ?>',
+					rtl          : '<?php echo $rtl; ?>',
 				};
 
 				JJShoutbox.submitPost(JJ_ShoutPostParams);

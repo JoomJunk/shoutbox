@@ -210,15 +210,23 @@ JJShoutbox.getRandomArbitrary = function(min, max)
 /**
  * Draw the maths question using a canvas
  */
-JJShoutbox.drawMathsQuestion = function(number1, number2)
-{	
-	var c = document.getElementById('mathscanvas');
-	var ctx = c.getContext('2d');
+JJShoutbox.drawMathsQuestion = function(number1, number2, rtl)
+{
+	var c   = document.getElementById('mathscanvas'),
+	    ctx = c.getContext('2d');
 
 	ctx.clearRect(0, 0, c.width, c.height);
 	ctx.font = '14px Arial';
 	ctx.fillStyle = 'grey';
-	ctx.fillText(number1 + ' + ' + number2 + ' = ', 10, 20);
+
+	if (rtl == 1)
+	{
+		ctx.fillText(parseInt(number1) + ' + ' + parseInt(number2) + ' = ', 70, 20);
+	}
+	else
+	{
+		ctx.fillText(number1 + ' + ' + number2 + ' = ', 10, 20);
+	}
 }
 
 
@@ -621,7 +629,7 @@ jQuery(document).ready(function($) {
 			params.instance.find('input[name="jjshout[sum2]"]').val(val2);
 			params.instance.find('label[for="math_output"]').text(val1 + ' + ' + val2);
 			params.instance.find('input[name="jjshout[human]"]').val('');
-			JJShoutbox.drawMathsQuestion(val1, val2);
+			JJShoutbox.drawMathsQuestion(val1, val2, params.rtl);
 		}
 
 		return false;
