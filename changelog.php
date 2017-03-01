@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-###WIP
+Version 8.1.13
 ^ Improved layout for RTL languages
 
 Version 8.1.12
