@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+### WIP
+# Fixed install SQL missing a field
+
 Version 8.1.13
 ^ Improved layout for RTL languages
 
