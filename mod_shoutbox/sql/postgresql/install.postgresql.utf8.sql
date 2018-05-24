@@ -8,4 +8,4 @@ CREATE TABLE "#__shoutbox" (
   PRIMARY KEY ("id") 
 );
 
-INSERT INTO "#__shoutbox" ("name", "when", "msg", "user_id") VALUES ('JoomJunk', '2013-04-04 20:00:00', 'Welcome to the Shoutbox', '0');
+INSERT INTO "#__shoutbox" ("name", "when", "ip", "msg", "user_id") VALUES ('JoomJunk', '2013-04-04 20:00:00', '127.0.0.1', 'Welcome to the Shoutbox', '0');

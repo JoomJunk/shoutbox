@@ -1,7 +1,7 @@
 <?php
 /**
  * @package    JJ_Shoutbox
- * @copyright  Copyright (C) 2011 - 2017 JoomJunk. All rights reserved.
+ * @copyright  Copyright (C) 2011 - 2018 JoomJunk. All rights reserved.
  * @license    GPL v3.0 or later http://www.gnu.org/licenses/gpl-3.0.html
  */
 
@@ -331,13 +331,14 @@ JText::script('SHOUT_SESSION_EXPIRED');
 	}
 ?>
 
-<script type="text/javascript">
+<script>
 
 	<?php if ($securitytype == 2) {
 			if ($securityHide == 0 || ($user->guest && $securityHide == 1)) { ?>
 				JJShoutbox.drawMathsQuestion(<?php echo $que_number1; ?>, <?php echo $que_number2; ?>, <?php echo $rtl; ?>);
 	<?php } } ?>
 
+	var JJ_notification  = '<?php echo JUri::root(); ?>media/mod_shoutbox/images/notification.png';
 	var JJ_frameworkType = '<?php echo $framework; ?>';
 	var JJ_BBCode        = <?php echo $bbcode; ?>;
 	var JJ_history       = <?php echo $history; ?>;
