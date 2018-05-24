@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<extension type="module" version="3.6" client="site" method="upgrade">
+<extension type="module" version="3.8" client="site" method="upgrade">
 	<name>JJ Shoutbox</name>
 	<author>JoomJunk</author>
 	<creationDate>05-Mar-2012</creationDate>
@@ -7,7 +7,7 @@
 	<license>http://www.gnu.org/licenses/gpl-3.0.html</license>
 	<authorEmail>admin@joomjunk.co.uk</authorEmail>
 	<authorUrl>http://www.joomjunk.co.uk</authorUrl>
-	<version>8.1.13</version>
+	<version>8.1.14</version>
 	<description>JJSHOUTBOX_DESCRIPTION</description>
 
 	<install>
