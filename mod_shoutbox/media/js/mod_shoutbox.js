@@ -27,10 +27,17 @@ JJShoutbox.performNotificationCheck = function()
 /**
  * Create the HTML5 Notification
  */
-JJShoutbox.createNotification = function(title, options)
+JJShoutbox.createNotification = function(title)
 {
-	options = {
-		icon: 'media/mod_shoutbox/images/notification.png'
+	var icon = '/media/mod_shoutbox/images/notification.png';
+
+	if (typeof JJ_notification !== 'undefined')
+	{
+		icon = JJ_notification
+	}
+
+	var options = {
+		icon: icon
 	};
 
 	// Let's check if the browser supports notifications

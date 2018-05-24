@@ -16,6 +16,7 @@ $ -> Language fix or change
 
 ### WIP
 # Fixed install SQL missing a field
+# Fix HTML5 notification image on multilingual sites
 
 Version 8.1.13
 ^ Improved layout for RTL languages
