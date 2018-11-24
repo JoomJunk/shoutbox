@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
+# Fix permission issues with page builder extensions
+
 Version 8.1.14
 # Fixed install SQL missing a field
 # Fixed HTML5 notification image on multilingual sites

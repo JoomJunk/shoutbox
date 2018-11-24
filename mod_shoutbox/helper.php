@@ -45,8 +45,8 @@ class ModShoutboxHelper
 	 */
 	public function __construct($id)
 	{
-		$this->params = $this->getParams($id);
 		$this->db     = JFactory::getDbo();
+		$this->params = $this->getParams($id);
 	}
 
 	/**
@@ -155,10 +155,20 @@ class ModShoutboxHelper
 	 */
 	public function getParams($title = null)
 	{
-		jimport('joomla.application.module.helper');
-		$module = JModuleHelper::getModule('mod_shoutbox', $title);
+		$query = $this->db->getQuery(true)
+		->select('params')
+		->from($this->db->qn('#__modules'))
+		->where($this->db->qn('module') . ' = ' . $this->db->q('mod_shoutbox'));
+
+		$this->db->setQuery($query);
+		$result = $this->db->loadResult();
+
 		$moduleParams = new JRegistry;
-		$moduleParams->loadString($module->params);
+
+		if ($result !== '')
+		{
+			$moduleParams->loadString($result);
+		}
 
 		return $moduleParams;
 	}
