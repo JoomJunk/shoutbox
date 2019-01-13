@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
+# Fix bug getting module parameters
+
 Version 8.1.15
 # Fix permission issues with page builder extensions
 
