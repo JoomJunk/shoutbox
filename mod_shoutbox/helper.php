@@ -171,7 +171,7 @@ class ModShoutboxHelper
 		
 		if ($result !== '')
 		{
-			$moduleParams->loadString($result);
+			$moduleParams->loadString($result->params);
 		}
 
 		return $moduleParams;

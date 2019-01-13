@@ -14,6 +14,9 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+WIP
+# Fix critical bug with previous release
+
 Version 8.1.16
 # Fix bug getting module parameters
 
