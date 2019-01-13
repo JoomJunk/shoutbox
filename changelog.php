@@ -14,6 +14,12 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
+Version 8.1.17
+# Fix critical bug with previous release
+
+Version 8.1.16
+# Fix bug getting module parameters
+
 Version 8.1.15
 # Fix permission issues with page builder extensions
 

@@ -156,18 +156,22 @@ class ModShoutboxHelper
 	public function getParams($title = null)
 	{
 		$query = $this->db->getQuery(true)
-		->select('params')
-		->from($this->db->qn('#__modules'))
-		->where($this->db->qn('module') . ' = ' . $this->db->q('mod_shoutbox'));
+			->select('m.id, m.module, m.params')
+			->from('#__modules AS m')
+			->join('LEFT', '#__modules_menu AS mm ON mm.moduleid = m.id')
+			->where('m.published = 1')
+			->where('m.module = ' . $this->db->q('mod_shoutbox'))
+			->join('LEFT', '#__extensions AS e ON e.element = m.module AND e.client_id = m.client_id')
+			->where('e.enabled = 1');
 
 		$this->db->setQuery($query);
-		$result = $this->db->loadResult();
+		$result = $this->db->loadObject();
 
 		$moduleParams = new JRegistry;
-
+		
 		if ($result !== '')
 		{
-			$moduleParams->loadString($result);
+			$moduleParams->loadString($result->params);
 		}
 
 		return $moduleParams;
