@@ -14,7 +14,7 @@ $ -> Language fix or change
 - -> Removed
 ! -> Note
 
-WIP
+Version 8.1.17
 # Fix critical bug with previous release
 
 Version 8.1.16
