@@ -616,7 +616,7 @@ class Mod_ShoutboxInstallerScript
 		$this->manageSmilies();
 
 		// Get the swearwords from the file
-		$file = file_get_contents(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php', NULL, NULL, 249);
+		$file = file_get_contents(JPATH_ROOT . '/modules/mod_shoutbox/swearWords.php', null, null, 249);
 		$explode = explode("\n", $file); // Explode the contents of the file
 		$words = array_filter($explode); // Remove empty values from array
 		unset($words[0]);                // Unset the first array index which contains a space
